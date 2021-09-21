@@ -1,5 +1,6 @@
 {
-  "name": "react-vite",
+  "name": "uxflows",
+	"appName": "uxflows",
   "version": "1.0.0",
   "license": "MIT",
   "author": "Matthew Zito (goldmund) <matthewtzito@gmail.com>",
@@ -11,10 +12,10 @@
     "lint:css": "stylelint \"src/**/*.{css,scss,vue}\" --fix"
   },
   "lint-staged": {
-    "src/**/*.{js,vue}": [
+    "**/*.{ts,tsx,js,jsx}": [
       "pnpm lint"
     ],
-    "src/**/*.{vue,css,scss}": [
+    "src/**/*.{css,scss}": [
       "pnpm lint:css"
     ]
   },
