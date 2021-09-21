@@ -1,0 +1,6 @@
+{
+  "extends": "@magister_zito/react",
+  "ignorePatterns": [
+    "dist"
+  ]
+}

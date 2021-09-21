@@ -1,0 +1,12 @@
+node_modules
+dist
+dist-ssr
+*.local
+.eslintcache
+repl.js
+cache
+.vercel
+
+*.sql
+metadata.json
+data.md
