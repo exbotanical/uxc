@@ -1,6 +1,7 @@
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import eslintPlugin from 'vite-plugin-eslint';
+import react from '@vitejs/plugin-react';
 
 const r = (dir) => resolve(__dirname, dir);
 
@@ -12,7 +13,8 @@ export default defineConfig({
 	},
 
 	plugins: [
-		eslintPlugin()
+		eslintPlugin(),
+		react()
 	],
 
 	resolve: {

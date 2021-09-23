@@ -1,6 +1,16 @@
 {
-  "extends": "@magister_zito/react",
+  "extends": [
+    "@magister_zito/react",
+    "plugin:jsx-a11y/recommended",
+    "prettier"
+  ],
+  "plugins": ["jsx-a11y"],
   "ignorePatterns": [
-    "dist"
-  ]
+    "dist",
+    "src/components/Modal.ts",
+    "src/components/common/ErrorBoundary.tsx"
+  ],
+  "rules": {
+    "react/react-in-jsx-scope": "off"
+  }
 }
