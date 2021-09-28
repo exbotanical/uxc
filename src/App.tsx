@@ -1,37 +1,30 @@
-import React, { useState } from 'react';
-import '@/styles/App.scss';
-import { BrowserRouter as Router, Switch, Link, Route } from 'react-router-dom';
-import About from './components/About';
-import ThemeContext from './context/ThemeContext';
+import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-function App() {
-	const theme = useState('darkblue');
+import './App.scss';
 
+import Header from '@/components/header/Header';
+import Sidebar from '@/components/sidebar/Sidebar';
+import Landing from '@/pages/Landing';
+import ChatRoom from '@/pages/ChatRoom';
+
+// vite would need to do some extra parsing if we made this a `.ts` file,
+// and so all files containing jsx will bear the extension
+const App = () => {
 	return (
-		// @ts-ignore TODO
-		<ThemeContext.Provider value={theme}>
-			<div className="app">
-				<Router>
-					<header className="app-header">
-						Header
-						{/* TODO <button onClick={theme[1]}>
-							I want to pimp out my ride
-						</button> */}
-					</header>
+		<div className="main-layout">
+			<BrowserRouter>
+				<Header />
+				<div className="main-layout__body">
+					<Sidebar />
 					<Switch>
-						<Route path="/about/:id">
-							{/* @ts-ignore TODO */}
-							<About />
-						</Route>
-						<Route exact path="/"></Route>
+						<Route path="/room/:roomid" component={ChatRoom} />
+						<Route path="/" component={Landing} />
 					</Switch>
-					<footer>
-						<Link to="/">Home</Link>
-					</footer>
-				</Router>
-			</div>
-		</ThemeContext.Provider>
+				</div>
+			</BrowserRouter>
+		</div>
 	);
-}
+};
 
 export default App;

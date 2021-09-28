@@ -1,6 +1,5 @@
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
-import eslintPlugin from 'vite-plugin-eslint';
 import react from '@vitejs/plugin-react';
 
 const r = (dir) => resolve(__dirname, dir);
@@ -12,22 +11,18 @@ export default defineConfig({
 		open: true
 	},
 
-	plugins: [
-		eslintPlugin(),
-		react()
-	],
+	plugins: [react()],
 
 	resolve: {
 		alias: {
-			'@': r('./src'),
-			'@pkg': r('./package.json')
+			'@': r('./src')
 		}
 	},
 
 	css: {
 		preprocessorOptions: {
 			scss: {
-				additionalData: '@import \'@/styles/index\';'
+				additionalData: "@import '@/styles/index';"
 			}
 		}
 	},
