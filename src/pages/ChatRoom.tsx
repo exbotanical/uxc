@@ -6,8 +6,12 @@ import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import ChatTextInput from '@/components/chatroom/ChatTextInput';
 
 import '@/styles/chatroom.scss';
+import ChatMessage from '@/components/chatroom/ChatMessage';
 
 const ChatRoom = () => {
+	const now = new Date();
+	const user = { userImage: '', name: 'name' };
+
 	return (
 		<div className="chatroom">
 			<div className="chatroom__header">
@@ -23,7 +27,9 @@ const ChatRoom = () => {
 					</p>
 				</div>
 			</div>
-			<div className="chatroom__messages"></div>
+			<div className="chatroom__messages">
+				<ChatMessage message={'message'} timestamp={now} user={user} />
+			</div>
 
 			<ChatTextInput />
 		</div>
