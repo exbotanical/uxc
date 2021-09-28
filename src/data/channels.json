@@ -1,0 +1,20 @@
+{
+	"channels": [
+		{
+			"name": "Engineering",
+			"id": 1
+		},
+		{
+			"name": "Virtual Breakroom",
+			"id": 2
+		},
+		{
+			"name": "Frontend",
+			"id": 3
+		},
+		{
+			"name": "Backend",
+			"id": 4
+		}
+	]
+}

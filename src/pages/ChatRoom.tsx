@@ -1,16 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined';
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import BookmarkIcon from '@material-ui/icons/Bookmark';
+import InfoIcon from '@material-ui/icons/InfoOutlined';
 
 import ChatTextInput from '@/components/chatroom/ChatTextInput';
-
-import '@/styles/chatroom.scss';
 import ChatMessage from '@/components/chatroom/ChatMessage';
 
+import '@/styles/chatroom.scss';
+import type { IMessage } from '@/types/message';
+import { fetchData } from '@/services';
+
+interface IDummyMessages {
+	messages: { [key: string]: IMessage[] };
+}
+
 const ChatRoom = () => {
-	const now = new Date();
-	const user = { userImage: '', name: 'name' };
+	const { id } = useParams<{ id?: string }>();
+
+	if (!id) throw new Error('');
+
+	const [messages, setMessages] = useState<IMessage[]>([]);
+
+	useEffect(() => {
+		fetchData<IDummyMessages>(import('@/data/messages')).then(
+			({ messages }) => {
+				setMessages(messages[id]);
+			}
+		);
+	}, [id]);
 
 	return (
 		<div className="chatroom">
@@ -18,17 +36,19 @@ const ChatRoom = () => {
 				<div className="chatroom__header-detail">
 					<h4 className="chatroom__channel-data">
 						<strong>#roomname</strong>
-						<StarBorderOutlinedIcon />
+						<BookmarkIcon />
 					</h4>
 				</div>
 				<div className="chatroom__header-opts">
 					<p>
-						<InfoOutlinedIcon /> Details
+						<InfoIcon /> Details
 					</p>
 				</div>
 			</div>
 			<div className="chatroom__messages">
-				<ChatMessage message={'message'} timestamp={now} user={user} />
+				{messages.map((message, idx) => (
+					<ChatMessage key={idx} {...message} />
+				))}
 			</div>
 
 			<ChatTextInput />

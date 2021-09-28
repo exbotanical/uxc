@@ -1,24 +1,17 @@
 import React from 'react';
 import '@/styles/message.scss';
+import { IMessage } from '@/types/message';
 
-interface IUser {
-	userImage: string;
-	name: string;
-}
-
-interface IMessageProps {
-	message: string;
-	timestamp: Date;
-	user: IUser;
-}
-
-const Message = ({ message, timestamp, user }: IMessageProps) => {
+const Message = ({ message, timestamp, user }: IMessage) => {
 	return (
 		<div className="message">
-			<img src={''} alt="" />
+			<img
+				src={user.userImage || '../../src/assets/gravatar.png'}
+				alt={`${user.displayName}'s avatar`}
+			/>
 			<div className="message__info">
 				<h4>
-					{user.name}{' '}
+					{user.displayName}
 					<span className="message__timestamp">
 						{new Date(timestamp).toLocaleTimeString()}
 					</span>
