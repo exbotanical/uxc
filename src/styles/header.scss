@@ -9,8 +9,8 @@
 
 .header__left {
   display: flex;
-  align-items: center;
   flex: 0.3;
+  align-items: center;
   margin-left: 1.25rem;
 }
 
@@ -19,27 +19,27 @@
 }
 
 .header__search {
-  flex: 0.4;
-  background-color: var(--app-primary-color);
-  text-align: center;
   display: flex;
+  flex: 0.4;
+  border: 1px solid gray;
+  background-color: var(--app-primary-color);
+  border-radius: 6px;
   // padding: 0 50px;
   color: gray;
-  border: 1px solid gray;
-  border-radius: 6px;
+  text-align: center;
 }
 
 .header__search > input {
-  background-color: transparent;
-  border: none;
-  text-align: center;
   min-width: 35vw;
+  border: none;
+  background-color: transparent;
   color: var(--app-secondary-color);
+  text-align: center;
 }
 
 .header__right {
-  flex: 0.3;
   display: flex;
+  flex: 0.3;
   align-items: flex-end;
 }
 

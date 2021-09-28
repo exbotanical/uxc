@@ -1,17 +1,17 @@
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 :root {
   --app-color: #282a36;
-  --app-secondary-color: #ffffff;
+  --app-secondary-color: #fff;
   --app-primary-color: #44475a;
 }
 
 body {
+  overflow: hidden;
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  overflow: hidden;
 }

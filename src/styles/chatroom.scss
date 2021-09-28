@@ -1,8 +1,21 @@
 .chatroom {
   flex: 0.7;
   flex-grow: 1;
-  overflow-y: scroll;
   padding-bottom: 15px;
+  overflow-y: scroll;
+}
+
+.chatroom__channel-data {
+  text-transform: lowercase;
+}
+
+.chatroom__channel-data > .MuiSvgIcon-root {
+  margin-left: 10px;
+  font-size: 1rem;
+}
+
+.chatroom__channel-data > strong {
+  font-size: 1rem;
 }
 
 .chatroom__header {
@@ -20,19 +33,6 @@
 }
 
 .chatroom__header-opts > p > .MuiSvgIcon-root {
-  margin-right: .3rem !important;
-  font-size: 1rem;
-}
-
-.chatroom__channel-data {
-  text-transform: lowercase;
-}
-
-.chatroom__channel-data > .MuiSvgIcon-root {
-  margin-left: 10px;
-  font-size: 1rem;
-}
-
-.chatroom__channel-data > strong {
+  margin-right: 0.3rem !important;
   font-size: 1rem;
 }

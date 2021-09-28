@@ -22,7 +22,7 @@ export default defineConfig({
 	css: {
 		preprocessorOptions: {
 			scss: {
-				additionalData: "@import '@/styles/index';"
+				additionalData: '@import \'@/styles/index\';'
 			}
 		}
 	},
