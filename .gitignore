@@ -5,7 +5,7 @@ dist-ssr
 .eslintcache
 cache
 .vercel
+*.log
+coverage
 
-*.sql
-metadata.json
-data.md
+server

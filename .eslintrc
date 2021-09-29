@@ -1,14 +1,10 @@
 {
   "extends": [
-    "plugin:jsx-a11y/recommended",
     "prettier",
     "@magister_zito/react"
   ],
-  "plugins": ["jsx-a11y"],
   "ignorePatterns": [
-    "dist"
-  ],
-  "rules": {
-    "react/react-in-jsx-scope": "off"
-  }
+    "dist",
+    "server"
+  ]
 }
