@@ -24,11 +24,13 @@ export const WithLayout: FC<{ isDash: boolean }> = ({ children, isDash }) => {
 				</div>
 				<div className="col-span-6">{children}</div>
 				<div className="col-span-3">
-					{isDash ? (
-						<RightPanel top={<Profile />} bottom={<div />} />
-					) : (
-						<UsersInChannelContainer />
-					)}
+					{isDash ?
+						(
+							<RightPanel top={<Profile />} bottom={<div />} />
+						) :
+						(
+							<UsersInChannelContainer />
+						)}
 				</div>
 			</div>
 		</>

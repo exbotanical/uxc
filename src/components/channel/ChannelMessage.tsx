@@ -25,7 +25,7 @@ export const ChannelMessage: FC<IMessage & { isAuthor: boolean }> = ({
 	];
 
 	// TODO serverside
-	function generateColor(str: string) {
+	function generateColor (str: string) {
 		let sum = 0;
 		for (let i = 0; i < str.length; i++) {
 			sum += i * str.charCodeAt(i);
@@ -37,7 +37,7 @@ export const ChannelMessage: FC<IMessage & { isAuthor: boolean }> = ({
 	return (
 		<div className="flex flex-col text-lg py-1 mx-3">
 			<div>
-				<span className="font-bold" style={{ color: generateColor(username) }}>
+				<span className="font-bold" style={{ color: generatecolor(username) }}>
 					{username}
 				</span>
 				<span className="text-white">: </span>

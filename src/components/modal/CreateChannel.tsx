@@ -83,9 +83,9 @@ const CreateChannelModal: FC<ICreateChannelModalProps & PropsFromRedux> = ({
 			>
 				<div className={'col-span-3 block'}>
 					<h4 className={'mb-2 text-primary-100'}>
-						{isEdit && channelModalState.data
-							? `Update #${channelModalState.data.name}`
-							: 'Create a New Channel'}
+						{isEdit && channelModalState.data ?
+							`Update #${channelModalState.data.name}` :
+							'Create a New Channel'}
 					</h4>
 				</div>
 				<div className={'flex h-full w-full col-span-2'}>

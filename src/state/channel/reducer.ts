@@ -6,7 +6,7 @@ const initialState = {
 	channelModal: { showing: false }
 };
 
-export function reducer(
+export function reducer (
 	state: IChannelState = initialState,
 	action: IModalAction
 ): IChannelState {

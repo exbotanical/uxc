@@ -149,9 +149,9 @@ export const connect: IConnector = ({
 
 			const errorMessage = 'The socket connection has closed.';
 			const timeoutInSeconds = connectionTimeout / 1000;
-			const reconnectMessage = shouldReconnect
-				? ` Please try refreshing if it does not reconnect in ${timeoutInSeconds} seconds.`
-				: '';
+			const reconnectMessage = shouldReconnect ?
+				` Please try refreshing if it does not reconnect in ${timeoutInSeconds} seconds.` :
+				'';
 
 			const defaultMsg = errorMessage + reconnectMessage;
 			switch (error.code) {

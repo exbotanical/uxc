@@ -1,9 +1,9 @@
+import { store } from '..';
 import {
 	IShowNotification,
 	IHideNotification,
 	NOTIFICATION_ACTION
 } from './types';
-import { store } from '..';
 
 // Actions
 const SHOW_NOTIFICATION: IShowNotification = ({

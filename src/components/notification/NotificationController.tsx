@@ -8,7 +8,7 @@ import { PropsFromRedux, connector } from '@/state';
 interface INotificationControllerProps extends PropsFromRedux {}
 
 const NotificationControllerBase: FC<
-	PropsFromRedux & INotificationControllerProps
+PropsFromRedux & INotificationControllerProps
 > = ({ notifications, hideNotification }) => {
 	return (
 		<div

@@ -51,7 +51,7 @@ const modalStyles = {
 };
 
 export const Modal: FC<
-	ReactModal['props'] & { variant?: keyof typeof modalStyles }
+ReactModal['props'] & { variant?: keyof typeof modalStyles }
 > = ({ children, variant = 'default', ...props }) => {
 	const onKeyDown = (event: KeyboardEvent) => {
 		const currentActive = document.activeElement;

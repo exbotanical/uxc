@@ -69,11 +69,11 @@ export const UserCard: FC<IUserCard> = ({ size, isOnline, u }) => {
 
 	return (
 		<div
-			className={`relative inline-block`}
+			className={'relative inline-block'}
 			style={{
-				width: avatarSizeMap[size],
-				height: avatarSizeMap[size]
-			}}
+        width: avatarsizemap[size],
+        height: avatarsizemap[size]
+      }}
 		>
 			<img
 				className="rounded-full"
@@ -88,8 +88,8 @@ export const UserCard: FC<IUserCard> = ({ size, isOnline, u }) => {
 
 			<span
 				className={
-					'rounded-full absolute box-content border-primary-800 ' +
-					(isOnline ? 'bg-green-400' : 'bg-accent')
+					`rounded-full absolute box-content border-primary-800 ${
+						isOnline ? 'bg-green-400' : 'bg-accent'}`
 				}
 				style={sizeStyle}
 			></span>

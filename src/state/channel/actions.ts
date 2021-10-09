@@ -1,7 +1,7 @@
+import { store } from '..';
 import { MODAL_ACTION } from './types';
 
 import type { IShowModal, IHideModal } from './types';
-import { store } from '..';
 
 // Actions
 const SHOW_UPSERT_CHANNEL_MODAL: IShowModal = ({ type, ...data }) => ({

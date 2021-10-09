@@ -66,7 +66,7 @@ export const SocketProvider: FC<ISocketProviderProps> = ({
 				.catch((err) => {
 					console.error({ err });
 					if (err.code === 4001) {
-						console.error("we're fucked");
+						console.error('we\'re fucked');
 					}
 				})
 				.finally(() => {
@@ -90,7 +90,7 @@ export const SocketProvider: FC<ISocketProviderProps> = ({
 			setConn,
 			// `args` here is either a new user object or a setter function
 			// that pulls in the current user and returns a diffed, new user
-			setUser(args: IUser | IUserSetter) {
+			setUser (args: IUser | IUserSetter) {
 				if (conn) {
 					if (typeof args === 'function') {
 						setConn({

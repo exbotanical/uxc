@@ -3,7 +3,7 @@ import { isHideAction, isShowAction } from './util';
 
 import type { INotificationState, INotificationAction } from './types';
 
-export function reducer(
+export function reducer (
 	state: INotificationState = [],
 	action: INotificationAction
 ) {

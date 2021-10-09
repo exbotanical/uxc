@@ -11,7 +11,7 @@ export const Profile = () => {
 		<div className="flex flex-col rounded-8 bg-primary-800 p-4 w-full">
 			<button className="flex">
 				<div className="flex">
-					<div className={`relative inline-block`}>
+					<div className={'relative inline-block'}>
 						<span
 							className={
 								'rounded-full absolute box-content bg-accent border-primary-800'
