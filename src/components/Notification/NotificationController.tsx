@@ -2,13 +2,13 @@ import React from 'react';
 
 import type { FC } from 'react';
 
-import { Notification } from '@/components/notification/Notification';
+import { Notification } from '@/components/Notification/Notification';
 import { PropsFromRedux, connector } from '@/state';
 
 interface INotificationControllerProps extends PropsFromRedux {}
 
 const NotificationControllerBase: FC<
-PropsFromRedux & INotificationControllerProps
+	PropsFromRedux & INotificationControllerProps
 > = ({ notifications, hideNotification }) => {
 	return (
 		<div

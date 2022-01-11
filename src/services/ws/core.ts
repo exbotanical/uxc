@@ -3,7 +3,7 @@ import ReconnectingWebSocket from 'reconnecting-websocket';
 import { v4 as generateUuid } from 'uuid';
 
 import type { UUID, JWT } from '@/types/const';
-import { IUser } from '@/types/user';
+import { User } from '@/types/user';
 
 /*
 	BEGIN TYPES
@@ -70,7 +70,7 @@ type BaseConnectionSender = (
 ) => void;
 
 export interface IConnection {
-	user: IUser;
+	user: User;
 
 	send: BaseConnectionSender;
 	close: () => void;
@@ -149,9 +149,9 @@ export const connect: IConnector = ({
 
 			const errorMessage = 'The socket connection has closed.';
 			const timeoutInSeconds = connectionTimeout / 1000;
-			const reconnectMessage = shouldReconnect ?
-				` Please try refreshing if it does not reconnect in ${timeoutInSeconds} seconds.` :
-				'';
+			const reconnectMessage = shouldReconnect
+				? ` Please try refreshing if it does not reconnect in ${timeoutInSeconds} seconds.`
+				: '';
 
 			const defaultMsg = errorMessage + reconnectMessage;
 			switch (error.code) {
@@ -194,7 +194,7 @@ export const connect: IConnector = ({
 			// presumably, the first message is the response to our auth request with which we initiated the connection
 			// we reply to the caller with the entire core API, `IConnection`
 			if (message.op === 'authorize:reply') {
-				const user = (message as IResponseMessage<IUser>).d;
+				const user = (message as IResponseMessage<User>).d;
 
 				if (!user) {
 					reject(new Error('failed to load user session'));

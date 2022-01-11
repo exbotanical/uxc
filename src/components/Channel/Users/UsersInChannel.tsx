@@ -6,10 +6,10 @@ import type { FC } from 'react';
 import { connector, PropsFromRedux } from '@/state';
 import { useConn, useWrappedConn } from '@/hooks/useConn';
 
-import type { IUser } from '@/types/user';
-import { UserCard } from '@/components/user/UserCard';
+import type { User } from '@/types/user';
+import { UserCard } from '@/components/User/UserCard';
 
-const ChannelUser: FC<IUser> = (u) => {
+const ChannelUser: FC<User> = (u) => {
 	return (
 		<div className="flex py-3 w-full hover:bg-primary-700">
 			<UserCard size="sm" isOnline={true} u={u} />
@@ -50,7 +50,7 @@ export const ChannelUsers: React.FC<PropsFromRedux> = ({
 	const paths = l.pathname.split('/');
 	const id = paths[paths.length - 1];
 
-	const [users, setUsers] = useState<IUser[]>([]);
+	const [users, setUsers] = useState<User[]>([]);
 
 	useEffect(() => {
 		(async () => {

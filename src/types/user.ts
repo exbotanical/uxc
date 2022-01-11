@@ -2,7 +2,7 @@ import type { IChannel } from './channel';
 import { JWT, UUID } from './const';
 import type { IDirectMessageThread } from './message';
 
-export interface IUser {
+export interface User {
 	uuid: UUID;
 	username: string;
 	userImage: string;
@@ -11,9 +11,9 @@ export interface IUser {
 	currentChannel: Pick<IChannel, 'uuid' | 'name' | 'desc'>;
 }
 
-export interface IUserTokens {
+export interface UserTokens {
 	accessToken: JWT;
 	refreshToken: JWT;
 }
 
-export type IUserSession = IUser & IUserTokens;
+export type UserSession = User & UserTokens;

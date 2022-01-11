@@ -1,7 +1,7 @@
 import React from 'react';
 
 import type { FC } from 'react';
-import { UserCard } from '../user/UserCard';
+import { UserCard } from '../User/UserCard';
 import { useConn } from '@/hooks/useConn';
 
 export const Profile = () => {

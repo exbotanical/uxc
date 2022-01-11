@@ -2,7 +2,7 @@ import type { IConnection } from './core';
 import { IChannel } from '@/types/channel';
 
 import type { IMessage } from '@/types/message';
-import { IUser } from '@/types/user';
+import { User } from '@/types/user';
 
 type Handler<Data> = (data: Data) => void;
 
@@ -24,7 +24,7 @@ export const wrap = (conn: IConnection) => ({
 	query: {
 		getChannel: ({ id }: { id: string }) => {
 			return conn.wait('channel', { id }) as Promise<
-			{ error: string } | { messages: IMessage[]; users: IUser[] } // TODO return types file
+				{ error: string } | { messages: IMessage[]; users: User[] } // TODO return types file
 			>;
 		}
 	},
@@ -36,8 +36,8 @@ export const wrap = (conn: IConnection) => ({
 
 		createChannel: (data: Pick<IChannel, 'name' | 'desc'>) => {
 			return conn.wait('create_channel', data) as Promise<
-			| { error: string }
-			| { channel: Pick<IChannel, 'name' | 'desc' | 'uuid'> }
+				| { error: string }
+				| { channel: Pick<IChannel, 'name' | 'desc' | 'uuid'> }
 			>;
 		}
 	}

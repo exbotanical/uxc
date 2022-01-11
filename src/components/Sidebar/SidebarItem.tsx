@@ -10,7 +10,7 @@ import type { FC } from 'react';
 
 import { useConn } from '@/hooks/useConn';
 import { handleKeypressWith } from '@/utils';
-import { NotificationBadge } from '@/ui/badges/NotificationBadge';
+import { NotificationBadge } from '@/ui/Badges/NotificationBadge';
 
 type TParams = { id?: string };
 
@@ -57,21 +57,19 @@ const SidebarItem: FC<RouteComponentProps<TParams> & ISidebarItemProps> = ({
 				isActiveItem ? 'bg-transparent-alt text-tertiary' : 'text-white'
 			} py-1 px-2 flex items-center justify-between`}
 		>
-			{type === 'channel' ?
-				(
-					`#${name}`
-				) :
-				(
-					<span className="flex items-center">
-						<svg
-							className="h-2 w-2 fill-current text-green-400 mr-2"
-							viewBox="0 0 20 20"
-						>
-							<circle cx="10" cy="10" r="10" />
-						</svg>
-						<span className="text-white opacity-75">{name}</span>
-					</span>
-				)}
+			{type === 'channel' ? (
+				`#${name}`
+			) : (
+				<span className="flex items-center">
+					<svg
+						className="h-2 w-2 fill-current text-green-400 mr-2"
+						viewBox="0 0 20 20"
+					>
+						<circle cx="10" cy="10" r="10" />
+					</svg>
+					<span className="text-white opacity-75">{name}</span>
+				</span>
+			)}
 			<NotificationBadge>2</NotificationBadge>
 		</div>
 	);

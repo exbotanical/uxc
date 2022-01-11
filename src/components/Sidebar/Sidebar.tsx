@@ -4,9 +4,9 @@ import type { FC } from 'react';
 
 import { useConn } from '@/hooks/useConn';
 
-import { SidebarSectionContainer } from '@/components/sidebar/SidebarSection';
-import { Status } from '@/components/sidebar/status/Status';
-import { RoutedSidebarItem as SidebarItem } from '@/components/sidebar/SidebarItem';
+import { SidebarSectionContainer } from '@/components/Sidebar/SidebarSection';
+import { Status } from '@/components/Sidebar/Status/Status';
+import { RoutedSidebarItem as SidebarItem } from '@/components/Sidebar/SidebarItem';
 
 export const Sidebar: FC = () => {
 	const { conn } = useConn();

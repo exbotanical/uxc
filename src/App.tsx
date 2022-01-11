@@ -8,8 +8,8 @@ import {
 	SocketProvider
 } from '@/context';
 
-import { Login } from '@/components/auth/Login';
-import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
+import { Login } from '@/components/Auth/Login';
+import { ProtectedRoute } from '@/components/Auth/ProtectedRoute';
 import { ChannelContainer } from '@/pages/Channel';
 import { Dashboard } from '@/pages/Dashboard';
 

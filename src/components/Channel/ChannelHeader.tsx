@@ -4,13 +4,13 @@ import type { FC } from 'react';
 
 import { handleKeypressWith } from '@/utils';
 
-import { EditIcon } from '@/ui/icons/EditIcon';
+import { EditIcon } from '@/ui/Icons/EditIcon';
 
-import type { IUser } from '@/types/user';
+import type { User } from '@/types/user';
 import { connector, PropsFromRedux } from '@/state';
 
 interface IChannelHeaderProps {
-	user: IUser;
+	user: User;
 }
 
 const ChannelHeader: FC<IChannelHeaderProps & PropsFromRedux> = ({

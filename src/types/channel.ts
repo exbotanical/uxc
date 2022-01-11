@@ -1,9 +1,9 @@
 import type { UUID } from './const';
 import type { IMessage } from './message';
-import type { IUser } from './user';
+import type { User } from './user';
 
 export interface IChannel {
-	users: IUser[];
+	users: User[];
 	messages: IMessage[];
 	uuid: UUID;
 	name: string;
@@ -11,7 +11,7 @@ export interface IChannel {
 }
 
 export interface IDirectChannel {
-	user: IUser[];
+	user: User[];
 	messages: IMessage[];
 	uuid: UUID;
 }

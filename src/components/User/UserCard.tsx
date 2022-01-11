@@ -2,7 +2,7 @@ import React from 'react';
 
 import type { FC } from 'react';
 
-import type { IUser } from '@/types/user';
+import type { User } from '@/types/user';
 
 export const onlineIndicatorStyleMap = {
 	default: {
@@ -58,22 +58,22 @@ export const avatarSizeMap = {
 	xxs: '30px'
 };
 
-interface IUserCard {
+interface UserCard {
 	size: keyof typeof onlineIndicatorStyleMap;
 	isOnline: boolean;
-	u: IUser;
+	u: User;
 }
 
-export const UserCard: FC<IUserCard> = ({ size, isOnline, u }) => {
+export const UserCard: FC<UserCard> = ({ size, isOnline, u }) => {
 	const sizeStyle = onlineIndicatorStyleMap[size];
 
 	return (
 		<div
 			className={'relative inline-block'}
 			style={{
-        width: avatarsizemap[size],
-        height: avatarsizemap[size]
-      }}
+				width: avatarSizeMap[size],
+				height: avatarSizeMap[size]
+			}}
 		>
 			<img
 				className="rounded-full"
@@ -87,10 +87,9 @@ export const UserCard: FC<IUserCard> = ({ size, isOnline, u }) => {
 			)} */}
 
 			<span
-				className={
-					`rounded-full absolute box-content border-primary-800 ${
-						isOnline ? 'bg-green-400' : 'bg-accent'}`
-				}
+				className={`rounded-full absolute box-content border-primary-800 ${
+					isOnline ? 'bg-green-400' : 'bg-accent'
+				}`}
 				style={sizeStyle}
 			></span>
 		</div>

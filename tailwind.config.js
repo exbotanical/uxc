@@ -1,13 +1,8 @@
 const defaultColors = require('tailwindcss/colors');
+
 module.exports = {
-	mode: 'jit',
-	darkMode: 'class',
-	purge: {
-		content: ['./src/**/*.tsx', './index.html'],
-		options: {
-			safelist: ['h-8', 'h-11']
-		}
-	},
+	content: ['index.html', 'src/**/*.{js,ts,jsx,tsx}'],
+
 	theme: {
 		fontFamily: {
 			sans: [
@@ -38,53 +33,52 @@ module.exports = {
 		},
 		colors: {
 			...defaultColors,
-
-			button: 'var(--color-button-text)',
+			button: ' #fff',
 			outline: {
-				DEFAULT: 'var(--color-outline-200)',
-				light: 'var(--color-outline-100)'
+				DEFAULT: '#34384e',
+				light: '#44475a'
 			},
 			transparent: {
 				DEFAULT: 'transparent',
-				alt: 'var(--color-transparent-alt)'
+				alt: '#34384e80'
 			},
-
 			primary: {
-				100: 'var(--color-primary-100)',
-				200: 'var(--color-primary-200)',
-				300: 'var(--color-primary-300)',
-				600: 'var(--color-primary-600)',
-				700: 'var(--color-primary-700)',
-				800: 'var(--color-primary-800)',
-				900: 'var(--color-primary-900)'
+				100: '#dee3ea',
+				200: '#b2bdcd',
+				300: '#5d7290',
+				600: '#031229',
+				700: '#1e2130',
+				800: '#171926',
+				900: '#11121d'
 			},
 
 			secondary: {
-				'DEFAULT': 'var(--color-secondary)',
-				'washed-out': 'var(--color-secondary-washed-out)'
+				'DEFAULT': '#5575e7',
+				'washed-out': '#879eed'
 			},
 			tertiary: {
-				DEFAULT: 'var(--color-tertiary)'
+				DEFAULT: '#2fd6b5'
 			},
 			accent: {
-				DEFAULT: 'var(--color-accent)',
-				hover: 'var(--color-accent-hover)',
-				disabled: 'var(--color-accent-disabled)'
+				DEFAULT: '#e53265',
+				hover: '#fd6868',
+				disabled: '#f5bfbf'
 			},
 			message: {
-				100: 'var(--color-message-100)',
-				200: 'var(--color-message-200)',
-				300: 'var(--color-message-300)',
-				400: 'var(--color-message-400)',
-				500: 'var(--color-message-500)',
-				600: 'var(--color-message-600)',
-				700: 'var(--color-message-700)',
-				800: 'var(--color-message-800)',
-				900: 'var(--color-message-900)',
-				1000: 'var(--color-message-1000)'
+				100: '#ff2366',
+				200: '#fd51d9',
+				300: '#face15',
+				400: '#8d4de8',
+				500: '#6859ea',
+				600: '#7ed321',
+				700: '#56b2ba',
+				800: '#0cf',
+				900: '#f90',
+				1000: '#ff6'
 			},
 			black: '#000'
 		},
+
 		spacing: {
 			'0': '0px',
 			'1': '5px',
@@ -111,9 +105,9 @@ module.exports = {
 		},
 
 		boxShadow: {
-			outlineLg: '0 0 0 4pt var(--color-primary-800)',
-			outlineMd: '0 0 0 2pt var(--color-primary-800)',
-			outlineSm: '0 0 0 1pt var(--color-primary-800)'
+			outlineLg: '0 0 0 4pt #171926',
+			outlineMd: '0 0 0 2pt #171926',
+			outlineSm: '0 0 0 1pt #171926'
 		},
 		borderWidth: {
 			DEFAULT: '1px',
@@ -129,7 +123,7 @@ module.exports = {
 				40: '40px'
 			},
 			borderColor: {
-				'color-800': 'var(--color-primary-800)'
+				'color-800': '#171926'
 			},
 			outline: {
 				'no-chrome': 'none'
@@ -143,12 +137,12 @@ module.exports = {
 			keyframes: {
 				breathe: {
 					'0%, 100%': {
-						boxShadow: '0 0 20px 2px var(--color-primary-100-translucent)',
-						borderColor: 'var(--color-primary-300)'
+						boxShadow: '0 0 20px 2px rgba(222, 227, 234, 0.15)',
+						borderColor: '#5d7290'
 					},
 					'50%': {
 						boxShadow: '0 0 20px 2px transparent',
-						borderColor: 'var(--color-primary-700)'
+						borderColor: '#1e2130'
 					}
 				}
 			},

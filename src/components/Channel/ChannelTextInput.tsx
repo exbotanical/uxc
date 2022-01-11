@@ -3,16 +3,16 @@ import React, { ChangeEvent, FormEvent, useState } from 'react';
 import type { FC } from 'react';
 
 import { Input } from '@/ui/Input';
-import { SmileyIcon } from '@/ui/icons/SmileyIcon';
+import { SmileyIcon } from '@/ui/Icons/SmileyIcon';
 
-import type { ISendMessage } from '@/pages/Channel';
+import type { SendMessage } from '@/pages/Channel';
 
-interface IChannelTextInputProps {
-	sendMessage: ISendMessage;
+interface ChannelTextInputProps {
+	sendMessage: SendMessage;
 	name: string;
 }
 
-export const ChannelTextInput: FC<IChannelTextInputProps> = ({
+export const ChannelTextInput: FC<ChannelTextInputProps> = ({
 	sendMessage,
 	name
 }) => {

@@ -5,14 +5,14 @@ import type { FC } from 'react';
 
 import { useConn, useWrappedConn } from '@/hooks/useConn';
 
-import { ChannelTextInput } from '@/components/channel/ChannelTextInput';
-import { ChannelMessage } from '@/components/channel/ChannelMessage';
-import { ChannelHeaderContainer } from '@/components/channel/ChannelHeader';
+import { ChannelTextInput } from '@/components/Channel/ChannelTextInput';
+import { ChannelMessage } from '@/components/Channel/ChannelMessage';
+import { ChannelHeaderContainer } from '@/components/Channel/ChannelHeader';
 
 import type { IMessage } from '@/types/message';
 import { connector, PropsFromRedux } from '@/state';
 
-export interface ISendMessage {
+export interface SendMessage {
 	(message: string): void;
 }
 
@@ -29,7 +29,7 @@ export const Channel: FC<PropsFromRedux> = ({ showNotification }) => {
 	const [isScrolledToTop] = useState(false);
 	const [messages, setMessages] = useState<IMessage[]>([]);
 
-	const sendMessage: ISendMessage = (message) => {
+	const sendMessage: SendMessage = (message) => {
 		client.mutation.sendMessage({
 			message,
 			user: {

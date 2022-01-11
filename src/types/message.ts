@@ -1,15 +1,15 @@
 import type { UUID } from './const';
-import type { IUser } from './user';
+import type { User } from './user';
 
 export interface IMessage {
 	message: string;
 	channelUuid: UUID;
 	timestamp: Date | string;
-	user: Pick<IUser, 'username' | 'uuid' | 'userImage'>;
+	user: Pick<User, 'username' | 'uuid' | 'userImage'>;
 	uuid: UUID;
 }
 
 export interface IDirectMessageThread {
-	user: IUser;
+	user: User;
 	uuid: UUID;
 }

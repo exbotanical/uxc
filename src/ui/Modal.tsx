@@ -41,7 +41,7 @@ const modalStyles = {
 			borderRadius: 8,
 			padding: 0,
 			transform: 'translate(-50%, -50%)',
-			backgroundColor: 'var(--color-primary-900)',
+			backgroundColor: "theme('color.primary.900')",
 			border: 'none',
 			maxHeight: '80vh',
 			width: '90%',
@@ -51,7 +51,7 @@ const modalStyles = {
 };
 
 export const Modal: FC<
-ReactModal['props'] & { variant?: keyof typeof modalStyles }
+	ReactModal['props'] & { variant?: keyof typeof modalStyles }
 > = ({ children, variant = 'default', ...props }) => {
 	const onKeyDown = (event: KeyboardEvent) => {
 		const currentActive = document.activeElement;

@@ -2,13 +2,13 @@ import React from 'react';
 
 import type { FC } from 'react';
 
-import { Sidebar } from '@/components/sidebar/Sidebar';
-import { NotificationController } from '@/components/notification/NotificationController';
-import { CreateChannelModalContainer } from '@/components/modal/CreateChannel';
+import { Sidebar } from '@/components/Sidebar/Sidebar';
+import { NotificationController } from '@/components/Notification/NotificationController';
+import { CreateChannelModalContainer } from '@/components/Modal/CreateChannel';
 
 import '@/styles/landing.scss';
-import { Profile, RightPanel } from '@/components/panels/RightPanel';
-import { UsersInChannelContainer } from '@/components/channel/users/UsersInChannel';
+import { Profile, RightPanel } from '@/components/Panels/RightPanel';
+import { UsersInChannelContainer } from '@/components/Channel/Users/UsersInChannel';
 
 export const WithLayout: FC<{ isDash: boolean }> = ({ children, isDash }) => {
 	return (
@@ -24,13 +24,11 @@ export const WithLayout: FC<{ isDash: boolean }> = ({ children, isDash }) => {
 				</div>
 				<div className="col-span-6">{children}</div>
 				<div className="col-span-3">
-					{isDash ?
-						(
-							<RightPanel top={<Profile />} bottom={<div />} />
-						) :
-						(
-							<UsersInChannelContainer />
-						)}
+					{isDash ? (
+						<RightPanel top={<Profile />} bottom={<div />} />
+					) : (
+						<UsersInChannelContainer />
+					)}
 				</div>
 			</div>
 		</>

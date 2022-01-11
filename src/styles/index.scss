@@ -8,7 +8,7 @@
   margin: 0;
 
   /* Firefox */
-  scrollbar-color: var(--color-primary-700) rgba(0, 0, 0, 0);
+  scrollbar-color: theme('colors.primary.700') rgba(0, 0, 0, 0);
   scrollbar-width: thin;
 }
 
@@ -16,7 +16,7 @@ body,
 html,
 #__next {
   overflow: hidden;
-  background-color: var(--color-primary-900);
+  background-color: theme('colors.primary.900');
   // font-family: 'Poppins', sans-serif;
 }
 
@@ -30,12 +30,12 @@ html,
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--color-primary-700);
+  background-color: theme('colors.primary.700');
   border-radius: 5px;
 }
 
 ::-webkit-resizer {
-  background: var(--color-primary-700);
+  background: theme('colors.primary.700');
 }
 
 h1,
@@ -56,39 +56,6 @@ p.bold {
 
 :root {
   font-size: 16px;
-
-  --app-color: #282a36;
-  --app-secondary-color: #fff;
-  --color-outline-100: #44475a;
-  --color-outline-200: #34384e;
-  --color-button-text: #fff;
-  --color-primary-100: #dee3ea;
-  --color-primary-200: #b2bdcd;
-  --color-primary-300: #5d7290;
-  --color-primary-600: #031229;
-  --color-primary-700: #1e2130;
-  --color-primary-800: #171926;
-  --color-primary-900: #11121d;
-  --color-secondary-washed-out: #879eed;
-  --color-secondary: #5575e7;
-  --color-tertiary: #2fd6b5;
-  --color-accent-glow: rgba(253, 77, 77, 0.3);
-  --color-accent: #e53265;
-  --color-accent-hover: #fd6868;
-  --color-accent-disabled: #f5bfbf;
-  --screen-height-reduction: 0;
-  --color-primary-100-translucent: rgba(222, 227, 234, 0.15);
-  --color-message-100: #ff2366;
-  --color-message-200: #fd51d9;
-  --color-message-300: #face15;
-  --color-message-400: #8d4de8;
-  --color-message-500: #6859ea;
-  --color-message-600: #7ed321;
-  --color-message-700: #56b2ba;
-  --color-message-800: #0cf;
-  --color-message-900: #f90;
-  --color-message-1000: #ff6;
-  --color-transparent-alt: #34384e80;
 }
 
 h1 {
@@ -131,18 +98,18 @@ audio {
 }
 
 #nprogress .bar {
-  background: var(--color-accent-hover) !important;
+  background: theme('colors.accent.hover') !important;
 }
 
 #nprogress .peg {
   box-shadow:
-    0 0 10px var(--color-accent-hover),
-    0 0 5px var(--color-accent-hover) !important;
+    0 0 10px theme('colors.accent.hover'),
+    0 0 5px theme('colors.accent.hover') !important;
 }
 
 #nprogress .spinner-icon {
-  border-top-color: var(--color-accent-hover) !important;
-  border-left-color: var(--color-accent-hover) !important;
+  border-top-color: theme('colors.accent.hover') !important;
+  border-left-color: theme('colors.accent.hover') !important;
 }
 
 img.emoji {
@@ -160,7 +127,7 @@ img.emoji {
 }
 
 .h-screen {
-  height: calc(100vh - var(--screen-height-reduction));
+  height: calc(100vh );
 }
 
 button:focus {
