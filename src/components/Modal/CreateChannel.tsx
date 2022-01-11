@@ -38,8 +38,8 @@ function CreateChannelModal({
 		if (!channelName || !channelDesc) return;
 
 		const res = await client.mutation.createChannel({
-			name: channelName,
-			desc: channelDesc
+			desc: channelDesc,
+			name: channelName
 		});
 
 		if (typeof res === 'object' && 'error' in res) {
@@ -96,7 +96,7 @@ function CreateChannelModal({
 				</div>
 
 				<div className="grid items-start grid-cols-1 h-6">
-					<Select>
+					<Select className="h-6">
 						<option className="hover:bg-primary-900" value="public">
 							public
 						</option>

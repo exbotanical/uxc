@@ -51,6 +51,7 @@ export function Profile() {
 
 			<a
 				className="text-accent mt-3 font-bold"
+				href="/"
 				rel="noreferrer"
 				target="_blank"
 			>

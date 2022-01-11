@@ -49,40 +49,40 @@ interface Logger {
 	): void;
 }
 
-interface ResponseMessage<Data = unknown> {
+interface ResponseMessage<Data = any> {
 	op: ResponseOpcode;
 	d: Data;
 	txId: TransactionID;
 }
 
-interface SubscriberHandler<Data = unknown> {
+interface SubscriberHandler<Data = any> {
 	(data: Data, txId?: TransactionID): void;
 }
 
-interface Subscriber<Data = unknown> {
+interface Subscriber<Data = any> {
 	opcode: Opcode | ResponseOpcode;
 	handler: SubscriberHandler<Data>;
 }
 
 type BaseConnectionSender = (
 	opcode: Opcode,
-	data: unknown,
+	data: any,
 	txId?: TransactionID
 ) => void;
 
 export interface Connection {
 	close: () => void;
-	once: <Data = unknown>(
+	once: <Data = any>(
 		opcode: ResponseOpcode,
 		handler: SubscriberHandler<Data>
 	) => void;
 	send: BaseConnectionSender;
-	subscribe: <Data = unknown>(
+	subscribe: <Data = any>(
 		opcode: Opcode,
 		handler: SubscriberHandler<Data>
 	) => () => void;
 	user: User;
-	wait: (opcode: Opcode, data: unknown) => Promise<unknown>;
+	wait: (opcode: Opcode, data: any) => Promise<any>;
 }
 
 interface ConnectorOptions {
@@ -118,6 +118,7 @@ export const connect: Connector = async ({
 }) => {
 	return new Promise((resolve, reject) => {
 		const socket = new ReconnectingWebSocket(url, [], {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 			WebSocket,
 			connectionTimeout
 		});

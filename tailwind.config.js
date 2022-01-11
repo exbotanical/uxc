@@ -119,10 +119,17 @@ module.exports = {
 					600: '#7ed321',
 					700: '#56b2ba',
 					800: '#0cf',
-					900: '#f90',
+					900: '#f93040',
 					1000: '#ff6'
 				},
 				black: '#000'
+			},
+			fontFamily: {
+				sans: 'Inter, system-ui',
+				serif: 'Inter, system-ui',
+				mono: 'Inter, system-ui',
+				display: 'Inter, system-ui',
+				body: 'Inter, system-ui'
 			},
 			outline: {
 				'no-chrome': 'none'

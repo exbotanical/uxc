@@ -21,7 +21,7 @@ export const wrap = (conn: Connection) => ({
 				  }
 			>;
 		},
-		sendMessage: (message: Omit<Message, 'uuid'>) => {
+		sendMessage: (message: Message) => {
 			conn.send('message', message);
 		}
 	},

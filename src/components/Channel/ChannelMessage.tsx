@@ -13,7 +13,7 @@ export function ChannelMessage({ message, user }: Message) {
 		'#7ed321',
 		'#56b2ba',
 		'#00CCFF',
-		'#FF9900',
+		'#AA19FA',
 		'#FFFF66'
 	];
 

@@ -1,19 +1,21 @@
 import { useMediaQuery } from 'react-responsive';
 
 export const useViewportSize = () => {
-	const is3Cols = useMediaQuery({ minWidth: 1336 });
-	const is2Cols = useMediaQuery({ minWidth: 1265 });
-	const is1Cols = useMediaQuery({ minWidth: 800 });
+	const isLg = useMediaQuery({ minWidth: 1336 });
+	const isMd = useMediaQuery({ minWidth: 1055 });
+	const isSm = useMediaQuery({ minWidth: 780 });
 
-	if (is3Cols) {
-		return '3-cols';
-	}
-	if (is2Cols) {
-		return '2-cols';
-	}
-	if (is1Cols) {
-		return '1-cols';
+	if (isLg) {
+		return 3;
 	}
 
-	return 'fullscreen';
+	if (isMd) {
+		return 2;
+	}
+
+	if (isSm) {
+		return 1;
+	}
+
+	return 0;
 };

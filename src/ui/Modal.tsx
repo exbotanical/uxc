@@ -1,14 +1,14 @@
 import type { KeyboardEvent } from 'react';
 
 import React from 'react';
-import ReacModal from 'react-modal';
+import ReactModal from 'react-modal';
 
 import { CloseIconButton } from './CloseIconButton';
 
 const modalStyles = {
 	default: {
 		content: {
-			backgroundColor: 'var(--color-primary-800)',
+			backgroundColor: '#171926',
 			border: 'none',
 			borderRadius: 8,
 			bottom: 'auto',
@@ -54,7 +54,7 @@ export function Modal({
 	children,
 	variant = 'default',
 	...props
-}: ReacModal['props'] & { variant?: keyof typeof modalStyles }) {
+}: ReactModal['props'] & { variant?: keyof typeof modalStyles }) {
 	const onKeyDown = (event: KeyboardEvent) => {
 		const currentActive = document.activeElement;
 
@@ -66,7 +66,7 @@ export function Modal({
 	};
 
 	return (
-		<ReacModal
+		<ReactModal
 			shouldCloseOnEsc
 			shouldFocusAfterRender
 			style={modalStyles[variant]}
@@ -93,7 +93,7 @@ export function Modal({
 					{children}
 				</div>
 			</div>
-		</ReacModal>
+		</ReactModal>
 	);
 }
 

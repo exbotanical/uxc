@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { v4 } from 'uuid';
 
 import type { Message } from '@/types/message';
 
@@ -35,7 +36,8 @@ export function Channel({ showNotification }: PropsFromRedux) {
 				userImage: user.userImage,
 				username: user.username,
 				uuid: user.uuid
-			}
+			},
+			uuid: v4()
 		});
 	};
 
@@ -69,7 +71,7 @@ export function Channel({ showNotification }: PropsFromRedux) {
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
-		<div className="flex flex-col h-screen bg-primary-800 rounded-sm">
+		<div className="flex flex-col h-full bg-primary-800 rounded-sm">
 			<div>
 				<ChannelHeaderContainer user={user} />
 			</div>

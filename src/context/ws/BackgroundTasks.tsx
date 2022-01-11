@@ -1,15 +1,15 @@
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 
 import { SocketContext } from '.';
 
-export const useBackgroundTasks = () => {
+export function useBackgroundTasks() {
 	const { conn } = useContext(SocketContext);
 
 	useEffect(() => {
 		if (!conn) return;
 
 		const unsubscribables = [
-			conn.subscribe<any>('error', (message: string) => {
+			conn.subscribe('error', (message: string) => {
 				// dispatchErrorToast(message);
 				console.error({ message });
 			})
@@ -23,7 +23,7 @@ export const useBackgroundTasks = () => {
 	}, [conn]);
 
 	return conn;
-};
+}
 
 export function BackgroundTasksProvider({
 	children
@@ -32,7 +32,7 @@ export function BackgroundTasksProvider({
 }) {
 	useBackgroundTasks();
 
-	return <>{children}</>;
+	return children;
 }
 
 BackgroundTasksProvider.displayName = 'BackgroundTasksProvider';

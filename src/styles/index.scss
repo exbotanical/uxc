@@ -1,135 +1,40 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.18.0/inter.css');
 @import 'tailwindcss/base';
+@import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+@layer base {
+	* {
+		/* Firefox */
+		scrollbar-color: theme('colors.primary.700') rgba(0, 0, 0, 0);
+		scrollbar-width: thin;
+	}
 
-  /* Firefox */
-  scrollbar-color: theme('colors.primary.700') rgba(0, 0, 0, 0);
-  scrollbar-width: thin;
-}
+	body,
+	html {
+		box-sizing: border-box;
+		background-color: theme('colors.primary.900');
+	}
 
-body,
-html,
-#__next {
-  overflow: hidden;
-  background-color: theme('colors.primary.900');
-  // font-family: 'Poppins', sans-serif;
-}
+	::-webkit-scrollbar {
+		overflow: overlay;
+		width: 8px;
+	}
 
-::-webkit-scrollbar {
-  overflow: overlay;
-  width: 8px;
-}
+	::-webkit-scrollbar-track {
+		display: initial;
+	}
 
-::-webkit-scrollbar-track {
-  display: initial;
-}
+	::-webkit-scrollbar-thumb {
+		background-color: theme('colors.primary.700');
+		border-radius: 5px;
+	}
 
-::-webkit-scrollbar-thumb {
-  background-color: theme('colors.primary.700');
-  border-radius: 5px;
-}
+	::-webkit-resizer {
+		background: theme('colors.primary.700');
+	}
 
-::-webkit-resizer {
-  background: theme('colors.primary.700');
-}
-
-h1,
-h2,
-h3,
-h4,
-p {
-  line-height: 1.6;
-}
-
-h1,
-h2,
-h3,
-h4,
-p.bold {
-  font-weight: 700;
-}
-
-:root {
-  font-size: 16px;
-}
-
-h1 {
-  font-size: 4rem;
-}
-
-h2 {
-  font-size: 2.8rem;
-}
-
-h3 {
-  font-size: 2rem;
-}
-
-h4 {
-  font-size: 1.4rem;
-}
-
-p {
-  font-size: 1rem;
-  font-weight: 500;
-}
-
-p.small {
-  font-size: 0.85rem;
-}
-
-audio {
-  display: none !important;
-  width: 0;
-}
-
-#__next {
-  overflow-y: auto;
-}
-
-#nprogress {
-  position: relative;
-  z-index: 9999999;
-}
-
-#nprogress .bar {
-  background: theme('colors.accent.hover') !important;
-}
-
-#nprogress .peg {
-  box-shadow:
-    0 0 10px theme('colors.accent.hover'),
-    0 0 5px theme('colors.accent.hover') !important;
-}
-
-#nprogress .spinner-icon {
-  border-top-color: theme('colors.accent.hover') !important;
-  border-left-color: theme('colors.accent.hover') !important;
-}
-
-img.emoji {
-  position: relative;
-  top: -0.1em;
-  display: inline-block;
-  width: 1.2rem;
-  height: 1.2rem;
-  margin: 0 0.05em 0 0.1em;
-  cursor: text;
-  -webkit-user-drag: none;
-  -moz-user-drag: none;
-  -o-user-drag: none;
-  vertical-align: middle;
-}
-
-.h-screen {
-  height: calc(100vh );
-}
-
-button:focus {
-  outline: none;
+	button:focus {
+		outline: none;
+	}
 }

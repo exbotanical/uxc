@@ -79,12 +79,6 @@ export function UserCard({ size, isOnline, u }: UserCardProps) {
 				src={u.userImage || '../../../src/assets/gravatar.png'}
 			/>
 
-			{/* {hover && (
-				<div
-					className={`bg-primary-900 hover:opacity-20 transition duration-200 opacity-0 absolute w-full h-full top-0 left-0 rounded-full`}
-				></div>
-			)} */}
-
 			<span
 				className={`rounded-full absolute box-content border-primary-800 ${
 					isOnline ? 'bg-green-400' : 'bg-accent'

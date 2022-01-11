@@ -12,7 +12,7 @@ export function Select({
 }: ComponentPropsWithoutRef<'select'>) {
 	return (
 		<select
-			className={`h-full bg-primary-800 text-primary-100 placeholder-primary-300 focus:outline-none rounded-8 px-4 py-2 appearance-none bg-no-repeat bg-auto ${className}`}
+			className={`bg-primary-700 text-primary-100 placeholder-primary-300 focus:outline-none rounded-8 px-4 py-2 appearance-none bg-no-repeat bg-auto ${className}`}
 			style={{
 				backgroundImage: `url(${pixel})`,
 				backgroundPosition: 'right 8.5px center'

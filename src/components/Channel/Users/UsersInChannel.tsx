@@ -34,7 +34,7 @@ export function ChannelUsersWrapper({
 	n: number;
 }) {
 	return (
-		<div className="bg-primary-800 p-4 pb-5 w-full flex flex-col flex-1 overflow-y-auto min-h-full rounded-sm">
+		<div className="bg-primary-800 p-4 pb-5 w-full flex flex-col flex-1 overflow-y-auto h-full rounded-sm">
 			<h4 className="text-primary-100">Users</h4>
 
 			<h6 className="text-primary-300 mt-3 text-sm font-bold uppercase">
