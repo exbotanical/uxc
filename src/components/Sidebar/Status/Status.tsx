@@ -1,10 +1,8 @@
 import React from 'react';
 
-import type { FC } from 'react';
-
 import { useConn } from '@/hooks/useConn';
 
-export const Status: FC = () => {
+export function Status() {
 	const { conn } = useConn();
 	const { user } = conn;
 
@@ -17,10 +15,11 @@ export const Status: FC = () => {
 				>
 					<circle cx="10" cy="10" r="10" />
 				</svg>
+
 				<h1 className="text-white opacity-50 text-sm">{user.username}</h1>
 			</div>
 		</div>
 	);
-};
+}
 
 Status.displayName = 'Status';

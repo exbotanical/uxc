@@ -7,16 +7,14 @@ import React, {
 	useState
 } from 'react';
 
-import type { FC } from 'react';
+import type { Connection } from '@/services/ws/core';
+import type { User } from '@/types/user';
 
 import { SessionContext } from '@/context';
 import { connect } from '@/services/ws/core';
 import { showNotification } from '@/state';
 
-import type { IConnection } from '@/services/ws/core';
-import type { User } from '@/types/user';
-
-interface ISocketProviderProps {
+interface SocketProviderProps {
 	shouldConnect: boolean;
 }
 
@@ -24,24 +22,25 @@ interface UserSetter {
 	(user: User): User;
 }
 
-interface ISocketContext {
-	conn: IConnection | null;
-	setConn: (c: IConnection | null) => void;
+interface SocketCtx {
+	conn: Connection | null;
+	setConn: (c: Connection | null) => void;
 	setUser: (args: User | UserSetter) => void;
 }
 
-export const SocketContext = createContext<ISocketContext>({
+export const SocketContext = createContext<SocketCtx>({
 	conn: null,
 	setConn: () => {},
 	setUser: () => {}
 });
 
-export const SocketProvider: FC<ISocketProviderProps> = ({
+export function SocketProvider({
 	shouldConnect,
 	children
-}) => {
+}: // TODO
+SocketProviderProps & { children: JSX.Element | JSX.Element[] }) {
 	const { userSession, isAuthenticated } = useContext(SessionContext);
-	const [conn, setConn] = useState<IConnection | null>(null);
+	const [conn, setConn] = useState<Connection | null>(null);
 	const isConnecting = useRef(false);
 
 	useEffect(() => {
@@ -49,22 +48,23 @@ export const SocketProvider: FC<ISocketProviderProps> = ({
 			isConnecting.current = true;
 
 			connect({
-				shouldReconnect: true,
-				waitTimeout: 9000,
-				url: 'ws://localhost:5000/',
-				logger: console.log, // eslint-disable-line no-console
 				getAuthOptions: () => ({
 					accessToken: userSession
 				}),
+				logger: console.log, // eslint-disable-line no-console
 				onError: (message) =>
 					showNotification({
-						type: 'error',
-						message
-					})
+						message,
+						type: 'error'
+					}),
+				shouldReconnect: true,
+				url: 'ws://localhost:5000/',
+				waitTimeout: 9000
 			})
 				.then(setConn)
-				.catch((err) => {
+				.catch((err: { code: number }) => {
 					console.error({ err });
+
 					if (err.code === 4001) {
 						console.error("we're fucked");
 					}
@@ -112,6 +112,6 @@ export const SocketProvider: FC<ISocketProviderProps> = ({
 	return (
 		<SocketContext.Provider value={value}>{children}</SocketContext.Provider>
 	);
-};
+}
 
 SocketProvider.displayName = 'SocketProvider';

@@ -1,14 +1,11 @@
 import React from 'react';
 
-import type { FC } from 'react';
-
-import { useConn } from '@/hooks/useConn';
-
+import { RoutedSidebarItem as SidebarItem } from '@/components/Sidebar/SidebarItem';
 import { SidebarSectionContainer } from '@/components/Sidebar/SidebarSection';
 import { Status } from '@/components/Sidebar/Status/Status';
-import { RoutedSidebarItem as SidebarItem } from '@/components/Sidebar/SidebarItem';
+import { useConn } from '@/hooks/useConn';
 
-export const Sidebar: FC = () => {
+export function Sidebar() {
 	const { conn } = useConn();
 	const { user } = conn;
 
@@ -18,24 +15,27 @@ export const Sidebar: FC = () => {
 
 			<div className="mb-4">
 				<SidebarSectionContainer title="Channels" />
+
 				{user.channels.map(({ name, uuid, desc }) => (
 					<SidebarItem
+						desc={desc}
 						key={uuid}
 						name={name}
-						uuid={uuid}
-						desc={desc}
 						type="channel"
+						uuid={uuid}
 					/>
 				))}
 			</div>
 
 			<hr className="border-outline font-thin" />
+
 			<SidebarSectionContainer title="Direct Messages" />
+
 			{user.directMessageThreads.map(({ user, uuid }) => (
-				<SidebarItem key={uuid} name={user.username} uuid={uuid} type="dm" />
+				<SidebarItem key={uuid} name={user.username} type="dm" uuid={uuid} />
 			))}
 		</div>
 	);
-};
+}
 
 Sidebar.displayName = 'Sidebar';

@@ -1,96 +1,100 @@
-import React from 'react';
-import ReactModal from 'react-modal';
+import type { KeyboardEvent } from 'react';
 
-import type { FC, KeyboardEvent } from 'react';
+import React from 'react';
+import ReacModal from 'react-modal';
 
 import { CloseIconButton } from './CloseIconButton';
 
 const modalStyles = {
 	default: {
+		content: {
+			backgroundColor: 'var(--color-primary-800)',
+			border: 'none',
+			borderRadius: 8,
+			bottom: 'auto',
+			left: '50%',
+			marginRight: '-50%',
+			maxHeight: '80vh',
+			maxWidth: 530,
+			padding: '40px 40px 40px 40px',
+			right: 'auto',
+			top: '50%',
+			transform: 'translate(-50%, -50%)',
+			width: '90%'
+		},
 		overlay: {
 			backgroundColor: 'rgba(0, 0, 0, 0.8)',
 			zIndex: 1000
-		},
-		content: {
-			top: '50%',
-			left: '50%',
-			right: 'auto',
-			bottom: 'auto',
-			marginRight: '-50%',
-			borderRadius: 8,
-			padding: '40px 40px 40px 40px',
-			transform: 'translate(-50%, -50%)',
-			backgroundColor: 'var(--color-primary-800)',
-			border: 'none',
-			maxHeight: '80vh',
-			width: '90%',
-			maxWidth: 530
 		}
 	},
 	userPreview: {
+		content: {
+			backgroundColor: "theme('color.primary.900')",
+			border: 'none',
+			borderRadius: 8,
+			bottom: 'auto',
+			left: '50%',
+			marginRight: '-50%',
+			maxHeight: '80vh',
+			maxWidth: 435,
+			padding: 0,
+			right: 'auto',
+			top: '50%',
+			transform: 'translate(-50%, -50%)',
+			width: '90%'
+		},
 		overlay: {
 			backgroundColor: 'rgba(0, 0, 0, 0.8)',
 			zIndex: 1000
-		},
-		content: {
-			top: '50%',
-			left: '50%',
-			right: 'auto',
-			bottom: 'auto',
-			marginRight: '-50%',
-			borderRadius: 8,
-			padding: 0,
-			transform: 'translate(-50%, -50%)',
-			backgroundColor: "theme('color.primary.900')",
-			border: 'none',
-			maxHeight: '80vh',
-			width: '90%',
-			maxWidth: 435
 		}
 	}
 };
 
-export const Modal: FC<
-	ReactModal['props'] & { variant?: keyof typeof modalStyles }
-> = ({ children, variant = 'default', ...props }) => {
+export function Modal({
+	children,
+	variant = 'default',
+	...props
+}: ReacModal['props'] & { variant?: keyof typeof modalStyles }) {
 	const onKeyDown = (event: KeyboardEvent) => {
 		const currentActive = document.activeElement;
 
 		if (event.key === 'ArrowLeft') {
-			(currentActive?.previousElementSibling as HTMLElement)?.focus();
+			(currentActive?.previousElementSibling as HTMLElement).focus();
 		} else if (event.key === 'ArrowRight') {
-			(currentActive?.nextElementSibling as HTMLElement)?.focus();
+			(currentActive?.nextElementSibling as HTMLElement).focus();
 		}
 	};
 
 	return (
-		<ReactModal
+		<ReacModal
 			shouldCloseOnEsc
 			shouldFocusAfterRender
 			style={modalStyles[variant]}
 			{...props}
 		>
-			<div className={'flex flex-col w-full'}>
-				<div className={'flex justify-end absolute right-3 top-3'}>
+			<div className="flex flex-col w-full">
+				<div className="flex justify-end absolute right-3 top-3">
 					<button
-						className={'p-1 text-primary-100'}
-						onClick={(e) => props?.onRequestClose?.(e)}
+						className="p-1 text-primary-100"
 						data-testid="close-modal"
+						onClick={(e) => props.onRequestClose?.(e)}
+						type="button"
 					>
-						<CloseIconButton className={'transform rotate-45'} />
+						<CloseIconButton className="transform rotate-45" />
 					</button>
 				</div>
+
 				<div
-					tabIndex={-1}
-					className={'focus:outline-none'}
+					className="focus:outline-none"
 					onKeyDown={onKeyDown}
 					role="tab"
+					tabIndex={-1}
 				>
 					{children}
 				</div>
 			</div>
-		</ReactModal>
+		</ReacModal>
 	);
-};
+}
 
 Modal.displayName = 'Modal';

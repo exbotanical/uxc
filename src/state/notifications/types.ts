@@ -5,38 +5,40 @@ export enum NOTIFICATION_ACTION {
 	HIDE = 'HIDE_NOTIFICATION'
 }
 
-export interface INotification {
+export interface Notification {
 	id: string;
 	button?: ReactNode;
-	duration?: TNotification;
+	duration?: 'default' | 'sticky';
 	message: string;
-	type: 'error' | 'success' | 'info';
+	type: 'error' | 'info' | 'success';
 }
 
-export interface BaseAction {
+export interface BaseNotificationAction {
 	type: NOTIFICATION_ACTION;
 }
 
-export interface HideAction extends BaseAction {
+export interface HideNotificationAction extends BaseNotificationAction {
 	type: NOTIFICATION_ACTION.HIDE;
-	payload: Pick<INotification, 'id'>;
+	payload: Pick<Notification, 'id'>;
 }
 
-export interface ShowAction extends BaseAction {
+export interface ShowNotificationAction extends BaseNotificationAction {
 	type: NOTIFICATION_ACTION.SHOW;
-	payload: Omit<INotification, 'id'>;
+	payload: Omit<Notification, 'id'>;
 }
 
-export interface IShowNotification {
-	(p: Omit<INotification, 'id'>): INotificationAction;
+export interface ShowNotification {
+	(p: Omit<Notification, 'id'>): NotificationAction;
 }
 
-export interface IHideNotification {
-	(p: Pick<INotification, 'id'>): INotificationAction;
+export interface HideNotification {
+	(p: Pick<Notification, 'id'>): NotificationAction;
 }
 
-export type INotificationState = INotification[];
+export type NotificationState = Notification[];
 
-export type TNotification = 'default' | 'sticky';
+// export type Notification = 'default' | 'sticky';
 
-export type INotificationAction = ShowAction | HideAction;
+export type NotificationAction =
+	| HideNotificationAction
+	| ShowNotificationAction;

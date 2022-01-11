@@ -1,41 +1,43 @@
-import { IChannel } from '@/types/channel';
+import { Channel } from '@/types/channel';
 
 export enum MODAL_ACTION {
 	SHOW = 'SHOW_MODAL',
 	HIDE = 'HIDE_MODAL'
 }
 
-type TModalType = 'create' | 'edit';
+type ModalType = 'create' | 'edit';
 
-type TPayload = {
-	type?: TModalType;
-	data?: Pick<IChannel, 'name' | 'desc' | 'uuid'>;
-};
-
-export interface BaseAction {
-	type: MODAL_ACTION;
-	payload?: TPayload;
+interface Payload {
+	type?: ModalType;
+	data?: Pick<Channel, 'desc' | 'name' | 'uuid'>;
 }
 
-export interface HideAction extends BaseAction {
+export interface BaseChannelAction {
+	type: MODAL_ACTION;
+	payload?: Payload;
+}
+
+export interface HideChannelAction extends BaseChannelAction {
 	type: MODAL_ACTION.HIDE;
 }
 
-export interface ShowAction extends BaseAction {
+export interface ShowChannelAction extends BaseChannelAction {
 	type: MODAL_ACTION.SHOW;
-	payload: TPayload;
+	payload: Payload;
 }
 
-export interface IShowModal {
-	(p: TPayload): IModalAction;
+export interface ShowModal {
+	(p: Payload): ModalAction;
 }
 
-export interface IHideModal {
-	(): IModalAction;
+export interface HideModal {
+	(): ModalAction;
 }
 
-export type IModalAction = ShowAction | HideAction;
+export type ModalAction = HideChannelAction | ShowChannelAction;
 
-export type IModalState = { showing: boolean } & TPayload;
+export type ModalState = Payload & { showing: boolean };
 
-export type IChannelState = { channelModal: IModalState };
+export interface ChannelState {
+	channelModal: ModalState;
+}

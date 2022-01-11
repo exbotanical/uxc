@@ -1,34 +1,35 @@
 import { store } from '..';
+
 import {
-	IShowNotification,
-	IHideNotification,
+	ShowNotification,
+	HideNotification,
 	NOTIFICATION_ACTION
 } from './types';
 
 // Actions
-const SHOW_NOTIFICATION: IShowNotification = ({
+const SHOW_NOTIFICATION: ShowNotification = ({
 	message,
 	duration = 'default',
 	type = 'info'
 }) => ({
-	type: NOTIFICATION_ACTION.SHOW,
 	payload: {
-		message,
 		duration,
+		message,
 		type
-	}
+	},
+	type: NOTIFICATION_ACTION.SHOW
 });
 
-const HIDE_NOTIFICATION: IHideNotification = ({ id }) => ({
-	type: NOTIFICATION_ACTION.HIDE,
+const HIDE_NOTIFICATION: HideNotification = ({ id }) => ({
 	payload: {
 		id
-	}
+	},
+	type: NOTIFICATION_ACTION.HIDE
 });
 
 // Action Creators
-export const showNotification: IShowNotification = (args) =>
+export const showNotification: ShowNotification = (args) =>
 	store.dispatch(SHOW_NOTIFICATION(args));
 
-export const hideNotification: IHideNotification = (args) =>
+export const hideNotification: HideNotification = (args) =>
 	store.dispatch(HIDE_NOTIFICATION(args));

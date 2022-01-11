@@ -1,7 +1,5 @@
 import React, { useContext, useEffect } from 'react';
 
-import type { FC } from 'react';
-
 import { SocketContext } from '.';
 
 export const useBackgroundTasks = () => {
@@ -11,24 +9,30 @@ export const useBackgroundTasks = () => {
 		if (!conn) return;
 
 		const unsubscribables = [
-			conn.subscribe<any>('error', (message) => {
+			conn.subscribe<any>('error', (message: string) => {
 				// dispatchErrorToast(message);
 				console.error({ message });
 			})
 		];
 
 		return () => {
-			unsubscribables.forEach((u) => u());
+			unsubscribables.forEach((u) => {
+				u();
+			});
 		};
 	}, [conn]);
 
 	return conn;
 };
 
-export const BackgroundTasksProvider: FC = ({ children }) => {
+export function BackgroundTasksProvider({
+	children
+}: {
+	children: JSX.Element | JSX.Element[];
+}) {
 	useBackgroundTasks();
 
 	return <>{children}</>;
-};
+}
 
 BackgroundTasksProvider.displayName = 'BackgroundTasksProvider';

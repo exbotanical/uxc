@@ -1,4 +1,4 @@
-const defaultColors = require('tailwindcss/colors');
+/* eslint-disable sort-keys */
 
 module.exports = {
 	content: ['index.html', 'src/**/*.{js,ts,jsx,tsx}'],
@@ -30,53 +30,6 @@ module.exports = {
 			'5xl': '3rem',
 			'6xl': '4rem',
 			'7xl': '5rem'
-		},
-		colors: {
-			...defaultColors,
-			button: ' #fff',
-			outline: {
-				DEFAULT: '#34384e',
-				light: '#44475a'
-			},
-			transparent: {
-				DEFAULT: 'transparent',
-				alt: '#34384e80'
-			},
-			primary: {
-				100: '#dee3ea',
-				200: '#b2bdcd',
-				300: '#5d7290',
-				600: '#031229',
-				700: '#1e2130',
-				800: '#171926',
-				900: '#11121d'
-			},
-
-			secondary: {
-				'DEFAULT': '#5575e7',
-				'washed-out': '#879eed'
-			},
-			tertiary: {
-				DEFAULT: '#2fd6b5'
-			},
-			accent: {
-				DEFAULT: '#e53265',
-				hover: '#fd6868',
-				disabled: '#f5bfbf'
-			},
-			message: {
-				100: '#ff2366',
-				200: '#fd51d9',
-				300: '#face15',
-				400: '#8d4de8',
-				500: '#6859ea',
-				600: '#7ed321',
-				700: '#56b2ba',
-				800: '#0cf',
-				900: '#f90',
-				1000: '#ff6'
-			},
-			black: '#000'
 		},
 
 		spacing: {
@@ -124,6 +77,52 @@ module.exports = {
 			},
 			borderColor: {
 				'color-800': '#171926'
+			},
+			colors: {
+				button: ' #fff',
+				outline: {
+					DEFAULT: '#34384e',
+					light: '#44475a'
+				},
+				transparent: {
+					DEFAULT: 'transparent',
+					alt: '#34384e80'
+				},
+				primary: {
+					100: '#dee3ea',
+					200: '#b2bdcd',
+					300: '#5d7290',
+					600: '#031229',
+					700: '#1e2130',
+					800: '#171926',
+					900: '#11121d'
+				},
+
+				secondary: {
+					'DEFAULT': '#5575e7',
+					'washed-out': '#879eed'
+				},
+				tertiary: {
+					DEFAULT: '#2fd6b5'
+				},
+				accent: {
+					DEFAULT: '#e53265',
+					hover: '#fd6868',
+					disabled: '#f5bfbf'
+				},
+				message: {
+					100: '#ff2366',
+					200: '#fd51d9',
+					300: '#face15',
+					400: '#8d4de8',
+					500: '#6859ea',
+					600: '#7ed321',
+					700: '#56b2ba',
+					800: '#0cf',
+					900: '#f90',
+					1000: '#ff6'
+				},
+				black: '#000'
 			},
 			outline: {
 				'no-chrome': 'none'

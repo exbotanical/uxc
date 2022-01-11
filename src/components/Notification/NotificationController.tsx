@@ -1,28 +1,25 @@
 import React from 'react';
 
-import type { FC } from 'react';
-
 import { Notification } from '@/components/Notification/Notification';
 import { PropsFromRedux, connector } from '@/state';
 
-interface INotificationControllerProps extends PropsFromRedux {}
+type NotificationControllerProps = PropsFromRedux;
 
-const NotificationControllerBase: FC<
-	PropsFromRedux & INotificationControllerProps
-> = ({ notifications, hideNotification }) => {
+function NotificationControllerBase({
+	notifications,
+	hideNotification
+}: NotificationControllerProps & PropsFromRedux) {
 	return (
 		<div
+			className="absolute w-24 flex w-full fixed bottom-0 justify-center mx-auto inset-x-0"
 			style={{ zIndex: 1001 }}
-			className={
-				'absolute w-24 flex w-full fixed bottom-0 justify-center mx-auto inset-x-0'
-			}
 		>
-			<div className={'flex flex-col w-full'}>
+			<div className="flex flex-col w-full">
 				{notifications.map(({ id, message, duration, ...otherProps }) => (
-					<div key={id} className={'flex mb-3'}>
+					<div className="flex mb-3" key={id}>
 						<Notification
-							message={message}
 							duration={duration}
+							message={message}
 							onClose={() => hideNotification({ id })}
 							{...otherProps}
 						/>
@@ -31,7 +28,7 @@ const NotificationControllerBase: FC<
 			</div>
 		</div>
 	);
-};
+}
 
 NotificationControllerBase.displayName = 'NotificationControllerBase';
 

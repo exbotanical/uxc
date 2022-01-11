@@ -1,25 +1,23 @@
 import React, { useEffect, useRef } from 'react';
 
-import type { FC } from 'react';
-
-import { INotification } from '@/state/types';
-import { handleKeypressWith } from '@/utils';
+import type { Notification as NotifType } from '@/state/types';
 
 import { CloseIconButton } from '@/ui/CloseIconButton';
+import { handleKeypressWith } from '@/utils';
 
-export type TNotificationDuration = 'default' | 'sticky';
+export type NotificationDuration = 'default' | 'sticky';
 
-export type INotificationProps = Partial<INotification> & {
+export type NotificationProps = Partial<NotifType> & {
 	onClose?: () => void;
 };
 
-export const Notification: FC<INotificationProps> = ({
+export function Notification({
 	message,
 	button,
 	duration = 'default',
 	type,
 	onClose
-}) => {
+}: NotificationProps) {
 	const onCloseRef = useRef(onClose);
 	onCloseRef.current = onClose;
 
@@ -38,41 +36,41 @@ export const Notification: FC<INotificationProps> = ({
 	}, [duration]);
 
 	const color =
-		type === 'error' ?
-			'bg-accent' :
-			type === 'success' ?
-				'bg-green-400' :
-				'bg-secondary';
+		type === 'error'
+			? 'bg-accent'
+			: type === 'success'
+			? 'bg-green-400'
+			: 'bg-secondary';
 
 	return (
 		<div
 			className={`flex rounded-8 p-3 relative w-full items-center justify-center text-button transition-transform duration-300 ${color}`}
 		>
-			{onClose ?
-				(
-					<div
-						className={'flex absolute cursor-pointer'}
-						style={{
-              top: 5,
-              right: 13,
-              width: 13,
-              height: 13
-            }}
-						onClick={onClose}
-						onKeyPress={handleKeypressWith(onClose)}
-						role="button"
-						tabIndex={0}
-					>
-						<CloseIconButton style={{ transform: 'rotate(45deg)' }} />
-					</div>
-				) :
-				null}
-			<div className={'flex space-x-4 items-center'}>
-				<div className={'bold'}>{message}</div>
+			{onClose ? (
+				<div
+					className="flex absolute cursor-pointer"
+					onClick={onClose}
+					onKeyPress={handleKeypressWith(onClose)}
+					role="button"
+					style={{
+						height: 13,
+						right: 13,
+						top: 5,
+						width: 13
+					}}
+					tabIndex={0}
+				>
+					<CloseIconButton style={{ transform: 'rotate(45deg)' }} />
+				</div>
+			) : null}
+
+			<div className="flex space-x-4 items-center">
+				<div className="bold">{message}</div>
+
 				{button}
 			</div>
 		</div>
 	);
-};
+}
 
 Notification.displayName = 'Notification';

@@ -1,20 +1,20 @@
-import { isHideAction, isShowAction } from './util';
+import { isHideChannelAction, isShowChannelAction } from './util';
 
-import type { IChannelState, IModalAction } from './types';
+import type { ChannelState, ModalAction } from './types';
 
 const initialState = {
 	channelModal: { showing: false }
 };
 
-export function reducer (
-	state: IChannelState = initialState,
-	action: IModalAction
-): IChannelState {
-	if (isHideAction(action)) {
+export function reducer(
+	state: ChannelState = initialState, // eslint-disable-line @typescript-eslint/default-param-last
+	action: ModalAction
+): ChannelState {
+	if (isHideChannelAction(action)) {
 		return { ...state, channelModal: { showing: false } };
 	}
 
-	if (isShowAction(action)) {
+	if (isShowChannelAction(action)) {
 		return { ...state, channelModal: { showing: true, ...action.payload } };
 	}
 

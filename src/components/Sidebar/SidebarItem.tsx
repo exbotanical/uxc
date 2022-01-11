@@ -6,27 +6,27 @@ import {
 	RouteComponentProps
 } from 'react-router-dom';
 
-import type { FC } from 'react';
-
 import { useConn } from '@/hooks/useConn';
-import { handleKeypressWith } from '@/utils';
 import { NotificationBadge } from '@/ui/Badges/NotificationBadge';
+import { handleKeypressWith } from '@/utils';
 
-type TParams = { id?: string };
+interface Params {
+	id?: string;
+}
 
-interface ISidebarItemProps {
+interface SidebarItemProps {
 	uuid: string;
 	name: string;
 	desc?: string;
-	type: 'dm' | 'channel';
+	type: 'channel' | 'dm';
 }
 
-const SidebarItem: FC<RouteComponentProps<TParams> & ISidebarItemProps> = ({
+function SidebarItem({
 	name,
 	desc = '',
 	uuid,
 	type = 'channel'
-}) => {
+}: RouteComponentProps<Params> & SidebarItemProps) {
 	const history = useHistory();
 	const { setUser } = useConn();
 
@@ -35,7 +35,11 @@ const SidebarItem: FC<RouteComponentProps<TParams> & ISidebarItemProps> = ({
 	const paths = l.pathname.split('/');
 	const isActiveItem = paths[paths.length - 1] == uuid;
 
-	const currentChannel = { uuid, name, desc };
+	const currentChannel = {
+		desc,
+		name,
+		uuid
+	};
 
 	const navToChannel = () => {
 		setUser((user) => ({ ...user, currentChannel })); // TODO improve
@@ -49,13 +53,13 @@ const SidebarItem: FC<RouteComponentProps<TParams> & ISidebarItemProps> = ({
 
 	return (
 		<div
+			className={`${
+				isActiveItem ? 'bg-transparent-alt text-tertiary' : 'text-white'
+			} py-1 px-2 flex items-center justify-between`}
 			onClick={handleClick}
 			onKeyPress={handleKeypressWith(navToChannel)}
 			role="button"
 			tabIndex={0}
-			className={`${
-				isActiveItem ? 'bg-transparent-alt text-tertiary' : 'text-white'
-			} py-1 px-2 flex items-center justify-between`}
 		>
 			{type === 'channel' ? (
 				`#${name}`
@@ -67,13 +71,15 @@ const SidebarItem: FC<RouteComponentProps<TParams> & ISidebarItemProps> = ({
 					>
 						<circle cx="10" cy="10" r="10" />
 					</svg>
+
 					<span className="text-white opacity-75">{name}</span>
 				</span>
 			)}
+
 			<NotificationBadge>2</NotificationBadge>
 		</div>
 	);
-};
+}
 
 SidebarItem.displayName = 'SidebarItem';
 

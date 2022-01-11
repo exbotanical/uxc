@@ -1,11 +1,9 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useMemo, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-
-import type { FC } from 'react';
 
 import type { JWT } from '@/types/const';
 
-function defaultValue () {
+function defaultValue() {
 	try {
 		return localStorage.getItem('accessToken') || '';
 	} catch (ex) {
@@ -13,16 +11,21 @@ function defaultValue () {
 	}
 }
 
-interface ISessionContext {
+interface SessionCtx {
 	userSession: JWT;
 	setUserSession: (accessToken: JWT | null) => void;
 	isAuthenticated: boolean;
 }
 
-export const SessionContext = createContext({} as ISessionContext);
+export const SessionContext = createContext({} as SessionCtx);
 
-export const SessionProvider: FC = ({ children }) => {
-	const { replace } = useHistory();
+export function SessionProvider({
+	children
+}: {
+	// TODO
+	children: JSX.Element | JSX.Element[];
+}) {
+	const history = useHistory();
 	const [userSession, _setUserSession] = useState(defaultValue);
 
 	const setUserSession = (accessToken: JWT | null) => {
@@ -39,24 +42,29 @@ export const SessionProvider: FC = ({ children }) => {
 		const manageStorageAdapter = () => {
 			if (!defaultValue()) {
 				setUserSession(null);
-				replace('/');
+				history.replace('/');
 			}
 		};
 
 		window.addEventListener('storage', manageStorageAdapter);
 
-		return () => window.removeEventListener('storage', manageStorageAdapter);
+		return () => {
+			window.removeEventListener('storage', manageStorageAdapter);
+		};
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-	const value = {
-		userSession,
-		setUserSession,
-		isAuthenticated: !!userSession
-	};
+	const value = useMemo(
+		() => ({
+			isAuthenticated: !!userSession,
+			setUserSession,
+			userSession
+		}),
+		[userSession]
+	);
 
 	return (
 		<SessionContext.Provider value={value}>{children}</SessionContext.Provider>
 	);
-};
+}
 
 SessionProvider.displayName = 'SessionProvider';

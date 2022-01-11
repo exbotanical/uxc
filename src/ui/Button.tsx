@@ -1,11 +1,6 @@
-import React from 'react';
+import type { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from 'react';
 
-import type {
-	FC,
-	ButtonHTMLAttributes,
-	DetailedHTMLProps,
-	ReactNode
-} from 'react';
+import React from 'react';
 
 const sizeClassNames = {
 	large: 'py-2 px-6 text-sm rounded-lg',
@@ -14,22 +9,22 @@ const sizeClassNames = {
 };
 
 const colorClassNames = {
+	'accent-secondary':
+		'text-button bg-secondary hover:bg-secondary-washed-out disabled:text-secondary-washed-out',
 	'primary':
 		'text-button bg-accent transition duration-200 ease-in-out hover:bg-accent-hover disabled:text-accent-disabled disabled:bg-accent-hover',
+	'primary-300':
+		'text-button bg-primary-700 hover:bg-primary-600 disabled:text-primary-300',
 	'secondary':
 		'text-button bg-primary-700 hover:bg-primary-600 disabled:text-primary-300',
 	'secondary-800':
 		'text-button bg-primary-800 hover:bg-primary-600 disabled:text-primary-300',
-	'primary-300':
-		'text-button bg-primary-700 hover:bg-primary-600 disabled:text-primary-300',
-	'transparent': 'text-button bg-transparent',
-	'accent-secondary':
-		'text-button bg-secondary hover:bg-secondary-washed-out disabled:text-secondary-washed-out'
+	'transparent': 'text-button bg-transparent'
 };
 
 export type ButtonProps = DetailedHTMLProps<
-ButtonHTMLAttributes<HTMLButtonElement>,
-HTMLButtonElement
+	ButtonHTMLAttributes<HTMLButtonElement>,
+	HTMLButtonElement
 > & {
 	size?: keyof typeof sizeClassNames;
 	color?: keyof typeof colorClassNames;
@@ -38,7 +33,7 @@ HTMLButtonElement
 	transition?: boolean;
 };
 
-export const Button: FC<ButtonProps> = ({
+export function Button({
 	children,
 	size = 'large',
 	color = 'primary',
@@ -48,24 +43,27 @@ export const Button: FC<ButtonProps> = ({
 	className = '',
 	transition,
 	...props
-}) => {
+}: ButtonProps) {
 	return (
 		<button
-			disabled={disabled || loading}
 			className={`flex outline-none focus:ring-4 focus:ring-${color} ${
 				sizeClassNames[size]
 			} ${transition ? 'transition duration-200 ease-in-out' : ''} ${
 				colorClassNames[color]
 			} font-bold flex items-center justify-center ${className}`}
+			disabled={disabled || loading}
+			type="button"
 			{...props}
 		>
 			<span className={loading ? 'opacity-0' : 'flex items-center'}>
-				{icon ? <span className={'mr-2 items-center'}>{icon}</span> : null}
+				{icon ? <span className="mr-2 items-center">{icon}</span> : null}
+
 				{children}
 			</span>
-			{loading ? <span className={'absolute'}>spinner</span> : null}
+
+			{loading ? <span className="absolute">spinner</span> : null}
 		</button>
 	);
-};
+}
 
 Button.displayName = 'Button';

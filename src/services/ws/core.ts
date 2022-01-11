@@ -3,6 +3,7 @@ import ReconnectingWebSocket from 'reconnecting-websocket';
 import { v4 as generateUuid } from 'uuid';
 
 import type { UUID, JWT } from '@/types/const';
+
 import { User } from '@/types/user';
 
 /*
@@ -18,29 +19,29 @@ type TransactionID = UUID;
 
 /* Opcodes */
 type AuthCode = 'authenticate' | 'authorize' | 'logout' | 'renew';
-type CommandCode = 'message' | 'create_channel';
+type CommandCode = 'create_channel' | 'message';
 type QueryCode = 'channel' | 'message';
-type SysCode = 'error' | 'syn' | 'ack';
+type SysCode = 'ack' | 'error' | 'syn';
 
 // TODO use discriminated union
 type ResponseOpcode =
 	| Omit<SysCode, 'syn'>
+	| 'authenticate:reply'
+	| 'authorize:reply'
 	| 'channel:reply'
 	| 'create_channel:reply'
 	| 'message:reply'
-	| 'authenticate:reply'
-	| 'renew:reply'
-	| 'authorize:reply';
+	| 'renew:reply';
 
 type Opcode = AuthCode | CommandCode | QueryCode | SysCode;
 
-interface IErrorHandler {
+interface ErrorHandler {
 	(errorMessage: string): void;
 }
 
-interface ILogger {
+interface Logger {
 	(
-		direction: 'send' | 'recv',
+		direction: 'recv' | 'send',
 		opcode: Opcode | ResponseOpcode,
 		data?: unknown,
 		txId?: TransactionID,
@@ -48,19 +49,19 @@ interface ILogger {
 	): void;
 }
 
-interface IResponseMessage<Data = unknown> {
+interface ResponseMessage<Data = unknown> {
 	op: ResponseOpcode;
 	d: Data;
 	txId: TransactionID;
 }
 
-interface ISubscriberHandler<Data = unknown> {
+interface SubscriberHandler<Data = unknown> {
 	(data: Data, txId?: TransactionID): void;
 }
 
-interface ISubscriber<Data = unknown> {
+interface Subscriber<Data = unknown> {
 	opcode: Opcode | ResponseOpcode;
-	handler: ISubscriberHandler<Data>;
+	handler: SubscriberHandler<Data>;
 }
 
 type BaseConnectionSender = (
@@ -69,28 +70,24 @@ type BaseConnectionSender = (
 	txId?: TransactionID
 ) => void;
 
-export interface IConnection {
-	user: User;
-
-	send: BaseConnectionSender;
+export interface Connection {
 	close: () => void;
-
 	once: <Data = unknown>(
 		opcode: ResponseOpcode,
-		handler: ISubscriberHandler<Data>
+		handler: SubscriberHandler<Data>
 	) => void;
-
+	send: BaseConnectionSender;
 	subscribe: <Data = unknown>(
 		opcode: Opcode,
-		handler: ISubscriberHandler<Data>
+		handler: SubscriberHandler<Data>
 	) => () => void;
-
+	user: User;
 	wait: (opcode: Opcode, data: unknown) => Promise<unknown>;
 }
 
-interface IConnectorOptions {
-	logger?: ILogger;
-	onError?: IErrorHandler;
+interface ConnectorOptions {
+	logger?: Logger;
+	onError?: ErrorHandler;
 	url?: string;
 	waitTimeout?: number;
 	shouldReconnect?: boolean;
@@ -99,8 +96,8 @@ interface IConnectorOptions {
 	}>;
 }
 
-interface IConnector {
-	(opts: IConnectorOptions): Promise<IConnection>;
+interface Connector {
+	(opts: ConnectorOptions): Promise<Connection>;
 }
 
 /*
@@ -111,7 +108,7 @@ const heartbeatInterval = 8000;
 const apiUrl = 'ws://localhost:5000';
 const connectionTimeout = 15000;
 
-export const connect: IConnector = ({
+export const connect: Connector = async ({
 	logger = () => {},
 	onError = () => {},
 	waitTimeout,
@@ -121,11 +118,11 @@ export const connect: IConnector = ({
 }) => {
 	return new Promise((resolve, reject) => {
 		const socket = new ReconnectingWebSocket(url, [], {
-			connectionTimeout,
-			WebSocket
+			WebSocket,
+			connectionTimeout
 		});
 
-		const subscribers: ISubscriber[] = [];
+		const subscribers: Subscriber[] = [];
 
 		const send: BaseConnectionSender = (opcode, data, txId) => {
 			if (socket.readyState !== socket.OPEN) {
@@ -141,11 +138,11 @@ export const connect: IConnector = ({
 			logger('send', opcode, data, txId, raw);
 		};
 
-		/*************************
+		/** ***********************
 		 * Event Registrations
 		 *************************/
 		socket.addEventListener('close', (error) => {
-			logger('recv', 'error', null, undefined, error.toString());
+			logger('recv', 'error', null, undefined, JSON.stringify(error));
 
 			const errorMessage = 'The socket connection has closed.';
 			const timeoutInSeconds = connectionTimeout / 1000;
@@ -187,27 +184,28 @@ export const connect: IConnector = ({
 				return;
 			}
 
-			const message: IResponseMessage = JSON.parse(e.data); // TODO verify
+			const message: ResponseMessage = JSON.parse(e.data); // TODO verify
 
 			logger('recv', message.op, message.d, message.txId, e.data);
 
 			// presumably, the first message is the response to our auth request with which we initiated the connection
-			// we reply to the caller with the entire core API, `IConnection`
+			// we reply to the caller with the entire core API, `Connection`
 			if (message.op === 'authorize:reply') {
-				const user = (message as IResponseMessage<User>).d;
+				const user = (message as ResponseMessage<User>).d;
 
 				if (!user) {
 					reject(new Error('failed to load user session'));
 				}
 
 				// TODO relocate connection to external module
-				const connection: IConnection = {
-					user,
-					send,
+				const connection: Connection = {
 					close: socket.close,
 
 					once: (opcode, handler) => {
-						const subscriber = { opcode, handler } as ISubscriber<unknown>;
+						const subscriber = {
+							handler,
+							opcode
+						} as Subscriber;
 
 						// we proxy the original handler so we can remove the subscriber once invoked
 						subscriber.handler = (...args) => {
@@ -218,12 +216,13 @@ export const connect: IConnector = ({
 						subscribers.push(subscriber);
 					},
 
+					send,
 					// TODO TS does not verify the opcode type
 					subscribe: (opcode, handler) => {
 						const listener = {
-							opcode: `${opcode}:reply`,
-							handler
-						} as ISubscriber<unknown>;
+							handler,
+							opcode: `${opcode}:reply`
+						} as Subscriber;
 
 						subscribers.push(listener);
 
@@ -231,7 +230,9 @@ export const connect: IConnector = ({
 						return () => subscribers.splice(subscribers.indexOf(listener), 1);
 					},
 
-					wait: (opcode: Opcode, args: unknown) => {
+					user,
+
+					wait: async (opcode: Opcode, args: unknown) => {
 						// eslint-disable-next-line promise/param-names
 						return new Promise((resolveWait, rejectWait) => {
 							if (socket.readyState !== socket.OPEN) {
@@ -241,7 +242,7 @@ export const connect: IConnector = ({
 
 							const ref: TransactionID = generateUuid();
 
-							let timeoutId: number /* NodeJS.Timeout */ | null = null;
+							let timeoutId: NodeJS.Timeout | null = null;
 
 							const unsubscribe = connection.subscribe(opcode, (data, txId) => {
 								if (txId !== ref) return;
@@ -270,7 +271,9 @@ export const connect: IConnector = ({
 				// it's not an auth response, invoke any subscribers
 				subscribers
 					.filter(({ opcode }) => opcode === message.op)
-					.forEach((it) => it.handler(message.d, message.txId));
+					.forEach((it) => {
+						it.handler(message.d, message.txId);
+					});
 			}
 		});
 	});

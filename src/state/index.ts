@@ -1,21 +1,25 @@
-import { combineReducers, createStore } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
+import { combineReducers, createStore } from 'redux';
 
-import { reducer as notification } from './notifications/reducer';
-import { showNotification, hideNotification } from './notifications/actions';
-
-import { reducer as channel } from './channel/reducer';
 import {
 	showUpsertChannelModal,
 	hideUpsertChannelModal
 } from './channel/actions';
+import { reducer as channel } from './channel/reducer';
+import { showNotification, hideNotification } from './notifications/actions';
+import { reducer as notification } from './notifications/reducer';
 
 export type RootState = ReturnType<typeof store.getState>;
 
 // state
 const store = createStore(
-	combineReducers({ notification, channel }),
+	combineReducers({
+		channel,
+		notification
+	}),
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-member-access
 	(window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
 		(window as any).__REDUX_DEVTOOLS_EXTENSION__()
 );
 
@@ -25,27 +29,27 @@ const store = createStore(
 // state helpers
 const mapStateToProps = (state: RootState) => {
 	return {
-		notifications: state.notification,
-		channelModalState: state.channel.channelModal
+		channelModalState: state.channel.channelModal,
+		notifications: state.notification
 	};
 };
 
 const mapDispatchToProps = {
-	showNotification,
 	hideNotification,
-	showUpsertChannelModal,
-	hideUpsertChannelModal
+	hideUpsertChannelModal,
+	showNotification,
+	showUpsertChannelModal
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
 export {
-	store,
 	connector,
-	showNotification,
 	hideNotification,
+	hideUpsertChannelModal,
+	showNotification,
 	showUpsertChannelModal,
-	hideUpsertChannelModal
+	store
 };
 
 export type PropsFromRedux = ConnectedProps<typeof connector>;

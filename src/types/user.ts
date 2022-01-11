@@ -1,14 +1,15 @@
-import type { IChannel } from './channel';
 import { JWT, UUID } from './const';
-import type { IDirectMessageThread } from './message';
+
+import type { Channel } from './channel';
+import type { DirectMessageThread } from './message';
 
 export interface User {
 	uuid: UUID;
 	username: string;
 	userImage: string;
-	directMessageThreads: IDirectMessageThread[];
-	channels: Pick<IChannel, 'uuid' | 'name' | 'desc'>[];
-	currentChannel: Pick<IChannel, 'uuid' | 'name' | 'desc'>;
+	directMessageThreads: DirectMessageThread[];
+	channels: Pick<Channel, 'desc' | 'name' | 'uuid'>[];
+	currentChannel: Pick<Channel, 'desc' | 'name' | 'uuid'>;
 }
 
 export interface UserTokens {

@@ -1,17 +1,18 @@
 import { v4 as generateUuid } from 'uuid';
-import { isHideAction, isShowAction } from './util';
 
-import type { INotificationState, INotificationAction } from './types';
+import { isHideNotificationAction, isShowNotificationAction } from './util';
 
-export function reducer (
-	state: INotificationState = [],
-	action: INotificationAction
+import type { NotificationState, NotificationAction } from './types';
+
+export function reducer(
+	state: NotificationState = [], // eslint-disable-line @typescript-eslint/default-param-last
+	action: NotificationAction
 ) {
-	if (isHideAction(action)) {
+	if (isHideNotificationAction(action)) {
 		return [...state.filter(({ id }) => id != action.payload.id)];
 	}
 
-	if (isShowAction(action)) {
+	if (isShowNotificationAction(action)) {
 		return [...state, { ...action.payload, id: generateUuid() }];
 	}
 

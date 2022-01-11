@@ -1,17 +1,15 @@
 import React from 'react';
 
-import type { SVGProps, FC } from 'react';
-
-export const EditIcon: FC<SVGProps<SVGSVGElement>> = () => {
+export function EditIcon() {
 	return (
 		<svg
-			version="1.1"
-			xmlns="http://www.w3.org/2000/svg"
-			width="16"
-			height="16"
-			viewBox="0 0 528.899 528.899"
-			fill="currentColor"
 			className="text-primary-300"
+			fill="currentColor"
+			height="16"
+			version="1.1"
+			viewBox="0 0 528.899 528.899"
+			width="16"
+			xmlns="http://www.w3.org/2000/svg"
 		>
 			<g>
 				<path
@@ -23,6 +21,6 @@ export const EditIcon: FC<SVGProps<SVGSVGElement>> = () => {
 			</g>
 		</svg>
 	);
-};
+}
 
 EditIcon.displayName = 'EditIcon';

@@ -42,7 +42,7 @@
   "devDependencies": {
     "@commitlint/cli": "13.1.0",
     "@commitlint/config-conventional": "13.1.0",
-    "@magister_zito/eslint-config-react": "0.0.9",
+    "@magister_zito/eslint-config-react": "0.8.0",
     "@magister_zito/stylelint-config": "0.0.1",
     "@tailwindcss/line-clamp": "0.2.2",
     "@types/react": "17.0.19",

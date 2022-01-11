@@ -1,51 +1,49 @@
 import React from 'react';
 
-import type { FC } from 'react';
-
 import type { User } from '@/types/user';
 
 export const onlineIndicatorStyleMap = {
 	default: {
-		width: '15px',
+		borderWidth: '4px',
+		bottom: '-4px',
 		height: '15px',
 		right: '2px',
-		bottom: '-4px',
-		borderWidth: '4px'
+		width: '15px'
 	},
 	lg: {
-		width: '12px',
+		borderWidth: '2px',
+		bottom: '-2px',
 		height: '12px',
 		right: '2px',
-		bottom: '-2px',
-		borderWidth: '2px'
+		width: '12px'
 	},
 	md: {
-		width: '10px',
+		borderWidth: '2px',
+		bottom: '-2px',
 		height: '10px',
 		right: '2px',
-		bottom: '-2px',
-		borderWidth: '2px'
+		width: '10px'
 	},
 	sm: {
-		width: '8px',
+		borderWidth: '2px',
+		bottom: '-2px',
 		height: '8px',
 		right: '2px',
-		bottom: '-2px',
-		borderWidth: '2px'
+		width: '8px'
 	},
 	xs: {
-		width: '4px',
+		borderWidth: '1px',
+		bottom: '-1px',
 		height: '4px',
 		right: '0px',
-		bottom: '-1px',
-		borderWidth: '1px'
+		width: '4px'
 	},
 	xxs: {
-		width: '6px',
+		borderWidth: '1px',
+		bottom: '-1px',
 		height: '6px',
 		right: '1px',
-		bottom: '-1px',
-		borderWidth: '1px'
+		width: '6px'
 	}
 };
 
@@ -58,28 +56,29 @@ export const avatarSizeMap = {
 	xxs: '30px'
 };
 
-interface UserCard {
+interface UserCardProps {
 	size: keyof typeof onlineIndicatorStyleMap;
 	isOnline: boolean;
 	u: User;
 }
 
-export const UserCard: FC<UserCard> = ({ size, isOnline, u }) => {
+export function UserCard({ size, isOnline, u }: UserCardProps) {
 	const sizeStyle = onlineIndicatorStyleMap[size];
 
 	return (
 		<div
-			className={'relative inline-block'}
+			className="relative inline-block"
 			style={{
-				width: avatarSizeMap[size],
-				height: avatarSizeMap[size]
+				height: avatarSizeMap[size],
+				width: avatarSizeMap[size]
 			}}
 		>
 			<img
-				className="rounded-full"
 				alt={u.username ? `${u.username}-s-avatar` : 'your-avatar'}
+				className="rounded-full"
 				src={u.userImage || '../../../src/assets/gravatar.png'}
 			/>
+
 			{/* {hover && (
 				<div
 					className={`bg-primary-900 hover:opacity-20 transition duration-200 opacity-0 absolute w-full h-full top-0 left-0 rounded-full`}
@@ -91,7 +90,7 @@ export const UserCard: FC<UserCard> = ({ size, isOnline, u }) => {
 					isOnline ? 'bg-green-400' : 'bg-accent'
 				}`}
 				style={sizeStyle}
-			></span>
+			/>
 		</div>
 	);
-};
+}

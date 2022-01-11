@@ -1,15 +1,8 @@
 import React from 'react';
 
-import type { FC } from 'react';
+import type { Message } from '@/types/message';
 
-import type { IMessage } from '@/types/message';
-
-export const ChannelMessage: FC<IMessage & { isAuthor: boolean }> = ({
-	message,
-	timestamp,
-	user,
-	isAuthor
-}) => {
+export function ChannelMessage({ message, user }: Message) {
 	const { username } = user;
 	const colors = [
 		'#ff2366',
@@ -40,11 +33,13 @@ export const ChannelMessage: FC<IMessage & { isAuthor: boolean }> = ({
 				<span className="font-bold" style={{ color: generateColor(username) }}>
 					{username}
 				</span>
+
 				<span className="text-white">: </span>
+
 				<span className="text-primary-100">{message}</span>
 			</div>
 		</div>
 	);
-};
+}
 
 ChannelMessage.displayName = 'ChannelMessage';

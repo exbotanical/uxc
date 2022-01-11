@@ -1,24 +1,24 @@
 import React from 'react';
 
-import type { FC } from 'react';
+import type { User } from '@/types/user';
 
+import { connector, PropsFromRedux } from '@/state';
+import { EditIcon } from '@/ui/Icons/EditIcon';
 import { handleKeypressWith } from '@/utils';
 
-import { EditIcon } from '@/ui/Icons/EditIcon';
-
-import type { User } from '@/types/user';
-import { connector, PropsFromRedux } from '@/state';
-
-interface IChannelHeaderProps {
+interface ChannelHeaderProps {
 	user: User;
 }
 
-const ChannelHeader: FC<IChannelHeaderProps & PropsFromRedux> = ({
+function ChannelHeader({
 	user,
 	showUpsertChannelModal
-}) => {
+}: ChannelHeaderProps & PropsFromRedux) {
 	const handleClick = () => {
-		showUpsertChannelModal({ type: 'edit', data: user.currentChannel });
+		showUpsertChannelModal({
+			data: user.currentChannel,
+			type: 'edit'
+		});
 	};
 
 	return (
@@ -27,16 +27,18 @@ const ChannelHeader: FC<IChannelHeaderProps & PropsFromRedux> = ({
 				<h4 className="text-primary-100 mb-1 font-extrabold">
 					#{user.currentChannel.name}
 				</h4>
+
 				<div className="text-primary-200 text-md truncate">
 					{user.currentChannel.desc}
 				</div>
 			</div>
-			<div className={'self-end py-2'}>
+
+			<div className="self-end py-2">
 				<div
-					role="button"
-					tabIndex={0}
 					onClick={handleClick}
 					onKeyPress={handleKeypressWith(handleClick)}
+					role="button"
+					tabIndex={0}
 				>
 					<EditIcon />
 				</div>
@@ -60,7 +62,7 @@ const ChannelHeader: FC<IChannelHeaderProps & PropsFromRedux> = ({
 			</div> */}
 		</div>
 	);
-};
+}
 
 ChannelHeader.displayName = 'ChannelHeader';
 
