@@ -1,26 +1,17 @@
 {
   "compilerOptions": {
-		"module": "ESNext",
-    "target": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-		"strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
+    "target": "esnext",
+    "module": "esnext",
+    "lib": ["esnext"],
     "moduleResolution": "node",
+    "esModuleInterop": true,
+    "strict": true,
+    "strictNullChecks": true,
     "resolveJsonModule": true,
-    "noUnusedLocals": true,
-    "forceConsistentCasingInFileNames": true,
-		"noEmit": true,
-    "jsx": "react",
-		"types": [
-      "vite/client",
-			"node",
-			"jest"
-    ],
-		"baseUrl": ".",
-		"paths": {
-      "@/*": ["src/*"]
-    }
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "declaration": true,
   },
-	"include": ["src", "test", "*.ts"]
+	"include": ["packages", "test", "*.ts"]
+  }
 }

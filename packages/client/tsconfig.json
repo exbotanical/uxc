@@ -1,0 +1,17 @@
+{
+	"extends": "../../tsconfig.json",
+  "compilerOptions": {
+		"lib": ["DOM", "DOM.Iterable"],
+    "jsx": "react",
+		"types": [
+      "vite/client",
+			"node",
+			"jest"
+    ],
+		"baseUrl": ".",
+		"paths": {
+      "@/*": ["src/*"]
+    }
+  },
+	"include": ["src", "test", "*.ts"]
+}

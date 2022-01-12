@@ -1,11 +1,7 @@
 node_modules
 dist
-dist-ssr
-*.local
-.eslintcache
-cache
-.vercel
-*.log
 coverage
-
-server
+*.log
+.env
+.cache
+dist

@@ -1,0 +1,20 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "license": "MIT",
+  "private": true,
+  "author": "Matthew Zito <matthewtzito@gmail.com> (goldmund)",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node &"
+	},
+  "dependencies": {
+    "cors": "2.8.5",
+    "express": "4.17.1",
+    "socket.io": "4.2.0",
+    "uuid": "8.3.2",
+    "ws": "8.2.2"
+  }
+}
