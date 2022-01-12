@@ -1,9 +1,9 @@
+import { SmileyIcon } from '@uxc/client/ui/Icons/SmileyIcon';
+import { Input } from '@uxc/client/ui/Input';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 
-import type { SendMessage } from '@/pages/Channel';
+import type { SendMessage } from '@uxc/client/pages/Channel';
 
-import { SmileyIcon } from '@/ui/Icons/SmileyIcon';
-import { Input } from '@/ui/Input';
 
 interface ChannelTextInputProps {
 	sendMessage: SendMessage;

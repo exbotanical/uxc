@@ -1,12 +1,12 @@
+
+import { useWrappedConn } from '@uxc/client/hooks/useConn';
+import { connector, PropsFromRedux } from '@uxc/client/state';
+import { Button } from '@uxc/client/ui/Button';
+import { Input } from '@uxc/client/ui/Input';
+import { Modal } from '@uxc/client/ui/Modal';
+import { Select } from '@uxc/client/ui/Select';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-
-import { useWrappedConn } from '@/hooks/useConn';
-import { connector, PropsFromRedux } from '@/state';
-import { Button } from '@/ui/Button';
-import { Input } from '@/ui/Input';
-import { Modal } from '@/ui/Modal';
-import { Select } from '@/ui/Select';
 
 function CreateChannelModal({
 	channelModalState,
@@ -17,11 +17,11 @@ function CreateChannelModal({
 	const { client, setUser } = useWrappedConn();
 
 	const [channelName, setChannelName] = useState(
-		channelModalState.data?.name || ''
+		channelModalState.data.name || ''
 	);
 
 	const [channelDesc, setChannelDesc] = useState(
-		channelModalState.data?.desc || ''
+		channelModalState.data.desc || ''
 	);
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {

@@ -41,7 +41,10 @@ const mapDispatchToProps = {
 	showUpsertChannelModal
 };
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
+const connector = connect(
+	mapStateToProps,
+	mapDispatchToProps
+);
 
 export {
 	connector,

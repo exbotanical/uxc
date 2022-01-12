@@ -3,11 +3,6 @@
 	"compilerOptions": {
 		"types": [
 			"node",
-    ],
-		"baseUrl": ".",
-		"paths": {
-      "@/*": ["src/*"]
-    }
-  },
-	"include": ["src", "test", "*.ts"]
+    ]
+	}
 }

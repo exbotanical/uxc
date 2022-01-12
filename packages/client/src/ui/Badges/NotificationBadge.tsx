@@ -7,7 +7,7 @@ export function NotificationBadge({
 	children,
 	type = 'md'
 }: // TODO
-NotificationBadgeProps & { children: JSX.Element | JSX.Element[] }) {
+NotificationBadgeProps & { children: JSX.Element }) {
 	const className = `bg-accent rounded-full ${
 		type === 'sm'
 			? 'inline-block w-2 h-2 mr-2'

@@ -1,7 +1,6 @@
+import { connector, PropsFromRedux } from '@uxc/client/state';
+import { handleKeypressWith } from '@uxc/client/utils';
 import React from 'react';
-
-import { connector, PropsFromRedux } from '@/state';
-import { handleKeypressWith } from '@/utils';
 
 interface SidebarSectionProps {
 	title: string;

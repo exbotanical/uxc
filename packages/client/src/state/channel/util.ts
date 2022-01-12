@@ -13,7 +13,7 @@ export function isHideChannelAction (action: BaseChannelAction): action is HideC
 }
 
 export function isShowChannelAction (action: BaseChannelAction): action is ShowChannelAction {
-	return action.type === MODAL_ACTION.SHOW && !!action.payload?.type;
+	return action.type === MODAL_ACTION.SHOW && !!action.payload.type;
 }
 
 export const createActionName = (name: string) => `${NAMESPACE}/${name}`;

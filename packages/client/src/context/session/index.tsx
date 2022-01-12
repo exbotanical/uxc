@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useMemo, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import type { JWT } from '@/types/const';
+import type { JWT } from '@uxc/client/types/const';
 
 function defaultValue() {
 	try {

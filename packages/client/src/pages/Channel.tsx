@@ -1,14 +1,13 @@
+import { ChannelHeaderContainer } from '@uxc/client/components/Channel/ChannelHeader';
+import { ChannelMessage } from '@uxc/client/components/Channel/ChannelMessage';
+import { ChannelTextInput } from '@uxc/client/components/Channel/ChannelTextInput';
+import { useConn, useWrappedConn } from '@uxc/client/hooks/useConn';
+import { connector, PropsFromRedux } from '@uxc/client/state';
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { v4 } from 'uuid';
 
-import type { Message } from '@/types/message';
-
-import { ChannelHeaderContainer } from '@/components/Channel/ChannelHeader';
-import { ChannelMessage } from '@/components/Channel/ChannelMessage';
-import { ChannelTextInput } from '@/components/Channel/ChannelTextInput';
-import { useConn, useWrappedConn } from '@/hooks/useConn';
-import { connector, PropsFromRedux } from '@/state';
+import type { Message } from '@uxc/client/types/message';
 
 export interface SendMessage {
 	(message: string): void;
@@ -43,7 +42,7 @@ export function Channel({ showNotification }: PropsFromRedux) {
 
 	useEffect(() => {
 		isScrolledToTop ||
-			bottomRef.current?.scrollIntoView({
+			bottomRef.current.scrollIntoView({
 				block: 'nearest',
 				inline: 'start'
 			});

@@ -1,17 +1,23 @@
 {
 	"extends": "../../tsconfig.json",
   "compilerOptions": {
-		"lib": ["DOM", "DOM.Iterable"],
+    "module": "commonjs",
+    "target": "esnext",
     "jsx": "react",
-		"types": [
-      "vite/client",
-			"node",
-			"jest"
-    ],
-		"baseUrl": ".",
-		"paths": {
-      "@/*": ["src/*"]
-    }
+    "lib": [
+			"dom",
+			"es2015",
+			"es2017",
+			"es2019"
+		],
+    "strict": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+		"resolveJsonModule": true,
+		"forceConsistentCasingInFileNames": true
   },
-	"include": ["src", "test", "*.ts"]
 }

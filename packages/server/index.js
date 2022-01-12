@@ -1,8 +1,8 @@
-const { WebSocketServer } = require('ws');
-const express = require('express');
 const app = express();
 const cors = require('cors');
+const express = require('express');
 const { v4 } = require('uuid');
+const { WebSocketServer } = require('ws');
 
 const PORT = 5000;
 const wss = new WebSocketServer({ port: PORT });
@@ -37,11 +37,14 @@ wss.on('connection', (ws) => {
 		try {
 			const { op, d, txId } = JSON.parse(message);
 
-			console.log({ op });
 			switch (op) {
 				case 'authorize':
-					if (d.accessToken) ws.send(serialize(op + ':reply', myUser, txId));
-					else ws.close(4001);
+					if (d.accessToken) {
+						ws.send(serialize(`${op}:reply`, myUser, txId));
+					} else {
+						ws.close(4001);
+					}
+
 					break;
 
 				case 'channel':
@@ -49,7 +52,7 @@ wss.on('connection', (ws) => {
 						messages[d.id] = [];
 					}
 
-					ws.send(serialize(op + ':reply', getUsersFromMessages(d), txId));
+					ws.send(serialize(`${op}:reply`, getUsersFromMessages(d), txId));
 					break;
 
 				case 'create_channel':
@@ -61,7 +64,7 @@ wss.on('connection', (ws) => {
 
 					myUser.channels.push(newChannel);
 
-					ws.send(serialize(op + ':reply', { channel: newChannel }, txId));
+					ws.send(serialize(`${op}:reply`, { channel: newChannel }, txId));
 
 					break;
 
@@ -70,18 +73,21 @@ wss.on('connection', (ws) => {
 						...d
 					});
 
-					console.log({ d });
 					wss.clients.forEach((client) => {
-						client.send(serialize(op + ':reply', d));
+						client.send(serialize(`${op}:reply`, d));
 						// if (client.readyState === WebSocket.OPEN) {
 						// }
 					});
 
+					break;
+
 				default:
-					ws.console.log({ op });
+					console.error({ op });
 			}
 		} catch (ex) {
-			if (message == 'syn') ws.send('ack');
+			if (message == 'syn') {
+				ws.send('ack');
+			}
 		}
 	});
 });
@@ -102,5 +108,5 @@ app.post('/api', (req, res) => {
 });
 
 app.listen(PORT + 1, () => {
-	console.log(`listening on port ${PORT}...`);
+	console.info(`listening on port ${PORT}...`);
 });

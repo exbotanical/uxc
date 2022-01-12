@@ -1,22 +1,21 @@
+import { SocketContext } from '@uxc/client/context';
+import { wrap } from '@uxc/client/services';
 import { useContext } from 'react';
 
-import { SocketContext } from '@/context';
-import { wrap } from '@/services';
-
-export const useConn = () => {
+export function useConn() {
 	const { conn, setUser } = useContext(SocketContext);
 
 	return {
-		conn: conn!,
+		conn,
 		setUser
 	};
-};
+}
 
-export const useWrappedConn = () => {
+export function useWrappedConn() {
 	const { conn, setUser } = useContext(SocketContext);
 
 	return {
-		client: wrap(conn!),
+		client: wrap(conn),
 		setUser
 	};
-};
+}

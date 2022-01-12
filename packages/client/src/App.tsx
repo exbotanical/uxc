@@ -1,16 +1,16 @@
-import React from 'react';
-import ReacModal from 'react-modal';
-import { Route, Switch } from 'react-router-dom';
 
-import { Login } from '@/components/Auth/Login';
-import { ProtectedRoute } from '@/components/Auth/ProtectedRoute';
+import { Login } from '@uxc/client/components/Auth/Login';
+import { ProtectedRoute } from '@uxc/client/components/Auth/ProtectedRoute';
 import {
 	SessionProvider,
 	BackgroundTasksProvider,
 	SocketProvider
-} from '@/context';
-import { ChannelContainer } from '@/pages/Channel';
-import { Dashboard } from '@/pages/Dashboard';
+} from '@uxc/client/context';
+import { ChannelContainer } from '@uxc/client/pages/Channel';
+import { Dashboard } from '@uxc/client/pages/Dashboard';
+import React from 'react';
+import ReacModal from 'react-modal';
+import { Route, Switch } from 'react-router-dom';
 
 import './App.scss';
 

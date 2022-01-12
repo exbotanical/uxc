@@ -1,7 +1,7 @@
-import React from 'react';
 
-import { Notification } from '@/components/Notification/Notification';
-import { PropsFromRedux, connector } from '@/state';
+import { Notification } from '@uxc/client/components/Notification/Notification';
+import { PropsFromRedux, connector } from '@uxc/client/state';
+import React from 'react';
 
 type NotificationControllerProps = PropsFromRedux;
 

@@ -1,11 +1,12 @@
+import { useConn } from '@uxc/client/hooks/useConn';
 import React from 'react';
 
 import { UserCard } from '../User/UserCard';
 
-import { useConn } from '@/hooks/useConn';
 
 export function Profile() {
 	const { conn } = useConn();
+	const { user } = conn;
 
 	return (
 		<div className="flex flex-col rounded-8 bg-primary-800 p-4 w-full">
@@ -19,11 +20,11 @@ export function Profile() {
 				<div className="flex mt-2">
 					<div className="flex flex-col ml-3">
 						<span className="text-primary-100 font-bold overflow-hidden break-all text-left">
-							<UserCard isOnline size="default" u={conn.user} />
+							<UserCard isOnline size="default" u={user} />
 						</span>
 
 						<span className="text-primary-300 text-left break-all">
-							@{conn.user.username}
+							@{user.username}
 						</span>
 
 						<span className="flex mt-1">badgies</span>

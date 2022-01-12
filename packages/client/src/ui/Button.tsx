@@ -33,7 +33,7 @@ export type ButtonProps = DetailedHTMLProps<
 	transition?: boolean;
 };
 
-export function Button({
+export function Button ({
 	children,
 	size = 'large',
 	color = 'primary',
@@ -48,20 +48,33 @@ export function Button({
 		<button
 			className={`flex outline-none focus:ring-4 focus:ring-${color} ${
 				sizeClassNames[size]
-			} ${transition ? 'transition duration-200 ease-in-out' : ''} ${
+			} ${transition ?
+				'transition duration-200 ease-in-out' :
+				''} ${
 				colorClassNames[color]
 			} font-bold flex items-center justify-center ${className}`}
 			disabled={disabled || loading}
 			type="button"
 			{...props}
 		>
-			<span className={loading ? 'opacity-0' : 'flex items-center'}>
-				{icon ? <span className="mr-2 items-center">{icon}</span> : null}
+			<span className={loading ?
+				'opacity-0' :
+				'flex items-center'}
+			>
+				{icon ?
+					<span className="mr-2 items-center">
+						{icon}
+					</span> :
+					null}
 
 				{children}
 			</span>
 
-			{loading ? <span className="absolute">spinner</span> : null}
+			{loading ?
+				<span className="absolute">
+					spinner
+				</span> :
+				null}
 		</button>
 	);
 }

@@ -5,7 +5,8 @@
   "license": "MIT",
   "author": "Matthew Zito (goldmund) <matthewtzito@gmail.com>",
   "scripts": {
-    "dev": "vite"
+    "dev": "vite",
+    "lint": "eslint --ext .ts,.js,.tsx,.jsx,.json . --fix"
   },
   "dependencies": {
     "react": "17.0.2",
@@ -21,6 +22,7 @@
     "uuid": "8.3.2"
   },
   "devDependencies": {
+    "@magister_zito/eslint-config-react": "^0.8.0",
     "@magister_zito/stylelint-config": "0.0.1",
     "@tailwindcss/line-clamp": "0.2.2",
     "@types/react": "17.0.19",
@@ -30,8 +32,12 @@
     "@types/uuid": "8.3.1",
     "@vitejs/plugin-react": "1.0.1",
     "autoprefixer": "10.3.7",
+    "eslint": "7.32.0",
+    "eslint-config-prettier": "8.3.0",
+    "isomorphic-ws": "4.0.1",
     "postcss": "8.3.9",
     "prettier": "2.4.1",
+    "reconnecting-websocket": "4.4.0",
     "sass": "1.42.0",
     "stylelint": "13.13.1",
     "tailwind-scrollbar": "1.3.1",

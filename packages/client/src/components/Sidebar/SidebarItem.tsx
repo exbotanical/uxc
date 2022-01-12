@@ -1,3 +1,7 @@
+
+import { useConn } from '@uxc/client/hooks/useConn';
+import { NotificationBadge } from '@uxc/client/ui/Badges/NotificationBadge';
+import { handleKeypressWith } from '@uxc/client/utils';
 import React from 'react';
 import {
 	useHistory,
@@ -5,10 +9,6 @@ import {
 	withRouter,
 	RouteComponentProps
 } from 'react-router-dom';
-
-import { useConn } from '@/hooks/useConn';
-import { NotificationBadge } from '@/ui/Badges/NotificationBadge';
-import { handleKeypressWith } from '@/utils';
 
 interface Params {
 	id?: string;
@@ -76,7 +76,9 @@ function SidebarItem({
 				</span>
 			)}
 
-			<NotificationBadge>2</NotificationBadge>
+			<NotificationBadge>
+				<p>2</p>
+			</NotificationBadge>
 		</div>
 	);
 }

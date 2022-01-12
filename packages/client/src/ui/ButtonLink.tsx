@@ -2,7 +2,7 @@ import type { ComponentPropsWithoutRef } from 'react';
 
 import React from 'react';
 
-export function ButtonLink({
+export function ButtonLink ({
 	children,
 	className,
 	...props

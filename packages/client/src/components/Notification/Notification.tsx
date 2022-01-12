@@ -1,9 +1,9 @@
+import { CloseIconButton } from '@uxc/client/ui/CloseIconButton';
+import { handleKeypressWith } from '@uxc/client/utils';
 import React, { useEffect, useRef } from 'react';
 
-import type { Notification as NotifType } from '@/state/types';
+import type { Notification as NotifType } from '@uxc/client/state/types';
 
-import { CloseIconButton } from '@/ui/CloseIconButton';
-import { handleKeypressWith } from '@/utils';
 
 export type NotificationDuration = 'default' | 'sticky';
 
@@ -27,7 +27,7 @@ export function Notification({
 		}
 
 		const timer = setTimeout(() => {
-			onCloseRef.current?.();
+			onCloseRef.current();
 		}, 5000);
 
 		return () => {

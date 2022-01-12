@@ -1,6 +1,6 @@
 import React from 'react';
 
-import type { Message } from '@/types/message';
+import type { Message } from '@uxc/client/types/message';
 
 export function ChannelMessage({ message, user }: Message) {
 	const { username } = user;

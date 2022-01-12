@@ -2,7 +2,7 @@ import type { CSSProperties } from 'react';
 
 import React from 'react';
 
-export function SmileyIcon({ style }: { style: CSSProperties }) {
+export function SmileyIcon ({ style }: { style: CSSProperties }) {
 	return (
 		<svg
 			fill="currentColor"

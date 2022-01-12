@@ -1,8 +1,9 @@
-import type { Connection } from './core';
-import type { Message } from '@/types/message';
+import { Channel } from '@uxc/client/types/channel';
+import { User } from '@uxc/client/types/user';
 
-import { Channel } from '@/types/channel';
-import { User } from '@/types/user';
+import type { Connection } from './core';
+import type { Message } from '@uxc/client/types/message';
+
 
 type Handler<Data> = (data: Data) => void;
 

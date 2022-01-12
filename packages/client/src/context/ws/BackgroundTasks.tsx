@@ -3,7 +3,7 @@ import { useContext, useEffect } from 'react';
 import { SocketContext } from '.';
 
 export function useBackgroundTasks() {
-	const { conn } = useContext(SocketContext);
+	const { conn } = useContext(SocketContext)!;
 
 	useEffect(() => {
 		if (!conn) return;
@@ -28,7 +28,7 @@ export function useBackgroundTasks() {
 export function BackgroundTasksProvider({
 	children
 }: {
-	children: JSX.Element | JSX.Element[];
+	children: JSX.Element;
 }) {
 	useBackgroundTasks();
 

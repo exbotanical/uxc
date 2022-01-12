@@ -1,11 +1,11 @@
+import { UserCard } from '@uxc/client/components/User/UserCard';
+import { useConn, useWrappedConn } from '@uxc/client/hooks/useConn';
+import { connector, PropsFromRedux } from '@uxc/client/state';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import type { User } from '@/types/user';
+import type { User } from '@uxc/client/types/user';
 
-import { UserCard } from '@/components/User/UserCard';
-import { useConn, useWrappedConn } from '@/hooks/useConn';
-import { connector, PropsFromRedux } from '@/state';
 
 function ChannelUser(u: User) {
 	return (
@@ -14,13 +14,6 @@ function ChannelUser(u: User) {
 
 			<div className="flex ml-3 flex-col overflow-hidden justify-center">
 				<h5 className="text-primary-100 font-bold">{u.username}</h5>
-
-				{/*
-				{u.currentChannel ? (
-					<a className={`hover:underline text-primary-300 truncate block`}>
-						aaa
-					</a>
-				) : null} */}
 			</div>
 		</div>
 	);

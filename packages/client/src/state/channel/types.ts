@@ -1,4 +1,4 @@
-import { Channel } from '@/types/channel';
+import { Channel } from '@uxc/client/types/channel';
 
 export enum MODAL_ACTION {
 	SHOW = 'SHOW_MODAL',

@@ -1,9 +1,9 @@
-import React from 'react';
 
-import { RoutedSidebarItem as SidebarItem } from '@/components/Sidebar/SidebarItem';
-import { SidebarSectionContainer } from '@/components/Sidebar/SidebarSection';
-import { Status } from '@/components/Sidebar/Status/Status';
-import { useConn } from '@/hooks/useConn';
+import { RoutedSidebarItem as SidebarItem } from '@uxc/client/components/Sidebar/SidebarItem';
+import { SidebarSectionContainer } from '@uxc/client/components/Sidebar/SidebarSection';
+import { Status } from '@uxc/client/components/Sidebar/Status/Status';
+import { useConn } from '@uxc/client/hooks/useConn';
+import React from 'react';
 
 export function Sidebar() {
 	const { conn } = useConn();

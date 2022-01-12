@@ -28,8 +28,6 @@ const HIDE_NOTIFICATION: HideNotification = ({ id }) => ({
 });
 
 // Action Creators
-export const showNotification: ShowNotification = (args) =>
-	store.dispatch(SHOW_NOTIFICATION(args));
+export const showNotification: ShowNotification = (args) => store.dispatch(SHOW_NOTIFICATION(args));
 
-export const hideNotification: HideNotification = (args) =>
-	store.dispatch(HIDE_NOTIFICATION(args));
+export const hideNotification: HideNotification = (args) => store.dispatch(HIDE_NOTIFICATION(args));

@@ -1,12 +1,11 @@
 import React from 'react';
-
-import { UsersInChannelContainer } from '@/components/Channel/Users/UsersInChannel';
-import { CreateChannelModalContainer } from '@/components/Modal/CreateChannel';
-import { NotificationController } from '@/components/Notification/NotificationController';
-import { Profile, RightPanel } from '@/components/Panels/RightPanel';
-import { Sidebar } from '@/components/Sidebar/Sidebar';
-import '@/styles/landing.scss';
-import { useViewportSize } from '@/hooks/useViewportSize';
+import { UsersInChannelContainer } from '@uxc/client/components/Channel/Users/UsersInChannel';
+import { CreateChannelModalContainer } from '@uxc/client/components/Modal/CreateChannel';
+import { NotificationController } from '@uxc/client/components/Notification/NotificationController';
+import { Profile, RightPanel } from '@uxc/client/components/Panels/RightPanel';
+import { Sidebar } from '@uxc/client/components/Sidebar/Sidebar';
+import '@uxc/client/styles/landing.scss';
+import { useViewportSize } from '@uxc/client/hooks/useViewportSize';
 
 export function WithLayout({
 	children,

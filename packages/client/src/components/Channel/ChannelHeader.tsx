@@ -1,10 +1,11 @@
+
+
+import { connector, PropsFromRedux } from '@uxc/client/state';
+import { EditIcon } from '@uxc/client/ui/Icons/EditIcon';
+import { handleKeypressWith } from '@uxc/client/utils';
 import React from 'react';
 
-import type { User } from '@/types/user';
-
-import { connector, PropsFromRedux } from '@/state';
-import { EditIcon } from '@/ui/Icons/EditIcon';
-import { handleKeypressWith } from '@/utils';
+import type { User } from '@uxc/client/types/user';
 
 interface ChannelHeaderProps {
 	user: User;
@@ -43,23 +44,6 @@ function ChannelHeader({
 					<EditIcon />
 				</div>
 			</div>
-
-			{/* <div className="my-2 px-4 rounded-lg shadow-lg space-x-6 flex items-center bg-primary-700 rounded-8">
-				<button className="focus:outline-none">
-					<svg
-						className="fill-current text-primary-100 h-4 w-4"
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 20 20"
-					>
-						<path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z" />
-					</svg>
-				</button>
-				<input
-					type="search"
-					className="bg-transparent text-base focus:outline-none"
-					placeholder="Search..."
-				/>
-			</div> */}
 		</div>
 	);
 }

@@ -1,9 +1,9 @@
+
+import { SessionContext } from '@uxc/client/context';
+import { useConn } from '@uxc/client/hooks/useConn';
+import { User } from '@uxc/client/types/user';
 import React, { ChangeEvent, FormEvent, useContext, useState } from 'react';
 import { useHistory, Redirect } from 'react-router-dom';
-
-import { SessionContext } from '@/context';
-import { useConn } from '@/hooks/useConn';
-import { User } from '@/types/user';
 
 export function Login() {
 	const history = useHistory();

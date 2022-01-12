@@ -1,9 +1,0 @@
-{
-  "extends": [
-    "@magister_zito/react",
-    "prettier",
-  ],
-  "ignorePatterns": [
-    "server"
-  ]
-}

@@ -1,3 +1,6 @@
+import { SessionContext } from '@uxc/client/context';
+import { connect } from '@uxc/client/services/ws/core';
+import { showNotification } from '@uxc/client/state';
 import React, {
 	createContext,
 	useContext,
@@ -7,18 +10,15 @@ import React, {
 	useState
 } from 'react';
 
-import type { Connection } from '@/services/ws/core';
-import type { User } from '@/types/user';
+import type { Connection } from '@uxc/client/services/ws/core';
+import type { User } from '@uxc/client/types/user';
 
-import { SessionContext } from '@/context';
-import { connect } from '@/services/ws/core';
-import { showNotification } from '@/state';
 
 interface SocketProviderProps {
 	shouldConnect: boolean;
 }
 
-interface UserSetter {
+export interface UserSetter {
 	(user: User): User;
 }
 
@@ -90,17 +90,17 @@ SocketProviderProps & { children: JSX.Element | JSX.Element[] }) {
 			setConn,
 			// `args` here is either a new user object or a setter function
 			// that pulls in the current user and returns a diffed, new user
-			setUser(args: User | UserSetter) {
+			setUser(user: User | UserSetter) {
 				if (conn) {
-					if (typeof args === 'function') {
+					if (typeof user === 'function') {
 						setConn({
 							...conn,
-							user: args(conn.user)
+							user: user(conn.user)
 						});
 					} else {
 						setConn({
 							...conn,
-							user: args
+							user
 						});
 					}
 				}

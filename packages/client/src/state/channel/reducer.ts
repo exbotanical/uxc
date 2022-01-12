@@ -6,16 +6,19 @@ const initialState = {
 	channelModal: { showing: false }
 };
 
-export function reducer(
+export function reducer (
 	state: ChannelState = initialState, // eslint-disable-line @typescript-eslint/default-param-last
 	action: ModalAction
 ): ChannelState {
 	if (isHideChannelAction(action)) {
-		return { ...state, channelModal: { showing: false } };
+		return { ...state,
+			channelModal: { showing: false } };
 	}
 
 	if (isShowChannelAction(action)) {
-		return { ...state, channelModal: { showing: true, ...action.payload } };
+		return { ...state,
+			channelModal: { showing: true,
+				...action.payload } };
 	}
 
 	return state;

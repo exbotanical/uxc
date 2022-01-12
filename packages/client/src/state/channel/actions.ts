@@ -18,8 +18,6 @@ const HIDE_UPSERT_CHANNEL_MODAL: HideModal = () => ({
 });
 
 // Action Creators
-export const showUpsertChannelModal: ShowModal = (args) =>
-	store.dispatch(SHOW_UPSERT_CHANNEL_MODAL(args));
+export const showUpsertChannelModal: ShowModal = (args) => store.dispatch(SHOW_UPSERT_CHANNEL_MODAL(args));
 
-export const hideUpsertChannelModal: HideModal = () =>
-	store.dispatch(HIDE_UPSERT_CHANNEL_MODAL());
+export const hideUpsertChannelModal: HideModal = () => store.dispatch(HIDE_UPSERT_CHANNEL_MODAL());

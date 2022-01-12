@@ -1,6 +1,6 @@
+import { useConn } from '@uxc/client/hooks/useConn';
 import React from 'react';
 
-import { useConn } from '@/hooks/useConn';
 
 export function Status() {
 	const { conn } = useConn();

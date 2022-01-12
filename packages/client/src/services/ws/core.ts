@@ -1,10 +1,10 @@
+import { User } from '@uxc/client/types/user';
 import WebSocket from 'isomorphic-ws';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 import { v4 as generateUuid } from 'uuid';
 
-import type { UUID, JWT } from '@/types/const';
+import type { UUID, JWT } from '@uxc/client/types/const';
 
-import { User } from '@/types/user';
 
 /*
 	BEGIN TYPES

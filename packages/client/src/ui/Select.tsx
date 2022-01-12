@@ -5,7 +5,7 @@ import React from 'react';
 const pixel =
 	'data:image/svg+xml;base64, PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iNiIgdmlld0JveD0iMCAwIDEwIDYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0wIDAuNUw1IDUuNUwxMCAwLjVIMFoiIGZpbGw9IiNERUUzRUEiLz4KPC9zdmc+Cgo=';
 
-export function Select({
+export function Select ({
 	children,
 	className,
 	...props
@@ -16,7 +16,7 @@ export function Select({
 			style={{
 				backgroundImage: `url(${pixel})`,
 				backgroundPosition: 'right 8.5px center'
-			}}
+}}
 			{...props}
 		>
 			{children}
