@@ -8,12 +8,16 @@ import type {
 
 export const NAMESPACE = 'channel';
 
-export function isHideChannelAction (action: BaseChannelAction): action is HideChannelAction {
+export function isHideChannelAction(
+	action: BaseChannelAction
+): action is HideChannelAction {
 	return action.type === MODAL_ACTION.HIDE;
 }
 
-export function isShowChannelAction (action: BaseChannelAction): action is ShowChannelAction {
-	return action.type === MODAL_ACTION.SHOW && !!action.payload.type;
+export function isShowChannelAction(
+	action: BaseChannelAction
+): action is ShowChannelAction {
+	return action.type === MODAL_ACTION.SHOW && !!action?.payload?.type;
 }
 
 export const createActionName = (name: string) => `${NAMESPACE}/${name}`;

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import type { Message } from '@uxc/client/types/message';
+import type { Message } from '@uxc/types';
 
-export function ChannelMessage({ message, user }: Message) {
+export function RoomMessage({ message, user }: Message) {
 	const { username } = user;
 	const colors = [
 		'#ff2366',
@@ -42,4 +42,4 @@ export function ChannelMessage({ message, user }: Message) {
 	);
 }
 
-ChannelMessage.displayName = 'ChannelMessage';
+RoomMessage.displayName = 'RoomMessage';

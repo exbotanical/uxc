@@ -8,7 +8,7 @@ export function useBackgroundTasks() {
 	useEffect(() => {
 		if (!conn) return;
 
-		const unsubscribables = [
+		const subscriptions = [
 			conn.subscribe('error', (message: string) => {
 				// dispatchErrorToast(message);
 				console.error({ message });
@@ -16,7 +16,7 @@ export function useBackgroundTasks() {
 		];
 
 		return () => {
-			unsubscribables.forEach((u) => {
+			subscriptions.forEach((u) => {
 				u();
 			});
 		};

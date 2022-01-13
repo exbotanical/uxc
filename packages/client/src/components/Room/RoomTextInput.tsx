@@ -1,16 +1,15 @@
-import { SmileyIcon } from '@uxc/client/ui/Icons/SmileyIcon';
-import { Input } from '@uxc/client/ui/Input';
+import { SmileyIcon } from '@/ui/Icons/SmileyIcon';
+import { Input } from '@/ui/Input';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 
-import type { SendMessage } from '@uxc/client/pages/Channel';
+import type { SendMessage } from '@/components/Room/Room';
 
-
-interface ChannelTextInputProps {
+interface RoomTextInputProps {
 	sendMessage: SendMessage;
 	name: string;
 }
 
-export function ChannelTextInput({ sendMessage, name }: ChannelTextInputProps) {
+export function RoomTextInput({ sendMessage, name }: RoomTextInputProps) {
 	const [message, setMessage] = useState('');
 
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -28,10 +27,8 @@ export function ChannelTextInput({ sendMessage, name }: ChannelTextInputProps) {
 	};
 
 	return (
-		<div className="pb-3 px-4 pt-2 flex flex-col">
+		<div className="flex flex-col z-1 p-2">
 			<form className="flex flex-col w-auto m-2" onSubmit={handleSubmit}>
-				<div className="mb-1 block relative" />
-
 				<div className="flex items-stretch">
 					<div className="flex-1">
 						<div className="flex flex-1 lg:mr-0 items-center bg-primary-700 rounded-8">
@@ -56,4 +53,4 @@ export function ChannelTextInput({ sendMessage, name }: ChannelTextInputProps) {
 	);
 }
 
-ChannelTextInput.displayName = 'ChannelTextInput';
+RoomTextInput.displayName = 'RoomTextInput';

@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useMemo, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
-import type { JWT } from '@uxc/client/types/const';
+import type { JWT } from '@uxc/types';
 
 function defaultValue() {
 	try {
@@ -25,7 +25,6 @@ export function SessionProvider({
 	// TODO
 	children: JSX.Element | JSX.Element[];
 }) {
-	const history = useHistory();
 	const [userSession, _setUserSession] = useState(defaultValue);
 
 	const setUserSession = (accessToken: JWT | null) => {
@@ -42,17 +41,18 @@ export function SessionProvider({
 		const manageStorageAdapter = () => {
 			if (!defaultValue()) {
 				setUserSession(null);
-				history.replace('/');
+
+				return <Navigate to={'/'} />;
 			}
 		};
 
 		window.addEventListener('storage', manageStorageAdapter);
 
+		console.log({ userSession });
 		return () => {
 			window.removeEventListener('storage', manageStorageAdapter);
 		};
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
-
 	const value = useMemo(
 		() => ({
 			isAuthenticated: !!userSession,

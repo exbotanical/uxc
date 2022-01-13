@@ -1,6 +1,6 @@
-import { SessionContext } from '@uxc/client/context';
-import { connect } from '@uxc/client/services/ws/core';
-import { showNotification } from '@uxc/client/state';
+import { SessionContext } from '@/context';
+import { connect } from '@uxc/socket-client';
+import { showNotification } from '@/state';
 import React, {
 	createContext,
 	useContext,
@@ -10,9 +10,8 @@ import React, {
 	useState
 } from 'react';
 
-import type { Connection } from '@uxc/client/services/ws/core';
-import type { User } from '@uxc/client/types/user';
-
+import type { Connection } from '@uxc/socket-client/src/types';
+import type { User } from '@uxc/types';
 
 interface SocketProviderProps {
 	shouldConnect: boolean;
@@ -76,7 +75,9 @@ SocketProviderProps & { children: JSX.Element | JSX.Element[] }) {
 	}, [conn, shouldConnect, isAuthenticated, userSession]);
 
 	useEffect(() => {
-		if (!conn) return;
+		if (!conn) {
+			return;
+		}
 
 		return conn.subscribe<{
 			refreshToken: string;

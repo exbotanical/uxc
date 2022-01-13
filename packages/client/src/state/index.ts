@@ -11,7 +11,6 @@ import { reducer as notification } from './notifications/reducer';
 
 export type RootState = ReturnType<typeof store.getState>;
 
-// state
 const store = createStore(
 	combineReducers({
 		channel,
@@ -23,10 +22,8 @@ const store = createStore(
 		(window as any).__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-// selectors
-// TODO
+// @todo selectors
 
-// state helpers
 const mapStateToProps = (state: RootState) => {
 	return {
 		channelModalState: state.channel.channelModal,
@@ -41,10 +38,7 @@ const mapDispatchToProps = {
 	showUpsertChannelModal
 };
 
-const connector = connect(
-	mapStateToProps,
-	mapDispatchToProps
-);
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 export {
 	connector,

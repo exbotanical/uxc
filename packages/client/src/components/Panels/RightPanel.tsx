@@ -1,12 +1,11 @@
-import { useConn } from '@uxc/client/hooks/useConn';
+import { useConn } from '@/hooks/useConn';
 import React from 'react';
 
 import { UserCard } from '../User/UserCard';
 
-
 export function Profile() {
 	const { conn } = useConn();
-	const { user } = conn;
+	const { user } = conn!;
 
 	return (
 		<div className="flex flex-col rounded-8 bg-primary-800 p-4 w-full">

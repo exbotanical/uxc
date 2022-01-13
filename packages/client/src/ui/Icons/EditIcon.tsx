@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function EditIcon () {
+export function EditIcon() {
 	return (
 		<svg
 			className="text-primary-300"

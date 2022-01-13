@@ -1,9 +1,7 @@
 {
   "name": "@uxc/monorepo",
   "version": "1.0.0",
-  "description": "",
   "private": true,
-  "keywords": [],
   "license": "MIT",
   "author": "Matthew Zito <matthewtzito@gmail.com> (goldmund)",
   "scripts": {

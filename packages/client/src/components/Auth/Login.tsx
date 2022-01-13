@@ -1,12 +1,11 @@
-
-import { SessionContext } from '@uxc/client/context';
-import { useConn } from '@uxc/client/hooks/useConn';
-import { User } from '@uxc/client/types/user';
+import { SessionContext } from '@/context';
+import { useConn } from '@/hooks/useConn';
+import { User } from '@uxc/types';
 import React, { ChangeEvent, FormEvent, useContext, useState } from 'react';
-import { useHistory, Redirect } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 
 export function Login() {
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const { isAuthenticated, setUserSession } = useContext(SessionContext);
 	const { setUser } = useConn();
@@ -15,7 +14,7 @@ export function Login() {
 	const [password, setPassword] = useState('');
 
 	if (isAuthenticated) {
-		return <Redirect to="/dashboard" />;
+		return <Navigate to="/dashboard" />;
 	}
 
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -46,7 +45,7 @@ export function Login() {
 				setEmail('');
 				setPassword('');
 
-				history.push(`/channel/${user.currentChannel.uuid}`);
+				navigate(`/channel/${user.currentChannel.uuid}`);
 			} catch (ex) {
 				console.warn('authentication failed; TODO tell the user about this', {
 					ex

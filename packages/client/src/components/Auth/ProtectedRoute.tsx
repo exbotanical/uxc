@@ -1,27 +1,25 @@
-import { SocketContext, SessionContext } from '@uxc/client/context';
-import { WithLayout } from '@uxc/client/pages/WithLayout';
+import { SocketContext, SessionContext } from '@/context';
 import React, { useContext } from 'react';
-import { Redirect, Route, RouteProps } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
-
-export function ProtectedRoute({ ...props }: RouteProps) {
+export function ProtectedRoute({
+	children
+}: {
+	isDash?: boolean;
+	children: JSX.Element;
+}) {
 	const { conn } = useContext(SocketContext);
 	const { isAuthenticated } = useContext(SessionContext);
 
 	if (!isAuthenticated) {
-		return <Redirect to="/" />;
+		return <Navigate to="/" replace />;
 	}
 
 	if (!conn) {
 		return <>Loading...</>;
-	} // TODO improve
+	} // @TODO improve
 
-	const isDash = props.location.pathname == '/dashboard';
-	return (
-		<WithLayout isDash={isDash}>
-			<Route {...props} />
-		</WithLayout>
-	);
+	return <>{children}</>;
 }
 
 ProtectedRoute.displayName = 'ProtectedRoute';

@@ -15,8 +15,9 @@ export const handleChange =
 		fn(event.target.value);
 	};
 
-export const handleKeypressWith =
-	(fn: () => void) => (event: KeyboardEvent<HTMLDivElement>) => {
+export const onEnterKeyPressed =
+	(fn: () => void) =>
+	<T>(event: KeyboardEvent<T>) => {
 		if (event.key == 'Enter') {
 			event.preventDefault();
 			fn();

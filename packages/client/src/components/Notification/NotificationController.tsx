@@ -1,6 +1,5 @@
-
-import { Notification } from '@uxc/client/components/Notification/Notification';
-import { PropsFromRedux, connector } from '@uxc/client/state';
+import { Notification } from '@/components/Notification/Notification';
+import { PropsFromRedux, connector } from '@/state';
 import React from 'react';
 
 type NotificationControllerProps = PropsFromRedux;
@@ -11,7 +10,7 @@ function NotificationControllerBase({
 }: NotificationControllerProps & PropsFromRedux) {
 	return (
 		<div
-			className="absolute w-24 flex w-full fixed bottom-0 justify-center mx-auto inset-x-0"
+			className="absolute w-24 flex bottom-0 justify-center mx-auto inset-x-0"
 			style={{ zIndex: 1001 }}
 		>
 			<div className="flex flex-col w-full">

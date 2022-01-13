@@ -1,39 +1,56 @@
-
-import { RoutedSidebarItem as SidebarItem } from '@uxc/client/components/Sidebar/SidebarItem';
-import { SidebarSectionContainer } from '@uxc/client/components/Sidebar/SidebarSection';
-import { Status } from '@uxc/client/components/Sidebar/Status/Status';
-import { useConn } from '@uxc/client/hooks/useConn';
+import { Channel } from '@/components/Sidebar/Channel';
+import { ConnectedDivider as Divider } from '@/components/Sidebar/Divider';
+import { Status } from '@/components/Sidebar/Status';
+import { useConn } from '@/hooks/useConn';
+import { Button } from '@/ui/Button';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export function Sidebar() {
+	const navigate = useNavigate();
 	const { conn } = useConn();
-	const { user } = conn;
+	const { user } = conn!;
+
+	const toDashboard = () => {
+		navigate(`/dashboard`);
+	};
 
 	return (
-		<div className="bg-primary-800 h-full p-4 rounded-sm">
+		<div className="flex flex-col bg-primary-800 h-full px-2 rounded-sm">
 			<Status />
 
-			<div className="mb-4">
-				<SidebarSectionContainer title="Channels" />
+			<nav className="mb-2">
+				<Divider title="Channels" />
 
-				{user.channels.map(({ name, uuid, desc }) => (
-					<SidebarItem
-						desc={desc}
-						key={uuid}
-						name={name}
-						type="channel"
-						uuid={uuid}
-					/>
-				))}
-			</div>
+				<ul>
+					{user.channels.map(({ name, uuid, desc }) => (
+						<Channel
+							desc={desc}
+							key={uuid}
+							name={name}
+							type="channel"
+							uuid={uuid}
+						/>
+					))}
+				</ul>
+			</nav>
 
 			<hr className="border-outline font-thin" />
 
-			<SidebarSectionContainer title="Direct Messages" />
+			<Divider title="Direct Messages" />
 
 			{user.directMessageThreads.map(({ user, uuid }) => (
-				<SidebarItem key={uuid} name={user.username} type="dm" uuid={uuid} />
+				<Channel key={uuid} name={user.username} type="dm" uuid={uuid} />
 			))}
+
+			<Button
+				className="mt-auto"
+				color="primary"
+				type="button"
+				onClick={toDashboard}
+			>
+				To dashboard
+			</Button>
 		</div>
 	);
 }

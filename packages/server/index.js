@@ -1,8 +1,12 @@
-const app = express();
 const cors = require('cors');
 const express = require('express');
 const { v4 } = require('uuid');
 const { WebSocketServer } = require('ws');
+
+const app = express();
+/**
+ * quick and dirty for now; @todo implement server
+ */
 
 const PORT = 5000;
 const wss = new WebSocketServer({ port: PORT });

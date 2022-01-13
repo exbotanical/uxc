@@ -1,12 +1,7 @@
 {
   "compilerOptions": {   
 		"strictNullChecks": true,
-    "baseUrl": ".",
-    "paths": {
-      "@uxc/client/*": ["./packages/client/src/*"],
-      "@uxc/server/*": ["./packages/server/src/*"],
-      "@uxc/socket-client/*": ["./packages/socket-client/src/*"],
-    }
+    "baseUrl": "."
   },
   "exclude": [
     "**/dist/**"

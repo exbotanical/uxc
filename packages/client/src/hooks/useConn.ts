@@ -1,5 +1,5 @@
-import { SocketContext } from '@uxc/client/context';
-import { wrap } from '@uxc/client/services';
+import { SocketContext } from '@/context';
+import { wrap } from '@uxc/socket-client';
 import { useContext } from 'react';
 
 export function useConn() {
@@ -15,7 +15,7 @@ export function useWrappedConn() {
 	const { conn, setUser } = useContext(SocketContext);
 
 	return {
-		client: wrap(conn),
+		client: wrap(conn!),
 		setUser
 	};
 }

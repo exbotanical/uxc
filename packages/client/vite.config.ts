@@ -14,7 +14,7 @@ export default defineConfig({
 	css: {
 		preprocessorOptions: {
 			scss: {
-				additionalData: "@import '@uxc/client/styles/index';"
+				additionalData: "@import '@/styles/index';"
 			}
 		}
 	},

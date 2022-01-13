@@ -1,27 +1,26 @@
-
-import { useWrappedConn } from '@uxc/client/hooks/useConn';
-import { connector, PropsFromRedux } from '@uxc/client/state';
-import { Button } from '@uxc/client/ui/Button';
-import { Input } from '@uxc/client/ui/Input';
-import { Modal } from '@uxc/client/ui/Modal';
-import { Select } from '@uxc/client/ui/Select';
+import { useWrappedConn } from '@/hooks/useConn';
+import { connector, PropsFromRedux } from '@/state';
+import { Button } from '@/ui/Button';
+import { Input } from '@/ui/Input';
+import { Modal } from '@/ui/Modal';
+import { Select } from '@/ui/Select';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function CreateChannelModal({
 	channelModalState,
 	hideUpsertChannelModal,
 	showNotification
 }: PropsFromRedux) {
-	const history = useHistory();
+	const navigate = useNavigate();
 	const { client, setUser } = useWrappedConn();
 
 	const [channelName, setChannelName] = useState(
-		channelModalState.data.name || ''
+		channelModalState?.data?.name || ''
 	);
 
 	const [channelDesc, setChannelDesc] = useState(
-		channelModalState.data.desc || ''
+		channelModalState?.data?.desc || ''
 	);
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +55,7 @@ function CreateChannelModal({
 				currentChannel: res.channel
 			}));
 
-			history.push(`/channel/${res.channel.uuid}`);
+			navigate(`/channel/${res.channel.uuid}`);
 		}
 
 		hideUpsertChannelModal();
@@ -134,4 +133,4 @@ function CreateChannelModal({
 
 CreateChannelModal.displayName = 'CreateChannelModal';
 
-export const CreateChannelModalContainer = connector(CreateChannelModal);
+export const ConnectedCreateChannelModal = connector(CreateChannelModal);

@@ -1,96 +1,34 @@
-import { ChannelHeaderContainer } from '@uxc/client/components/Channel/ChannelHeader';
-import { ChannelMessage } from '@uxc/client/components/Channel/ChannelMessage';
-import { ChannelTextInput } from '@uxc/client/components/Channel/ChannelTextInput';
-import { useConn, useWrappedConn } from '@uxc/client/hooks/useConn';
-import { connector, PropsFromRedux } from '@uxc/client/state';
-import React, { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { v4 } from 'uuid';
+import React from 'react';
+import { ConnectedUsersInChannel } from '@/components/Room/Users/UsersInChannel';
+import { ConnectedCreateChannelModal } from '@/components/Modal/CreateChannel';
+import { NotificationController } from '@/components/Notification/NotificationController';
+import { Sidebar } from '@/components/Sidebar/Sidebar';
+import { useViewportSize } from '@/hooks/useViewportSize';
+import { ConnectedRoom } from '@/components/Room/Room';
 
-import type { Message } from '@uxc/client/types/message';
-
-export interface SendMessage {
-	(message: string): void;
-}
-
-export function Channel({ showNotification }: PropsFromRedux) {
-	const { id } = useParams<{ id: string }>();
-
-	const bottomRef = useRef<HTMLDivElement | null>(null);
-
-	const { conn } = useConn();
-	const { user } = conn;
-
-	const { client } = useWrappedConn();
-
-	const [isScrolledToTop] = useState(false);
-	const [messages, setMessages] = useState<Message[]>([]);
-
-	const sendMessage: SendMessage = (message) => {
-		client.mutation.sendMessage({
-			channelUuid: id,
-			message,
-			timestamp: new Date().toISOString(),
-			user: {
-				userImage: user.userImage,
-				username: user.username,
-				uuid: user.uuid
-			},
-			uuid: v4()
-		});
-	};
-
-	useEffect(() => {
-		isScrolledToTop ||
-			bottomRef.current.scrollIntoView({
-				block: 'nearest',
-				inline: 'start'
-			});
-	});
-
-	useEffect(() => {
-		(async () => {
-			const res = await client.query.getChannel({ id });
-			if (typeof res === 'object' && 'error' in res) {
-				showNotification({
-					message:
-						'Something went wrong while grabbing info for this channel. Please try again later.',
-					type: 'error'
-				});
-			} else if (res.messages.length) {
-				setMessages(res.messages);
-			}
-		})();
-	}, [id]); // eslint-disable-line react-hooks/exhaustive-deps
-
-	useEffect(() => {
-		client.subscribe.onMessage((message) => {
-			setMessages((prevState) => [...prevState, message]);
-		});
-	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+export function Channel() {
+	const viewport = useViewportSize();
 
 	return (
-		<div className="flex flex-col h-full bg-primary-800 rounded-sm">
-			<div>
-				<ChannelHeaderContainer user={user} />
+		<>
+			<NotificationController />
+
+			<ConnectedCreateChannelModal />
+
+			<div className="grid h-screen grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-2 lg:gap-4 p-0 lg:p-2">
+				<div className="col-span-1 lg:col-span-3">
+					<Sidebar />
+				</div>
+				<div className="col-span-1 md:col-span-2 lg:col-span-6">
+					<ConnectedRoom />
+				</div>
+
+				{viewport > 1 ? (
+					<div className="col-span-0 col-span-3">
+						<ConnectedUsersInChannel />
+					</div>
+				) : null}
 			</div>
-
-			<div className="overflow-y-auto" style={{ height: '80vh' }}>
-				{messages.map((message) => {
-					return <ChannelMessage key={message.uuid} {...message} />;
-				})}
-
-				<div ref={bottomRef} />
-			</div>
-
-			<ChannelTextInput
-				name={user.currentChannel.name}
-				sendMessage={sendMessage}
-			/>
-		</div>
+		</>
 	);
 }
-
-Channel.displayName = 'Channel';
-
-export const ChannelContainer = connector(Channel);

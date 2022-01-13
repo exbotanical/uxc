@@ -1,6 +1,6 @@
 import React from 'react';
 
-import type { User } from '@uxc/client/types/user';
+import type { User } from '@uxc/types';
 
 export const onlineIndicatorStyleMap = {
 	default: {

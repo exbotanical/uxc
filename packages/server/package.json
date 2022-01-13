@@ -8,7 +8,7 @@
   "author": "Matthew Zito <matthewtzito@gmail.com> (goldmund)",
   "main": "index.js",
   "scripts": {
-    "dev": "node &",
+    "dev": "node . &",
 		"lint": "eslint --ext .ts,.js,.tsx,.jsx,.json . --fix"
   },
   "dependencies": {

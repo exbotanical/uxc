@@ -1,9 +1,8 @@
-import { CloseIconButton } from '@uxc/client/ui/CloseIconButton';
-import { handleKeypressWith } from '@uxc/client/utils';
+import { CloseIconButton } from '@/ui/CloseIconButton';
+import { onEnterKeyPressed } from '@/utils';
 import React, { useEffect, useRef } from 'react';
 
-import type { Notification as NotifType } from '@uxc/client/state/types';
-
+import type { Notification as NotifType } from '@/state/types';
 
 export type NotificationDuration = 'default' | 'sticky';
 
@@ -16,18 +15,15 @@ export function Notification({
 	button,
 	duration = 'default',
 	type,
-	onClose
+	onClose = () => {}
 }: NotificationProps) {
-	const onCloseRef = useRef(onClose);
-	onCloseRef.current = onClose;
-
 	useEffect(() => {
 		if (duration === 'sticky') {
 			return;
 		}
 
 		const timer = setTimeout(() => {
-			onCloseRef.current();
+			onClose();
 		}, 5000);
 
 		return () => {
@@ -48,16 +44,10 @@ export function Notification({
 		>
 			{onClose ? (
 				<div
-					className="flex absolute cursor-pointer"
+					className="flex absolute cursor-pointer h-4 w-12 right-2 bottom-5 pt-1"
 					onClick={onClose}
-					onKeyPress={handleKeypressWith(onClose)}
+					onKeyPress={onEnterKeyPressed(onClose)}
 					role="button"
-					style={{
-						height: 13,
-						right: 13,
-						top: 5,
-						width: 13
-					}}
 					tabIndex={0}
 				>
 					<CloseIconButton style={{ transform: 'rotate(45deg)' }} />
