@@ -16,7 +16,7 @@ export function Sidebar() {
 	};
 
 	return (
-		<div className="flex flex-col bg-primary-800 h-full px-2 rounded-sm">
+		<div className="flex flex-col bg-primary-800 h-full rounded-sm">
 			<Status />
 
 			<nav className="mb-2">
@@ -44,7 +44,7 @@ export function Sidebar() {
 			))}
 
 			<Button
-				className="mt-auto"
+				className="mt-auto mb-2 mx-2"
 				color="primary"
 				type="button"
 				onClick={toDashboard}

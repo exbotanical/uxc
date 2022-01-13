@@ -15,14 +15,14 @@ function Divider({
 	};
 
 	return (
-		<div className="grid grid-cols-4 items-center text-white my-1">
+		<div className="grid grid-cols-4 items-center text-white my-1 px-2">
 			<div className="col-span-3">
 				<p className="whitespace-nowrap font-bold text-sm opacity-75 uppercase">
 					{title}
 				</p>
 			</div>
 
-			<div className="place-self-end" style={{ paddingRight: '3.5px' }}>
+			<div className="place-self-end" style={{ paddingRight: '2.75px' }}>
 				<div
 					onClick={handleClick}
 					onKeyPress={onEnterKeyPressed(handleClick)}

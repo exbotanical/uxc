@@ -3,7 +3,9 @@
 ## @uxc/client
 
 - [ ] convert sidebar to collapsible side drawer
-- [ ] tabs animation
+- [x] tabs animation
 - [ ] page transition
 - [ ] chat messages
-- [ ] nav
+- [x] nav
+- [ ] unit tests
+- [ ] integration tests

@@ -13,7 +13,14 @@ export interface SendMessage {
 	(message: string): void;
 }
 
-export function Room({ showNotification }: PropsFromRedux) {
+interface RoomProps {
+	className: string;
+}
+
+export function Room({
+	className,
+	showNotification
+}: RoomProps & PropsFromRedux) {
 	const { id } = useParams<{ id: string }>();
 
 	if (!id) {
@@ -56,7 +63,6 @@ export function Room({ showNotification }: PropsFromRedux) {
 		(async () => {
 			const res = await client.query.getChannel({ id });
 
-			console.log({ res });
 			if (typeof res === 'object' && 'error' in res) {
 				showNotification({
 					message:
@@ -76,10 +82,10 @@ export function Room({ showNotification }: PropsFromRedux) {
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
-		<div className="flex flex-col h-screen bg-primary-800 rounded-sm">
+		<div className={className + ' flex flex-col bg-primary-800 rounded-sm'}>
 			<ConnectedRoomHeader user={user} />
 
-			<div className="overflow-y-auto" style={{ height: '83vh' }}>
+			<div className="overflow-y-auto flex-auto">
 				{messages.map((message) => {
 					return <RoomMessage key={message.uuid} {...message} />;
 				})}
@@ -87,10 +93,12 @@ export function Room({ showNotification }: PropsFromRedux) {
 				<div ref={bottomRef} />
 			</div>
 
-			<RoomTextInput
-				name={user.currentChannel.name}
-				sendMessage={sendMessage}
-			/>
+			<footer className="flex flex-col p-2">
+				<RoomTextInput
+					name={user.currentChannel.name}
+					sendMessage={sendMessage}
+				/>
+			</footer>
 		</div>
 	);
 }

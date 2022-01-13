@@ -15,13 +15,12 @@ export function Channel() {
 
 			<ConnectedCreateChannelModal />
 
-			<div className="grid h-screen grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-2 lg:gap-4 p-0 lg:p-2">
+			<div className="h-screen grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-2 lg:gap-4 p-0 lg:p-2">
 				<div className="col-span-1 lg:col-span-3">
 					<Sidebar />
 				</div>
-				<div className="col-span-1 md:col-span-2 lg:col-span-6">
-					<ConnectedRoom />
-				</div>
+
+				<ConnectedRoom className="col-span-1 md:col-span-2 lg:col-span-6 overflow-hidden" />
 
 				{viewport > 1 ? (
 					<div className="col-span-0 col-span-3">

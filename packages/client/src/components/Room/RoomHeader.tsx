@@ -21,7 +21,7 @@ function RoomHeader({
 	};
 
 	return (
-		<header className="border-b my-2 border-outline flex px-3 py-2 justify-between h-9 mt-0">
+		<header className="border-b mb-2 border-outline flex px-3 py-2 justify-between h-[75px]">
 			<section className="flex flex-col">
 				<h4 className="text-primary-100 mb-1 font-extrabold">
 					#{user.currentChannel.name}

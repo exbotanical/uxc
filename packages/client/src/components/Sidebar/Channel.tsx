@@ -47,7 +47,7 @@ export function Channel({
 
 	return (
 		<li
-			className={itemClass}
+			className={itemClass + ' px-3'}
 			style={{ transition: 'color .3s, background-color .4s' }}
 			onClick={handleClick}
 			onKeyPress={(e) => {

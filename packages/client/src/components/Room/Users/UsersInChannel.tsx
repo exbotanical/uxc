@@ -8,7 +8,7 @@ import type { User } from '@uxc/types';
 
 function ChannelUser(u: User) {
 	return (
-		<div className="flex py-3 w-full hover:bg-primary-700">
+		<div className="flex p-2 w-full hover:bg-primary-700">
 			<UserCard isOnline size="sm" u={u} />
 
 			<div className="flex ml-3 flex-col overflow-hidden justify-center">
@@ -44,10 +44,10 @@ export function UsersInChannel({ showNotification }: PropsFromRedux) {
 	}, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
-		<div className="bg-primary-800 p-4 pb-5 w-full flex flex-col flex-1 overflow-y-auto rounded-sm h-full">
-			<h4 className="text-primary-100">Users</h4>
+		<div className="bg-primary-800 w-full h-full flex flex-col overflow-y-auto rounded-sm">
+			<h4 className="text-primary-100 px-2 py-1">Users</h4>
 
-			<h6 className="text-primary-300 mt-3 text-sm font-bold uppercase">
+			<h6 className="text-primary-300 px-2 py-1 text-sm font-bold uppercase">
 				{users.length + 1} online
 			</h6>
 

@@ -1,15 +1,21 @@
 import React from 'react';
-import { ConnectedUsersInChannel } from '@/components/Room/Users/UsersInChannel';
+
 import { ConnectedCreateChannelModal } from '@/components/Modal/CreateChannel';
 import { NotificationController } from '@/components/Notification/NotificationController';
 import { Profile, RightPanel } from '@/components/Panels/RightPanel';
-import { Sidebar } from '@/components/Sidebar/Sidebar';
 import { useViewportSize } from '@/hooks/useViewportSize';
+import { motion } from 'framer-motion';
+
 export function Dashboard() {
 	const viewport = useViewportSize();
 
 	return (
-		<>
+		<motion.div
+			initial={{ scaleY: 0 }}
+			animate={{ scaleY: 1 }}
+			exit={{ scaleY: 0 }}
+			transition={{ duration: 0.5 }}
+		>
 			<NotificationController />
 
 			<ConnectedCreateChannelModal />
@@ -24,6 +30,6 @@ export function Dashboard() {
 					</div>
 				) : null}
 			</div>
-		</>
+		</motion.div>
 	);
 }
