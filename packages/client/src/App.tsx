@@ -3,6 +3,7 @@ import {
 	BackgroundTasksProvider,
 	SocketProvider
 } from '@/context';
+
 import React from 'react';
 import ReactModal from 'react-modal';
 import { useRoutes } from 'react-router-dom';

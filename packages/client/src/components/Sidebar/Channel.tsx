@@ -1,8 +1,9 @@
+import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+
 import { useConn } from '@/hooks/useConn';
 import { NotificationBadge } from '@/ui/Badges/NotificationBadge';
 import { onEnterKeyPressed } from '@/utils';
-import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
 
 interface ChannelProps {
 	uuid: string;
@@ -47,13 +48,13 @@ export function Channel({
 
 	return (
 		<li
-			className={itemClass + ' px-3'}
-			style={{ transition: 'color .3s, background-color .4s' }}
+			className={`${itemClass  } px-3`}
 			onClick={handleClick}
 			onKeyPress={(e) => {
 				onEnterKeyPressed(navToChannel)<HTMLLIElement>(e);
 			}}
 			role="button"
+			style={{ transition: 'color .3s, background-color .4s' }}
 			tabIndex={0}
 		>
 			<span className="col-span-3">

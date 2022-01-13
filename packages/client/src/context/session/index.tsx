@@ -42,7 +42,7 @@ export function SessionProvider({
 			if (!defaultValue()) {
 				setUserSession(null);
 
-				return <Navigate to={'/'} />;
+				return <Navigate to="/" />;
 			}
 		};
 

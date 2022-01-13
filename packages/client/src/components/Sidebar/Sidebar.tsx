@@ -1,10 +1,11 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { Channel } from '@/components/Sidebar/Channel';
 import { ConnectedDivider as Divider } from '@/components/Sidebar/Divider';
 import { Status } from '@/components/Sidebar/Status';
 import { useConn } from '@/hooks/useConn';
 import { Button } from '@/ui/Button';
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 export function Sidebar() {
 	const navigate = useNavigate();
@@ -46,8 +47,8 @@ export function Sidebar() {
 			<Button
 				className="mt-auto mb-2 mx-2"
 				color="primary"
-				type="button"
 				onClick={toDashboard}
+				type="button"
 			>
 				To dashboard
 			</Button>

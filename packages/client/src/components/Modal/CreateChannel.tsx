@@ -1,11 +1,12 @@
+import React, { ChangeEvent, FormEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { useWrappedConn } from '@/hooks/useConn';
 import { connector, PropsFromRedux } from '@/state';
 import { Button } from '@/ui/Button';
 import { Input } from '@/ui/Input';
 import { Modal } from '@/ui/Modal';
 import { Select } from '@/ui/Select';
-import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 function CreateChannelModal({
 	channelModalState,
@@ -16,11 +17,11 @@ function CreateChannelModal({
 	const { client, setUser } = useWrappedConn();
 
 	const [channelName, setChannelName] = useState(
-		channelModalState?.data?.name || ''
+		channelModalState.data?.name || ''
 	);
 
 	const [channelDesc, setChannelDesc] = useState(
-		channelModalState?.data?.desc || ''
+		channelModalState.data?.desc || ''
 	);
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {

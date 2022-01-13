@@ -1,10 +1,11 @@
 import React from 'react';
-import { ConnectedUsersInChannel } from '@/components/Room/Users/UsersInChannel';
+
 import { ConnectedCreateChannelModal } from '@/components/Modal/CreateChannel';
 import { NotificationController } from '@/components/Notification/NotificationController';
+import { ConnectedRoom } from '@/components/Room/Room';
+import { ConnectedUsersInChannel } from '@/components/Room/Users/UsersInChannel';
 import { Sidebar } from '@/components/Sidebar/Sidebar';
 import { useViewportSize } from '@/hooks/useViewportSize';
-import { ConnectedRoom } from '@/components/Room/Room';
 
 export function Channel() {
 	const viewport = useViewportSize();

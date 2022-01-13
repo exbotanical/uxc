@@ -1,5 +1,5 @@
-import type { Channel, User, Message } from '@uxc/types';
 import type { Connection } from './types';
+import type { Channel, User, Message } from '@uxc/types';
 
 type Handler<Data> = (data: Data) => void;
 

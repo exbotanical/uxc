@@ -1,6 +1,7 @@
+import React from 'react';
+
 import { connector, PropsFromRedux } from '@/state';
 import { onEnterKeyPressed } from '@/utils';
-import React from 'react';
 
 interface DividerProps {
 	title: string;
@@ -9,7 +10,7 @@ interface DividerProps {
 function Divider({
 	title,
 	showUpsertChannelModal
-}: PropsFromRedux & DividerProps) {
+}: DividerProps & PropsFromRedux) {
 	const handleClick = () => {
 		showUpsertChannelModal({ type: 'create' });
 	};
@@ -24,11 +25,11 @@ function Divider({
 
 			<div className="place-self-end" style={{ paddingRight: '2.75px' }}>
 				<div
+					className="cursor-pointer p-1 hover:bg-transparent-alt rounded-full transition ease-in-out transform hover:scale-125 duration-300"
 					onClick={handleClick}
 					onKeyPress={onEnterKeyPressed(handleClick)}
 					role="button"
 					tabIndex={0}
-					className="cursor-pointer p-1 hover:bg-transparent-alt rounded-full transition ease-in-out transform hover:scale-125 duration-300"
 				>
 					<svg
 						className="fill-current h-4 w-4 opacity-50"

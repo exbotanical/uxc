@@ -1,6 +1,7 @@
-import { SocketContext } from '@/context';
 import { wrap } from '@uxc/socket-client';
 import { useContext } from 'react';
+
+import { SocketContext } from '@/context';
 
 export function useConn() {
 	const { conn, setUser } = useContext(SocketContext);

@@ -1,6 +1,7 @@
-import { SocketContext, SessionContext } from '@/context';
 import React, { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
+
+import { SocketContext, SessionContext } from '@/context';
 
 export function ProtectedRoute({
 	children
@@ -12,7 +13,7 @@ export function ProtectedRoute({
 	const { isAuthenticated } = useContext(SessionContext);
 
 	if (!isAuthenticated) {
-		return <Navigate to="/" replace />;
+		return <Navigate replace to="/" />;
 	}
 
 	if (!conn) {

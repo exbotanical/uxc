@@ -1,10 +1,12 @@
-import { UserCard } from '@/components/User/UserCard';
-import { useConn, useWrappedConn } from '@/hooks/useConn';
-import { connector, PropsFromRedux } from '@/state';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import type { User } from '@uxc/types';
+
+import { UserCard } from '@/components/User/UserCard';
+import { useConn, useWrappedConn } from '@/hooks/useConn';
+import { connector, PropsFromRedux } from '@/state';
+
 
 function ChannelUser(u: User) {
 	return (
@@ -54,11 +56,9 @@ export function UsersInChannel({ showNotification }: PropsFromRedux) {
 			<div className="flex flex-col mt-3 overflow-y-auto scrollbar-thin scrollbar-thumb-primary-700 overflow-x-hidden">
 				<ChannelUser {...user} key={user.uuid} />
 
-				<>
-					{users.map((u) => (
+				{users.map((u) => (
 						<ChannelUser key={u.uuid} {...u} />
 					))}
-				</>
 			</div>
 		</div>
 	);

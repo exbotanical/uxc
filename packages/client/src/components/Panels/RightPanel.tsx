@@ -1,7 +1,8 @@
-import { useConn } from '@/hooks/useConn';
 import React from 'react';
 
 import { UserCard } from '../User/UserCard';
+
+import { useConn } from '@/hooks/useConn';
 
 export function Profile() {
 	const { conn } = useConn();

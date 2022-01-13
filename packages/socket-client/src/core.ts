@@ -2,8 +2,8 @@ import WebSocket from 'isomorphic-ws';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 import { v4 as generateUuid } from 'uuid';
 
-import type { User, TransactionId, Opcode, ResponseOpcode } from '@uxc/types';
 import { deserialize, serialize, toResponseCode } from './serialize';
+import { LOGGER_ACTION } from './types';
 
 import type {
 	ResponseMessage,
@@ -12,8 +12,7 @@ import type {
 	Connector,
 	SubscriberHandler
 } from './types';
-
-import { LOGGER_ACTION } from './types';
+import type { User, TransactionId, Opcode, ResponseOpcode } from '@uxc/types';
 
 const heartbeatInterval = 8000;
 const apiUrl = 'ws://localhost:5000';
@@ -191,7 +190,7 @@ export const connect: Connector = async ({
 
 				resolve(connection);
 			} else {
-				subscribersMap?.get(message.op)?.forEach((handler) => {
+				subscribersMap.get(message.op)?.forEach((handler) => {
 					handler(message.d, message.txId);
 				});
 			}

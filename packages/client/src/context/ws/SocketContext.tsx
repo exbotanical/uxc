@@ -1,6 +1,4 @@
-import { SessionContext } from '@/context';
 import { connect } from '@uxc/socket-client';
-import { showNotification } from '@/state';
 import React, {
 	createContext,
 	useContext,
@@ -12,6 +10,9 @@ import React, {
 
 import type { Connection } from '@uxc/socket-client/src/types';
 import type { User } from '@uxc/types';
+
+import { SessionContext } from '@/context';
+import { showNotification } from '@/state';
 
 interface SocketProviderProps {
 	shouldConnect: boolean;

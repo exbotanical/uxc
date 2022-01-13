@@ -1,9 +1,11 @@
-import { connector, PropsFromRedux } from '@/state';
-import { EditIcon } from '@/ui/Icons/EditIcon';
-import { onEnterKeyPressed } from '@/utils';
 import React from 'react';
 
 import type { User } from '@uxc/types';
+
+import { connector, PropsFromRedux } from '@/state';
+import { EditIcon } from '@/ui/Icons/EditIcon';
+import { onEnterKeyPressed } from '@/utils';
+
 
 interface RoomHeaderProps {
 	user: User;
@@ -12,7 +14,7 @@ interface RoomHeaderProps {
 function RoomHeader({
 	user,
 	showUpsertChannelModal
-}: RoomHeaderProps & PropsFromRedux) {
+}: PropsFromRedux & RoomHeaderProps) {
 	const handleClick = () => {
 		showUpsertChannelModal({
 			data: user.currentChannel,
@@ -34,11 +36,11 @@ function RoomHeader({
 
 			<section>
 				<div
+					className="cursor-pointer p-2 hover:bg-transparent-alt rounded-full transition ease-in-out transform hover:scale-125 duration-300"
 					onClick={handleClick}
 					onKeyPress={onEnterKeyPressed(handleClick)}
 					role="button"
 					tabIndex={0}
-					className="cursor-pointer p-2 hover:bg-transparent-alt rounded-full transition ease-in-out transform hover:scale-125 duration-300"
 				>
 					<EditIcon />
 				</div>

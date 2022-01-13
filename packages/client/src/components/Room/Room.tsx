@@ -1,13 +1,15 @@
-import { ConnectedRoomHeader } from '@/components/Room/RoomHeader';
-import { RoomMessage } from '@/components/Room/RoomMessage';
-import { RoomTextInput } from '@/components/Room/RoomTextInput';
-import { useConn, useWrappedConn } from '@/hooks/useConn';
-import { connector, PropsFromRedux } from '@/state';
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { v4 } from 'uuid';
 
 import type { Message } from '@uxc/types';
+
+import { ConnectedRoomHeader } from '@/components/Room/RoomHeader';
+import { RoomMessage } from '@/components/Room/RoomMessage';
+import { RoomTextInput } from '@/components/Room/RoomTextInput';
+import { useConn, useWrappedConn } from '@/hooks/useConn';
+import { connector, PropsFromRedux } from '@/state';
+
 
 export interface SendMessage {
 	(message: string): void;
@@ -20,7 +22,7 @@ interface RoomProps {
 export function Room({
 	className,
 	showNotification
-}: RoomProps & PropsFromRedux) {
+}: PropsFromRedux & RoomProps) {
 	const { id } = useParams<{ id: string }>();
 
 	if (!id) {
@@ -53,7 +55,7 @@ export function Room({
 
 	useEffect(() => {
 		isScrolledToTop ||
-			bottomRef?.current?.scrollIntoView({
+			bottomRef.current?.scrollIntoView({
 				block: 'nearest',
 				inline: 'start'
 			});
@@ -82,7 +84,7 @@ export function Room({
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
-		<div className={className + ' flex flex-col bg-primary-800 rounded-sm'}>
+		<div className={`${className  } flex flex-col bg-primary-800 rounded-sm`}>
 			<ConnectedRoomHeader user={user} />
 
 			<div className="overflow-y-auto flex-auto">

@@ -6,7 +6,7 @@ import type {
 	Opcode
 } from '@uxc/types';
 
-type ErroneousResult = { error: string };
+interface ErroneousResult { error: string }
 type PromiseResult<R> = ErroneousResult | R;
 
 export enum LOGGER_ACTION {
