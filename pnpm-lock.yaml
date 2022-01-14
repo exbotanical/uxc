@@ -59,6 +59,7 @@ importers:
       react-virtual: 2.8.2
       reconnecting-websocket: 4.4.0
       redux: 4.1.1
+      resonant: ^1.2.0
       sass: 1.42.0
       stylelint: 13.13.1
       tailwind-scrollbar: 1.3.1
@@ -79,6 +80,7 @@ importers:
       react-use-gesture: 9.1.3_react@17.0.2
       react-virtual: 2.8.2_react@17.0.2
       redux: 4.1.1
+      resonant: 1.2.0
       uuid: 8.3.2
     devDependencies:
       '@magister_zito/eslint-config-react': 0.8.0_eslint@7.32.0+typescript@4.4.2
@@ -4639,6 +4641,11 @@ packages:
       is-core-module: 2.8.1
       path-parse: 1.0.7
     dev: true
+
+  /resonant/1.2.0:
+    resolution: {integrity: sha512-6asgNJxuBBuBbRHpsDILw6oRXzOEQy08ushy84WWaGtWscS92EBEK6grYKXlvlOT4JPcRIMEoHuvk/g2O5QncA==}
+    engines: {node: '>= 10'}
+    dev: false
 
   /restore-cursor/3.1.0:
     resolution: {integrity: sha512-l+sSefzHpj5qimhFSE5a8nufZYAM3sBSVMAPtYkmC+4EH2anSGaEMXSD0izRQbu9nfyQ9y5JrVmp7E8oZrUjvA==}

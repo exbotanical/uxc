@@ -1,6 +1,6 @@
 import { useMediaQuery } from 'react-responsive';
 
-export const useViewportSize = () => {
+export function useViewportSize() {
 	const isLg = useMediaQuery({ minWidth: 1336 });
 	const isMd = useMediaQuery({ minWidth: 1055 });
 	const isSm = useMediaQuery({ minWidth: 780 });
@@ -18,4 +18,4 @@ export const useViewportSize = () => {
 	}
 
 	return 0;
-};
+}

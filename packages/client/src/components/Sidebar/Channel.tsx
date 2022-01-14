@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { useConn } from '@/hooks/useConn';
-import { NotificationBadge } from '@/ui/Badges/NotificationBadge';
+import { NotificationBadge } from '@/components/Badges/NotificationBadge';
 import { onEnterKeyPressed } from '@/utils';
 
 interface ChannelProps {
@@ -48,7 +48,7 @@ export function Channel({
 
 	return (
 		<li
-			className={`${itemClass  } px-3`}
+			className={`${itemClass} px-3`}
 			onClick={handleClick}
 			onKeyPress={(e) => {
 				onEnterKeyPressed(navToChannel)<HTMLLIElement>(e);

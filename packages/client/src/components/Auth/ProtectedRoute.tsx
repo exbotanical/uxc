@@ -20,7 +20,7 @@ export function ProtectedRoute({
 		return <>Loading...</>;
 	} // @TODO improve
 
-	return <>{children}</>;
+	return children;
 }
 
 ProtectedRoute.displayName = 'ProtectedRoute';

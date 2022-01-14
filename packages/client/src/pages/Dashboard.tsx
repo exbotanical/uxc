@@ -1,35 +1,26 @@
-import { motion } from 'framer-motion';
 import React from 'react';
 
-import { ConnectedCreateChannelModal } from '@/components/Modal/CreateChannel';
+import { ConnectedCreateChannelModal } from '@/components/Sidebar/CreateChannel';
 import { NotificationController } from '@/components/Notification/NotificationController';
-import { Profile, RightPanel } from '@/components/Panels/RightPanel';
+import { UserProfile } from '@/components/User/UserProfile';
 import { useViewportSize } from '@/hooks/useViewportSize';
+import { Panel } from '@/components/Layout/Panel';
+import { Feed } from '@/components/Feed/Feed';
 
 export function Dashboard() {
 	const viewport = useViewportSize();
 
 	return (
-		<motion.div
-			animate={{ scaleY: 1 }}
-			exit={{ scaleY: 0 }}
-			initial={{ scaleY: 0 }}
-			transition={{ duration: 0.5 }}
-		>
+		<div className="p-2 2xl:px-8 h-screen">
 			<NotificationController />
 
 			<ConnectedCreateChannelModal />
 
-			<div className="grid h-screen grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-2 lg:gap-4 p-0 lg:p-2">
-				<div className="col-span-1 lg:col-span-3" />
-				<div className="col-span-1 md:col-span-2 lg:col-span-6" />
+			<div className="grid grid-cols-6 gap-2 h-full">
+				<Feed />
 
-				{viewport > 1 ? (
-					<div className="col-span-0 col-span-3">
-						<RightPanel bottom={<div />} top={<Profile />} />
-					</div>
-				) : null}
+				<Panel top={<UserProfile />} bottom={<div />} />
 			</div>
-		</motion.div>
+		</div>
 	);
 }

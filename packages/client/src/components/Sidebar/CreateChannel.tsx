@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 
 import { useWrappedConn } from '@/hooks/useConn';
 import { connector, PropsFromRedux } from '@/state';
-import { Button } from '@/ui/Button';
-import { Input } from '@/ui/Input';
-import { Modal } from '@/ui/Modal';
-import { Select } from '@/ui/Select';
+import { Button } from '@/components/Buttons/Button';
+import { Input } from '@/components/Fields/Input';
+import { Modal } from '@/components/Modal/Modal';
+import { Select } from '@/components/Fields/Select';
 
 function CreateChannelModal({
 	channelModalState,
@@ -81,6 +81,7 @@ function CreateChannelModal({
 						{isEdit && channelModalState.data
 							? `Update #${channelModalState.data.name}`
 							: 'Create a New Channel'}
+						s
 					</h4>
 				</div>
 

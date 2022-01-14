@@ -3,9 +3,8 @@ import React from 'react';
 import type { User } from '@uxc/types';
 
 import { connector, PropsFromRedux } from '@/state';
-import { EditIcon } from '@/ui/Icons/EditIcon';
+import { EditIcon } from '@/components/Icons/EditIcon';
 import { onEnterKeyPressed } from '@/utils';
-
 
 interface RoomHeaderProps {
 	user: User;

@@ -5,9 +5,9 @@ import { Channel } from '@/components/Sidebar/Channel';
 import { ConnectedDivider as Divider } from '@/components/Sidebar/Divider';
 import { Status } from '@/components/Sidebar/Status';
 import { useConn } from '@/hooks/useConn';
-import { Button } from '@/ui/Button';
+import { Button } from '@/components/Buttons/Button';
 
-export function Sidebar() {
+export function Sidebar({ className = '' }: { className?: string }) {
 	const navigate = useNavigate();
 	const { conn } = useConn();
 	const { user } = conn!;
@@ -17,7 +17,9 @@ export function Sidebar() {
 	};
 
 	return (
-		<div className="flex flex-col bg-primary-800 h-full rounded-sm">
+		<div
+			className={`flex flex-col bg-primary-800 h-full rounded-sm ${className}`}
+		>
 			<Status />
 
 			<nav className="mb-2">

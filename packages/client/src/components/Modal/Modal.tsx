@@ -3,7 +3,7 @@ import type { KeyboardEvent } from 'react';
 import React from 'react';
 import ReactModal from 'react-modal';
 
-import { CloseIconButton } from './CloseIconButton';
+import { CloseIconButton } from '@/components/Buttons/CloseIconButton';
 
 const modalStyles = {
 	default: {
@@ -29,7 +29,7 @@ const modalStyles = {
 	},
 	userPreview: {
 		content: {
-			backgroundColor: 'theme(\'color.primary.900\')',
+			backgroundColor: "theme('color.primary.900')",
 			border: 'none',
 			borderRadius: 8,
 			bottom: 'auto',
@@ -50,7 +50,7 @@ const modalStyles = {
 	}
 };
 
-export function Modal ({
+export function Modal({
 	children,
 	variant = 'default',
 	...props
@@ -59,9 +59,9 @@ export function Modal ({
 		const currentActive = document.activeElement;
 
 		if (event.key === 'ArrowLeft') {
-			(currentActive.previousElementSibling as HTMLElement).focus();
+			(currentActive?.previousElementSibling as HTMLElement).focus();
 		} else if (event.key === 'ArrowRight') {
-			(currentActive.nextElementSibling as HTMLElement).focus();
+			(currentActive?.nextElementSibling as HTMLElement).focus();
 		}
 	};
 
@@ -77,7 +77,9 @@ export function Modal ({
 					<button
 						className="p-1 text-primary-100"
 						data-testid="close-modal"
-						onClick={(e) => { props.onRequestClose(e); }}
+						onClick={(e) => {
+							props?.onRequestClose?.(e);
+						}}
 						type="button"
 					>
 						<CloseIconButton className="transform rotate-45" />

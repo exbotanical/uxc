@@ -1,10 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 
 import type { Notification as NotifType } from '@/state/types';
 
-import { CloseIconButton } from '@/ui/CloseIconButton';
+import { CloseIconButton } from '@/components/Buttons/CloseIconButton';
 import { onEnterKeyPressed } from '@/utils';
-
 
 export type NotificationDuration = 'default' | 'sticky';
 

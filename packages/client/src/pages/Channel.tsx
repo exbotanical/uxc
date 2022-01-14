@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ConnectedCreateChannelModal } from '@/components/Modal/CreateChannel';
+import { ConnectedCreateChannelModal } from '@/components/Sidebar/CreateChannel';
 import { NotificationController } from '@/components/Notification/NotificationController';
 import { ConnectedRoom } from '@/components/Room/Room';
 import { ConnectedUsersInChannel } from '@/components/Room/Users/UsersInChannel';
@@ -10,25 +10,25 @@ import { useViewportSize } from '@/hooks/useViewportSize';
 export function Channel() {
 	const viewport = useViewportSize();
 
+	const gtsm = viewport > 0;
+	const gtmd = viewport > 1;
 	return (
-		<>
+		<div className="p-2 2xl:px-8 h-screen">
 			<NotificationController />
 
 			<ConnectedCreateChannelModal />
 
-			<div className="h-screen grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-2 lg:gap-4 p-0 lg:p-2">
-				<div className="col-span-1 lg:col-span-3">
-					<Sidebar />
-				</div>
+			<div className="h-full grid grid-cols-8 gap-2 lg:gap-4">
+				{gtsm ? <Sidebar className={`col-span-2`} /> : null}
 
-				<ConnectedRoom className="col-span-1 md:col-span-2 lg:col-span-6 overflow-hidden" />
+				<ConnectedRoom
+					className={`overflow-hidden ${
+						gtmd ? 'col-span-4' : gtsm ? 'col-span-6' : 'col-span-8'
+					}`}
+				/>
 
-				{viewport > 1 ? (
-					<div className="col-span-0 col-span-3">
-						<ConnectedUsersInChannel />
-					</div>
-				) : null}
+				{gtmd ? <ConnectedUsersInChannel className="col-span-2" /> : null}
 			</div>
-		</>
+		</div>
 	);
 }
