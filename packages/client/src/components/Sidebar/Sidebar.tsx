@@ -1,11 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { Button } from '@/components/Buttons/Button';
 import { Channel } from '@/components/Sidebar/Channel';
 import { ConnectedDivider as Divider } from '@/components/Sidebar/Divider';
 import { Status } from '@/components/Sidebar/Status';
 import { useConn } from '@/hooks/useConn';
-import { Button } from '@/components/Buttons/Button';
 
 export function Sidebar({ className = '' }: { className?: string }) {
 	const navigate = useNavigate();

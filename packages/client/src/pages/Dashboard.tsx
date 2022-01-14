@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { ConnectedCreateChannelModal } from '@/components/Sidebar/CreateChannel';
+import { Feed } from '@/components/Feed/Feed';
+import { Panel } from '@/components/Layout/Panel';
 import { NotificationController } from '@/components/Notification/NotificationController';
+import { ConnectedCreateChannelModal } from '@/components/Sidebar/CreateChannel';
 import { UserProfile } from '@/components/User/UserProfile';
 import { useViewportSize } from '@/hooks/useViewportSize';
-import { Panel } from '@/components/Layout/Panel';
-import { Feed } from '@/components/Feed/Feed';
 
 export function Dashboard() {
 	const viewport = useViewportSize();
@@ -19,7 +19,7 @@ export function Dashboard() {
 			<div className="grid grid-cols-6 gap-2 h-full">
 				<Feed />
 
-				<Panel top={<UserProfile />} bottom={<div />} />
+				<Panel bottom={<div />} top={<UserProfile />} />
 			</div>
 		</div>
 	);

@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { ConnectedCreateChannelModal } from '@/components/Sidebar/CreateChannel';
 import { NotificationController } from '@/components/Notification/NotificationController';
 import { ConnectedRoom } from '@/components/Room/Room';
 import { ConnectedUsersInChannel } from '@/components/Room/Users/UsersInChannel';
+import { ConnectedCreateChannelModal } from '@/components/Sidebar/CreateChannel';
 import { Sidebar } from '@/components/Sidebar/Sidebar';
 import { useViewportSize } from '@/hooks/useViewportSize';
 
@@ -19,7 +19,7 @@ export function Channel() {
 			<ConnectedCreateChannelModal />
 
 			<div className="h-full grid grid-cols-8 gap-2 lg:gap-4">
-				{gtsm ? <Sidebar className={`col-span-2`} /> : null}
+				{gtsm ? <Sidebar className="col-span-2" /> : null}
 
 				<ConnectedRoom
 					className={`overflow-hidden ${

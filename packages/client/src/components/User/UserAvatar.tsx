@@ -1,6 +1,7 @@
 import React from 'react';
 
 import type { User } from '@uxc/types';
+
 import { StatusDot } from '@/components/Badges/StatusDot';
 
 export const sizeMap = {
@@ -49,7 +50,7 @@ export function UserAvatar({ u, size = 'md', className = '' }: UserCardProps) {
 				src={u.userImage || '../../../src/assets/gravatar.png'}
 			/>
 
-			<div className={`absolute border-primary-800`}>
+			<div className="absolute border-primary-800">
 				<StatusDot size={status} />
 			</div>
 		</div>

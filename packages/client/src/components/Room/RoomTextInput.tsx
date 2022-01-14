@@ -2,8 +2,8 @@ import React, { ChangeEvent, FormEvent, useState } from 'react';
 
 import type { SendMessage } from '@/components/Room/Room';
 
-import { SmileyIcon } from '@/components/Icons/SmileyIcon';
 import { Input } from '@/components/Fields/Input';
+import { SmileyIcon } from '@/components/Icons/SmileyIcon';
 
 interface RoomTextInputProps {
 	sendMessage: SendMessage;

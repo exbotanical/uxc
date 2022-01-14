@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import { useConn } from '@/hooks/useConn';
 import { NotificationBadge } from '@/components/Badges/NotificationBadge';
+import { useConn } from '@/hooks/useConn';
 import { onEnterKeyPressed } from '@/utils';
 
 interface ChannelProps {

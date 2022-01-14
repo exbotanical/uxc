@@ -61,8 +61,8 @@ wss.on('connection', (ws) => {
 
 				case 'create_channel':
 					const newChannel = {
-						name: d.name,
 						desc: d.desc,
+						name: d.name,
 						uuid: v4()
 					};
 
@@ -100,7 +100,7 @@ app.use(cors());
 app.use(express.json());
 
 app.post('/api', (req, res) => {
-	const { email, password } = req.body;
+	// const { email, password } = req.body;
 
 	res.send({
 		accessToken:
@@ -112,5 +112,6 @@ app.post('/api', (req, res) => {
 });
 
 app.listen(PORT + 1, () => {
+	// eslint-disable-next-line no-console
 	console.info(`listening on port ${PORT}...`);
 });

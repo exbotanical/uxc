@@ -1,12 +1,12 @@
 import React from 'react';
 
 import { UserAvatar } from './UserAvatar';
+import { UserBadges } from './UserBadges';
+import { UserBio } from './UserBio';
+import { UserFollowers } from './UserFollowers';
+import { UserSite } from './UserSite';
 
 import { useConn } from '@/hooks/useConn';
-import { UserFollowers } from './UserFollowers';
-import { UserBio } from './UserBio';
-import { UserSite } from './UserSite';
-import { UserBadges } from './UserBadges';
 
 const mockUserInfo = {
 	site: 'github.com/MatthewZito',

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
+import { ChannelUser } from './ChannelUser';
+
 import type { User } from '@uxc/types';
 
 import { useConn, useWrappedConn } from '@/hooks/useConn';
 import { connector, PropsFromRedux } from '@/state';
-import { ChannelUser } from './ChannelUser';
 
 export function UsersInChannel({
 	showNotification,

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { useConn } from '@/hooks/useConn';
 import { StatusDot } from '@/components/Badges/StatusDot';
+import { useConn } from '@/hooks/useConn';
 
 export function Status() {
 	const { conn } = useConn();
@@ -9,9 +9,8 @@ export function Status() {
 
 	return (
 		<div className="flex m-2 ml-3">
-			<div className="flex items-center">
-				<StatusDot />
-
+			<div className="flex justify-between items-center">
+				<StatusDot placementClass="right-1 top-0" />
 				<h1 className="text-white text-sm">{user.username}</h1>
 			</div>
 		</div>
