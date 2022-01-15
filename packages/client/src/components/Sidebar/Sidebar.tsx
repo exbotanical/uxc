@@ -1,59 +1,32 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
-import { Button } from '@/components/Buttons/Button';
 import { Channel } from '@/components/Sidebar/Channel';
-import { ConnectedDivider as Divider } from '@/components/Sidebar/Divider';
-import { Status } from '@/components/Sidebar/Status';
+import { ConnectedHeader as Header } from '@/components/Sidebar/Header';
 import { useConn } from '@/hooks/useConn';
+import { SearchButton } from './SearchButton';
+import { Status } from './Status';
 
 export function Sidebar({ className = '' }: { className?: string }) {
-	const navigate = useNavigate();
 	const { conn } = useConn();
 	const { user } = conn!;
 
-	const toDashboard = () => {
-		navigate(`/dashboard`);
-	};
-
 	return (
-		<div
-			className={`flex flex-col bg-primary-800 h-full rounded-sm ${className}`}
-		>
-			<Status />
+		<div className={`flex flex-col bg-primary-800 h-full ${className}`}>
+			<SearchButton />
 
-			<nav className="mb-2">
-				<Divider title="Channels" />
+			<nav className="p-2 overflow-y-auto">
+				{/* @todo sticky */}
+				<Header title="Direct Messages" className="ml-1 bg-primary-800" />
 
 				<ul>
-					{user.channels.map(({ name, uuid, desc }) => (
-						<Channel
-							desc={desc}
-							key={uuid}
-							name={name}
-							type="channel"
-							uuid={uuid}
-						/>
+					{/* @todo del btn on hover */}
+					{user.directMessageThreads.map(({ user, uuid }) => (
+						<Channel key={uuid} user={user} />
 					))}
 				</ul>
 			</nav>
 
-			<hr className="border-outline font-thin" />
-
-			<Divider title="Direct Messages" />
-
-			{user.directMessageThreads.map(({ user, uuid }) => (
-				<Channel key={uuid} name={user.username} type="dm" uuid={uuid} />
-			))}
-
-			<Button
-				className="mt-auto mb-2 mx-2"
-				color="primary"
-				onClick={toDashboard}
-				type="button"
-			>
-				To dashboard
-			</Button>
+			<Status user={user} />
 		</div>
 	);
 }

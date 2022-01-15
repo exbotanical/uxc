@@ -24,6 +24,10 @@ export const sizeMap = {
 	'sm': {
 		avatar: '40px',
 		status: 'sm' as const
+	},
+	'xs': {
+		avatar: '35px',
+		status: 'sm' as const
 	}
 };
 

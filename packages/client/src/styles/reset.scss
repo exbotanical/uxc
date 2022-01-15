@@ -35,3 +35,9 @@
 		background: theme('colors.primary.700');
 	}
 }
+
+@layer components {
+	.btn-hover {
+		@apply hover:bg-transparent-alt rounded-full transition ease-in-out transform hover:scale-125 duration-300;
+	}
+}

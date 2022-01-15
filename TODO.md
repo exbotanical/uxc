@@ -9,3 +9,7 @@
 - [x] nav
 - [ ] unit tests
 - [ ] integration tests
+- [ ] move svgs to icons dir
+- [ ] accessibility tests
+- [ ] component <- tailwind class seq's
+- [ ] restructure components dir

@@ -4,35 +4,32 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { NotificationBadge } from '@/components/Badges/NotificationBadge';
 import { useConn } from '@/hooks/useConn';
 import { onEnterKeyPressed } from '@/utils';
+import { UserAvatar } from '../User/UserAvatar';
+import { User } from '@uxc/types';
 
 interface ChannelProps {
-	uuid: string;
-	name: string;
-	desc?: string;
-	type: 'channel' | 'dm';
+	user: User;
 }
 
-export function Channel({
-	name,
-	desc = '',
-	uuid,
-	type = 'channel'
-}: ChannelProps) {
+export function Channel({ user }: ChannelProps) {
 	const navigate = useNavigate();
 	const { setUser } = useConn();
+	const { uuid, username } = user;
 
-	// TODO TMP
+	/** @todo */
 	const location = useLocation();
 	const paths = location.pathname.split('/');
 	const isActiveItem = paths[paths.length - 1] == uuid;
-	const isChannel = type === 'channel';
-	const itemClass = `p-1.5 grid grid-cols-4 items-center text-white  ${
-		isActiveItem ? 'bg-transparent-alt text-tertiary' : 'text-white'
-	} ${isChannel ? 'my-1' : ''}`;
+	const activeClass = `${
+		isActiveItem
+			? 'bg-transparent-alt rounded-lg text-tertiary'
+			: 'text-primary-100'
+	}`;
 
 	const currentChannel = {
-		desc,
-		name,
+		/** @todo */
+		desc: '',
+		name: username,
 		uuid
 	};
 
@@ -48,7 +45,7 @@ export function Channel({
 
 	return (
 		<li
-			className={`${itemClass} px-3`}
+			className={`${activeClass} w-full flex justify-between items-center p-1 px-2 rounded-sm`}
 			onClick={handleClick}
 			onKeyPress={(e) => {
 				onEnterKeyPressed(navToChannel)<HTMLLIElement>(e);
@@ -57,28 +54,17 @@ export function Channel({
 			style={{ transition: 'color .3s, background-color .4s' }}
 			tabIndex={0}
 		>
-			<span className="col-span-3">
-				{isChannel ? (
-					<p>#{name}</p>
-				) : (
-					<div className="flex items-center">
-						<svg
-							className="h-2 w-2 fill-current text-green-400 mr-2"
-							viewBox="0 0 20 20"
-						>
-							<circle cx="10" cy="10" r="10" />
-						</svg>
+			<div className="flex items-center gap-2">
+				<UserAvatar size="xs" u={user} />
+				<h5 className="font-semibold mb-1.5">{username}</h5>
+			</div>
 
-						<p className="text-white opacity-75">{name}</p>
-					</div>
-				)}
-			</span>
-
-			<div className="place-self-end">
-				<NotificationBadge>
+			{/* @todo new messages */}
+			{/* {(uuid === '33' || uuid === '343') && (
+				<NotificationBadge className="mb-1">
 					<p>2</p>
 				</NotificationBadge>
-			</div>
+			)} */}
 		</li>
 	);
 }
