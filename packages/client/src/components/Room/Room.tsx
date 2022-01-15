@@ -10,7 +10,6 @@ import { RoomTextInput } from '@/components/Room/RoomTextInput';
 import { useConn, useWrappedConn } from '@/hooks/useConn';
 import { connector, PropsFromRedux } from '@/state';
 
-
 export interface SendMessage {
 	(message: string): void;
 }
@@ -72,6 +71,7 @@ export function Room({
 					type: 'error'
 				});
 			} else if (res.messages) {
+				console.log({ res });
 				setMessages(res.messages);
 			}
 		})();
@@ -84,7 +84,7 @@ export function Room({
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
-		<div className={`${className  } flex flex-col bg-primary-800 rounded-sm`}>
+		<div className={`${className} flex flex-col bg-primary-800 rounded-sm`}>
 			<ConnectedRoomHeader user={user} />
 
 			<div className="overflow-y-auto flex-auto">

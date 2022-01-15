@@ -43,7 +43,9 @@ export function RoomTextInput({ sendMessage, name }: RoomTextInputProps) {
 						/>
 
 						<div className="right-12 cursor-pointer flex flex-row-reverse fill-current text-primary-100 mr-3">
-							<SmileyIcon style={{ inlineSize: '23px' }} />
+							<button className="btn-hover">
+								<SmileyIcon dimensions="22" />
+							</button>
 						</div>
 					</div>
 				</div>

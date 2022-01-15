@@ -15,7 +15,7 @@ export function Sidebar({ className = '' }: { className?: string }) {
 			<SearchButton />
 
 			<nav className="p-2 overflow-y-auto">
-				{/* @todo sticky */}
+				{/* @todo sticky,rename */}
 				<Header title="Direct Messages" className="ml-1 bg-primary-800" />
 
 				<ul>

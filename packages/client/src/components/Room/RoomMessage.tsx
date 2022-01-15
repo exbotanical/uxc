@@ -28,7 +28,7 @@ export function RoomMessage({ message, user }: Message) {
 	}
 
 	return (
-		<div className="flex flex-col text-lg py-1 mx-3">
+		<div className="flex flex-col text-lg pb-1 mx-3">
 			<div>
 				<span className="font-bold" style={{ color: generateColor(username) }}>
 					{username}

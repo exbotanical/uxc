@@ -2,21 +2,22 @@ import type { CSSProperties } from 'react';
 
 import React from 'react';
 
-export function SmileyIcon ({ style }: { style: CSSProperties }) {
+interface IconProps {
+	dimensions?: string;
+	style?: CSSProperties;
+}
+
+export function SmileyIcon({ style, dimensions = '16' }: IconProps) {
 	return (
 		<svg
 			fill="currentColor"
-			height="16"
 			style={style}
 			viewBox="0 0 16 16"
-			width="16"
+			height={dimensions}
+			width={dimensions}
 			xmlns="http://www.w3.org/2000/svg"
 		>
-			<path
-				clipRule="evenodd"
-				d="M4.111 2.18a7 7 0 1 1 7.778 11.64A7 7 0 0 1 4.11 2.18zm.556 10.809a6 6 0 1 0 6.666-9.978 6 6 0 0 0-6.666 9.978zM6.5 7a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm5 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM8 11a3 3 0 0 1-2.65-1.58l-.87.48a4 4 0 0 0 7.12-.16l-.9-.43A3 3 0 0 1 8 11z"
-				fillRule="evenodd"
-			/>
+			<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zM4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM10 8c-.552 0-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5S10.552 8 10 8z" />
 		</svg>
 	);
 }
