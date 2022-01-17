@@ -121,7 +121,7 @@ function CreateChannelModal({
 
 				<div className="flex pt-2 space-x-3 col-span-full items-center">
 					<Button color="primary-300" onClick={onClose} type="button">
-						cancel
+						Cancel
 					</Button>
 
 					<Button className="mr-3" type="submit">
