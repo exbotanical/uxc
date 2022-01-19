@@ -1,0 +1,66 @@
+{
+	"uuid": "c334e0f3-36c0-45bd-a958-d700e7994b12",
+	"username": "goldmund",
+	"userImage": "",
+	"directMessageThreads": [
+		{
+			"user": {
+				"username": "whitney",
+				"uuid": "33",
+				"userImage": ""
+			},
+			"uuid": "222"
+		},
+		{
+			"user": {
+				"username": "nevan",
+				"uuid": "11",
+				"userImage": ""
+			},
+			"uuid": "2223"
+		},
+		{
+			"user": {
+				"username": "kampfir",
+				"uuid": "343",
+				"userImage": ""
+			},
+			"uuid": "2212"
+		},
+		{
+			"user": {
+				"username": "dagerman",
+				"uuid": "115",
+				"userImage": ""
+			},
+			"uuid": "22243"
+		}
+	],
+	"channels": [
+		{
+			"name": "Engineering",
+			"desc": "chat about engineering",
+			"uuid": 1
+		},
+		{
+			"name": "Virtual Breakroom",
+			"desc": "chat about fun stuff",
+			"uuid": 2
+		},
+		{
+			"name": "Frontend",
+			"desc": "chat about frontend development",
+			"uuid": 3
+		},
+		{
+			"name": "Backend",
+			"desc": "chat about backend development",
+			"uuid": 4
+		}
+	],
+	"currentChannel": {
+		"name": "Frontend",
+		"desc": "chat about frontend development",
+		"uuid": 3
+	}
+}
