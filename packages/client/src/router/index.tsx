@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import type { RouteObject } from 'react-router-dom';
 
 import { Login } from '@/components/Auth/Login';
-import { ProtectedRoute } from '@/components/Auth/ProtectedRoute';
+import { ProtectedRoute } from './ProtectedRoute';
 import { Channel } from '@/pages/Channel';
 import { Dashboard } from '@/pages/Dashboard';
 

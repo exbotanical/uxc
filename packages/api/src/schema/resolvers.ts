@@ -1,28 +1,32 @@
-import { PubSub } from 'graphql-yoga';
+import type { Message, User } from '@uxc/types';
 
-import type { Message } from '@uxc/types';
 import { v4 } from 'uuid';
-
-const messages: Message[] = [];
+import { pubsub } from '../pubsub/redis';
+import { messages, user } from '../state';
 
 const subscribers: (() => void)[] = [];
+
 const onMessageUpdates = (fn) => subscribers.push(fn);
 
 export const resolvers = {
 	Query: {
 		getAllMessages(): Message[] {
 			return messages;
+		},
+
+		getUser(): User {
+			return user;
 		}
 	},
 
 	Subscription: {
 		messages: {
-			subscribe: (parent, args, { pubsub }: { pubsub: PubSub }) => {
+			subscribe: (parent, args, context) => {
+				console.log({ context });
 				const chan = Math.random().toString(32).slice(2, 5);
-
 				const cb = () => pubsub.publish(chan, { messages });
-				onMessageUpdates(cb);
 
+				onMessageUpdates(cb);
 				setTimeout(cb, 0);
 
 				return pubsub.asyncIterator(chan);
@@ -32,6 +36,7 @@ export const resolvers = {
 
 	Mutation: {
 		addMessage(_, { message, user, timestamp }: Omit<Message, 'uuid'>, arg) {
+			console.log({ _, arg });
 			const uuid = v4();
 			const newMessage = { message, user, timestamp, uuid };
 

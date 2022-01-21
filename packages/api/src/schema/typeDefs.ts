@@ -1,10 +1,12 @@
+import { gql } from 'apollo-server-express';
+
 const BareUserTransputType = `
 	userImage: String
 	username: String
 	uuid: String
 `;
 
-export const typeDefs = `
+export const typeDefs = gql`
 	type User {
 		${BareUserTransputType}
 	}
@@ -23,6 +25,7 @@ export const typeDefs = `
 	type Query {
 		getAllMessages: [Message]
 		getMessage(id: ID!): Message
+		getUser: User
 	}
 
 	type Subscription {
