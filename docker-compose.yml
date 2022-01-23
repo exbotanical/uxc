@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+
+  redis:
+    image: redis
+    command: redis-server --requirepass password --bind redis
+    # TODO
+    env_file:
+      - .env
+    # ports:
+      # - "6379:6379"
+    networks:
+      - uxc-network
+
+  api:
+    container_name: api
+    restart: always
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    command: pnpm dev
+    env_file:
+      - .env
+    volumes:
+      - ./apps/api:/root/uxc/apps/api
+      - api_node_modules:/root/uxc/apps/api/node_modules
+    networks:
+      - uxc-network
+    depends_on:
+      - redis
+
+  client:
+    container_name: client
+    build:
+      context: .
+      dockerfile: apps/client/Dockerfile
+    command: pnpm dev
+    volumes:
+      - ./apps/client:/root/uxc/apps/client
+      - client_node_modules:/root/uxc/apps/client/node_modules
+    networks:
+      - uxc-network
+    depends_on:
+      - api
+      - redis
+    # needed for vite websocket conn
+    ports:
+      - "3000:3000"
+
+  nginx:
+    restart: always
+    build:
+      context: apps/server
+      dockerfile: Dockerfile
+    volumes:
+      - ./logs/nginx:/var/log/nginx:cached
+      # - ./dev/certs:/var/log/nginx:cached
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - uxc-network
+    depends_on:
+      - client
+
+networks:
+  uxc-network:
+    driver: bridge
+
+volumes:
+  api_node_modules:
+  client_node_modules:

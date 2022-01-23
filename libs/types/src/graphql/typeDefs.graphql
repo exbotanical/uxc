@@ -1,0 +1,34 @@
+type User {
+  userImage: String
+  username: String
+  uuid: String
+}
+
+input UserInput {
+	userImage: String!
+	username: String!
+	uuid: String!
+}
+
+type Message {
+  message: String
+  timestamp: String
+  user: User
+  uuid: ID
+}
+
+type Query {
+  getAllMessages: [Message]
+  getMessage(id: ID!): Message
+  getUser: User
+}
+
+type Subscription {
+  messages: [Message]
+}
+
+type Mutation {
+  addMessage(message: String, user: UserInput, timestamp: String): ID
+  updateMessage(uuid: ID, message: String, timestamp: String): ID
+  login(email: String, password: String, rememberMe: Boolean): User
+}

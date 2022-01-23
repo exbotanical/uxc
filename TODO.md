@@ -13,3 +13,10 @@
 - [ ] accessibility tests
 - [ ] component <- tailwind class seq's
 - [ ] restructure components dir
+
+## @uxc/api
+
+- [ ] logger
+- [ ] dev env for raw / non-containerized modes
+- [ ] tls
+- [ ] use gzip for graphql JSON compression

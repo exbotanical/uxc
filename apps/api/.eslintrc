@@ -1,0 +1,9 @@
+{
+  "extends": [
+    "@magister_zito",
+    "prettier"
+  ],
+  "rules": {
+    "@typescript-eslint/no-unnecessary-type-assertion": "off"
+  }
+}

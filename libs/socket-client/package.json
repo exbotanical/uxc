@@ -1,0 +1,23 @@
+{
+  "name": "@uxc/socket-client",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "author": "Matthew Zito <matthewtzito@gmail.com> (goldmund)",
+  "main": "src",
+  "scripts": {
+    "lint": "eslint --ext .ts,.js,.tsx,.jsx,.json . --fix"
+  },
+  "dependencies": {
+    "isomorphic-ws": "4.0.1",
+    "reconnecting-websocket": "4.4.0",
+    "uuid": "8.3.2"
+  },
+  "devDependencies": {
+    "@magister_zito/eslint-config": "^0.8.0",
+    "@uxc/types": "workspace:^1.0.0",
+    "eslint": "7.32.0",
+    "eslint-config-prettier": "8.3.0",
+    "prettier": "2.4.1"
+  }
+}

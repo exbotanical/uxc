@@ -5,3 +5,6 @@ coverage
 .env
 .cache
 dist
+*.env
+certs
+logs

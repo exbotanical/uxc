@@ -5,21 +5,27 @@
   "license": "MIT",
   "author": "Matthew Zito <matthewtzito@gmail.com> (goldmund)",
   "scripts": {
-    "dev": "pnpm -r --parallel --filter {packages} run dev",
+    "dev": "./scripts/dev.bash",
+    "dev:insecure": "pnpm -r --parallel --filter {apps,libs} run dev:insecure",
     "format": "prettier --write \"src/**/*.{ts,tsx,md,css,scss}\"",
+    "pnpm-context": "scripts/pnpm-context.mjs",
     "preview": "vite preview",
-    "lint": "pnpm -r --parallel --filter {packages} run lint",
+    "lint": "pnpm -r --parallel --filter {apps} run lint",
     "lint:css": "stylelint \"src/**/*.{css,scss,ts,tsx}\" --fix"
   },
   "lint-staged": {
-    "packages/**/*.{ts,tsx,js,jsx}": [
+    "apps/**/*.{ts,tsx,js,jsx}": [
       "pnpm format",
       "pnpm lint"
     ],
-    "packages/**/*.{css,scss}": [
+    "apps/**/*.{css,scss}": [
       "pnpm format",
       "pnpm lint:css"
     ]
+  },
+  "engines": {
+    "node": ">= 16.1.0",
+    "pnpm": ">= 6.9.0"
   },
   "devDependencies": {
     "@commitlint/cli": "13.1.0",
