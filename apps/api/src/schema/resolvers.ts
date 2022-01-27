@@ -6,6 +6,7 @@ import { messages, user } from '../state';
 
 import type { Message } from '@uxc/types';
 import type { Resolvers } from '@uxc/types/generated';
+import { loginController } from '../controllers/login';
 
 const subscribers: (() => void)[] = [];
 
@@ -70,9 +71,9 @@ export const resolvers: Resolvers = {
 			return oldMessage.uuid;
 		},
 
-		login(_, { email, password, rememberMe }) {
-			console.log({ email, password, rememberMe });
-			return user;
+		login(_, { email, password, rememberMe }, { req }) {
+			if (!email || !password) throw new Error();
+			return loginController({ email, password }, req);
 		}
 	}
 };

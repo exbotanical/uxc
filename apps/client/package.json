@@ -7,14 +7,14 @@
     "dev": "vite",
     "dev:solo": "INSECURE_MODE=1 vite",
     "lint": "eslint --ext .ts,.js,.tsx,.jsx,.json . --fix",
-		"lint:css": "stylelint \"src/**/*.{css,scss,ts,tsx}\" --fix",
+    "lint:css": "stylelint \"src/**/*.{css,scss,ts,tsx}\" --fix",
     "test:cy:dev": "cross-env VITE_CY_TEST=true CYPRESS_BASE_URL=http://localhost:3000 CYPRESS_STAGE=dev start-server-and-test dev http-get://localhost:3000/ \"cypress open\"",
     "test:cy": "cross-env VITE_CY_TEST=true vite build && start-server-and-test serve http-get://localhost:3000/ \"cypress open\"",
     "test:cy:ci": "cross-env VITE_CY_TEST=true vite build && start-server-and-test serve http-get://localhost:3000/ \"cypress run --env CY_CI=true\"",
     "test:unit:dev": "jest --watchAll",
     "test:unit": "jest",
     "test": "npm run test:unit && npm run test:cy:ci",
-		"typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@apollo/client": "^3.5.7",
@@ -25,6 +25,7 @@
     "jwt-decode": "^3.1.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-error-boundary": "^3.1.4",
     "react-modal": "3.14.3",
     "react-redux": "7.2.5",
     "react-responsive": "9.0.0-beta.4",

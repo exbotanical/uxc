@@ -4,6 +4,12 @@
 		"esModuleInterop": true,
 		"types": [
 			"node",
-    ]
-	}
+    ],
+    "baseUrl": ".",
+		"paths": {
+			"@/*": ["src/*"],
+    },
+	},
+	"typeRoots": ["src/shims.d.ts","node_modules/@types"],
+	"include": ["src", "*.ts"]
 }

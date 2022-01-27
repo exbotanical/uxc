@@ -5,7 +5,6 @@ export const GET_USER = gql`
 		userImage
 		username
 		uuid
-		__typename
 	}
 `;
 

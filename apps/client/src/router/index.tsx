@@ -9,6 +9,7 @@ import { Login } from '@/components/Auth/Login';
 import { Channel } from '@/pages/Channel';
 import { Dashboard } from '@/pages/Dashboard';
 
+/** @todo error boundaries */
 export function Routes(): RouteObject[] {
 	return [
 		{

@@ -1,3 +1,5 @@
+import type { Request } from 'express';
+
 export interface Context {
-	data: string;
+	req: Request;
 }

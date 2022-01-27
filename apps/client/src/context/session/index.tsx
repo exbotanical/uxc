@@ -2,7 +2,7 @@ import decode from 'jwt-decode';
 import React, { createContext, useEffect, useMemo, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 
-import type { UserTokens } from '@uxc/types';
+import type { User, UserTokens } from '@uxc/types';
 import type { JwtPayload } from 'jsonwebtoken';
 
 type AllNullable<T> = { [K in keyof T]: T[K] | null };
@@ -23,54 +23,15 @@ export function SessionProvider({
 	// TODO
 	children: JSX.Element | JSX.Element[];
 }) {
-	const [userSession, _setUserSession] = useState(defaultValue);
+	// const
+	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	const [user, setUser] = useState({} as User);
 
-	const setUserSession = (
-		{ accessToken, refreshToken }: SessionTokens = {
-			accessToken: null,
-			refreshToken: null
-		}
-	) => {
-		if (!isTokenLive({ accessToken, refreshToken })) {
-			localStorage.removeItem('accessToken');
-			localStorage.removeItem('refreshToken');
-		} else {
-			localStorage.setItem('accessToken', accessToken!);
-			localStorage.setItem('refreshToken', refreshToken!);
-		}
-
-		_setUserSession({
-			accessToken,
-			refreshToken
-		});
-	};
-
-	const isAuthenticated = isTokenLive(userSession);
 	useEffect(() => {
-		const manageStorageAdapter = () => {
-			if (!isTokenLive(userSession)) {
-				setUserSession();
+		// const user = await
+	}, []);
 
-				return <Navigate to="/" />;
-			}
-		};
-
-		window.addEventListener('storage', manageStorageAdapter);
-
-		return () => {
-			window.removeEventListener('storage', manageStorageAdapter);
-		};
-	}, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-	const value = useMemo(
-		() => ({
-			isAuthenticated,
-			setUserSession,
-			userSession
-		}),
-		[userSession]
-	);
-
+	const value = {};
 	return (
 		<SessionContext.Provider value={value}>{children}</SessionContext.Provider>
 	);
@@ -94,7 +55,7 @@ function defaultValue() {
 function isTokenLive(userSession: SessionTokens) {
 	if (!!userSession.accessToken && !!userSession.refreshToken) {
 		try {
-			const { exp } = decode(userSession.refreshToken) ;
+			const { exp } = decode(userSession.refreshToken);
 
 			return !!exp && Date.now() / 1000 < exp;
 		} catch (ex) {}

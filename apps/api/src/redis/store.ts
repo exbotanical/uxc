@@ -1,7 +1,7 @@
 import connectRedis from 'connect-redis';
 import Redis from 'ioredis';
 
-import { Session } from '../middleware';
+import { SessionMiddleware } from '../middleware';
 
 import { options } from '.';
 
@@ -11,7 +11,7 @@ const client = new Redis(options)
 		console.info('redis connect');
 	});
 
-export function buildStore(session: Session) {
+export function buildStore(session: SessionMiddleware) {
 	return new (connectRedis(session))({
 		client,
 		ttl: 86400

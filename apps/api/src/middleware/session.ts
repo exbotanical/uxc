@@ -1,15 +1,14 @@
 import session from 'express-session';
 
 import { buildStore } from '../redis';
-
-const isProd = process.env.NODE_ENV === 'production';
+import { isInsecureMode } from '../utils';
 
 export const sessionMiddleware = session({
 	cookie: {
-		httpOnly: isProd,
+		httpOnly: !isInsecureMode,
 		maxAge: 24 * 60 * 60 * 1000,
-		sameSite: true,
-		secure: isProd,
+		sameSite: !isInsecureMode,
+		secure: !isInsecureMode,
 		signed: true
 	},
 	resave: false,
@@ -18,4 +17,4 @@ export const sessionMiddleware = session({
 	store: buildStore(session)
 });
 
-export type Session = typeof session;
+export type SessionMiddleware = typeof session;

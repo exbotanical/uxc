@@ -14,6 +14,20 @@ import { app } from './app';
 import { corsOptions, errorhandler, NotFoundError } from './middleware';
 import { schema } from './schema';
 import { validateConfig } from './utils';
+import { User } from '@uxc/types';
+
+declare module 'express-session' {
+	export interface SessionData {
+		accessToken: string;
+		refreshToken: string;
+	}
+}
+
+declare module 'express-serve-static-core' {
+	export interface Request {
+		user?: User;
+	}
+}
 
 const PORT = process.env.API_PORT || 5000;
 
@@ -21,6 +35,9 @@ async function main() {
 	const httpServer = createServer(app);
 
 	const server = new ApolloServer({
+		context: ({ req }) => {
+			return { req };
+		},
 		plugins: [
 			ApolloServerPluginDrainHttpServer({ httpServer }),
 			{
@@ -52,7 +69,7 @@ async function main() {
 			subscribe
 		},
 		{
-			path: process.env.API_SUBSCRIPTIONS_PATH,
+			path: process.env.VITE_API_SUBSCRIPTIONS_PATH,
 			server: httpServer
 		}
 	);

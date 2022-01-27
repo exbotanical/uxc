@@ -1,26 +1,21 @@
-import { isInsecureModeRuntime } from '@/utils/runtime';
+import { isInsecureMode } from '@/utils/runtime';
 import { split, HttpLink } from '@apollo/client';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 
-console.log(window.location.hostname);
-const httpHostname = import.meta.env[
-	(isInsecureModeRuntime
-		? 'API_HTTP_HOSTNAME'
-		: 'API_HTTPS_HOSTNAME') as keyof ImportMeta['env']
-];
+const httpHostname = isInsecureMode
+	? import.meta.env.VITE_API_HTTP_HOSTNAME
+	: import.meta.env.VITE_API_HTTPS_HOSTNAME;
 
-const httpUri = `${httpHostname}/${import.meta.env.API_BASE_PATH}/${
-	import.meta.env.API_GRAPHQL_PATH
+const httpUri = `${httpHostname}/${import.meta.env.VITE_API_BASE_PATH}/${
+	import.meta.env.VITE_API_GRAPHQL_PATH
 }`;
 
-const wsHostname = import.meta.env[
-	(isInsecureModeRuntime
-		? 'API_SUBSCRIPTIONS_HOSTNAME'
-		: 'API_SUBSCRIPTIONS_HOSTNAME_SECURE') as keyof ImportMeta['env']
-];
+const wsHostname = isInsecureMode
+	? import.meta.env.VITE_API_SUBSCRIPTIONS_HOSTNAME
+	: import.meta.env.VITE_API_SUBSCRIPTIONS_HOSTNAME_SECURE;
 
-const wsUri = `${wsHostname}/${import.meta.env.API_SUBSCRIPTIONS_PATH}`;
+const wsUri = `${wsHostname}/${import.meta.env.VITE_API_SUBSCRIPTIONS_PATH}`;
 
 const httpLink = new HttpLink({
 	uri: httpUri

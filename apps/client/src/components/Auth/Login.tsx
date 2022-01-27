@@ -11,12 +11,16 @@ import { useConn } from '@/hooks/useConn';
 import { LOGIN } from '@/services/api/queries';
 
 export function Login() {
-	const [login, { data, loading, error }] = useMutation(LOGIN);
+	const [login] = useMutation(LOGIN, {
+		onError: console.error,
+		onCompleted: ({ login: user }) => {
+			// setUser(user);
+		}
+	});
 
 	const navigate = useNavigate();
 
 	const { isAuthenticated, setUserSession } = useContext(SessionContext);
-	const { setUser } = useConn();
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -25,17 +29,16 @@ export function Login() {
 		return <Navigate to="/dashboard" />;
 	}
 
-	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 
-		login({
+		await login({
 			variables: {
 				email,
 				password
 			}
 		});
 
-		console.log({ data });
 		// setUserSession({});
 		// setUser(user);
 
@@ -43,7 +46,7 @@ export function Login() {
 		setPassword('');
 
 		// navigate(`/channel/${user.currentChannel.uuid}`);
-	};
+	}
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const { value, name } = event.target;
