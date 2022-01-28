@@ -6,7 +6,7 @@ import { UserBio } from './UserBio';
 import { UserFollowers } from './UserFollowers';
 import { UserSite } from './UserSite';
 
-import { useConn } from '@/hooks/useConn';
+import type { User } from '@uxc/types';
 
 const mockUserInfo = {
 	site: 'github.com/MatthewZito',
@@ -15,10 +15,7 @@ const mockUserInfo = {
 	following: 4
 };
 
-export function UserProfile() {
-	const { conn } = useConn();
-	const { user } = conn!;
-
+export function UserProfile({ user }: { user: User }) {
 	return (
 		<div className="flex flex-col w-full rounded-8 bg-primary-800 p-4">
 			<div className="flex flex-col items-center mb-4">

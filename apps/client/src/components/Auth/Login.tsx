@@ -1,51 +1,50 @@
 import { useMutation } from '@apollo/client';
 import { User } from '@uxc/types';
-import React, { ChangeEvent, FormEvent, useContext, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 
 import { Button } from '../Buttons/Button';
 import { Input } from '../Fields/Input';
 
-import { SessionContext } from '@/context';
-import { useConn } from '@/hooks/useConn';
 import { LOGIN } from '@/services/api/queries';
 
 export function Login() {
-	const [login] = useMutation(LOGIN, {
-		onError: console.error,
-		onCompleted: ({ login: user }) => {
-			// setUser(user);
-		}
-	});
+	const [user, setUser] = useState<User | null>(null);
 
 	const navigate = useNavigate();
 
-	const { isAuthenticated, setUserSession } = useContext(SessionContext);
-
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [login] = useMutation(LOGIN);
 
-	if (isAuthenticated) {
-		return <Navigate to="/dashboard" />;
-	}
+	useEffect(() => {
+		// async () => {
+		// 	const variables = { email, password };
+		// 	const { data, errors } = await login({ variables });
+		// 	// if (errors)
+		// };
+	});
+
+	// if (isAuthenticated) {
+	// return <Navigate to="/dashboard" />;
+	// }
 
 	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 
-		await login({
+		const { data } = await login({
 			variables: {
 				email,
 				password
 			}
 		});
 
-		// setUserSession({});
-		// setUser(user);
-
 		setEmail('');
 		setPassword('');
 
-		// navigate(`/channel/${user.currentChannel.uuid}`);
+		const { login: user } = data;
+		console.log({ user });
+		navigate(`/dashboard`);
 	}
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {

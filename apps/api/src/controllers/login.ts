@@ -27,6 +27,6 @@ export async function loginController(
 	const { uuid: id } = user;
 
 	Object.assign(req.session, createSession(id));
-	console.log({ SESSION: req.session });
+
 	return user;
 }

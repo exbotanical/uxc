@@ -9,12 +9,12 @@ export function refreshMiddleware(
 	next: NextFunction
 ) {
 	const { accessToken, refreshToken } = req.session;
-
 	if (!accessToken) {
 		return next();
 	}
 
 	const { payload, expired } = verify({ token: accessToken });
+
 	if (payload) {
 		req.user = payload;
 		return next();
@@ -31,9 +31,9 @@ export function refreshMiddleware(
 
 	const session = createSession(refresh.uuid);
 	const decoded = decode(session.accessToken);
-	console.log({ decoded });
 
 	const { payload: user } = decoded!;
+
 	req.user = user as User;
 
 	Object.assign(req.session, session);

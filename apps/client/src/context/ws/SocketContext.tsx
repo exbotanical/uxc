@@ -11,7 +11,7 @@ import React, {
 import type { Connection } from '@uxc/socket-client/src/types';
 import type { User } from '@uxc/types';
 
-import { SessionContext } from '@/context';
+// import { SessionContext } from '@/context';
 import { showNotification } from '@/state';
 
 interface SocketProviderProps {
@@ -39,41 +39,40 @@ export function SocketProvider({
 	children
 }: // TODO
 SocketProviderProps & { children: JSX.Element | JSX.Element[] }) {
-	const { userSession, isAuthenticated } = useContext(SessionContext);
 	const [conn, setConn] = useState<Connection | null>(null);
 	const isConnecting = useRef(false);
 
-	useEffect(() => {
-		if (!conn && shouldConnect && isAuthenticated && !isConnecting.current) {
-			isConnecting.current = true;
+	// useEffect(() => {
+	// 	if (!conn && shouldConnect && isAuthenticated && !isConnecting.current) {
+	// 		isConnecting.current = true;
 
-			connect({
-				getAuthOptions: () => ({
-					accessToken: userSession
-				}),
-				logger: console.log, // eslint-disable-line no-console
-				onError: (message) =>
-					showNotification({
-						message,
-						type: 'error'
-					}),
-				shouldReconnect: true,
-				url: 'ws://localhost:5000/',
-				waitTimeout: 9000
-			})
-				.then(setConn)
-				.catch((err: { code: number }) => {
-					console.error({ err });
+	// 		connect({
+	// 			getAuthOptions: () => ({
+	// 				accessToken: userSession
+	// 			}),
+	// 			logger: console.log, // eslint-disable-line no-console
+	// 			onError: (message) =>
+	// 				showNotification({
+	// 					message,
+	// 					type: 'error'
+	// 				}),
+	// 			shouldReconnect: true,
+	// 			url: 'ws://localhost:5000/',
+	// 			waitTimeout: 9000
+	// 		})
+	// 			.then(setConn)
+	// 			.catch((err: { code: number }) => {
+	// 				console.error({ err });
 
-					if (err.code === 4001) {
-						console.error("we're fucked");
-					}
-				})
-				.finally(() => {
-					isConnecting.current = false;
-				});
-		}
-	}, [conn, shouldConnect, isAuthenticated, userSession]);
+	// 				if (err.code === 4001) {
+	// 					console.error("we're fucked");
+	// 				}
+	// 			})
+	// 			.finally(() => {
+	// 				isConnecting.current = false;
+	// 			});
+	// 	}
+	// }, [conn, shouldConnect, isAuthenticated, userSession]);
 
 	useEffect(() => {
 		if (!conn) {

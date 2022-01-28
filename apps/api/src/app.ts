@@ -7,7 +7,7 @@ import 'express-async-errors';
 import { refreshMiddleware } from './middleware/refresh';
 
 const app = express()
-	.set('trust proxy', true)
+	.set('trust proxy', 1)
 	.use(json())
 	.use(session)
 	.use(refreshMiddleware)

@@ -1,10 +1,16 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
-import { splitLink } from './links';
+import { link } from './links';
 
 export const client = new ApolloClient({
-	link: splitLink,
+	link,
 	cache: new InMemoryCache({
 		addTypename: false
 	})
+});
+
+client.onResetStore(() => {
+	return Promise.resolve(() => {
+		console.log('store reset');
+	});
 });

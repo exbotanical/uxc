@@ -11,6 +11,7 @@ export const sessionMiddleware = session({
 		secure: !isInsecureMode,
 		signed: true
 	},
+	name: 'sid',
 	resave: false,
 	saveUninitialized: false,
 	secret: process.env.COOKIE_SECRET!,

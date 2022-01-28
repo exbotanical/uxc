@@ -7,6 +7,8 @@ import { messages, user } from '../state';
 import type { Message } from '@uxc/types';
 import type { Resolvers } from '@uxc/types/generated';
 import { loginController } from '../controllers/login';
+import { authGuard } from '../middleware/auth';
+import { UserInputError } from 'apollo-server-core';
 
 const subscribers: (() => void)[] = [];
 
@@ -16,20 +18,20 @@ const onMessageUpdates = (fn: () => Promise<void>) => {
 
 export const resolvers: Resolvers = {
 	Query: {
-		getAllMessages() {
+		getAllMessages: authGuard((_, __, context) => {
 			return messages;
-		},
+		}),
 
-		getUser() {
+		getUser: authGuard((_, __, context) => {
 			return user;
-		}
+		})
 	},
 
 	Subscription: {
 		messages: {
 			// @todo
 			// @ts-expect-error
-			subscribe: (parent, args, context) => {
+			subscribe: authGuard((_, args, context) => {
 				console.log({ context });
 				const chan = Math.random().toString(32).slice(2, 5);
 				const subscription = async () => pubsub.publish(chan, { messages });
@@ -38,15 +40,20 @@ export const resolvers: Resolvers = {
 				setTimeout(subscription, 0);
 
 				return pubsub.asyncIterator<number>(chan);
-			}
+			})
 		}
 	},
 
 	Mutation: {
-		addMessage(_, { message, user, timestamp }) {
+		addMessage: authGuard((_, { message, user, timestamp }) => {
 			// @todo
-			if (!message || !user || !timestamp) throw Error();
-			if (!user.userImage || !user.username || !user.uuid) throw Error();
+			if (!message || !user || !timestamp) {
+				throw new UserInputError('missing data @todo');
+			}
+
+			if (!user.userImage || !user.username || !user.uuid) {
+				throw new UserInputError('missing data @todo');
+			}
 
 			const uuid = v4();
 			const newMessage: Message = { message, user, timestamp, uuid };
@@ -57,22 +64,22 @@ export const resolvers: Resolvers = {
 			});
 
 			return uuid;
-		},
+		}),
 
-		updateMessage(_, { uuid, message, timestamp }) {
+		updateMessage: authGuard((_, { uuid, message, timestamp }) => {
 			const oldMessage = messages.find((message) => message.uuid === uuid);
-
 			if (!oldMessage) {
 				throw new Error(`could not find a message with id ${uuid}`);
 			}
 
 			Object.assign(oldMessage, { uuid, message, timestamp });
-
 			return oldMessage.uuid;
-		},
+		}),
 
 		login(_, { email, password, rememberMe }, { req }) {
-			if (!email || !password) throw new Error();
+			if (!email || !password) {
+				throw new UserInputError('missing credentials');
+			}
 			return loginController({ email, password }, req);
 		}
 	}

@@ -1,14 +1,11 @@
 import { UnauthorizedError } from './error';
-import type { NextFunction, Request, Response } from 'express';
+import type { Context } from '@uxc/types';
+import { buildWrapResolver } from './wrapResolver';
 
-export async function authMiddleware(
-	req: Request,
-	res: Response,
-	next: NextFunction
-) {
+export async function authMiddleware({ req }: Context) {
 	if (!req.user) {
 		throw new UnauthorizedError();
 	}
-
-	return next();
 }
+
+export const authGuard = buildWrapResolver(authMiddleware);

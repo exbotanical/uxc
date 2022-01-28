@@ -1,7 +1,8 @@
 import { isInsecureMode } from '@/utils/runtime';
-import { split, HttpLink } from '@apollo/client';
+import { split, HttpLink, from } from '@apollo/client';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
+import { onError } from '@apollo/client/link/error';
 
 const httpHostname = isInsecureMode
 	? import.meta.env.VITE_API_HTTP_HOSTNAME
@@ -32,6 +33,16 @@ const wsLink = new WebSocketLink({
 	}
 });
 
+export const errorLink = onError(({ graphQLErrors, networkError }) => {
+	if (graphQLErrors)
+		graphQLErrors.forEach(({ message, locations, path }) =>
+			console.log(
+				`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+			)
+		);
+	if (networkError) console.log(`[Net    work error]: ${networkError}`);
+});
+
 export const splitLink = split(
 	({ query }) => {
 		const { kind, operation } = getMainDefinition(query) as {
@@ -43,3 +54,5 @@ export const splitLink = split(
 	wsLink,
 	httpLink
 );
+
+export const link = from([errorLink, splitLink]);

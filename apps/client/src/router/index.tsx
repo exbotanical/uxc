@@ -1,13 +1,15 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 
-import { ProtectedRoute } from './ProtectedRoute';
-
-import type { RouteObject } from 'react-router-dom';
+import { withProtectedRoute } from './ProtectedRoute';
 
 import { Login } from '@/components/Auth/Login';
 import { Channel } from '@/pages/Channel';
 import { Dashboard } from '@/pages/Dashboard';
+import type { RouteObject } from 'react-router-dom';
+
+const WrappedDashboard = withProtectedRoute(Dashboard);
+const WrappedChannel = withProtectedRoute(Channel);
 
 /** @todo error boundaries */
 export function Routes(): RouteObject[] {
@@ -17,19 +19,11 @@ export function Routes(): RouteObject[] {
 			path: '/'
 		},
 		{
-			element: (
-				<ProtectedRoute>
-					<Channel />
-				</ProtectedRoute>
-			),
+			element: <WrappedChannel />,
 			path: '/channel/:id'
 		},
 		{
-			element: (
-				<ProtectedRoute>
-					<Dashboard />
-				</ProtectedRoute>
-			),
+			element: <WrappedDashboard />,
 			path: '/dashboard'
 		},
 		{

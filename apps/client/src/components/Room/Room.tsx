@@ -7,7 +7,7 @@ import type { Message } from '@uxc/types';
 import { ConnectedRoomHeader } from '@/components/Room/RoomHeader';
 import { RoomMessage } from '@/components/Room/RoomMessage';
 import { RoomTextInput } from '@/components/Room/RoomTextInput';
-import { useConn, useWrappedConn } from '@/hooks/useConn';
+// import { useConn, useWrappedConn } from '@/hooks/useConn';
 import { connector, PropsFromRedux } from '@/state';
 
 export interface SendMessage {
@@ -30,26 +30,26 @@ export function Room({
 
 	const bottomRef = useRef<HTMLDivElement | null>(null);
 
-	const { conn } = useConn();
-	const { user } = conn!;
+	// const { conn } = useConn();
+	// const { user } = conn!;
 
-	const { client } = useWrappedConn();
+	// const { client } = useWrappedConn();
 
 	const [isScrolledToTop] = useState(false);
 	const [messages, setMessages] = useState<Message[]>([]);
 
 	const sendMessage: SendMessage = (message) => {
-		client.mutation.sendMessage({
-			channelUuid: id,
-			message,
-			timestamp: new Date().toISOString(),
-			user: {
-				userImage: user.userImage,
-				username: user.username,
-				uuid: user.uuid
-			},
-			uuid: v4()
-		});
+		// client.mutation.sendMessage({
+		// 	channelUuid: id,
+		// 	message,
+		// 	timestamp: new Date().toISOString(),
+		// 	user: {
+		// 		userImage: user.userImage,
+		// 		username: user.username,
+		// 		uuid: user.uuid
+		// 	},
+		// 	uuid: v4()
+		// });
 	};
 
 	useEffect(() => {
@@ -60,32 +60,32 @@ export function Room({
 			});
 	});
 
-	useEffect(() => {
-		(async () => {
-			const res = await client.query.getChannel({ id });
+	// useEffect(() => {
+	// 	(async () => {
+	// 		const res = await client.query.getChannel({ id });
 
-			if (typeof res === 'object' && 'error' in res) {
-				showNotification({
-					message:
-						'Something went wrong while grabbing info for this channel. Please try again later.',
-					type: 'error'
-				});
-			} else if (res.messages) {
-				console.log({ res });
-				setMessages(res.messages);
-			}
-		})();
-	}, [id]); // eslint-disable-line react-hooks/exhaustive-deps
+	// 		if (typeof res === 'object' && 'error' in res) {
+	// 			showNotification({
+	// 				message:
+	// 					'Something went wrong while grabbing info for this channel. Please try again later.',
+	// 				type: 'error'
+	// 			});
+	// 		} else if (res.messages) {
+	// 			console.log({ res });
+	// 			setMessages(res.messages);
+	// 		}
+	// 	})();
+	// }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
-	useEffect(() => {
-		client.subscribe.onMessage((message) => {
-			setMessages((prevState) => [...prevState, message]);
-		});
-	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+	// useEffect(() => {
+	// 	client.subscribe.onMessage((message) => {
+	// 		setMessages((prevState) => [...prevState, message]);
+	// 	});
+	// }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
 		<div className={`${className} flex flex-col bg-primary-800 rounded-sm`}>
-			<ConnectedRoomHeader user={user} />
+			{/* <ConnectedRoomHeader user={user} /> */}
 
 			<div className="overflow-y-auto flex-auto">
 				{messages.map((message) => {
@@ -96,10 +96,10 @@ export function Room({
 			</div>
 
 			<footer className="flex flex-col p-2">
-				<RoomTextInput
+				{/* <RoomTextInput
 					name={user.currentChannel.name}
 					sendMessage={sendMessage}
-				/>
+				/> */}
 			</footer>
 		</div>
 	);

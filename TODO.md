@@ -25,3 +25,8 @@
   (use id to filter feed subscription)
 - [ ] impl CTA / landing page (prior to login) w/ https://github.com/stephane-monnot/react-vertical-timeline
 - [ ] replace express-session with raw redis store and cookie-parser
+
+## Miscellaneous
+
+- [ ] build two servers - one proxies the connection to the other
+  - [ ] REST API behind a gql server
