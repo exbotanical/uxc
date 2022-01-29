@@ -50,6 +50,13 @@ services:
     ports:
       - "3000:3000"
 
+  database:
+    container_name: database
+    image: cassandra
+    networks:
+      - uxc-network
+    restart: always
+
   nginx:
     restart: always
     build:

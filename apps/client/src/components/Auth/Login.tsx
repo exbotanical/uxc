@@ -1,38 +1,33 @@
-import { useMutation } from '@apollo/client';
-import { User } from '@uxc/types';
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useMutation, useQuery } from '@apollo/client';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 
-import { Button } from '../Buttons/Button';
-import { Input } from '../Fields/Input';
-
-import { LOGIN } from '@/services/api/queries';
+import { Button } from '@/components/Buttons/Button';
+import { Input } from '@/components/Fields/Input';
+import { GET_USER, LOGIN } from '@/services/api/queries';
+import type { User } from '@uxc/types';
 
 export function Login() {
-	const [user, setUser] = useState<User | null>(null);
-
-	const navigate = useNavigate();
-
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const navigate = useNavigate();
+	const { data, loading } = useQuery<{
+		getUser: User;
+	}>(GET_USER);
 	const [login] = useMutation(LOGIN);
 
-	useEffect(() => {
-		// async () => {
-		// 	const variables = { email, password };
-		// 	const { data, errors } = await login({ variables });
-		// 	// if (errors)
-		// };
-	});
+	if (loading) {
+		return <>Loading...</>;
+	}
 
-	// if (isAuthenticated) {
-	// return <Navigate to="/dashboard" />;
-	// }
+	if (data) {
+		return <Navigate to="/dashboard" />;
+	}
 
 	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 
-		const { data } = await login({
+		await login({
 			variables: {
 				email,
 				password
@@ -42,14 +37,11 @@ export function Login() {
 		setEmail('');
 		setPassword('');
 
-		const { login: user } = data;
-		console.log({ user });
 		navigate(`/dashboard`);
 	}
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const { value, name } = event.target;
-
 		const executor = name == 'email' ? setEmail : setPassword;
 
 		executor(value);
