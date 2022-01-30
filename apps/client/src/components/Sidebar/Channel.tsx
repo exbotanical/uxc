@@ -15,12 +15,12 @@ interface ChannelProps {
 export function Channel({ user }: ChannelProps) {
 	const navigate = useNavigate();
 	const { setUser } = useConn();
-	const { uuid, username } = user;
+	const { id, username } = user;
 
 	/** @todo */
 	const location = useLocation();
 	const paths = location.pathname.split('/');
-	const isActiveItem = paths[paths.length - 1] == uuid;
+	const isActiveItem = paths[paths.length - 1] == id;
 	const activeClass = `${
 		isActiveItem
 			? 'bg-transparent-alt rounded-lg text-tertiary'
@@ -31,13 +31,13 @@ export function Channel({ user }: ChannelProps) {
 		/** @todo */
 		desc: '',
 		name: username,
-		uuid
+		id
 	};
 
 	const navToChannel = () => {
 		setUser((user) => ({ ...user, currentChannel })); // TODO improve
 
-		navigate(`/channel/${uuid}`);
+		navigate(`/channel/${id}`);
 	};
 
 	const handleClick = () => {
@@ -61,7 +61,7 @@ export function Channel({ user }: ChannelProps) {
 			</div>
 
 			{/* @todo new messages */}
-			{/* {(uuid === '33' || uuid === '343') && (
+			{/* {(id === '33' || id === '343') && (
 				<NotificationBadge className="mb-1">
 					<p>2</p>
 				</NotificationBadge>

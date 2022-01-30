@@ -47,10 +47,10 @@ export function UsersInChannel({
 			</h6>
 
 			<div className="flex flex-col mt-3 overflow-y-auto scrollbar-thin scrollbar-thumb-primary-700 overflow-x-hidden">
-				<ChannelUser {...user} key={user.uuid} />
+				<ChannelUser {...user} key={user.id} />
 
 				{users.map((u) => (
-					<ChannelUser key={u.uuid} {...u} />
+					<ChannelUser key={u.id} {...u} />
 				))}
 			</div>
 		</div>

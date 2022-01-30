@@ -1,20 +1,34 @@
-type User {
-  userImage: String
-  username: String
-  uuid: String
-}
-
-input UserInput {
-	userImage: String!
-	username: String!
-	uuid: String!
-}
+scalar Date
 
 type Message {
-  message: String
-  timestamp: String
-  user: User
-  uuid: ID
+  _id: ID
+	roomId: ID
+	sender: ID
+	createdAt: Date
+	updatedAt: Date
+	body: String
+}
+
+type User {
+	_id: ID
+	username: String
+	email: String
+	userImage: String
+	currentRoomId: ID
+}
+
+input LoginInput {
+	email: String
+	password: String
+	rememberMe: Boolean
+}
+
+input JoinInput {
+	email: String
+	username: String
+	password: String
+	currentRoomId: ID
+	userImage: ID
 }
 
 type Query {
@@ -28,7 +42,9 @@ type Subscription {
 }
 
 type Mutation {
-  addMessage(message: String, user: UserInput, timestamp: String): ID
-  updateMessage(uuid: ID, message: String, timestamp: String): ID
-  login(email: String, password: String, rememberMe: Boolean): User
+  addMessage(roomId: ID, body: String): ID
+  updateMessage(id: ID, body: String): ID
+  login(args: LoginInput): User
+	logout: ID
+  join(args: JoinInput): User
 }

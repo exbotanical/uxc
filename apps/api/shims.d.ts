@@ -1,5 +1,3 @@
-import type { JWT, User } from '@uxc/types';
-
 declare global {
 	namespace NodeJS {
 		export interface ProcessEnv {
@@ -20,19 +18,6 @@ declare global {
 			REFRESH_TOKEN_SIGNING_KEY: string;
 			JWT_AUTHORITY: string;
 		}
-	}
-}
-
-declare module 'express-session' {
-	export interface SessionData {
-		accessToken: string;
-		refreshToken: string;
-	}
-}
-
-declare module 'express-serve-static-core' {
-	export interface Request {
-		user?: User;
 	}
 }
 

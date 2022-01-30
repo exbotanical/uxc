@@ -21,8 +21,8 @@ export function Sidebar({ className = '' }: { className?: string }) {
 
 				<ul>
 					{/* @todo del btn on hover */}
-					{user.directMessageThreads.map(({ user, uuid }) => (
-						<Channel key={uuid} user={user} />
+					{user.dms.map(({ user, id }) => (
+						<Channel key={id} user={user} />
 					))}
 				</ul>
 			</nav>

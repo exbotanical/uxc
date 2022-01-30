@@ -56,7 +56,7 @@ function CreateChannelModal({
 				currentChannel: res.channel
 			}));
 
-			navigate(`/channel/${res.channel.uuid}`);
+			navigate(`/channel/${res.channel.id}`);
 		}
 
 		hideUpsertChannelModal();

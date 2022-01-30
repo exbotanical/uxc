@@ -1,4 +1,4 @@
-import type { User } from '@uxc/types';
+import type { JWTPayload, User } from '@uxc/types';
 import type { NextFunction, Request, Response } from 'express';
 import { decode, verify } from '../utils';
 import { createSession } from '../utils/auth';
@@ -16,7 +16,7 @@ export function refreshMiddleware(
 	const { payload, expired } = verify({ token: accessToken });
 
 	if (payload) {
-		req.user = payload;
+		req.meta = payload;
 		return next();
 	}
 
@@ -29,12 +29,12 @@ export function refreshMiddleware(
 		return next();
 	}
 
-	const session = createSession(refresh.uuid);
+	const session = createSession(refresh.id);
 	const decoded = decode(session.accessToken);
 
-	const { payload: user } = decoded!;
+	const { payload: meta } = decoded!;
 
-	req.user = user as User;
+	req.meta = meta as JWTPayload;
 
 	Object.assign(req.session, session);
 

@@ -13,6 +13,7 @@
 - [ ] accessibility tests
 - [ ] component <- tailwind class seq's
 - [ ] restructure components dir
+- [ ] slash commands
 
 ## @uxc/api
 
@@ -25,6 +26,8 @@
   (use id to filter feed subscription)
 - [ ] impl CTA / landing page (prior to login) w/ https://github.com/stephane-monnot/react-vertical-timeline
 - [ ] replace express-session with raw redis store and cookie-parser
+- [ ] slash commands
+- [ ] discrete tsconfig for jest test files (avoid namespace pollution)
 
 ## Miscellaneous
 

@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
 
-import type { JWT, User, UUID } from '@uxc/types';
+import type { JWT, User, ObjectID, JWTPayload } from '@uxc/types';
 
-export function sign({ id, isRefresh }: { id: UUID; isRefresh?: boolean }) {
+export function sign({ id, isRefresh }: { id: ObjectID; isRefresh?: boolean }) {
 	const secret =
 		process.env[
 			isRefresh ? 'REFRESH_TOKEN_SIGNING_KEY' : 'ACCESS_TOKEN_SIGNING_KEY'
@@ -24,7 +24,7 @@ export function verify({
 	token: JWT;
 	isRefresh?: boolean;
 }): {
-	payload: User | null;
+	payload: JWTPayload | null;
 	expired: boolean;
 } {
 	const secret =
@@ -34,7 +34,7 @@ export function verify({
 
 	try {
 		const decoded = jwt.verify(token, secret!);
-		return { payload: decoded as unknown as User, expired: false };
+		return { payload: decoded as unknown as JWTPayload, expired: false };
 	} catch (ex: any) {
 		return { payload: null, expired: ex?.message?.includes('jwt expired') };
 	}

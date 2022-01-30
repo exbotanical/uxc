@@ -6,7 +6,7 @@ import { sessionMiddleware as session } from './middleware';
 import 'express-async-errors';
 import { refreshMiddleware } from './middleware/refresh';
 
-const app = express()
+export const app = express()
 	.set('trust proxy', 1)
 	.use(json())
 	.use(session)
@@ -14,5 +14,3 @@ const app = express()
 	.get(`/health`, (_, res) => {
 		res.send('live');
 	});
-
-export { app };

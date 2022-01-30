@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { v4 } from 'uuid';
+import { v4 } from 'id';
 
 import type { Message } from '@uxc/types';
 
@@ -40,15 +40,15 @@ export function Room({
 
 	const sendMessage: SendMessage = (message) => {
 		// client.mutation.sendMessage({
-		// 	channelUuid: id,
+		// 	channelId: id,
 		// 	message,
 		// 	timestamp: new Date().toISOString(),
 		// 	user: {
 		// 		userImage: user.userImage,
 		// 		username: user.username,
-		// 		uuid: user.uuid
+		// 		id: user.id
 		// 	},
-		// 	uuid: v4()
+		// 	id: v4()
 		// });
 	};
 
@@ -89,7 +89,7 @@ export function Room({
 
 			<div className="overflow-y-auto flex-auto">
 				{messages.map((message) => {
-					return <RoomMessage key={message.uuid} {...message} />;
+					return <RoomMessage key={message.id} {...message} />;
 				})}
 
 				<div ref={bottomRef} />

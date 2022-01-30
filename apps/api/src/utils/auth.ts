@@ -1,7 +1,7 @@
 import { sign } from './jwt';
 import { scrypt, randomBytes } from 'crypto';
 import { promisify } from 'util';
-import type { UUID } from '@uxc/types';
+import type { ObjectID } from '@uxc/types';
 import type { Request } from 'express';
 
 const scryptAsync = promisify(scrypt);
@@ -20,7 +20,7 @@ export async function compare(stored: string, given: string) {
 	return buffer.toString('hex') === hashed;
 }
 
-export function createSession(id: UUID) {
+export function createSession(id: ObjectID) {
 	const accessToken = sign({ id });
 	const refreshToken = sign({ id, isRefresh: true });
 
@@ -38,7 +38,7 @@ export function invalidateSession(req: Request) {
 	});
 }
 
-export function createTokens(id: UUID) {
+export function createTokens(id: ObjectID) {
 	return {
 		accessToken: sign({ id }),
 		refreshToken: sign({ id, isRefresh: true })

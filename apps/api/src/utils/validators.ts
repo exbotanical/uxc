@@ -15,7 +15,8 @@ export function validateConfig() {
 		'VITE_API_SUBSCRIPTIONS_HOSTNAME_SECURE',
 		'ACCESS_TOKEN_SIGNING_KEY',
 		'REFRESH_TOKEN_SIGNING_KEY',
-		'JWT_AUTHORITY'
+		'JWT_AUTHORITY',
+		'DB_URL'
 	];
 	for (const envVar of requiredEnvVars) {
 		if (process.env[envVar] == null) {

@@ -52,10 +52,15 @@ services:
 
   database:
     container_name: database
-    image: cassandra
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
     networks:
       - uxc-network
     restart: always
+    volumes:
+      - mongo:/data/db
 
   nginx:
     restart: always
@@ -80,3 +85,4 @@ networks:
 volumes:
   api_node_modules:
   client_node_modules:
+  mongo:

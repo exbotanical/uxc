@@ -5,7 +5,7 @@ export const GET_USER = gql`
 		getUser {
 			userImage
 			username
-			uuid
+			id
 		}
 	}
 `;
@@ -15,7 +15,7 @@ export const LOGIN = gql`
 		login(email: $email, password: $password) {
 			userImage
 			username
-			uuid
+			id
 		}
 	}
 `;

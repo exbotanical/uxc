@@ -9,7 +9,7 @@ type ModalType = 'create' | 'edit';
 
 interface Payload {
 	type?: ModalType;
-	data?: Pick<Channel, 'desc' | 'name' | 'uuid'>;
+	data?: Pick<Channel, 'desc' | 'name' | 'id'>;
 }
 
 export interface BaseChannelAction {
