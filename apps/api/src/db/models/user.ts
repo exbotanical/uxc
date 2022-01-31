@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import type { Model, Document, Types } from 'mongoose';
+import type { Model, Document } from 'mongoose';
 
 import { toHash } from '@/utils';
 import type { User as UserType } from '@uxc/types';
@@ -33,7 +33,13 @@ const UserSchema = new Schema<UserType>(
 		// @ts-ignore
 		currentRoomId: {
 			default: null,
-			type: Schema.Types.ObjectId
+			type: Schema.Types.ObjectId,
+			ref: 'currentRoom'
+		},
+		currentRoom: {
+			default: null,
+			type: Schema.Types.ObjectId,
+			enum: ['DirectRoom' /* ,'Room' */]
 		}
 	},
 	{

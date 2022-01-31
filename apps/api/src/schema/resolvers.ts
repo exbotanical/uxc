@@ -7,7 +7,8 @@ import type { Resolvers } from '@uxc/types/generated';
 import { authGuard } from '../middleware/auth';
 import { joinResolver, loginResolver, logoutResolver } from '@/resolvers';
 import { GraphQLDateTime } from 'graphql-iso-date';
-import { User } from '@/db';
+import { User, Message, DirectRoom } from '@/db';
+import { seed } from './seed';
 
 const subscribers: (() => void)[] = [];
 
@@ -20,11 +21,25 @@ export const resolvers: Resolvers = {
 	Date: GraphQLDateTime,
 
 	Query: {
-		// getAllMessages: authGuard((_, __, context) => {
-		// 	return messages;
-		// }),
+		// @ts-ignore
+
+		getDirects: authGuard(async (_, { userId }, context) => {
+			const directsWithUser = await DirectRoom.find({
+				users: { $in: [{ _id: userId }] }
+			}).populate('users');
+
+			return directsWithUser;
+		}),
+		// @ts-ignore
+		getMessages: authGuard(async (_, { roomId }, context) => {
+			const messages = await Message.find({ roomId }).populate('sender');
+			console.log({ roomId, messages });
+
+			return messages;
+		}),
 
 		getUser: authGuard(async (_, __, { req }) => {
+			// @ts-ignore
 			const user = await User.findById(req.meta.id);
 
 			return user;
@@ -33,18 +48,13 @@ export const resolvers: Resolvers = {
 
 	// Subscription: {
 	// 	messages: {
-	// 		// @todo
-	// 		// @ts-expect-error
-	// 		subscribe: authGuard((_, args, context) => {
-	// 			console.log({ context });
-	// 			const chan = Math.random().toString(32).slice(2, 5);
-	// 			const subscription = async () => pubsub.publish(chan, { messages });
-
-	// 			onMessageUpdates(subscription);
-	// 			setTimeout(subscription, 0);
-
-	// 			return pubsub.asyncIterator<number>(chan);
-	// 		})
+	// 		// @ts-ignore
+	// 		subscribe: authGuard(
+	// 			withFilter(
+	// 				() => pubsub.asyncIterator('NEW_MESSAGE'),
+	// 				(payload, { roomId }) => payload._id === roomId
+	// 			)
+	// 		)
 	// 	}
 	// },
 
@@ -82,7 +92,7 @@ export const resolvers: Resolvers = {
 		// 	Object.assign(oldMessage, { body });
 		// 	return oldMessage._id;
 		// }),
-
+		seed,
 		logout: logoutResolver,
 		login: loginResolver,
 		join: joinResolver

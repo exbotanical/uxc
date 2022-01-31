@@ -1,3 +1,4 @@
+import 'module-alias/register';
 import { connectToDatabase } from './db';
 import { DatabaseConnectionError } from './middleware';
 import { initializeServer } from './server';

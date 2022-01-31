@@ -20,37 +20,23 @@ const MessageSchema = new Schema(
 	{
 		roomId: {
 			type: Schema.Types.ObjectId,
+			ref: 'DirectRoom',
 			required: true
 		},
 		sender: {
 			type: Schema.Types.ObjectId,
+			ref: 'User',
 			required: true
 		},
 		body: {
 			type: String,
 			required: true
-		},
-		on: {
-			type: 'ObjectId',
-			required: true,
-			refPath: 'onModel'
-		},
-		onModel: {
-			type: String,
-			required: true,
-			enum: ['Room', 'DirectRoom']
 		}
 	},
 	{
 		timestamps: true,
-
-		// modify internal `toJSON` method to serialize the user object sans password, __v;
-		// convert mongo-specific `_id` to a db-agnostic format
 		toJSON: {
-			// mongoose types are terrible here
 			transform(_, ret: ReturnDocument) {
-				// @ts-expect-error
-				delete ret.password;
 				delete ret.__v;
 			}
 		}

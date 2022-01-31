@@ -16,6 +16,7 @@ export const joinResolver: MutationResolvers['join'] = async (
 	{ args },
 	{ req }
 ) => {
+	console.log({ args });
 	const { email, password, username, userImage, currentRoomId } =
 		validateInputs(args);
 

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import type { JWT, User, ObjectID, JWTPayload } from '@uxc/types';
+import type { JWT, ObjectID, JWTPayload } from '@uxc/types';
 
 export function sign({ id, isRefresh }: { id: ObjectID; isRefresh?: boolean }) {
 	const secret =
