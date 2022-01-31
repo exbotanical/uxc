@@ -24,6 +24,7 @@ services:
       - .env
     volumes:
       - ./apps/api:/root/uxc/apps/api
+      - ./libs:/root/uxc/libs
       - api_node_modules:/root/uxc/apps/api/node_modules
     networks:
       - uxc-network
@@ -61,6 +62,8 @@ services:
     restart: always
     volumes:
       - mongo:/data/db
+    logging:
+      driver: "none"
 
   nginx:
     restart: always

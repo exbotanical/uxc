@@ -1,40 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { ChannelUser } from './ChannelUser';
+import { RoomUser } from './RoomUser';
 
 import type { User } from '@uxc/types';
 
-import { useConn, useWrappedConn } from '@/hooks/useConn';
 import { connector, PropsFromRedux } from '@/state';
 
-export function UsersInChannel({
+export function UsersInRoom({
 	showNotification,
 	className = ''
 }: PropsFromRedux & { className?: string }) {
 	const location = useLocation();
 	const [users, setUsers] = useState<User[]>([]);
-	const { client } = useWrappedConn();
-	const { conn } = useConn();
-
-	const { user } = conn!;
 	const paths = location.pathname.split('/');
 	const id = paths[paths.length - 1];
 
-	useEffect(() => {
-		(async () => {
-			const res = await client.query.getChannel({ id });
-			if (typeof res === 'object' && 'error' in res) {
-				showNotification({
-					message:
-						'Something went wrong while retrieving data about this channel. Please try again later.',
-					type: 'error'
-				});
-			} else if (res.users) {
-				setUsers(res.users);
-			}
-		})();
-	}, [id]); // eslint-disable-line react-hooks/exhaustive-deps
+	// useEffect(() => {
+	// 	(async () => {
+	// 		const res = await client.query.getRoom({ id });
+	// 		if (typeof res === 'object' && 'error' in res) {
+	// 			showNotification({
+	// 				message:
+	// 					'Something went wrong while retrieving data about this channel. Please try again later.',
+	// 				type: 'error'
+	// 			});
+	// 		} else if (res.users) {
+	// 			setUsers(res.users);
+	// 		}
+	// 	})();
+	// }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
 		<div
@@ -47,14 +42,14 @@ export function UsersInChannel({
 			</h6>
 
 			<div className="flex flex-col mt-3 overflow-y-auto scrollbar-thin scrollbar-thumb-primary-700 overflow-x-hidden">
-				<ChannelUser {...user} key={user.id} />
+				{/* <RoomUser {...user} key={user.id} />
 
 				{users.map((u) => (
-					<ChannelUser key={u.id} {...u} />
-				))}
+					<RoomUser key={u.id} {...u} />
+				))} */}
 			</div>
 		</div>
 	);
 }
 
-export const ConnectedUsersInChannel = connector(UsersInChannel);
+export const ConnectedUsersInRoom = connector(UsersInRoom);

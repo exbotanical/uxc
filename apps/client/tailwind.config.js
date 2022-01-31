@@ -99,7 +99,7 @@ module.exports = {
 				},
 
 				secondary: {
-					'DEFAULT': '#5575e7',
+					'DEFAULT': '#55a5a1',
 					'washed-out': '#879eed'
 				},
 				tertiary: {

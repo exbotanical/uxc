@@ -1,9 +1,16 @@
 scalar Date
 
+type DirectRoom {
+  _id: ID
+	createdAt: Date
+	updatedAt: Date
+	users: [User]
+}
+
 type Message {
   _id: ID
 	roomId: ID
-	sender: ID
+	sender: [User]
 	createdAt: Date
 	updatedAt: Date
 	body: String
@@ -32,16 +39,17 @@ input JoinInput {
 }
 
 type Query {
-  getAllMessages: [Message]
-  getMessage(id: ID!): Message
+	getDirects(userId: ID): [DirectRoom]
+  getMessages(roomId: ID): [Message]
   getUser: User
 }
 
 type Subscription {
-  messages: [Message]
+  messages(roomId: ID): [Message]
 }
 
 type Mutation {
+	seed: User
   addMessage(roomId: ID, body: String): ID
   updateMessage(id: ID, body: String): ID
   login(args: LoginInput): User

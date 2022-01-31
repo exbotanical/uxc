@@ -15,11 +15,11 @@ interface RoomHeaderProps {
 
 function RoomHeader({
 	user,
-	showUpsertChannelModal
+	showUpsertRoomModal
 }: PropsFromRedux & RoomHeaderProps) {
 	const handleClick = () => {
-		showUpsertChannelModal({
-			data: user.currentChannel,
+		showUpsertRoomModal({
+			data: user.currentRoom,
 			type: 'edit'
 		});
 	};

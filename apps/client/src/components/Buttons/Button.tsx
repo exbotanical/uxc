@@ -17,7 +17,7 @@ const colorClassNames = {
 		'text-button bg-primary-700 hover:bg-primary-600 disabled:text-primary-300',
 	'secondary':
 		'text-button bg-primary-700 hover:bg-primary-600 disabled:text-primary-300',
-	'secondary-800':
+	'secondary-dark':
 		'text-button bg-primary-800 hover:bg-primary-600 disabled:text-primary-300',
 	'transparent': 'text-button bg-transparent'
 };

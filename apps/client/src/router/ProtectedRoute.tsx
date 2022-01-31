@@ -18,7 +18,7 @@ export function withProtectedRoute<P extends {}>(
 		}
 
 		if (error || !data) {
-			return <Navigate replace to="/" />;
+			return <Navigate replace to="/login" />;
 		}
 
 		return <Component {...props} user={data.getUser} />;

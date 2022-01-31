@@ -71,6 +71,7 @@ importers:
       jest: ^27.4.7
       jsonwebtoken: ^8.5.1
       module-alias: ^2.2.2
+      mongodb: ^4.3.1
       mongodb-memory-server: ^8.2.0
       mongoose: ^6.1.8
       prettier: 2.4.1
@@ -130,6 +131,7 @@ importers:
       eslint-config-prettier: 8.3.0_eslint@7.32.0
       jest: 27.4.7
       module-alias: 2.2.2
+      mongodb: 4.3.1
       mongodb-memory-server: 8.2.0
       prettier: 2.4.1
       supertest: 6.2.2
@@ -172,6 +174,7 @@ importers:
       react: 17.0.2
       react-dom: 17.0.2
       react-error-boundary: ^3.1.4
+      react-images-upload: ^1.2.8
       react-modal: 3.14.3
       react-redux: 7.2.5
       react-responsive: 9.0.0-beta.4
@@ -199,6 +202,7 @@ importers:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-error-boundary: 3.1.4_react@17.0.2
+      react-images-upload: 1.2.8_react-dom@17.0.2
       react-modal: 3.14.3_react-dom@17.0.2+react@17.0.2
       react-redux: 7.2.5_react-dom@17.0.2+react@17.0.2
       react-responsive: 9.0.0-beta.4_react@17.0.2
@@ -9683,6 +9687,26 @@ packages:
       react: 17.0.2
     dev: false
 
+  /react-flip-move/3.0.4_react-dom@17.0.2+react@16.14.0:
+    resolution: {integrity: sha512-HyUVv9g3t/BS7Yz9HgrtYSWyRNdR2F81nkj+C5iRY675AwlqCLB5JU9mnZWg0cdVz7IM4iquoyZx70vzZv3Z8Q==}
+    peerDependencies:
+      react: '>=16.3.x'
+      react-dom: '>=16.3.x'
+    dependencies:
+      react: 16.14.0
+      react-dom: 17.0.2_react@17.0.2
+    dev: false
+
+  /react-images-upload/1.2.8_react-dom@17.0.2:
+    resolution: {integrity: sha512-d5mhAE0BfkLTlG5MLvKVw+q76LL8r5easgWW0TTBvXD8n6HXeLMZLwCuPiOibY1a3NRMXI4AnM1r34dqLOBjng==}
+    peerDependencies:
+      react-dom: ^16.3.0
+    dependencies:
+      react: 16.14.0
+      react-dom: 17.0.2_react@17.0.2
+      react-flip-move: 3.0.4_react-dom@17.0.2+react@16.14.0
+    dev: false
+
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
@@ -9822,6 +9846,15 @@ packages:
     dependencies:
       '@reach/observe-rect': 1.2.0
       react: 17.0.2
+    dev: false
+
+  /react/16.14.0:
+    resolution: {integrity: sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+      prop-types: 15.8.1
     dev: false
 
   /react/17.0.2:

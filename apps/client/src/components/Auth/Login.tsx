@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { useNavigate, Navigate, Link } from 'react-router-dom';
 
 import { Button } from '@/components/Buttons/Button';
 import { Input } from '@/components/Fields/Input';
@@ -29,8 +29,10 @@ export function Login() {
 
 		await login({
 			variables: {
-				email,
-				password
+				args: {
+					email,
+					password
+				}
 			}
 		});
 
@@ -57,12 +59,12 @@ export function Login() {
 
 					<p className="mt-2 text-center text-xl text-primary-100">
 						Or&nbsp;
-						<a
+						<Link
+							to="/register"
 							className="font-medium text-accent hover:text-accent-disabled"
-							href="/todo"
 						>
-							Create an Account
-						</a>
+							Create an Account{' '}
+						</Link>
 					</p>
 				</div>
 

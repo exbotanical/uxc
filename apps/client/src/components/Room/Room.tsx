@@ -1,14 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { v4 } from 'id';
 
-import type { Message } from '@uxc/types';
+import type { Message, ObjectID, User } from '@uxc/types';
 
-import { ConnectedRoomHeader } from '@/components/Room/RoomHeader';
 import { RoomMessage } from '@/components/Room/RoomMessage';
-import { RoomTextInput } from '@/components/Room/RoomTextInput';
-// import { useConn, useWrappedConn } from '@/hooks/useConn';
 import { connector, PropsFromRedux } from '@/state';
+import { useQuery } from '@apollo/client';
+import { GET_MESSAGES } from '@/services/api/queries';
 
 export interface SendMessage {
 	(message: string): void;
@@ -16,27 +14,48 @@ export interface SendMessage {
 
 interface RoomProps {
 	className: string;
+	roomId: ObjectID;
 }
 
 export function Room({
 	className,
+	roomId,
 	showNotification
 }: PropsFromRedux & RoomProps) {
-	const { id } = useParams<{ id: string }>();
+	const bottomRef = useRef<HTMLDivElement | null>(null);
+	const [isScrolledToTop] = useState(false);
 
-	if (!id) {
+	useEffect(() => {
+		isScrolledToTop ||
+			bottomRef.current?.scrollIntoView({
+				block: 'nearest',
+				inline: 'start'
+			});
+	});
+
+	const { loading, data, error } = useQuery<{
+		getMessages: (Omit<Message, 'sender'> & { sender: User })[];
+	}>(GET_MESSAGES, {
+		variables: {
+			roomId
+		}
+		// skip: messages.length > 0
+	});
+
+	console.log('HJER');
+
+	if (loading) return null;
+
+	if (error) {
+		console.log({ error });
+		// showNotification({
+		// 	message:
+		// 		'Something went wrong while grabbing info for this channel. Please try again later.',
+		// 	type: 'error'
+		// });
+
 		return null;
 	}
-
-	const bottomRef = useRef<HTMLDivElement | null>(null);
-
-	// const { conn } = useConn();
-	// const { user } = conn!;
-
-	// const { client } = useWrappedConn();
-
-	const [isScrolledToTop] = useState(false);
-	const [messages, setMessages] = useState<Message[]>([]);
 
 	const sendMessage: SendMessage = (message) => {
 		// client.mutation.sendMessage({
@@ -52,52 +71,29 @@ export function Room({
 		// });
 	};
 
-	useEffect(() => {
-		isScrolledToTop ||
-			bottomRef.current?.scrollIntoView({
-				block: 'nearest',
-				inline: 'start'
-			});
-	});
-
-	// useEffect(() => {
-	// 	(async () => {
-	// 		const res = await client.query.getChannel({ id });
-
-	// 		if (typeof res === 'object' && 'error' in res) {
-	// 			showNotification({
-	// 				message:
-	// 					'Something went wrong while grabbing info for this channel. Please try again later.',
-	// 				type: 'error'
-	// 			});
-	// 		} else if (res.messages) {
-	// 			console.log({ res });
-	// 			setMessages(res.messages);
-	// 		}
-	// 	})();
-	// }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
-
 	// useEffect(() => {
 	// 	client.subscribe.onMessage((message) => {
 	// 		setMessages((prevState) => [...prevState, message]);
 	// 	});
 	// }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+	const messages = data?.getMessages || [];
+
 	return (
 		<div className={`${className} flex flex-col bg-primary-800 rounded-sm`}>
 			{/* <ConnectedRoomHeader user={user} /> */}
 
 			<div className="overflow-y-auto flex-auto">
-				{messages.map((message) => {
-					return <RoomMessage key={message.id} {...message} />;
-				})}
+				{messages.map((message) => (
+					<RoomMessage key={message._id} {...message} />
+				))}
 
 				<div ref={bottomRef} />
 			</div>
 
 			<footer className="flex flex-col p-2">
 				{/* <RoomTextInput
-					name={user.currentChannel.name}
+					name={user.currentRoom.name}
 					sendMessage={sendMessage}
 				/> */}
 			</footer>

@@ -1,33 +1,29 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import { Button } from '@/components/Buttons/Button';
 import { Input } from '@/components/Fields/Input';
 import { Select } from '@/components/Fields/Select';
 import { Modal } from '@/components/Modal/Modal';
-import { useWrappedConn } from '@/hooks/useConn';
 import { connector, PropsFromRedux } from '@/state';
 
-function CreateChannelModal({
+function CreateRoomModal({
 	channelModalState,
-	hideUpsertChannelModal,
+	hideUpsertRoomModal,
 	showNotification
 }: PropsFromRedux) {
 	const navigate = useNavigate();
-	const { client, setUser } = useWrappedConn();
 
-	const [channelName, setChannelName] = useState(
+	const [channelName, setRoomName] = useState(
 		channelModalState.data?.name || ''
 	);
 
-	const [channelDesc, setChannelDesc] = useState(
+	const [channelDesc, setRoomDesc] = useState(
 		channelModalState.data?.desc || ''
 	);
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const { value, name } = event.target;
 
-		const executor = name == 'name' ? setChannelName : setChannelDesc;
+		const executor = name == 'name' ? setRoomName : setRoomDesc;
 
 		executor(value);
 	};
@@ -37,51 +33,51 @@ function CreateChannelModal({
 
 		if (!channelName || !channelDesc) return;
 
-		const res = await client.mutation.createChannel({
-			desc: channelDesc,
-			name: channelName
-		});
+		// const res = await client.mutation.createRoom({
+		// 	desc: channelDesc,
+		// 	name: channelName
+		// });
 
-		if (typeof res === 'object' && 'error' in res) {
-			showNotification({
-				message:
-					'Something went wrong while creating your channel. Please try again in a few minutes.',
-				type: 'error'
-			});
-		} else if (res.channel) {
-			// TODO improve
-			setUser((user) => ({
-				...user,
-				channels: [...user.channels, res.channel],
-				currentChannel: res.channel
-			}));
+		// if (typeof res === 'object' && 'error' in res) {
+		// 	showNotification({
+		// 		message:
+		// 			'Something went wrong while creating your channel. Please try again in a few minutes.',
+		// 		type: 'error'
+		// 	});
+		// } else if (res.channel) {
+		// 	// TODO improve
+		// 	setUser((user) => ({
+		// 		...user,
+		// 		channels: [...user.channels, res.channel],
+		// 		currentRoom: res.channel
+		// 	}));
 
-			navigate(`/channel/${res.channel.id}`);
-		}
+		// 	navigate(`/channel/${res.channel.id}`);
+		// }
 
-		hideUpsertChannelModal();
+		hideUpsertRoomModal();
 	};
 
-	const onClose = () => {
-		setChannelName('');
-		setChannelDesc('');
-		hideUpsertChannelModal();
-	};
+	// const onClose = () => {
+	// 	setRoomName('');
+	// 	setRoomDesc('');
+	// 	hideUpsertRoomModal();
+	// };
 
-	const isEdit = channelModalState.type === 'edit';
+	// const isEdit = channelModalState.type === 'edit';
 
 	return (
-		<Modal isOpen={channelModalState.showing} onRequestClose={onClose}>
+		<Modal isOpen={channelModalState.showing}>
 			<form
 				className="grid grid-cols-3 gap-4 focus:outline-none w-full"
 				onSubmit={handleSubmit}
 			>
 				<div className="col-span-3 block">
 					<h4 className="mb-2 text-primary-100">
-						{isEdit && channelModalState.data
+						{/* {isEdit && channelModalState.data
 							? `Update #${channelModalState.data.name}`
-							: 'Create a New Channel'}
-						s
+							: 'Create a New Room'}
+						s */}
 					</h4>
 				</div>
 
@@ -120,19 +116,19 @@ function CreateChannelModal({
 				</div>
 
 				<div className="flex pt-2 space-x-3 col-span-full items-center">
-					<Button color="primary-300" onClick={onClose} type="button">
+					{/* <Button color="primary-300" onClick={onClose} type="button">
 						Cancel
 					</Button>
 
 					<Button className="mr-3" type="submit">
 						{isEdit ? 'Save' : 'Create'}
-					</Button>
+					</Button> */}
 				</div>
 			</form>
 		</Modal>
 	);
 }
 
-CreateChannelModal.displayName = 'CreateChannelModal';
+CreateRoomModal.displayName = 'CreateRoomModal';
 
-export const ConnectedCreateChannelModal = connector(CreateChannelModal);
+export const ConnectedCreateRoomModal = connector(CreateRoomModal);

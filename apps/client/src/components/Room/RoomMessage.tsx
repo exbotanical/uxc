@@ -1,9 +1,11 @@
 import React from 'react';
 
-import type { Message } from '@uxc/types';
+import type { Message, User } from '@uxc/types';
 
-export function RoomMessage({ message, user }: Message) {
-	const { username } = user;
+export function RoomMessage(
+	message: Omit<Message, 'sender'> & { sender: User }
+) {
+	const { username } = message.sender;
 	const colors = [
 		'#ff2366',
 		'#fd51d9',
@@ -30,13 +32,13 @@ export function RoomMessage({ message, user }: Message) {
 	return (
 		<div className="flex flex-col text-lg pb-1 mx-3">
 			<div>
-				<span className="font-bold" style={{ color: generatecolor(username) }}>
+				<span className="font-bold" style={{ color: generateColor(username) }}>
 					{username}
 				</span>
 
 				<span className="text-white">: </span>
 
-				<span className="text-primary-100">{message}</span>
+				<span className="text-primary-100">{message.body}</span>
 			</div>
 		</div>
 	);

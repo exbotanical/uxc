@@ -1,22 +1,18 @@
 import { MODAL_ACTION } from './types';
 
-import type {
-	BaseChannelAction,
-	HideChannelAction,
-	ShowChannelAction
-} from './types';
+import type { BaseRoomAction, HideRoomAction, ShowRoomAction } from './types';
 
 export const NAMESPACE = 'channel';
 
-export function isHideChannelAction(
-	action: BaseChannelAction
-): action is HideChannelAction {
+export function isHideRoomAction(
+	action: BaseRoomAction
+): action is HideRoomAction {
 	return action.type === MODAL_ACTION.HIDE;
 }
 
-export function isShowChannelAction(
-	action: BaseChannelAction
-): action is ShowChannelAction {
+export function isShowRoomAction(
+	action: BaseRoomAction
+): action is ShowRoomAction {
 	return action.type === MODAL_ACTION.SHOW && !!action.payload?.type;
 }
 

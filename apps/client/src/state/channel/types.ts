@@ -1,4 +1,4 @@
-import { Channel } from '@uxc/types';
+import { Room } from '@uxc/types';
 
 export enum MODAL_ACTION {
 	SHOW = 'SHOW_MODAL',
@@ -9,19 +9,19 @@ type ModalType = 'create' | 'edit';
 
 interface Payload {
 	type?: ModalType;
-	data?: Pick<Channel, 'desc' | 'name' | 'id'>;
+	data?: Pick<Room, 'desc' | 'name' | 'id'>;
 }
 
-export interface BaseChannelAction {
+export interface BaseRoomAction {
 	type: MODAL_ACTION;
 	payload?: Payload;
 }
 
-export interface HideChannelAction extends BaseChannelAction {
+export interface HideRoomAction extends BaseRoomAction {
 	type: MODAL_ACTION.HIDE;
 }
 
-export interface ShowChannelAction extends BaseChannelAction {
+export interface ShowRoomAction extends BaseRoomAction {
 	type: MODAL_ACTION.SHOW;
 	payload: Payload;
 }
@@ -34,10 +34,10 @@ export interface HideModal {
 	(): ModalAction;
 }
 
-export type ModalAction = HideChannelAction | ShowChannelAction;
+export type ModalAction = HideRoomAction | ShowRoomAction;
 
 export type ModalState = Payload & { showing: boolean };
 
-export interface ChannelState {
+export interface RoomState {
 	channelModal: ModalState;
 }

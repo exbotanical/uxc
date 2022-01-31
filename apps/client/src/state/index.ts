@@ -1,10 +1,7 @@
 import { connect, ConnectedProps } from 'react-redux';
 import { combineReducers, createStore } from 'redux';
 
-import {
-	showUpsertChannelModal,
-	hideUpsertChannelModal
-} from './channel/actions';
+import { showUpsertRoomModal, hideUpsertRoomModal } from './channel/actions';
 import { reducer as channel } from './channel/reducer';
 import { showNotification, hideNotification } from './notifications/actions';
 import { reducer as notification } from './notifications/reducer';
@@ -33,9 +30,9 @@ const mapStateToProps = (state: RootState) => {
 
 const mapDispatchToProps = {
 	hideNotification,
-	hideUpsertChannelModal,
+	hideUpsertRoomModal,
 	showNotification,
-	showUpsertChannelModal
+	showUpsertRoomModal
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -43,9 +40,9 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 export {
 	connector,
 	hideNotification,
-	hideUpsertChannelModal,
+	hideUpsertRoomModal,
 	showNotification,
-	showUpsertChannelModal,
+	showUpsertRoomModal,
 	store
 };
 
