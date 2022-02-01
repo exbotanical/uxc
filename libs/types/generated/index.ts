@@ -45,7 +45,7 @@ export type Message = {
   body?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['Date']>;
   roomId?: Maybe<Scalars['ID']>;
-  sender?: Maybe<Array<Maybe<User>>>;
+  sender?: Maybe<User>;
   updatedAt?: Maybe<Scalars['Date']>;
 };
 
@@ -233,7 +233,7 @@ export type MessageResolvers<ContextType = Context, ParentType extends Resolvers
   body?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   roomId?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
-  sender?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
+  sender?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

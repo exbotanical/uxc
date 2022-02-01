@@ -5,7 +5,11 @@
 // import type { Message } from '@uxc/types';
 import type { Resolvers } from '@uxc/types/generated';
 import { authGuard } from '../middleware/auth';
-import { joinResolver, loginResolver, logoutResolver } from '@/resolvers';
+import {
+	joinResolver as join,
+	loginResolver as login,
+	logoutResolver as logout
+} from '@/resolvers';
 import { GraphQLDateTime } from 'graphql-iso-date';
 import { User, Message, DirectRoom } from '@/db';
 import { seed } from './seed';
@@ -33,7 +37,6 @@ export const resolvers: Resolvers = {
 		// @ts-ignore
 		getMessages: authGuard(async (_, { roomId }, context) => {
 			const messages = await Message.find({ roomId }).populate('sender');
-			console.log({ roomId, messages });
 
 			return messages;
 		}),
@@ -93,8 +96,8 @@ export const resolvers: Resolvers = {
 		// 	return oldMessage._id;
 		// }),
 		seed,
-		logout: logoutResolver,
-		login: loginResolver,
-		join: joinResolver
+		logout,
+		login,
+		join
 	}
 };

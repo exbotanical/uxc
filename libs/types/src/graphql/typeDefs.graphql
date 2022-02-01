@@ -10,7 +10,7 @@ type DirectRoom {
 type Message {
   _id: ID
 	roomId: ID
-	sender: [User]
+	sender: User
 	createdAt: Date
 	updatedAt: Date
 	body: String

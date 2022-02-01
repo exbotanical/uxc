@@ -7,6 +7,8 @@ import { RoomMessage } from '@/components/Room/RoomMessage';
 import { connector, PropsFromRedux } from '@/state';
 import { useQuery } from '@apollo/client';
 import { GET_MESSAGES } from '@/services/api/queries';
+import { RoomTextInput } from './RoomTextInput';
+import { ConnectedRoomHeader } from './RoomHeader';
 
 export interface SendMessage {
 	(message: string): void;
@@ -39,10 +41,7 @@ export function Room({
 		variables: {
 			roomId
 		}
-		// skip: messages.length > 0
 	});
-
-	console.log('HJER');
 
 	if (loading) return null;
 
@@ -57,27 +56,10 @@ export function Room({
 		return null;
 	}
 
-	const sendMessage: SendMessage = (message) => {
-		// client.mutation.sendMessage({
-		// 	channelId: id,
-		// 	message,
-		// 	timestamp: new Date().toISOString(),
-		// 	user: {
-		// 		userImage: user.userImage,
-		// 		username: user.username,
-		// 		id: user.id
-		// 	},
-		// 	id: v4()
-		// });
-	};
-
-	// useEffect(() => {
-	// 	client.subscribe.onMessage((message) => {
-	// 		setMessages((prevState) => [...prevState, message]);
-	// 	});
-	// }, []); // eslint-disable-line react-hooks/exhaustive-deps
+	const sendMessage: SendMessage = (message) => {};
 
 	const messages = data?.getMessages || [];
+	console.log(messages);
 
 	return (
 		<div className={`${className} flex flex-col bg-primary-800 rounded-sm`}>
@@ -92,10 +74,10 @@ export function Room({
 			</div>
 
 			<footer className="flex flex-col p-2">
-				{/* <RoomTextInput
-					name={user.currentRoom.name}
+				<RoomTextInput
+					name={'user.currentRoom.name'}
 					sendMessage={sendMessage}
-				/> */}
+				/>
 			</footer>
 		</div>
 	);
