@@ -4,7 +4,7 @@ import type { User } from '@uxc/types';
 
 import { UserAvatar } from '@/components/User/UserAvatar';
 
-export function RoomUser(u: User) {
+export function ChatRoomUser(u: User) {
 	return (
 		<div className="flex p-2 w-full hover:bg-primary-700">
 			<UserAvatar size="sm" u={u} />
@@ -15,3 +15,5 @@ export function RoomUser(u: User) {
 		</div>
 	);
 }
+
+ChatRoomUser.displayName = 'ChatRoomUser';

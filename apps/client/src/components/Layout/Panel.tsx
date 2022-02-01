@@ -22,3 +22,5 @@ export function Panel({ top, bottom, className = '' }: PanelProps) {
 		</div>
 	);
 }
+
+Panel.displayName = 'Panel';

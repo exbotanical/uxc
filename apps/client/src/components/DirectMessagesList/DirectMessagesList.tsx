@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 
 import { SearchButton } from './SearchButton';
-import { Room } from '@/components/Sidebar/Room';
-import { ConnectedHeader as Header } from '@/components/Sidebar/Header';
+import { DirectMessage } from '@/components/DirectMessagesList/DirectMessage';
+import { ConnectedHeader as Header } from '@/components/DirectMessagesList/Header';
 import { DirectsContext } from '@/pages/DirectsContext';
 
-export function Sidebar({ className = '' }: { className?: string }) {
+export function DirectMessagesList({ className = '' }: { className?: string }) {
 	const { directs } = useContext(DirectsContext);
 
 	return (
@@ -19,7 +19,7 @@ export function Sidebar({ className = '' }: { className?: string }) {
 				<ul>
 					{/* @todo del btn on hover */}
 					{directs.map(({ _id: id }) => (
-						<Room key={id} id={id} />
+						<DirectMessage key={id} id={id} />
 					))}
 				</ul>
 			</nav>
@@ -29,4 +29,4 @@ export function Sidebar({ className = '' }: { className?: string }) {
 	);
 }
 
-Sidebar.displayName = 'Sidebar';
+DirectMessagesList.displayName = 'DirectMessagesList';

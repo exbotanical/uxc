@@ -3,7 +3,7 @@ import React from 'react';
 
 import { UserAvatar } from '../User/UserAvatar';
 
-export function Status({ user }: { user: User }) {
+export function UserStatus({ user }: { user: User }) {
 	return (
 		<div className="flex justify-between items-center mt-auto bg-primary-900 drop-shadow-2xl shadow-2xl w-full p-2 px-3 h-7">
 			<div className="flex items-center gap-2">
@@ -23,4 +23,4 @@ export function Status({ user }: { user: User }) {
 	);
 }
 
-Status.displayName = 'Status';
+UserStatus.displayName = 'UserStatus';

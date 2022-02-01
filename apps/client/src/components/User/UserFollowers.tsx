@@ -19,6 +19,8 @@ export function UserFollowers({
 	);
 }
 
+UserFollowers.displayName = 'UserFollowers';
+
 export function Followers({ followers }: { followers?: number }) {
 	return (
 		<div className="flex transition duration-200 ease-in-out hover:bg-primary-700 py-1 rounded-8">
@@ -29,6 +31,8 @@ export function Followers({ followers }: { followers?: number }) {
 	);
 }
 
+Followers.displayName = 'Followers';
+
 function Following({ following }: { following?: number }) {
 	return (
 		<div className="flex transition duration-200 ease-in-out hover:bg-primary-700 px-2 py-1 rounded-8">
@@ -38,3 +42,5 @@ function Following({ following }: { following?: number }) {
 		</div>
 	);
 }
+
+Following.displayName = 'Following';

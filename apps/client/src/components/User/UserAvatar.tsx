@@ -2,7 +2,7 @@ import React from 'react';
 
 import type { User } from '@uxc/types';
 
-import { StatusDot } from '@/components/Badges/StatusDot';
+import { StatusIndicator } from '@/components/Badges/StatusIndicator';
 
 export const sizeMap = {
 	'2xl': {
@@ -44,9 +44,9 @@ export function UserAvatar({ u, size = 'md', className = '' }: UserCardProps) {
 		<div
 			className={`relative mb-1 ${className}`}
 			style={{
-    height: avatar,
-    width: avatar
-  }}
+				height: avatar,
+				width: avatar
+			}}
 		>
 			<img
 				alt={u.username ? `${u.username}-s-avatar` : 'your-avatar'}
@@ -55,8 +55,10 @@ export function UserAvatar({ u, size = 'md', className = '' }: UserCardProps) {
 			/>
 
 			<div className="absolute border-primary-800">
-				<StatusDot size={status} />
+				<StatusIndicator size={status} />
 			</div>
 		</div>
 	);
 }
+
+UserAvatar.displayName = 'UserAvatar';

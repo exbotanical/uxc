@@ -1,2 +1,2 @@
-export * from './channel/types';
-export * from './notifications/types';
+export * from './thread/types';
+export * from './notification/types';

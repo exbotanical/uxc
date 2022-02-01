@@ -17,3 +17,5 @@ export function UserSite({ site, className = '' }: UserSiteProps) {
 		</a>
 	);
 }
+
+UserSite.displayName = 'UserSite';

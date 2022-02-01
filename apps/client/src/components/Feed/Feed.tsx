@@ -7,3 +7,5 @@ export function Feed() {
 		</div>
 	);
 }
+
+Feed.displayName = 'Feed';

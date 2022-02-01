@@ -20,3 +20,5 @@ export function ToDashboard() {
 		</Button>
 	);
 }
+
+ToDashboard.displayName = 'ToDashboard';

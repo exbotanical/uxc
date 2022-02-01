@@ -1,10 +1,10 @@
 import { connect, ConnectedProps } from 'react-redux';
 import { combineReducers, createStore } from 'redux';
 
-import { showUpsertRoomModal, hideUpsertRoomModal } from './channel/actions';
-import { reducer as channel } from './channel/reducer';
-import { showNotification, hideNotification } from './notifications/actions';
-import { reducer as notification } from './notifications/reducer';
+import { showUpsertRoomModal, hideUpsertRoomModal } from './thread/actions';
+import { reducer as channel } from './thread/reducer';
+import { showNotification, hideNotification } from './notification/actions';
+import { reducer as notification } from './notification/reducer';
 
 export type RootState = ReturnType<typeof store.getState>;
 
@@ -23,7 +23,7 @@ const store = createStore(
 
 const mapStateToProps = (state: RootState) => {
 	return {
-		channelModalState: state.channel.channelModal,
+		threadModalState: state.channel,
 		notifications: state.notification
 	};
 };

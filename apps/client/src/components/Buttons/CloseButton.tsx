@@ -2,7 +2,7 @@ import type { SVGProps } from 'react';
 
 import React from 'react';
 
-export function CloseIconButton (props: SVGProps<SVGSVGElement>) {
+export function CloseButton(props: SVGProps<SVGSVGElement>) {
 	return (
 		<svg
 			fill="currentColor"
@@ -30,15 +30,11 @@ export function CloseIconButton (props: SVGProps<SVGSVGElement>) {
 
 			<defs>
 				<clipPath id="clip12">
-					<rect
-						fill="white"
-    height="16"
-    width="16"
-					/>
+					<rect fill="white" height="16" width="16" />
 				</clipPath>
 			</defs>
 		</svg>
 	);
 }
 
-CloseIconButton.displayName = 'CloseIconButton';
+CloseButton.displayName = 'CloseButton';

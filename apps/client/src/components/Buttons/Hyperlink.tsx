@@ -2,7 +2,7 @@ import type { ComponentPropsWithoutRef } from 'react';
 
 import React from 'react';
 
-export function ButtonLink ({
+export function Hyperlink({
 	children,
 	className,
 	...props
@@ -17,3 +17,5 @@ export function ButtonLink ({
 		</button>
 	);
 }
+
+Hyperlink.displayName = 'Hyperlink';

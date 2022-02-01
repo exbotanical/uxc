@@ -1,16 +1,16 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 
-import type { SendMessage } from '@/components/Room/Room';
+import type { SendMessage } from '@/components/ChatRoom/ChatArea';
 
 import { Input } from '@/components/Fields/Input';
 import { SmileyIcon } from '@/components/Icons/SmileyIcon';
 
-interface RoomTextInputProps {
+interface ChatMessageInputProps {
 	sendMessage: SendMessage;
 	name: string;
 }
 
-export function RoomTextInput({ sendMessage, name }: RoomTextInputProps) {
+export function ChatMessageInput({ sendMessage, name }: ChatMessageInputProps) {
 	const [message, setMessage] = useState('');
 
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -54,4 +54,4 @@ export function RoomTextInput({ sendMessage, name }: RoomTextInputProps) {
 	);
 }
 
-RoomTextInput.displayName = 'RoomTextInput';
+ChatMessageInput.displayName = 'ChatMessageInput';

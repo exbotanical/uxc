@@ -7,3 +7,5 @@ export function UserBadges({ className = '' }: { className?: string }) {
 		</span>
 	);
 }
+
+UserBadges.displayName = 'UserBadges';

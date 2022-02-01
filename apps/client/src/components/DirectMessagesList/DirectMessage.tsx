@@ -9,11 +9,11 @@ import { DirectsContext } from '@/pages/DirectsContext';
 import { useQuery } from '@apollo/client';
 import { GET_USER } from '@/services/api/queries';
 
-interface RoomProps {
+interface DirectMessageProps {
 	id: ObjectID;
 }
 
-export function Room({ id }: RoomProps) {
+export function DirectMessage({ id }: DirectMessageProps) {
 	const { getDirectById } = useContext(DirectsContext);
 	const direct = getDirectById(id);
 	const { data: user } = useQuery<{
@@ -62,4 +62,4 @@ export function Room({ id }: RoomProps) {
 	);
 }
 
-Room.displayName = 'Room';
+DirectMessage.displayName = 'DirectMessage';

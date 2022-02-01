@@ -3,27 +3,27 @@ import { useParams } from 'react-router-dom';
 
 import type { Message, ObjectID, User } from '@uxc/types';
 
-import { RoomMessage } from '@/components/Room/RoomMessage';
+import { ChatMessage } from '@/components/ChatRoom/ChatMessage';
 import { connector, PropsFromRedux } from '@/state';
 import { useQuery } from '@apollo/client';
 import { GET_MESSAGES } from '@/services/api/queries';
-import { RoomTextInput } from './RoomTextInput';
-import { ConnectedRoomHeader } from './RoomHeader';
+import { ChatMessageInput } from './ChatMessageInput';
+import { ConnectedChatRoomHeader as Header } from './ChatRoomHeader';
 
 export interface SendMessage {
 	(message: string): void;
 }
 
-interface RoomProps {
+interface ChatAreaProps {
 	className: string;
 	roomId: ObjectID;
 }
 
-export function Room({
+export function ChatArea({
 	className,
 	roomId,
 	showNotification
-}: PropsFromRedux & RoomProps) {
+}: PropsFromRedux & ChatAreaProps) {
 	const bottomRef = useRef<HTMLDivElement | null>(null);
 	const [isScrolledToTop] = useState(false);
 
@@ -63,18 +63,18 @@ export function Room({
 
 	return (
 		<div className={`${className} flex flex-col bg-primary-800 rounded-sm`}>
-			{/* <ConnectedRoomHeader user={user} /> */}
+			{/* <Header user={user} /> */}
 
 			<div className="overflow-y-auto flex-auto">
 				{messages.map((message) => (
-					<RoomMessage key={message._id} {...message} />
+					<ChatMessage key={message._id} {...message} />
 				))}
 
 				<div ref={bottomRef} />
 			</div>
 
 			<footer className="flex flex-col p-2">
-				<RoomTextInput
+				<ChatMessageInput
 					name={'user.currentRoom.name'}
 					sendMessage={sendMessage}
 				/>
@@ -83,6 +83,6 @@ export function Room({
 	);
 }
 
-Room.displayName = 'Room';
+ChatArea.displayName = 'ChatArea';
 
-export const ConnectedRoom = connector(Room);
+export const ConnectedChatArea = connector(ChatArea);

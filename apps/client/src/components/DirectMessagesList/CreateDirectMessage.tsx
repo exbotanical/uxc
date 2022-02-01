@@ -5,7 +5,7 @@ import { Select } from '@/components/Fields/Select';
 import { Modal } from '@/components/Modal/Modal';
 import { connector, PropsFromRedux } from '@/state';
 
-function CreateRoomModal({
+function CreateDirectMessageModal({
 	channelModalState,
 	hideUpsertRoomModal,
 	showNotification
@@ -129,6 +129,8 @@ function CreateRoomModal({
 	);
 }
 
-CreateRoomModal.displayName = 'CreateRoomModal';
+CreateDirectMessageModal.displayName = 'CreateDirectMessageModal';
 
-export const ConnectedCreateRoomModal = connector(CreateRoomModal);
+export const ConnectedCreateDirectMessageModal = connector(
+	CreateDirectMessageModal
+);

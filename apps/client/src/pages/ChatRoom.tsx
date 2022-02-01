@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { Rooms } from '@/components/Rooms/Rooms';
+import { ChannelsList } from '@/components/ChannelsList/ChannelsList';
 import { NotificationController } from '@/components/Notification/NotificationController';
-import { ConnectedRoom } from '@/components/Room/Room';
-import { ConnectedCreateRoomModal } from '@/components/Sidebar/CreateRoom';
-import { Sidebar } from '@/components/Sidebar/Sidebar';
+import { ConnectedChatArea as ChatArea } from '@/components/ChatRoom/ChatArea';
+import { ConnectedCreateDirectMessageModal as Modal } from '@/components/DirectMessagesList/CreateDirectMessage';
+import { DirectMessagesList } from '@/components/DirectMessagesList/DirectMessagesList';
 import { useViewportSize } from '@/hooks/useViewportSize';
 import { useParams } from 'react-router-dom';
 import { DirectsProvider } from './DirectsContext';
@@ -19,7 +19,7 @@ const Dashboard = () => {
 	);
 };
 
-export function Room() {
+export function ChatRoom() {
 	const { roomId } = useParams();
 	const viewport = useViewportSize();
 	const gtsm = viewport > 0;
@@ -30,16 +30,19 @@ export function Room() {
 		<DirectsProvider>
 			<div className="h-screen flex flex-1">
 				<NotificationController />
-				<ConnectedCreateRoomModal />
+				<Modal />
 
-				<Rooms className="bg-primary-700" />
+				{/* TODO why here */}
+				<ChannelsList className="bg-primary-700" />
 
-				{gtsm ? <Sidebar className="bg-primary-900 w-[18rem]" /> : null}
+				{gtsm ? (
+					<DirectMessagesList className="bg-primary-900 w-[18rem]" />
+				) : null}
 
 				{isIndexRoom ? (
 					<Dashboard />
 				) : (
-					<ConnectedRoom
+					<ChatArea
 						className="overflow-hidden grow col-span-8 bg-primary-800"
 						roomId={roomId}
 					/>
@@ -48,3 +51,5 @@ export function Room() {
 		</DirectsProvider>
 	);
 }
+
+ChatRoom.displayName = 'ChatRoom';

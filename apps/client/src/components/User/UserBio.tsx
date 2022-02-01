@@ -12,3 +12,5 @@ export function UserBio({ bio, className = '' }: UserBioProps) {
 		</div>
 	);
 }
+
+UserBio.displayName = 'UserBio';

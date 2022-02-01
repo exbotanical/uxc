@@ -4,7 +4,7 @@ import { MODAL_ACTION } from './types';
 
 import type { ShowModal, HideModal } from './types';
 
-const SHOW_UPSERT_CHANNEL_MODAL: ShowModal = ({ type, ...data }) => ({
+const SHOW_UPSERT_THREAD_MODAL: ShowModal = ({ type, ...data }) => ({
 	payload: {
 		type,
 		...data
@@ -12,12 +12,12 @@ const SHOW_UPSERT_CHANNEL_MODAL: ShowModal = ({ type, ...data }) => ({
 	type: MODAL_ACTION.SHOW
 });
 
-const HIDE_UPSERT_CHANNEL_MODAL: HideModal = () => ({
+const HIDE_UPSERT_THREAD_MODAL: HideModal = () => ({
 	type: MODAL_ACTION.HIDE
 });
 
 export const showUpsertRoomModal: ShowModal = (args) =>
-	store.dispatch(SHOW_UPSERT_CHANNEL_MODAL(args));
+	store.dispatch(SHOW_UPSERT_THREAD_MODAL(args));
 
 export const hideUpsertRoomModal: HideModal = () =>
-	store.dispatch(HIDE_UPSERT_CHANNEL_MODAL());
+	store.dispatch(HIDE_UPSERT_THREAD_MODAL());

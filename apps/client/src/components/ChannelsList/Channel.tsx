@@ -1,5 +1,4 @@
 import React from 'react';
-
 const mockImgs = [
 	'https://upload.wikimedia.org/wikipedia/en/8/8e/Can_-_Tago_Mago.jpg',
 	'https://upload.wikimedia.org/wikipedia/en/e/e7/CanMonsterMovieAlbumCover.jpg',
@@ -12,7 +11,7 @@ function randomIntFromInterval(min: number, max: number) {
 
 const randomIdx = randomIntFromInterval(0, mockImgs.length - 1);
 
-function Room() {
+export function Channel() {
 	return (
 		<li className="rounded-xl m-1 p-1 flex items-center justify-center cursor-pointer hover:bg-transparent-alt transition ease-in-out transform hover:scale-105 duration-300">
 			<div className="h-6 ">
@@ -26,18 +25,4 @@ function Room() {
 	);
 }
 
-/** @todo rerenders when changing chat */
-export function Rooms({ className = '' }: { className?: string }) {
-	return (
-		<div className={`text-white grid grid-rows-12 w-7 h-full ${className}`}>
-			<ul>
-				<Room />
-				<hr className="border-outline mx-2" />
-				<Room />
-				<Room />
-				<Room />
-			</ul>
-		</div>
-	);
-}
-//
+Channel.displayName = 'Channel';

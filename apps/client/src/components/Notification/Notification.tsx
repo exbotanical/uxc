@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import type { Notification as NotifType } from '@/state/types';
 
-import { CloseIconButton } from '@/components/Buttons/CloseIconButton';
+import { CloseButton } from '@/components/Buttons/CloseButton';
 import { onEnterKeyPressed } from '@/utils';
 
 export type NotificationDuration = 'default' | 'sticky';
@@ -51,7 +51,7 @@ export function Notification({
 					role="button"
 					tabIndex={0}
 				>
-					<CloseIconButton style={{ transform: 'rotate(45deg)' }} />
+					<CloseButton style={{ transform: 'rotate(45deg)' }} />
 				</div>
 			) : null}
 

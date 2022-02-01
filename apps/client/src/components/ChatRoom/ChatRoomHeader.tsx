@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { StatusDot } from '../Badges/StatusDot';
-import { Input } from '../Fields/Input';
+import { StatusIndicator } from '@/components/Badges/StatusIndicator';
+import { Input } from '@/components/Fields/Input';
 
 import type { User } from '@uxc/types';
 
@@ -9,17 +9,17 @@ import { EditIcon } from '@/components/Icons/EditIcon';
 import { connector, PropsFromRedux } from '@/state';
 import { onEnterKeyPressed } from '@/utils';
 
-interface RoomHeaderProps {
+interface ChatRoomHeaderProps {
 	user: User;
 }
 
-function RoomHeader({
+function ChatRoomHeader({
 	user,
 	showUpsertRoomModal
-}: PropsFromRedux & RoomHeaderProps) {
+}: PropsFromRedux & ChatRoomHeaderProps) {
 	const handleClick = () => {
 		showUpsertRoomModal({
-			data: user.currentRoom,
+			data: user.currentRoomId,
 			type: 'edit'
 		});
 	};
@@ -77,6 +77,6 @@ function RoomHeader({
 	);
 }
 
-RoomHeader.displayName = 'RoomHeader';
+ChatRoomHeader.displayName = 'ChatRoomHeader';
 
-export const ConnectedRoomHeader = connector(RoomHeader);
+export const ConnectedChatRoomHeader = connector(ChatRoomHeader);

@@ -2,18 +2,18 @@ import React from 'react';
 
 import { useOnline } from '@/hooks';
 
-interface StatusDotProps {
+interface StatusIndicatorProps {
 	placementClass?: string;
 	size?: 'lg' | 'sm';
 	sansBorder?: boolean;
 	animate?: boolean;
 }
-export function StatusDot({
+export function StatusIndicator({
 	placementClass = '',
 	size = 'sm',
 	sansBorder = false,
 	animate = false
-}: StatusDotProps) {
+}: StatusIndicatorProps) {
 	const { isOnline } = useOnline();
 	const sizeClass = size === 'sm' ? 'w-3 h-3' : 'w-4 h-4';
 	const placement =
@@ -34,3 +34,5 @@ export function StatusDot({
 		</div>
 	);
 }
+
+StatusIndicator.displayName = 'StatusIndicator';

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { RoomUser } from './RoomUser';
+import { ChatRoomUser } from './ChatRoomUser';
 
 import type { User } from '@uxc/types';
 
 import { connector, PropsFromRedux } from '@/state';
 
-export function UsersInRoom({
+export function UsersInChatRoom({
 	showNotification,
 	className = ''
 }: PropsFromRedux & { className?: string }) {
@@ -42,14 +42,16 @@ export function UsersInRoom({
 			</h6>
 
 			<div className="flex flex-col mt-3 overflow-y-auto scrollbar-thin scrollbar-thumb-primary-700 overflow-x-hidden">
-				{/* <RoomUser {...user} key={user.id} />
+				{/* <ChatRoomUser {...user} key={user.id} />
 
 				{users.map((u) => (
-					<RoomUser key={u.id} {...u} />
+					<ChatRoomUser key={u.id} {...u} />
 				))} */}
 			</div>
 		</div>
 	);
 }
 
-export const ConnectedUsersInRoom = connector(UsersInRoom);
+UsersInChatRoom.displayName = 'UsersInChatRoom';
+
+export const ConnectedUsersInChatRoom = connector(UsersInChatRoom);

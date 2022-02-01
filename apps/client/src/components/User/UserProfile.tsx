@@ -36,3 +36,5 @@ export function UserProfile({ user }: { user: User }) {
 		</div>
 	);
 }
+
+UserProfile.displayName = 'UserProfile';

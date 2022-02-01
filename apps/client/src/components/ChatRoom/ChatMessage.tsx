@@ -2,7 +2,7 @@ import React from 'react';
 
 import type { Message, User } from '@uxc/types';
 
-export function RoomMessage(
+export function ChatMessage(
 	message: Omit<Message, 'sender'> & { sender: User }
 ) {
 	const { username } = message.sender;
@@ -44,4 +44,4 @@ export function RoomMessage(
 	);
 }
 
-RoomMessage.displayName = 'RoomMessage';
+ChatMessage.displayName = 'ChatMessage';

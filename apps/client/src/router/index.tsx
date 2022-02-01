@@ -4,13 +4,13 @@ import { Navigate } from 'react-router-dom';
 import { withProtectedRoute } from './ProtectedRoute';
 
 import { Login } from '@/components/Auth/Login';
-import { Room } from '@/pages/Room';
+import { ChatRoom } from '@/pages/ChatRoom';
 import { Dashboard } from '@/pages/Dashboard';
 import type { RouteObject } from 'react-router-dom';
 import { Register } from '@/components/Auth/Register';
 
 const WrappedDashboard = withProtectedRoute(Dashboard);
-const WrappedRoom = withProtectedRoute(Room);
+const WrappedChatRoom = withProtectedRoute(ChatRoom);
 
 /** @todo error boundaries */
 export function Routes(): RouteObject[] {
@@ -24,12 +24,12 @@ export function Routes(): RouteObject[] {
 			path: '/register'
 		},
 		{
-			element: <WrappedRoom />,
+			element: <WrappedChatRoom />,
 			path: 'room',
 
 			children: [
 				{
-					element: <WrappedRoom />,
+					element: <WrappedChatRoom />,
 					path: ':roomId'
 				}
 			]
