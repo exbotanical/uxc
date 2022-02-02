@@ -10,7 +10,7 @@ export function withProtectedRoute<P extends {}>(
 ) {
 	return function (props: P) {
 		const { loading, data, error } = useQuery<{
-			getUser: User;
+			getCurrentUser: User;
 		}>(GET_USER);
 
 		if (loading) {
@@ -21,7 +21,7 @@ export function withProtectedRoute<P extends {}>(
 			return <Navigate replace to="/login" />;
 		}
 
-		return <Component {...props} user={data.getUser} />;
+		return <Component {...props} user={data.getCurrentUser} />;
 	};
 }
 

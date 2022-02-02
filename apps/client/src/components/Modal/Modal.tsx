@@ -78,6 +78,7 @@ export function Modal({
 						className="p-1 text-primary-100"
 						data-testid="close-modal"
 						onClick={(e) => {
+							console.log({ e });
 							props.onRequestClose?.(e);
 						}}
 						type="button"

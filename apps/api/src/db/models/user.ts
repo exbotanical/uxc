@@ -4,15 +4,16 @@ import type { Model, Document } from 'mongoose';
 import { toHash } from '@/utils';
 import type { User as UserType } from '@uxc/types';
 
-type ReturnDocument = UserType & { password: string; __v?: string };
+type UserWithPassword = UserType & { password: string };
+type ReturnDocument = UserWithPassword & { __v?: string };
 
 interface UserDocument extends UserType, Omit<Document, '_id'> {}
 
 interface UserModel extends Model<ReturnDocument> {
-	build(attrs: Omit<UserType, '_id'> & { password: string }): UserDocument;
+	build(attrs: Omit<UserWithPassword, '_id'>): UserDocument;
 }
 
-const UserSchema = new Schema<UserType>(
+const UserSchema = new Schema<UserWithPassword>(
 	{
 		username: {
 			required: true,
@@ -29,17 +30,6 @@ const UserSchema = new Schema<UserType>(
 		userImage: {
 			default: null,
 			type: String
-		},
-		// @ts-ignore
-		currentRoomId: {
-			default: null,
-			type: Schema.Types.ObjectId,
-			ref: 'currentRoom'
-		},
-		currentRoom: {
-			default: null,
-			type: Schema.Types.ObjectId,
-			enum: ['DirectRoom' /* ,'Room' */]
 		}
 	},
 	{

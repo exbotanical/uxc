@@ -1,4 +1,4 @@
-export * from './directRoom';
+export * from './privateThread';
 
 export * from './message';
 

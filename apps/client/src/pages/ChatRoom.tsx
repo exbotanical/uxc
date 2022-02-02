@@ -2,12 +2,12 @@ import React from 'react';
 
 import { ChannelsList } from '@/components/ChannelsList/ChannelsList';
 import { NotificationController } from '@/components/Notification/NotificationController';
-import { ConnectedChatArea as ChatArea } from '@/components/ChatRoom/ChatArea';
-import { ConnectedCreateDirectMessageModal as Modal } from '@/components/DirectMessagesList/CreateDirectMessage';
-import { DirectMessagesList } from '@/components/DirectMessagesList/DirectMessagesList';
+import { ConnectedChatArea as ChatArea } from '@/components/ChatThread/ChatArea';
+import { ConnectedCreatePrivateThreadModal as Modal } from '@/components/PrivateThreadsList/CreatePrivateThread';
+import { PrivateThreadsList } from '@/components/PrivateThreadsList/PrivateThreadsList';
 import { useViewportSize } from '@/hooks/useViewportSize';
 import { useParams } from 'react-router-dom';
-import { DirectsProvider } from './DirectsContext';
+import { ThreadsProvider } from './ThreadsContext';
 
 const Dashboard = () => {
 	return (
@@ -20,14 +20,14 @@ const Dashboard = () => {
 };
 
 export function ChatRoom() {
-	const { roomId } = useParams();
+	const { threadId } = useParams();
 	const viewport = useViewportSize();
 	const gtsm = viewport > 0;
 
-	const isIndexRoom = roomId == null;
+	const isIndexThread = threadId == null;
 
 	return (
-		<DirectsProvider>
+		<ThreadsProvider>
 			<div className="h-screen flex flex-1">
 				<NotificationController />
 				<Modal />
@@ -36,19 +36,19 @@ export function ChatRoom() {
 				<ChannelsList className="bg-primary-700" />
 
 				{gtsm ? (
-					<DirectMessagesList className="bg-primary-900 w-[18rem]" />
+					<PrivateThreadsList className="bg-primary-900 w-[18rem]" />
 				) : null}
 
-				{isIndexRoom ? (
+				{isIndexThread ? (
 					<Dashboard />
 				) : (
 					<ChatArea
 						className="overflow-hidden grow col-span-8 bg-primary-800"
-						roomId={roomId}
+						threadId={threadId}
 					/>
 				)}
 			</div>
-		</DirectsProvider>
+		</ThreadsProvider>
 	);
 }
 

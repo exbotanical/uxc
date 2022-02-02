@@ -52,7 +52,6 @@ describe('join workflow', () => {
 					args: {
 						...user,
 						password,
-						currentRoomId: null,
 						userImage: null
 					}
 				}
@@ -62,7 +61,6 @@ describe('join workflow', () => {
 		expect(body.data.join).toMatchObject({
 			...user,
 			_id: expect.any(String),
-			currentRoomId: null,
 			userImage: null
 		});
 	});

@@ -11,10 +11,10 @@ interface HeaderProps {
 function Header({
 	title,
 	className = '',
-	showUpsertRoomModal
+	showUpsertThreadModal
 }: HeaderProps & PropsFromRedux) {
 	const handleClick = () => {
-		showUpsertRoomModal({ type: 'create' });
+		showUpsertThreadModal({ type: 'create', data: null });
 	};
 
 	return (

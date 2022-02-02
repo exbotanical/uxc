@@ -16,9 +16,7 @@ export const joinResolver: MutationResolvers['join'] = async (
 	{ args },
 	{ req }
 ) => {
-	console.log({ args });
-	const { email, password, username, userImage, currentRoomId } =
-		validateInputs(args);
+	const { email, password, username, userImage } = validateInputs(args);
 
 	const userExists = await User.findOne({
 		$or: [{ email }, { username }]
@@ -32,8 +30,7 @@ export const joinResolver: MutationResolvers['join'] = async (
 		email,
 		password,
 		username,
-		userImage,
-		currentRoomId
+		userImage
 	});
 
 	await newUser.save();
@@ -48,7 +45,7 @@ function validateInputs(args?: InputMaybe<JoinInput>) {
 		throw new UserInputError(ERROR_MESSAGES.E_NO_CREDENTIALS);
 	}
 
-	const { email, password, username, userImage, currentRoomId } = args;
+	const { email, password, username, userImage } = args;
 
 	if (!email) {
 		throw new UserInputError(ERROR_MESSAGES.E_NO_EMAIL);
@@ -86,8 +83,5 @@ function validateInputs(args?: InputMaybe<JoinInput>) {
 		throw new UserInputError(ERROR_MESSAGES.E_INVALID_PROGRAMMATIC_INPUTS);
 	}
 
-	if (currentRoomId != null && typeof currentRoomId !== 'string') {
-		throw new UserInputError(ERROR_MESSAGES.E_INVALID_PROGRAMMATIC_INPUTS);
-	}
-	return { email, password, username, userImage, currentRoomId };
+	return { email, password, username, userImage };
 }

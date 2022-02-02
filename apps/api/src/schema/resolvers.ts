@@ -1,8 +1,5 @@
 /* eslint-disable sort-keys */
 
-// import { pubsub } from '../redis';
-
-// import type { Message } from '@uxc/types';
 import type { Resolvers } from '@uxc/types/generated';
 import { authGuard } from '../middleware/auth';
 import {
@@ -11,93 +8,131 @@ import {
 	logoutResolver as logout
 } from '@/resolvers';
 import { GraphQLDateTime } from 'graphql-iso-date';
-import { User, Message, DirectRoom } from '@/db';
+import { User, Message, PrivateThread } from '@/db';
 import { seed } from './seed';
+import type { GraphQLScalarType } from 'graphql';
+import {
+	Message as MessageType,
+	ObjectID,
+	PrivateThread as PrivateThreadType,
+	User as UserType
+} from '@uxc/types';
 
-const subscribers: (() => void)[] = [];
+// const query = {
+// 	// getThreads: authGuard(async (_, { userId }, context) => {
+// 	// 	const privateThreads = await PrivateThread.find({
+// 	// 		users: { $in: [{ _id: userId }] }
+// 	// 	}).populate('users');
 
-const onMessageUpdates = (fn: () => Promise<void>) => {
-	subscribers.push(fn);
-};
+// 	// 	return privateThreads as unknown as PrivateThreadType & {
+// 	// 		users: UserType[];
+// 	// 	};
+// 	// }),
+
+// 	getMessages: authGuard(async (_, { threadId }, context) => {
+// 		const messages = await Message.find({ threadId }).populate('sender');
+
+// 		return messages;
+// 	}),
+
+// 	getUser: authGuard(async (_, userId: ObjectID, { req }) => {
+// 		const user = await User.findById(userId);
+
+// 		return user;
+// 	}),
+
+// 	getCurrentUser: authGuard(async (_, __, { req }) => {
+// 		const user = await User.findById(req.meta.id);
+
+// 		return user;
+// 	}),
+
+// 	getThread: authGuard(async (_, { threadId }, context) => {
+// 		const thread = await PrivateThread.findById(threadId);
+
+// 		return thread;
+// 	})
+// };
+
+// const q = Object.fromEntries(
+// 	Object.entries(query).map(([key, value]) => {
+// 		return [key, authGuard(value)];
+// 	})
+// );
 
 export const resolvers: Resolvers = {
-	// @ts-ignore
-	Date: GraphQLDateTime,
+	Date: GraphQLDateTime as unknown as GraphQLScalarType,
 
 	Query: {
-		// @ts-ignore
+		getThread: authGuard(async (_, { threadId }, context) => {
+			const thread = await PrivateThread.findById(threadId);
 
-		getDirects: authGuard(async (_, { userId }, context) => {
-			const directsWithUser = await DirectRoom.find({
+			return thread;
+		}),
+
+		getThreads: authGuard(async (_, { userId }, context) => {
+			const privateThreads = await PrivateThread.find({
 				users: { $in: [{ _id: userId }] }
 			}).populate('users');
 
-			return directsWithUser;
+			return privateThreads;
 		}),
-		// @ts-ignore
-		getMessages: authGuard(async (_, { roomId }, context) => {
-			const messages = await Message.find({ roomId }).populate('sender');
+
+		getMessages: authGuard(async (_, { threadId }, context) => {
+			const messages = await Message.find({ threadId }).populate('sender');
 
 			return messages;
 		}),
 
-		getUser: authGuard(async (_, __, { req }) => {
-			// @ts-ignore
+		getUser: authGuard(async (_, userId: ObjectID, { req }) => {
+			const user = await User.findById(userId);
+
+			return user;
+		}),
+
+		getCurrentUser: authGuard(async (_, __, { req }) => {
 			const user = await User.findById(req.meta.id);
 
 			return user;
 		})
 	},
 
-	// Subscription: {
-	// 	messages: {
-	// 		// @ts-ignore
-	// 		subscribe: authGuard(
-	// 			withFilter(
-	// 				() => pubsub.asyncIterator('NEW_MESSAGE'),
-	// 				(payload, { roomId }) => payload._id === roomId
-	// 			)
-	// 		)
-	// 	}
-	// },
-
 	Mutation: {
-		// addMessage: authGuard((_, { roomId, body }, { req }) => {
-		// 	// @todo
-		// 	if (!body || !roomId) {
-		// 		throw new UserInputError('missing data @todo');
-		// 	}
-
-		// 	const id = 'v4()';
-		// 	const newMessage: Message = {
-		// 		_id: id,
-		// 		roomId,
-		// 		body,
-		// 		sender: req.meta!._id!,
-		// 		createdAt: new Date(),
-		// 		updatedAt: new Date()
-		// 	};
-
-		// 	messages.push(newMessage);
-		// 	subscribers.forEach((subscription) => {
-		// 		subscription();
-		// 	});
-
-		// 	return id;
-		// }),
-
-		// updateMessage: authGuard((_, { id, body }, { req }) => {
-		// 	const oldMessage = messages.find((message) => message._id === id);
-		// 	if (!oldMessage) {
-		// 		throw new Error(`could not find a message with id ${id}`);
-		// 	}
-
-		// 	Object.assign(oldMessage, { body });
-		// 	return oldMessage._id;
-		// }),
 		seed,
 		logout,
 		login,
-		join
+		join,
+		createMessage: authGuard(async (_, { threadId, body }, { req }) => {
+			const message = await Message.create({
+				body,
+				threadId,
+				sender: req.meta.id
+			});
+
+			return message;
+		}),
+
+		updateMessage: authGuard(async (_, { messageId, body }, { req }) => {
+			const message = await Message.findOneAndUpdate(
+				{ _id: messageId },
+				{ body }
+			);
+
+			return message._id;
+		}),
+
+		createThread: authGuard(async (_, { receiverId }, { req }) => {
+			const message = await PrivateThread.create({
+				users: [req.meta.id, receiverId]
+			});
+
+			return message;
+		}),
+
+		deleteThread: authGuard(async (_, { threadId }, context) => {
+			await PrivateThread.deleteOne({ _id: threadId });
+
+			return threadId;
+		})
 	}
 };

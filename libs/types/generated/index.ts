@@ -17,8 +17,8 @@ export type Scalars = {
   Date: any;
 };
 
-export type DirectRoom = {
-  __typename?: 'DirectRoom';
+export type CommunityThread = {
+  __typename?: 'CommunityThread';
   _id?: Maybe<Scalars['ID']>;
   createdAt?: Maybe<Scalars['Date']>;
   updatedAt?: Maybe<Scalars['Date']>;
@@ -26,17 +26,15 @@ export type DirectRoom = {
 };
 
 export type JoinInput = {
-  currentRoomId?: InputMaybe<Scalars['ID']>;
   email?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
-  userImage?: InputMaybe<Scalars['ID']>;
+  userImage?: InputMaybe<Scalars['String']>;
   username?: InputMaybe<Scalars['String']>;
 };
 
 export type LoginInput = {
   email?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
-  rememberMe?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type Message = {
@@ -44,14 +42,16 @@ export type Message = {
   _id?: Maybe<Scalars['ID']>;
   body?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['Date']>;
-  roomId?: Maybe<Scalars['ID']>;
   sender?: Maybe<User>;
+  threadId?: Maybe<Scalars['ID']>;
   updatedAt?: Maybe<Scalars['Date']>;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addMessage?: Maybe<Scalars['ID']>;
+  createMessage?: Maybe<Message>;
+  createThread?: Maybe<PrivateThread>;
+  deleteThread?: Maybe<Scalars['ID']>;
   join?: Maybe<User>;
   login?: Maybe<User>;
   logout?: Maybe<Scalars['ID']>;
@@ -60,9 +60,19 @@ export type Mutation = {
 };
 
 
-export type MutationAddMessageArgs = {
+export type MutationCreateMessageArgs = {
   body?: InputMaybe<Scalars['String']>;
-  roomId?: InputMaybe<Scalars['ID']>;
+  threadId?: InputMaybe<Scalars['ID']>;
+};
+
+
+export type MutationCreateThreadArgs = {
+  receiverId?: InputMaybe<Scalars['ID']>;
+};
+
+
+export type MutationDeleteThreadArgs = {
+  threadId?: InputMaybe<Scalars['ID']>;
 };
 
 
@@ -78,40 +88,60 @@ export type MutationLoginArgs = {
 
 export type MutationUpdateMessageArgs = {
   body?: InputMaybe<Scalars['String']>;
-  id?: InputMaybe<Scalars['ID']>;
+  messageId?: InputMaybe<Scalars['ID']>;
+};
+
+export type PrivateThread = {
+  __typename?: 'PrivateThread';
+  _id?: Maybe<Scalars['ID']>;
+  createdAt?: Maybe<Scalars['Date']>;
+  updatedAt?: Maybe<Scalars['Date']>;
+  users?: Maybe<Array<Maybe<User>>>;
 };
 
 export type Query = {
   __typename?: 'Query';
-  getDirects?: Maybe<Array<Maybe<DirectRoom>>>;
+  getCurrentUser?: Maybe<User>;
   getMessages?: Maybe<Array<Maybe<Message>>>;
+  getThread?: Maybe<PrivateThread>;
+  getThreads?: Maybe<Array<Maybe<PrivateThread>>>;
   getUser?: Maybe<User>;
 };
 
 
-export type QueryGetDirectsArgs = {
+export type QueryGetMessagesArgs = {
+  threadId?: InputMaybe<Scalars['ID']>;
+};
+
+
+export type QueryGetThreadArgs = {
+  threadId?: InputMaybe<Scalars['ID']>;
+};
+
+
+export type QueryGetThreadsArgs = {
   userId?: InputMaybe<Scalars['ID']>;
 };
 
 
-export type QueryGetMessagesArgs = {
-  roomId?: InputMaybe<Scalars['ID']>;
+export type QueryGetUserArgs = {
+  userId?: InputMaybe<Scalars['ID']>;
 };
 
 export type Subscription = {
   __typename?: 'Subscription';
   messages?: Maybe<Array<Maybe<Message>>>;
+  threads?: Maybe<Array<Maybe<PrivateThread>>>;
 };
 
 
 export type SubscriptionMessagesArgs = {
-  roomId?: InputMaybe<Scalars['ID']>;
+  threadId?: InputMaybe<Scalars['ID']>;
 };
 
 export type User = {
   __typename?: 'User';
   _id?: Maybe<Scalars['ID']>;
-  currentRoomId?: Maybe<Scalars['ID']>;
   email?: Maybe<Scalars['String']>;
   userImage?: Maybe<Scalars['String']>;
   username?: Maybe<Scalars['String']>;
@@ -187,13 +217,14 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  CommunityThread: ResolverTypeWrapper<Omit<CommunityThread, 'users'> & { users?: Maybe<Array<Maybe<ResolversTypes['User']>>> }>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
-  DirectRoom: ResolverTypeWrapper<Omit<DirectRoom, 'users'> & { users?: Maybe<Array<Maybe<ResolversTypes['User']>>> }>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   JoinInput: JoinInput;
   LoginInput: LoginInput;
   Message: ResolverTypeWrapper<MessageModel>;
   Mutation: ResolverTypeWrapper<{}>;
+  PrivateThread: ResolverTypeWrapper<Omit<PrivateThread, 'users'> & { users?: Maybe<Array<Maybe<ResolversTypes['User']>>> }>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Subscription: ResolverTypeWrapper<{}>;
@@ -203,24 +234,21 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
+  CommunityThread: Omit<CommunityThread, 'users'> & { users?: Maybe<Array<Maybe<ResolversParentTypes['User']>>> };
   Date: Scalars['Date'];
-  DirectRoom: Omit<DirectRoom, 'users'> & { users?: Maybe<Array<Maybe<ResolversParentTypes['User']>>> };
   ID: Scalars['ID'];
   JoinInput: JoinInput;
   LoginInput: LoginInput;
   Message: MessageModel;
   Mutation: {};
+  PrivateThread: Omit<PrivateThread, 'users'> & { users?: Maybe<Array<Maybe<ResolversParentTypes['User']>>> };
   Query: {};
   String: Scalars['String'];
   Subscription: {};
   User: UserModel;
 };
 
-export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
-  name: 'Date';
-}
-
-export type DirectRoomResolvers<ContextType = Context, ParentType extends ResolversParentTypes['DirectRoom'] = ResolversParentTypes['DirectRoom']> = {
+export type CommunityThreadResolvers<ContextType = Context, ParentType extends ResolversParentTypes['CommunityThread'] = ResolversParentTypes['CommunityThread']> = {
   _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
@@ -228,18 +256,24 @@ export type DirectRoomResolvers<ContextType = Context, ParentType extends Resolv
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
+  name: 'Date';
+}
+
 export type MessageResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Message'] = ResolversParentTypes['Message']> = {
   _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   body?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
-  roomId?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   sender?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  threadId?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  addMessage?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType, RequireFields<MutationAddMessageArgs, never>>;
+  createMessage?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, RequireFields<MutationCreateMessageArgs, never>>;
+  createThread?: Resolver<Maybe<ResolversTypes['PrivateThread']>, ParentType, ContextType, RequireFields<MutationCreateThreadArgs, never>>;
+  deleteThread?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType, RequireFields<MutationDeleteThreadArgs, never>>;
   join?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationJoinArgs, never>>;
   login?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationLoginArgs, never>>;
   logout?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
@@ -247,19 +281,29 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   updateMessage?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType, RequireFields<MutationUpdateMessageArgs, never>>;
 };
 
+export type PrivateThreadResolvers<ContextType = Context, ParentType extends ResolversParentTypes['PrivateThread'] = ResolversParentTypes['PrivateThread']> = {
+  _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  users?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  getDirects?: Resolver<Maybe<Array<Maybe<ResolversTypes['DirectRoom']>>>, ParentType, ContextType, RequireFields<QueryGetDirectsArgs, never>>;
+  getCurrentUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   getMessages?: Resolver<Maybe<Array<Maybe<ResolversTypes['Message']>>>, ParentType, ContextType, RequireFields<QueryGetMessagesArgs, never>>;
-  getUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  getThread?: Resolver<Maybe<ResolversTypes['PrivateThread']>, ParentType, ContextType, RequireFields<QueryGetThreadArgs, never>>;
+  getThreads?: Resolver<Maybe<Array<Maybe<ResolversTypes['PrivateThread']>>>, ParentType, ContextType, RequireFields<QueryGetThreadsArgs, never>>;
+  getUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetUserArgs, never>>;
 };
 
 export type SubscriptionResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
   messages?: SubscriptionResolver<Maybe<Array<Maybe<ResolversTypes['Message']>>>, "messages", ParentType, ContextType, RequireFields<SubscriptionMessagesArgs, never>>;
+  threads?: SubscriptionResolver<Maybe<Array<Maybe<ResolversTypes['PrivateThread']>>>, "threads", ParentType, ContextType>;
 };
 
 export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
-  currentRoomId?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   userImage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   username?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -267,10 +311,11 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
 };
 
 export type Resolvers<ContextType = Context> = {
+  CommunityThread?: CommunityThreadResolvers<ContextType>;
   Date?: GraphQLScalarType;
-  DirectRoom?: DirectRoomResolvers<ContextType>;
   Message?: MessageResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  PrivateThread?: PrivateThreadResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Subscription?: SubscriptionResolvers<ContextType>;
   User?: UserResolvers<ContextType>;

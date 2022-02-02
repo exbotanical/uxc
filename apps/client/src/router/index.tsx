@@ -25,12 +25,12 @@ export function Routes(): RouteObject[] {
 		},
 		{
 			element: <WrappedChatRoom />,
-			path: 'room',
+			path: 'thread',
 
 			children: [
 				{
 					element: <WrappedChatRoom />,
-					path: ':roomId'
+					path: ':threadId'
 				}
 			]
 		},

@@ -79,7 +79,7 @@ export function Login() {
 
 							<Input
 								autoComplete="email"
-								className="appearance-none rounded-none relative block w-full px-3 py-2 bg-primary-800 placeholder-white-500 text-primary-200 rounded-t-md  focus:ring-accent-500  focus:z-10 sm:text-sm"
+								className="appearance-none rounded-none relative block w-full px-3 py-2 bg-primary-600 placeholder-white-500 text-primary-200 rounded-t-md  focus:ring-accent-500  focus:z-10 sm:text-sm"
 								id="email-address"
 								name="email"
 								onChange={handleChange}
@@ -97,7 +97,7 @@ export function Login() {
 
 							<Input
 								autoComplete="current-password"
-								className="appearance-none rounded-none relative block w-full px-3 py-2 bg-primary-800 placeholder-white-500 text-primary-200 rounded-b-md  focus:ring-accent-500 focus:border-accent-500 focus:z-10 sm:text-sm"
+								className="appearance-none rounded-none relative block w-full px-3 py-2 bg-primary-600 placeholder-white-500 text-primary-200 rounded-b-md  focus:ring-accent-500 focus:border-accent-500 focus:z-10 sm:text-sm"
 								id="password"
 								name="password"
 								onChange={handleChange}

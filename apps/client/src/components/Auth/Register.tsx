@@ -9,7 +9,7 @@ import type { User } from '@uxc/types';
 
 export function Register() {
 	const { data, loading } = useQuery<{
-		getUser: User;
+		getCurrentUser: User;
 	}>(GET_USER);
 
 	if (loading) {

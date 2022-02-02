@@ -1,7 +1,7 @@
 import type { JWTPayload, User } from '@uxc/types';
 import type { NextFunction, Request, Response } from 'express';
-import { decode, verify } from '../utils';
-import { createSession } from '../utils/auth';
+import { decode, verify } from '@/utils';
+import { createSession } from '@/utils/auth';
 
 export function refreshMiddleware(
 	req: Request,

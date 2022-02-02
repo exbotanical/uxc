@@ -1,6 +1,13 @@
 scalar Date
 
-type DirectRoom {
+type PrivateThread {
+  _id: ID
+	createdAt: Date
+	updatedAt: Date
+	users: [User]
+}
+
+type CommunityThread {
   _id: ID
 	createdAt: Date
 	updatedAt: Date
@@ -9,7 +16,7 @@ type DirectRoom {
 
 type Message {
   _id: ID
-	roomId: ID
+	threadId: ID
 	sender: User
 	createdAt: Date
 	updatedAt: Date
@@ -21,37 +28,39 @@ type User {
 	username: String
 	email: String
 	userImage: String
-	currentRoomId: ID
 }
 
 input LoginInput {
 	email: String
 	password: String
-	rememberMe: Boolean
 }
 
 input JoinInput {
 	email: String
 	username: String
 	password: String
-	currentRoomId: ID
-	userImage: ID
+	userImage: String
 }
 
 type Query {
-	getDirects(userId: ID): [DirectRoom]
-  getMessages(roomId: ID): [Message]
-  getUser: User
+	getThread(threadId: ID): PrivateThread
+	getThreads(userId: ID): [PrivateThread]
+  getMessages(threadId: ID): [Message]
+  getCurrentUser: User
+  getUser(userId: ID): User
 }
 
 type Subscription {
-  messages(roomId: ID): [Message]
+  messages(threadId: ID): [Message]
+	threads: [PrivateThread]
 }
 
 type Mutation {
 	seed: User
-  addMessage(roomId: ID, body: String): ID
-  updateMessage(id: ID, body: String): ID
+  createMessage(threadId: ID, body: String): Message
+  updateMessage(messageId: ID, body: String): ID
+	createThread(receiverId: ID): PrivateThread
+	deleteThread(threadId: ID): ID
   login(args: LoginInput): User
 	logout: ID
   join(args: JoinInput): User

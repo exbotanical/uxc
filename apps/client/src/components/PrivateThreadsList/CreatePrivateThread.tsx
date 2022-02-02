@@ -5,78 +5,51 @@ import { Select } from '@/components/Fields/Select';
 import { Modal } from '@/components/Modal/Modal';
 import { connector, PropsFromRedux } from '@/state';
 
-function CreateDirectMessageModal({
-	channelModalState,
-	hideUpsertRoomModal,
+function CreatePrivateThreadModal({
+	threadModalState,
+	hideUpsertThreadModal,
 	showNotification
 }: PropsFromRedux) {
 	const navigate = useNavigate();
 
-	const [channelName, setRoomName] = useState(
-		channelModalState.data?.name || ''
-	);
+	// const [channelName, setChannelName] = useState(
+	// 	threadModalState.data?.name || ''
+	// );
 
-	const [channelDesc, setRoomDesc] = useState(
-		channelModalState.data?.desc || ''
-	);
+	// const [channelDesc, setChannelDesc] = useState(
+	// 	threadModalState.data?.desc || ''
+	// );
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-		const { value, name } = event.target;
-
-		const executor = name == 'name' ? setRoomName : setRoomDesc;
-
-		executor(value);
+		// const { value, name } = event.target;
+		// const executor = name == 'name' ? setChannelName : setChannelDesc;
+		// executor(value);
 	};
 
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		if (!channelName || !channelDesc) return;
-
-		// const res = await client.mutation.createRoom({
-		// 	desc: channelDesc,
-		// 	name: channelName
-		// });
-
-		// if (typeof res === 'object' && 'error' in res) {
-		// 	showNotification({
-		// 		message:
-		// 			'Something went wrong while creating your channel. Please try again in a few minutes.',
-		// 		type: 'error'
-		// 	});
-		// } else if (res.channel) {
-		// 	// TODO improve
-		// 	setUser((user) => ({
-		// 		...user,
-		// 		channels: [...user.channels, res.channel],
-		// 		currentRoom: res.channel
-		// 	}));
-
-		// 	navigate(`/channel/${res.channel.id}`);
-		// }
-
-		hideUpsertRoomModal();
+		hideUpsertThreadModal();
 	};
 
-	// const onClose = () => {
-	// 	setRoomName('');
-	// 	setRoomDesc('');
-	// 	hideUpsertRoomModal();
-	// };
+	const handleClose = () => {
+		// @todo prevent rerender in chat area
+		hideUpsertThreadModal();
+	};
 
-	// const isEdit = channelModalState.type === 'edit';
+	// const isEdit = threadModalState.type === 'edit';
 
 	return (
-		<Modal isOpen={channelModalState.showing}>
+		<Modal isOpen={threadModalState.showing} onRequestClose={handleClose}>
 			<form
 				className="grid grid-cols-3 gap-4 focus:outline-none w-full"
 				onSubmit={handleSubmit}
 			>
 				<div className="col-span-3 block">
 					<h4 className="mb-2 text-primary-100">
-						{/* {isEdit && channelModalState.data
-							? `Update #${channelModalState.data.name}`
-							: 'Create a New Room'}
+						{/* {isEdit && threadModalState.data
+							? `Update #${threadModalState.data.name}`
+							: 'Create a New Channel'}
 						s */}
 					</h4>
 				</div>
@@ -88,7 +61,7 @@ function CreateDirectMessageModal({
 						maxLength={60}
 						name="name"
 						onChange={handleChange}
-						value={channelName}
+						// value={channelName}
 					/>
 				</div>
 
@@ -111,7 +84,7 @@ function CreateDirectMessageModal({
 						name="description"
 						onChange={handleChange}
 						rows={3}
-						value={channelDesc}
+						// value={channelDesc}
 					/>
 				</div>
 
@@ -129,8 +102,8 @@ function CreateDirectMessageModal({
 	);
 }
 
-CreateDirectMessageModal.displayName = 'CreateDirectMessageModal';
+CreatePrivateThreadModal.displayName = 'CreatePrivateThreadModal';
 
-export const ConnectedCreateDirectMessageModal = connector(
-	CreateDirectMessageModal
+export const ConnectedCreatePrivateThreadModal = connector(
+	CreatePrivateThreadModal
 );

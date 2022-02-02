@@ -3,7 +3,7 @@ import React from 'react';
 import { Feed } from '@/components/Feed/Feed';
 import { Panel } from '@/components/Layout/Panel';
 import { NotificationController } from '@/components/Notification/NotificationController';
-import { ConnectedCreateDirectMessageModal as Modal } from '@/components/DirectMessagesList/CreateDirectMessage';
+import { ConnectedCreatePrivateThreadModal as Modal } from '@/components/PrivateThreadsList/CreatePrivateThread';
 import { UserProfile } from '@/components/User/UserProfile';
 import type { User } from '@uxc/types';
 

@@ -16,7 +16,7 @@ describe('user context workflow', () => {
 			})
 			.expect(200);
 
-		expect(body.data.getUser).toMatchObject({
+		expect(body.data.getCurrentUser).toMatchObject({
 			...user,
 			_id: expect.any(String)
 		});

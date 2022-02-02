@@ -16,8 +16,8 @@ const HIDE_UPSERT_THREAD_MODAL: HideModal = () => ({
 	type: MODAL_ACTION.HIDE
 });
 
-export const showUpsertRoomModal: ShowModal = (args) =>
+export const showUpsertThreadModal: ShowModal = (args) =>
 	store.dispatch(SHOW_UPSERT_THREAD_MODAL(args));
 
-export const hideUpsertRoomModal: HideModal = () =>
+export const hideUpsertThreadModal: HideModal = () =>
 	store.dispatch(HIDE_UPSERT_THREAD_MODAL());

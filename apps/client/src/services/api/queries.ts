@@ -1,13 +1,12 @@
 import { gql } from '@apollo/client';
 
 export const GET_USER = gql`
-	query getUser {
-		getUser {
+	query getCurrentUser {
+		getCurrentUser {
 			_id
 			username
 			email
 			userImage
-			currentRoomId
 		}
 	}
 `;
@@ -19,7 +18,6 @@ export const LOGIN = gql`
 			email
 			username
 			userImage
-			currentRoomId
 		}
 	}
 `;
@@ -28,7 +26,6 @@ export const JOIN = gql`
 	mutation ($args: JoinInput) {
 		join(args: $args) {
 			_id
-			currentRoomId
 			email
 			userImage
 			username
@@ -36,9 +33,9 @@ export const JOIN = gql`
 	}
 `;
 
-export const GET_DIRECTS = gql`
-	query getDirects($userId: ID) {
-		getDirects(userId: $userId) {
+export const GET_THREADS = gql`
+	query getThreads($userId: ID) {
+		getThreads(userId: $userId) {
 			_id
 			createdAt
 			updatedAt
@@ -53,8 +50,8 @@ export const GET_DIRECTS = gql`
 `;
 
 export const GET_MESSAGES = gql`
-	query getMessages($roomId: ID) {
-		getMessages(roomId: $roomId) {
+	query getMessages($threadId: ID) {
+		getMessages(threadId: $threadId) {
 			_id
 			body
 			createdAt
@@ -63,7 +60,6 @@ export const GET_MESSAGES = gql`
 				username
 				email
 				userImage
-				currentRoomId
 			}
 			updatedAt
 		}

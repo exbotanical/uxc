@@ -18,9 +18,9 @@ interface MessageModel extends Model<MessageType> {
 
 const MessageSchema = new Schema(
 	{
-		roomId: {
+		threadId: {
 			type: Schema.Types.ObjectId,
-			ref: 'DirectRoom',
+			ref: 'PrivateThread',
 			required: true
 		},
 		sender: {

@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 
-import type { SendMessage } from '@/components/ChatRoom/ChatArea';
+import type { SendMessage } from '@/components/ChatThread/ChatArea';
 
 import { Input } from '@/components/Fields/Input';
 import { SmileyIcon } from '@/components/Icons/SmileyIcon';

@@ -55,9 +55,7 @@ globalThis.password = 'password';
 globalThis.user = {
 	email: 'test@test.com',
 	username: 'username',
-	userImage: 'url',
-	// ugh...
-	currentRoomId: new mongoose.Types.ObjectId() as unknown as string
+	userImage: 'url'
 };
 
 globalThis.join = async () => {

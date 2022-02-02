@@ -9,17 +9,17 @@ import { EditIcon } from '@/components/Icons/EditIcon';
 import { connector, PropsFromRedux } from '@/state';
 import { onEnterKeyPressed } from '@/utils';
 
-interface ChatRoomHeaderProps {
+interface ChatThreadHeaderProps {
 	user: User;
 }
 
-function ChatRoomHeader({
+function ChatThreadHeader({
 	user,
-	showUpsertRoomModal
-}: PropsFromRedux & ChatRoomHeaderProps) {
+	showUpsertThreadModal
+}: PropsFromRedux & ChatThreadHeaderProps) {
 	const handleClick = () => {
-		showUpsertRoomModal({
-			data: user.currentRoomId,
+		showUpsertThreadModal({
+			data: 'threadId',
 			type: 'edit'
 		});
 	};
@@ -77,6 +77,6 @@ function ChatRoomHeader({
 	);
 }
 
-ChatRoomHeader.displayName = 'ChatRoomHeader';
+ChatThreadHeader.displayName = 'ChatThreadHeader';
 
-export const ConnectedChatRoomHeader = connector(ChatRoomHeader);
+export const ConnectedChatThreadHeader = connector(ChatThreadHeader);

@@ -5,19 +5,19 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { UserAvatar } from '../User/UserAvatar';
 
 import { onEnterKeyPressed } from '@/utils';
-import { DirectsContext } from '@/pages/DirectsContext';
+import { ThreadsContext } from '@/pages/ThreadsContext';
 import { useQuery } from '@apollo/client';
 import { GET_USER } from '@/services/api/queries';
 
-interface DirectMessageProps {
+interface PrivateThreadProps {
 	id: ObjectID;
 }
 
-export function DirectMessage({ id }: DirectMessageProps) {
-	const { getDirectById } = useContext(DirectsContext);
-	const direct = getDirectById(id);
+export function PrivateThread({ id }: PrivateThreadProps) {
+	const { getThreadById } = useContext(ThreadsContext);
+	const thread = getThreadById(id);
 	const { data: user } = useQuery<{
-		getUser: User;
+		getCurrentUser: User;
 	}>(GET_USER);
 
 	const navigate = useNavigate();
@@ -30,10 +30,12 @@ export function DirectMessage({ id }: DirectMessageProps) {
 			: 'text-primary-100'
 	}`;
 
-	const them = direct?.users.find(({ _id }) => _id !== user?.getUser._id)!;
+	const them = thread?.users.find(
+		({ _id }) => _id !== user?.getCurrentUser._id
+	)!;
 
 	const handleClick = () => {
-		navigate(`/room/${id}`);
+		navigate(`/thread/${id}`);
 	};
 
 	return (
@@ -62,4 +64,4 @@ export function DirectMessage({ id }: DirectMessageProps) {
 	);
 }
 
-DirectMessage.displayName = 'DirectMessage';
+PrivateThread.displayName = 'PrivateThread';

@@ -4,7 +4,6 @@ export const LOGIN_MUTATION = `
 			_id
 			email
 			username
-			currentRoomId
 			userImage
 		}
 	}
@@ -22,7 +21,6 @@ export const JOIN_MUTATION = `
 			_id
 			email
 			username
-			currentRoomId
 			userImage
 		}
 	}
@@ -30,12 +28,11 @@ export const JOIN_MUTATION = `
 
 export const GET_USER_QUERY = `
 	query {
-		getUser {
+		getCurrentUser {
 			_id
 			username
 			email
 			userImage
-			currentRoomId
 		}
 	}
 `;

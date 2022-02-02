@@ -1,7 +1,7 @@
 import session from 'express-session';
 
-import { buildStore } from '../redis';
-import { isInsecureMode } from '../utils';
+import { buildStore } from '@/redis';
+import { isInsecureMode } from '@/utils';
 
 export const sessionMiddleware = session({
 	cookie: {

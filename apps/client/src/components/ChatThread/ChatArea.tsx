@@ -3,12 +3,12 @@ import { useParams } from 'react-router-dom';
 
 import type { Message, ObjectID, User } from '@uxc/types';
 
-import { ChatMessage } from '@/components/ChatRoom/ChatMessage';
+import { ChatMessage } from '@/components/ChatThread/ChatMessage';
 import { connector, PropsFromRedux } from '@/state';
 import { useQuery } from '@apollo/client';
 import { GET_MESSAGES } from '@/services/api/queries';
 import { ChatMessageInput } from './ChatMessageInput';
-import { ConnectedChatRoomHeader as Header } from './ChatRoomHeader';
+import { ConnectedChatThreadHeader as Header } from './ChatThreadHeader';
 
 export interface SendMessage {
 	(message: string): void;
@@ -16,12 +16,12 @@ export interface SendMessage {
 
 interface ChatAreaProps {
 	className: string;
-	roomId: ObjectID;
+	threadId: ObjectID;
 }
 
 export function ChatArea({
 	className,
-	roomId,
+	threadId,
 	showNotification
 }: PropsFromRedux & ChatAreaProps) {
 	const bottomRef = useRef<HTMLDivElement | null>(null);
@@ -39,7 +39,7 @@ export function ChatArea({
 		getMessages: (Omit<Message, 'sender'> & { sender: User })[];
 	}>(GET_MESSAGES, {
 		variables: {
-			roomId
+			threadId
 		}
 	});
 
