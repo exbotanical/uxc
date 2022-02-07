@@ -5,13 +5,15 @@ WORKDIR /root/uxc
 FROM base AS dev
 COPY . .
 # mitigate repeated package downloads by caching pnpm-store
-RUN --mount=type=cache,id=pnpm-store,target=/root/.pnpm-store\
- pnpm install --filter "{apps/api}..."\
- --frozen-lockfile\
-  # allow unsafe perms in pnpm exec given Docker runs pnpm as root
- --unsafe-perm\
-  #  filter pnpm symlink warnings
-  # (due to cache mount default behavior i.e. Docker placing the store in a different virtual drive)
- | grep -v "cross-device link not permitted\|Falling back to copying packages from store"
+# RUN --mount=type=cache,id=pnpm-store,target=/root/.pnpm-store\
+#  pnpm install --filter "{apps/api}..."\
+#  --frozen-lockfile\
+#   # allow unsafe perms in pnpm exec given Docker runs pnpm as root
+#  --unsafe-perm\
+#   #  filter pnpm symlink warnings
+#   # (due to cache mount default behavior i.e. Docker placing the store in a different virtual drive)
+#  | grep -v "cross-device link not permitted\|Falling back to copying packages from store"
+
+RUN pnpm install
 WORKDIR /root/uxc/apps/api
 CMD ["pnpm", "dev"]

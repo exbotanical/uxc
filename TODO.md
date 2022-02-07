@@ -14,6 +14,15 @@
 - [ ] component <- tailwind class seq's
 - [ ] restructure components dir
 - [ ] slash commands
+- [ ] resizable sidebar
+- [ ] progressive image load a la gatsby
+
+### Testing
+
+- [ ] login
+- [ ] registration
+- [ ] chat simulation
+- [ ] error state (no/slow connection)
 
 ## @uxc/api
 
@@ -28,6 +37,7 @@
 - [ ] replace express-session with raw redis store and cookie-parser
 - [ ] slash commands
 - [ ] discrete tsconfig for jest test files (avoid namespace pollution)
+- [ ] user typing state
 
 ## Miscellaneous
 

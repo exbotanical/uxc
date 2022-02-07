@@ -12,14 +12,6 @@ export function Register() {
 		getCurrentUser: User;
 	}>(GET_USER);
 
-	if (loading) {
-		return <>Loading...</>;
-	}
-
-	if (data) {
-		return <Navigate to="/dashboard" />;
-	}
-
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [username, setUsername] = useState('');
@@ -27,6 +19,15 @@ export function Register() {
 
 	const [join] = useMutation(JOIN);
 	const navigate = useNavigate();
+
+	if (loading) {
+		return <>Loading...</>;
+	}
+
+	if (data) {
+		console.log(data);
+		return <Navigate to="/thread" />;
+	}
 
 	function resetState() {
 		setEmail('');
@@ -52,7 +53,7 @@ export function Register() {
 
 		resetState();
 
-		navigate(`/dashboard`);
+		navigate(`/thread`);
 	}
 
 	const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {

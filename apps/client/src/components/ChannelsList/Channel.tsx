@@ -13,11 +13,11 @@ const randomIdx = randomIntFromInterval(0, mockImgs.length - 1);
 
 export function Channel() {
 	return (
-		<li className="rounded-xl m-1 p-1 flex items-center justify-center cursor-pointer hover:bg-transparent-alt transition ease-in-out transform hover:scale-105 duration-300">
-			<div className="h-6 ">
+		<li className="rounded-xl m-1 p-0.5 flex items-center justify-center cursor-pointer hover:bg-transparent-alt transition ease-in-out transform hover:scale-105 duration-300">
+			<div className="h-[65px]">
 				<img
 					alt="@todo"
-					className="rounded-md h-6"
+					className="rounded-md w-full h-[4rem]"
 					src={mockImgs[randomIdx()]}
 				/>
 			</div>

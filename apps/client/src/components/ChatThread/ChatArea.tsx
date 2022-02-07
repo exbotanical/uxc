@@ -1,14 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React from 'react';
 
-import type { Message, ObjectID, User } from '@uxc/types';
+import type { Message, ObjectID, PrivateThread, User } from '@uxc/types';
 
-import { ChatMessage } from '@/components/ChatThread/ChatMessage';
 import { connector, PropsFromRedux } from '@/state';
-import { useQuery } from '@apollo/client';
-import { GET_MESSAGES } from '@/services/api/queries';
 import { ChatMessageInput } from './ChatMessageInput';
-import { ConnectedChatThreadHeader as Header } from './ChatThreadHeader';
+import { MessageList } from './MessageList';
+import { useMutation, useQuery } from '@apollo/client';
+import {
+	CREATE_MESSAGE,
+	GET_MESSAGES,
+	GET_THREAD,
+	GET_USER
+} from '@/services/api/queries';
 
 export interface SendMessage {
 	(message: string): void;
@@ -24,60 +27,64 @@ export function ChatArea({
 	threadId,
 	showNotification
 }: PropsFromRedux & ChatAreaProps) {
-	const bottomRef = useRef<HTMLDivElement | null>(null);
-	const [isScrolledToTop] = useState(false);
+	const { data: user, loading } = useQuery<{
+		getCurrentUser: User;
+	}>(GET_USER);
 
-	useEffect(() => {
-		isScrolledToTop ||
-			bottomRef.current?.scrollIntoView({
-				block: 'nearest',
-				inline: 'start'
-			});
-	});
-
-	const { loading, data, error } = useQuery<{
-		getMessages: (Omit<Message, 'sender'> & { sender: User })[];
-	}>(GET_MESSAGES, {
+	const { data: thread } = useQuery<{ getThread: PrivateThread }>(GET_THREAD, {
 		variables: {
 			threadId
 		}
 	});
 
-	if (loading) return null;
+	/** @todo deduplicate types */
+	const [createMessage] = useMutation<{
+		createMessage: { body: Message['body']; threadId: Message['threadId'] };
+	}>(CREATE_MESSAGE, {
+		update(cache, { data }) {
+			const allMessages = cache.readQuery<{ getMessages: Message[] }>({
+				query: GET_MESSAGES,
+				variables: { threadId }
+			});
 
-	if (error) {
-		console.log({ error });
-		// showNotification({
-		// 	message:
-		// 		'Something went wrong while grabbing info for this channel. Please try again later.',
-		// 	type: 'error'
-		// });
+			/** @todo deduplicate in subscription */
+			cache.writeQuery({
+				query: GET_MESSAGES,
+				data: {
+					getMessages: [
+						...(allMessages?.getMessages ?? []),
+						{ ...data?.createMessage, sender: user?.getCurrentUser }
+					]
+				}
+			});
+		}
+	});
 
-		return null;
-	}
+	const them = thread?.getThread?.users.find(
+		({ _id }) => _id !== user?.getCurrentUser._id
+	)!;
 
-	const sendMessage: SendMessage = (message) => {};
-
-	const messages = data?.getMessages || [];
-	console.log(messages);
+	const sendMessage: SendMessage = async (message) => {
+		/** @todo update cache instead of sending back via subscription */
+		await createMessage({
+			variables: {
+				threadId,
+				body: message
+			}
+		});
+	};
 
 	return (
-		<div className={`${className} flex flex-col bg-primary-800 rounded-sm`}>
+		<div
+			className={`${className} flex flex-col bg-primary-800 rounded-sm h-screen`}
+		>
 			{/* <Header user={user} /> */}
-
-			<div className="overflow-y-auto flex-auto">
-				{messages.map((message) => (
-					<ChatMessage key={message._id} {...message} />
-				))}
-
-				<div ref={bottomRef} />
+			<div className="flex flex-1 overflow-auto">
+				<MessageList threadId={threadId} />
 			</div>
 
 			<footer className="flex flex-col p-2">
-				<ChatMessageInput
-					name={'user.currentRoom.name'}
-					sendMessage={sendMessage}
-				/>
+				<ChatMessageInput name={them?.username} sendMessage={sendMessage} />
 			</footer>
 		</div>
 	);

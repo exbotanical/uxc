@@ -19,14 +19,16 @@ declare module 'express-session' {
 	export interface SessionData {
 		accessToken: string;
 		refreshToken: string;
-	}
-}
-
-declare module 'express-serve-static-core' {
-	export interface Request {
 		meta?: JWTPayload;
 	}
 }
+
+// declare module 'express-serve-static-core' {
+// 	export interface Request {
+// 		session: {
+// 		};
+// 	}
+// }
 
 // we keep this here so we can extract and test
 export async function initializeServer() {

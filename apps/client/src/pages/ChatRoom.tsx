@@ -25,6 +25,7 @@ export function ChatRoom() {
 	const gtsm = viewport > 0;
 
 	const isIndexThread = threadId == null;
+	const isSmallViewport = useViewportSize() <= 2;
 
 	return (
 		<ThreadsProvider>
@@ -32,18 +33,15 @@ export function ChatRoom() {
 				<NotificationController />
 				<Modal />
 
-				{/* TODO why here */}
-				<ChannelsList className="bg-primary-700" />
+				{isSmallViewport ? null : <ChannelsList className="bg-primary-700" />}
 
-				{gtsm ? (
-					<PrivateThreadsList className="bg-primary-900 w-[18rem]" />
-				) : null}
+				{gtsm ? <PrivateThreadsList className="bg-primary-900" /> : null}
 
 				{isIndexThread ? (
 					<Dashboard />
 				) : (
 					<ChatArea
-						className="overflow-hidden grow col-span-8 bg-primary-800"
+						className="overflow-hidden w-full col-span-8 bg-primary-800"
 						threadId={threadId}
 					/>
 				)}

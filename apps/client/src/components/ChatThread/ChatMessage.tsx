@@ -1,9 +1,11 @@
 import React from 'react';
 
 import type { Message, User } from '@uxc/types';
+import { UserAvatar } from '../User/UserAvatar';
+import { toReadable } from '@/utils';
 
 export function ChatMessage(
-	message: Omit<Message, 'sender'> & { sender: User }
+	message: Omit<Message, 'sender'> & { sender: User; isSender: boolean }
 ) {
 	const { username } = message.sender;
 	const colors = [
@@ -31,14 +33,23 @@ export function ChatMessage(
 
 	return (
 		<div className="flex flex-col text-lg pb-1 mx-3">
-			<div>
-				<span className="font-bold" style={{ color: generateColor(username) }}>
-					{username}
-				</span>
+			<div className="flex py-2">
+				<div className="flex justify-center mx-3">
+					<UserAvatar size="lg" u={message.sender} />
+				</div>
 
-				<span className="text-white">: </span>
+				<div className="flex flex-col items-start">
+					<div className="flex items-center">
+						<p className="text-primary-100 font-bold mr-2">
+							{message.sender.username}
+						</p>
 
-				<span className="text-primary-100">{message.body}</span>
+						<p className="text-primary-200 text-sm">
+							{toReadable(message.createdAt)}
+						</p>
+					</div>
+					<p className="text-primary-100">{message.body}</p>
+				</div>
 			</div>
 		</div>
 	);

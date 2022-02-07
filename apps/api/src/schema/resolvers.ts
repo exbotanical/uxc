@@ -9,63 +9,34 @@ import {
 } from '@/resolvers';
 import { GraphQLDateTime } from 'graphql-iso-date';
 import { User, Message, PrivateThread } from '@/db';
-import { seed } from './seed';
+import { seed } from '../resolvers/seed';
 import type { GraphQLScalarType } from 'graphql';
-import {
-	Message as MessageType,
-	ObjectID,
-	PrivateThread as PrivateThreadType,
-	User as UserType
-} from '@uxc/types';
+import { ObjectID } from '@uxc/types';
+import { pubsub } from '@/redis';
+import { withFilter } from 'graphql-subscriptions';
 
-// const query = {
-// 	// getThreads: authGuard(async (_, { userId }, context) => {
-// 	// 	const privateThreads = await PrivateThread.find({
-// 	// 		users: { $in: [{ _id: userId }] }
-// 	// 	}).populate('users');
-
-// 	// 	return privateThreads as unknown as PrivateThreadType & {
-// 	// 		users: UserType[];
-// 	// 	};
-// 	// }),
-
-// 	getMessages: authGuard(async (_, { threadId }, context) => {
-// 		const messages = await Message.find({ threadId }).populate('sender');
-
-// 		return messages;
-// 	}),
-
-// 	getUser: authGuard(async (_, userId: ObjectID, { req }) => {
-// 		const user = await User.findById(userId);
-
-// 		return user;
-// 	}),
-
-// 	getCurrentUser: authGuard(async (_, __, { req }) => {
-// 		const user = await User.findById(req.meta.id);
-
-// 		return user;
-// 	}),
-
-// 	getThread: authGuard(async (_, { threadId }, context) => {
-// 		const thread = await PrivateThread.findById(threadId);
-
-// 		return thread;
-// 	})
-// };
-
-// const q = Object.fromEntries(
-// 	Object.entries(query).map(([key, value]) => {
-// 		return [key, authGuard(value)];
-// 	})
-// );
+const EVENTS = {
+	MESSAGE_CREATED: 'MESSAGE_CREATED'
+};
 
 export const resolvers: Resolvers = {
 	Date: GraphQLDateTime as unknown as GraphQLScalarType,
 
+	Subscription: {
+		onMessage: {
+			// @ts-ignore
+			subscribe: withFilter(
+				() => pubsub.asyncIterator([EVENTS.MESSAGE_CREATED]),
+				(payload, { threadId }) => {
+					return payload.onMessage[0].threadId === threadId;
+				}
+			)
+		}
+	},
+
 	Query: {
 		getThread: authGuard(async (_, { threadId }, context) => {
-			const thread = await PrivateThread.findById(threadId);
+			const thread = await PrivateThread.findById(threadId).populate('users');
 
 			return thread;
 		}),
@@ -79,6 +50,8 @@ export const resolvers: Resolvers = {
 		}),
 
 		getMessages: authGuard(async (_, { threadId }, context) => {
+			/**  @todo paginate */
+			/**  @todo deduplicate sender */
 			const messages = await Message.find({ threadId }).populate('sender');
 
 			return messages;
@@ -91,14 +64,14 @@ export const resolvers: Resolvers = {
 		}),
 
 		getCurrentUser: authGuard(async (_, __, { req }) => {
-			const user = await User.findById(req.meta.id);
+			const user = await User.findById(req.session.meta.id);
 
 			return user;
 		})
 	},
 
 	Mutation: {
-		seed,
+		seed: authGuard(seed),
 		logout,
 		login,
 		join,
@@ -106,7 +79,11 @@ export const resolvers: Resolvers = {
 			const message = await Message.create({
 				body,
 				threadId,
-				sender: req.meta.id
+				sender: req.session.meta.id
+			});
+
+			pubsub.publish(EVENTS.MESSAGE_CREATED, {
+				onMessage: [message]
 			});
 
 			return message;
@@ -122,11 +99,11 @@ export const resolvers: Resolvers = {
 		}),
 
 		createThread: authGuard(async (_, { receiverId }, { req }) => {
-			const message = await PrivateThread.create({
-				users: [req.meta.id, receiverId]
+			const thread = await PrivateThread.create({
+				users: [req.session.meta.id, receiverId]
 			});
 
-			return message;
+			return thread;
 		}),
 
 		deleteThread: authGuard(async (_, { threadId }, context) => {

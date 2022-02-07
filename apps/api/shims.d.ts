@@ -21,6 +21,11 @@ declare global {
 	}
 }
 
+// declare module '@faker-js/faker' {
+// 	import faker from 'faker';
+// 	export default faker;
+// }
+
 // added export makes this a module, which is a pre-requisite for the use
 // of module augmentations
 export {};

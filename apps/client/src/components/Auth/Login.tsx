@@ -12,7 +12,7 @@ export function Login() {
 	const [password, setPassword] = useState('');
 	const navigate = useNavigate();
 	const { data, loading } = useQuery<{
-		getUser: User;
+		getCurrentUser: User;
 	}>(GET_USER);
 	const [login] = useMutation(LOGIN);
 
@@ -21,7 +21,7 @@ export function Login() {
 	}
 
 	if (data) {
-		return <Navigate to="/dashboard" />;
+		return <Navigate to="/thread" />;
 	}
 
 	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -39,7 +39,7 @@ export function Login() {
 		setEmail('');
 		setPassword('');
 
-		navigate(`/dashboard`);
+		navigate(`/thread`);
 	}
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {

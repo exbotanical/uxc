@@ -37,7 +37,7 @@ export function ChatMessageInput({ sendMessage, name }: ChatMessageInputProps) {
 							className="text-primary-100"
 							maxLength={512}
 							onChange={handleChange}
-							placeholder={`Send a message in #${name}`}
+							placeholder={`Send a message to ${name}`}
 							transparent
 							value={message}
 						/>

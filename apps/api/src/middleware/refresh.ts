@@ -1,4 +1,3 @@
-import type { JWTPayload, User } from '@uxc/types';
 import type { NextFunction, Request, Response } from 'express';
 import { decode, verify } from '@/utils';
 import { createSession } from '@/utils/auth';
@@ -16,7 +15,7 @@ export function refreshMiddleware(
 	const { payload, expired } = verify({ token: accessToken });
 
 	if (payload) {
-		req.meta = payload;
+		req.session.meta = payload;
 		return next();
 	}
 
@@ -34,9 +33,7 @@ export function refreshMiddleware(
 
 	const { payload: meta } = decoded!;
 
-	req.meta = meta as JWTPayload;
-
-	Object.assign(req.session, session);
+	Object.assign(req.session, session, { meta });
 
 	return next();
 }

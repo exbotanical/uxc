@@ -10,11 +10,11 @@ export function SearchButton() {
 
 	return (
 		<div
-			className="flex flex-col justify-center items-center border-b border-slate-800 bg-primary-800 w-full p-2"
-			style={{ minHeight: '50px', height: '50px' }}
+			className="flex flex-col justify-center items-center border-b0 bg-primary-800 w-full p-3"
+			style={{ minHeight: '75px', height: '75px' }}
 		>
 			<button
-				className="w-full flex items-center py-2 px-4 rounded-8 focus:outline-none text-primary-300 bg-primary-900 text-xs h-5"
+				className="w-full flex items-center py-2 px-4 rounded-8 focus:outline-none text-primary-300 bg-primary-900 text-lg h-9"
 				onClick={() => {
 					setIsOpen(true);
 				}}

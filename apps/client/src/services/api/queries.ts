@@ -33,6 +33,22 @@ export const JOIN = gql`
 	}
 `;
 
+export const GET_THREAD = gql`
+	query getThread($threadId: ID) {
+		getThread(threadId: $threadId) {
+			_id
+			createdAt
+			updatedAt
+			users {
+				_id
+				username
+				email
+				userImage
+			}
+		}
+	}
+`;
+
 export const GET_THREADS = gql`
 	query getThreads($userId: ID) {
 		getThreads(userId: $userId) {
@@ -55,12 +71,42 @@ export const GET_MESSAGES = gql`
 			_id
 			body
 			createdAt
+			updatedAt
 			sender {
 				_id
 				username
 				email
 				userImage
 			}
+		}
+	}
+`;
+
+export const MESSAGES_SUBSCRIPTION = gql`
+	subscription onMessage($threadId: ID) {
+		onMessage(threadId: $threadId) {
+			_id
+			body
+			createdAt
+			updatedAt
+			threadId
+			sender {
+				_id
+				email
+				userImage
+				username
+			}
+		}
+	}
+`;
+
+export const CREATE_MESSAGE = gql`
+	mutation ($threadId: ID, $body: String) {
+		createMessage(body: $body, threadId: $threadId) {
+			_id
+			threadId
+			body
+			createdAt
 			updatedAt
 		}
 	}

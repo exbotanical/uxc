@@ -25,9 +25,7 @@ export function PrivateThread({ id }: PrivateThreadProps) {
 	const paths = location.pathname.split('/');
 	const isActiveItem = paths[paths.length - 1] == id;
 	const activeClass = `${
-		isActiveItem
-			? 'bg-transparent-alt rounded-lg text-tertiary'
-			: 'text-primary-100'
+		isActiveItem ? 'bg-transparent-alt text-tertiary' : 'text-primary-100'
 	}`;
 
 	const them = thread?.users.find(
@@ -40,7 +38,7 @@ export function PrivateThread({ id }: PrivateThreadProps) {
 
 	return (
 		<li
-			className={`${activeClass} w-full flex justify-between items-center p-1 px-2 rounded-sm text-primary-100`}
+			className={`${activeClass} w-full flex items-center p-2 rounded-sm text-primary-100`}
 			onClick={handleClick}
 			onKeyPress={(e) => {
 				onEnterKeyPressed(handleClick)<HTMLLIElement>(e);
@@ -49,11 +47,12 @@ export function PrivateThread({ id }: PrivateThreadProps) {
 			style={{ transition: 'color 0.3s, background-color 0.4s' }}
 			tabIndex={0}
 		>
-			<div className="flex items-center gap-2">
-				<UserAvatar size="xs" u={them} />
-				<h5 className="font-semibold mb-1.5">{them?.username}</h5>
+			<div className="flex justify-center items-center">
+				<UserAvatar size="md" u={them} />
 			</div>
-
+			<div className="flex items-center">
+				<p className="text-lg font-semibold m-auto ml-3">{them?.username}</p>
+			</div>
 			{/* @todo new messages */}
 			{/* {(id === '33' || id === '343') && (
 				<NotificationBadge className="mb-1">

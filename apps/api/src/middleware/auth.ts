@@ -4,7 +4,7 @@ import { AuthenticationError } from 'apollo-server-core';
 import { ERROR_MESSAGES } from '@/utils/constants';
 
 export async function authMiddleware({ req }: Context) {
-	if (!req.meta) {
+	if (!req.session.meta) {
 		throw new AuthenticationError(ERROR_MESSAGES.E_AUTHORIZATION_REQUIRED);
 	}
 }
