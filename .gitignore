@@ -8,4 +8,4 @@ dist
 .env
 certs
 logs
-XX.ts
+xx.ts
