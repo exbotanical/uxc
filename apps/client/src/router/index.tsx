@@ -3,11 +3,12 @@ import { Navigate } from 'react-router-dom';
 
 import { withProtectedRoute } from './ProtectedRoute';
 
+import type { RouteObject } from 'react-router-dom';
+
 import { Login } from '@/components/Auth/Login';
+import { Register } from '@/components/Auth/Register';
 import { ChatRoom } from '@/pages/ChatRoom';
 import { Dashboard } from '@/pages/Dashboard';
-import type { RouteObject } from 'react-router-dom';
-import { Register } from '@/components/Auth/Register';
 
 const WrappedDashboard = withProtectedRoute(Dashboard);
 const WrappedChatRoom = withProtectedRoute(ChatRoom);

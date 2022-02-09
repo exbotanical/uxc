@@ -36,3 +36,15 @@ export const GET_USER_QUERY = `
 		}
 	}
 `;
+
+export const CREATE_MESSAGE = `
+	mutation ($threadId: ID, $body: String) {
+		createMessage(body: $body, threadId: $threadId) {
+			_id
+			threadId
+			body
+			createdAt
+			updatedAt
+		}
+	}
+`;

@@ -6,7 +6,6 @@
   "author": "Matthew Zito <matthewtzito@gmail.com> (goldmund)",
   "scripts": {
     "dev": "./scripts/dev.bash",
-    "dev:insecure": "pnpm -r --parallel --filter {apps,libs} run dev:insecure",
     "format": "prettier --write \"src/**/*.{ts,tsx,md,css,scss}\"",
     "pnpm-context": "scripts/pnpm-context.mjs",
     "preview": "vite preview",

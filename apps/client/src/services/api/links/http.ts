@@ -1,7 +1,8 @@
-import { isInsecureMode } from '@/utils/runtime';
 import { HttpLink } from '@apollo/client';
 
-const httpHostname = isInsecureMode
+import { isTestRuntime } from '@/utils/runtime';
+
+const httpHostname = isTestRuntime
 	? import.meta.env.VITE_API_HTTP_HOSTNAME
 	: import.meta.env.VITE_API_HTTPS_HOSTNAME;
 

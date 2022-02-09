@@ -1,7 +1,8 @@
 import request from 'supertest';
 
-import { app } from '@/app';
 import { LOGIN_MUTATION } from './fixtures/queries';
+
+import { app } from '@/app';
 import { ERROR_MESSAGES } from '@/utils/constants';
 
 describe('login workflow', () => {

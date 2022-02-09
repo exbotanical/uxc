@@ -1,7 +1,10 @@
-import React, { createContext, useCallback } from 'react';
 import { useQuery } from '@apollo/client';
-import { GET_THREADS, GET_USER } from '@/services/api/queries';
+import React, { createContext, useCallback } from 'react';
+
 import type { PrivateThread, ObjectID, User } from '@uxc/types';
+
+import { GET_THREADS, GET_USER } from '@/services/api/queries';
+
 
 interface ThreadsContext {
 	threads: PrivateThread[];
@@ -9,7 +12,7 @@ interface ThreadsContext {
 }
 export const ThreadsContext = createContext({} as ThreadsContext);
 
-export const ThreadsProvider = ({ children }: { children: JSX.Element }) => {
+export function ThreadsProvider({ children }: { children: JSX.Element }) {
 	const { data: user } = useQuery<{
 		getCurrentUser: User;
 	}>(GET_USER);
@@ -28,7 +31,7 @@ export const ThreadsProvider = ({ children }: { children: JSX.Element }) => {
 		(id: ObjectID) => {
 			const thread = threads.find(({ _id }) => _id === id);
 
-			return thread as PrivateThread;
+			return thread!;
 		},
 		[threads]
 	);
@@ -38,4 +41,4 @@ export const ThreadsProvider = ({ children }: { children: JSX.Element }) => {
 	return (
 		<ThreadsContext.Provider value={value}>{children}</ThreadsContext.Provider>
 	);
-};
+}

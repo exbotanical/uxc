@@ -6,11 +6,10 @@
   "author": "Matthew Zito <matthewtzito@gmail.com> (goldmund)",
   "main": "src/index.ts",
   "scripts": {
-    "dev": "NODE_PORT=5000 ts-node-dev --log-error ./src/index.ts",
-    "dev:insecure": "NODE_PORT=5000 INSECURE_MODE=1 ts-node-dev ./src/index.ts",
+    "dev": "NODE_ENV=test NODE_PORT=5000 ts-node-dev --log-error ./src/index.ts",
     "lint": "eslint --ext .ts,.js,.tsx,.jsx,.json . --fix",
-    "test": "INSECURE_MODE=1 jest",
-    "test:dev": "INSECURE_MODE=1 jest --watchAll --no-cache"
+    "test": "jest",
+    "test:dev": "jest src/resolvers/mutations/__tests__/createMessage.test.ts --watchAll --no-cache"
   },
   "dependencies": {
     "@graphql-tools/schema": "^8.3.1",

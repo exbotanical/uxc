@@ -1,12 +1,12 @@
+import { Message as MessageType } from '@uxc/types';
 import { Schema, model } from 'mongoose';
 
 import type { Model, Document } from 'mongoose';
-import { Message as MessageType } from '@uxc/types';
 
-type ReturnDocument = {
+interface ReturnDocument {
 	_id?: MessageType['_id'];
 	__v?: string;
-};
+}
 
 type NewMessage = Omit<MessageType, '_id' | 'createdAt' | 'updatedAt'>;
 

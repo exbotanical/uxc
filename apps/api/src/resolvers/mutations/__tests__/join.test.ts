@@ -1,11 +1,12 @@
 import request from 'supertest';
-import mongoose from 'mongoose';
+
+import { JOIN_MUTATION } from './fixtures/queries';
 
 import { app } from '@/app';
-import { JOIN_MUTATION } from './fixtures/queries';
 import { ERROR_MESSAGES } from '@/utils/constants';
 
 describe('join workflow', () => {
+	console.log({ PATH: BASE_PATH });
 	it('sets a cookie when the user has been created', async () => {
 		const response = await request(app)
 			.post(BASE_PATH)

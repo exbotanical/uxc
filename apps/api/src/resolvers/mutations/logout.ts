@@ -1,6 +1,6 @@
-import { invalidateSession } from '@/utils';
-
 import type { MutationResolvers } from '@uxc/types/generated';
+
+import { invalidateSession } from '@/utils';
 
 export const logoutResolver: MutationResolvers['logout'] = async (
 	_,

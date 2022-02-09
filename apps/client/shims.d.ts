@@ -1,9 +1,8 @@
 interface ImportMeta {
 	env: {
-		NODE_ENV: 'development' | 'test' | 'production';
+		NODE_ENV: 'development' | 'production' | 'test';
 		VITE_API_GRAPHQL_PATH: string;
 		VITE_CY_TEST?: string;
-		INSECURE_MODE?: string;
 		VITE_API_BASE_PATH: string;
 		VITE_API_HTTP_HOSTNAME: string;
 		VITE_API_HTTPS_HOSTNAME: string;

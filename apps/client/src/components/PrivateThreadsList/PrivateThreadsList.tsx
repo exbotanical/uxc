@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 
 import { SearchButton } from './SearchButton';
-import { PrivateThread } from '@/components/PrivateThreadsList/PrivateThread';
+
 import { ConnectedHeader as Header } from '@/components/PrivateThreadsList/Header';
+import { PrivateThread } from '@/components/PrivateThreadsList/PrivateThread';
 import { ThreadsContext } from '@/pages/ThreadsContext';
 
 export function PrivateThreadsList({ className = '' }: { className?: string }) {
@@ -17,7 +18,7 @@ export function PrivateThreadsList({ className = '' }: { className?: string }) {
 				<ul className="flex flex-1 flex-col">
 					{/* @todo del btn on hover */}
 					{threads.map(({ _id: id }) => (
-						<PrivateThread key={id} id={id} />
+						<PrivateThread id={id} key={id} />
 					))}
 				</ul>
 			</nav>

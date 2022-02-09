@@ -1,6 +1,6 @@
-import { NavLink } from 'react-router-dom';
-import { generatePath } from 'react-router';
 import React from 'react';
+import { generatePath } from 'react-router';
+import { NavLink } from 'react-router-dom';
 
 export interface Route<T> {
 	path: string;

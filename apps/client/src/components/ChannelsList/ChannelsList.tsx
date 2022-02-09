@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Channel } from '@/components/ChannelsList/Channel';
 
 /** @todo rerenders when changing chat */

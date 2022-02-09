@@ -1,23 +1,24 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
+
+import { ThreadsProvider } from './ThreadsContext';
 
 import { ChannelsList } from '@/components/ChannelsList/ChannelsList';
-import { NotificationController } from '@/components/Notification/NotificationController';
 import { ConnectedChatArea as ChatArea } from '@/components/ChatThread/ChatArea';
+import { NotificationController } from '@/components/Notification/NotificationController';
 import { ConnectedCreatePrivateThreadModal as Modal } from '@/components/PrivateThreadsList/CreatePrivateThread';
 import { PrivateThreadsList } from '@/components/PrivateThreadsList/PrivateThreadsList';
 import { useViewportSize } from '@/hooks/useViewportSize';
-import { useParams } from 'react-router-dom';
-import { ThreadsProvider } from './ThreadsContext';
 
-const Dashboard = () => {
+function Dashboard() {
 	return (
 		<div
-			className={`flex flex-col justify-center items-center grow bg-primary-800 rounded-sm`}
+			className="flex flex-col justify-center items-center grow bg-primary-800 rounded-sm"
 		>
 			<h1 className="text-white">Dashboard</h1>
 		</div>
 	);
-};
+}
 
 export function ChatRoom() {
 	const { threadId } = useParams();

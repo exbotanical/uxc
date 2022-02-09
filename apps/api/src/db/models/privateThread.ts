@@ -1,12 +1,12 @@
+import { PrivateThread as PrivateThreadType } from '@uxc/types';
 import { Schema, model } from 'mongoose';
 
 import type { Model, Document } from 'mongoose';
-import { PrivateThread as PrivateThreadType } from '@uxc/types';
 
-type ReturnDocument = {
+interface ReturnDocument {
 	_id?: PrivateThreadType['_id'];
 	__v?: string;
-};
+}
 
 type NewPrivateThreadAttrs = Pick<PrivateThreadType, 'users'>;
 

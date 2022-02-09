@@ -55,7 +55,7 @@ export type Mutation = {
   join?: Maybe<User>;
   login?: Maybe<User>;
   logout?: Maybe<Scalars['ID']>;
-  seed?: Maybe<User>;
+  seed?: Maybe<SeedReturnValue>;
   updateMessage?: Maybe<Scalars['ID']>;
 };
 
@@ -126,6 +126,12 @@ export type QueryGetThreadsArgs = {
 
 export type QueryGetUserArgs = {
   userId?: InputMaybe<Scalars['ID']>;
+};
+
+export type SeedReturnValue = {
+  __typename?: 'SeedReturnValue';
+  threadIds?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  user?: Maybe<User>;
 };
 
 export type Subscription = {
@@ -226,6 +232,7 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
   PrivateThread: ResolverTypeWrapper<Omit<PrivateThread, 'users'> & { users?: Maybe<Array<Maybe<ResolversTypes['User']>>> }>;
   Query: ResolverTypeWrapper<{}>;
+  SeedReturnValue: ResolverTypeWrapper<Omit<SeedReturnValue, 'user'> & { user?: Maybe<ResolversTypes['User']> }>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Subscription: ResolverTypeWrapper<{}>;
   User: ResolverTypeWrapper<UserModel>;
@@ -243,6 +250,7 @@ export type ResolversParentTypes = {
   Mutation: {};
   PrivateThread: Omit<PrivateThread, 'users'> & { users?: Maybe<Array<Maybe<ResolversParentTypes['User']>>> };
   Query: {};
+  SeedReturnValue: Omit<SeedReturnValue, 'user'> & { user?: Maybe<ResolversParentTypes['User']> };
   String: Scalars['String'];
   Subscription: {};
   User: UserModel;
@@ -277,7 +285,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   join?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationJoinArgs, never>>;
   login?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationLoginArgs, never>>;
   logout?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
-  seed?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  seed?: Resolver<Maybe<ResolversTypes['SeedReturnValue']>, ParentType, ContextType>;
   updateMessage?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType, RequireFields<MutationUpdateMessageArgs, never>>;
 };
 
@@ -295,6 +303,12 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
   getThread?: Resolver<Maybe<ResolversTypes['PrivateThread']>, ParentType, ContextType, RequireFields<QueryGetThreadArgs, never>>;
   getThreads?: Resolver<Maybe<Array<Maybe<ResolversTypes['PrivateThread']>>>, ParentType, ContextType, RequireFields<QueryGetThreadsArgs, never>>;
   getUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetUserArgs, never>>;
+};
+
+export type SeedReturnValueResolvers<ContextType = Context, ParentType extends ResolversParentTypes['SeedReturnValue'] = ResolversParentTypes['SeedReturnValue']> = {
+  threadIds?: Resolver<Maybe<Array<Maybe<ResolversTypes['ID']>>>, ParentType, ContextType>;
+  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type SubscriptionResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
@@ -317,6 +331,7 @@ export type Resolvers<ContextType = Context> = {
   Mutation?: MutationResolvers<ContextType>;
   PrivateThread?: PrivateThreadResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  SeedReturnValue?: SeedReturnValueResolvers<ContextType>;
   Subscription?: SubscriptionResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 };

@@ -1,9 +1,9 @@
+import { useQuery } from '@apollo/client';
 import React, { useEffect, useRef, useState } from 'react';
 
 import type { Message, ObjectID, User } from '@uxc/types';
 
 import { ChatMessage } from '@/components/ChatThread/ChatMessage';
-import { useQuery } from '@apollo/client';
 import {
 	GET_MESSAGES,
 	GET_USER,
@@ -53,15 +53,13 @@ export function MessageList({ threadId }: MessageListProps) {
 				}
 
 				/** @todo */
-				// @ts-ignore
+				// @ts-expect-error
 				const newMessage = subscriptionData.data.onMessage[0];
 
-				const ret = Object.assign({}, prev, {
-					getMessages: [
+				const ret = { ...prev, getMessages: [
 						...prev.getMessages,
 						{ ...newMessage, sender: user?.getCurrentUser }
-					]
-				});
+					]};
 
 				return ret;
 			}

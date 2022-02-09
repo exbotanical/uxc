@@ -1,11 +1,12 @@
 import React from 'react';
 
+import type { User } from '@uxc/types';
+
 import { Feed } from '@/components/Feed/Feed';
 import { Panel } from '@/components/Layout/Panel';
 import { NotificationController } from '@/components/Notification/NotificationController';
 import { ConnectedCreatePrivateThreadModal as Modal } from '@/components/PrivateThreadsList/CreatePrivateThread';
 import { UserProfile } from '@/components/User/UserProfile';
-import type { User } from '@uxc/types';
 
 export function Dashboard({ user }: { user: User }) {
 	return (

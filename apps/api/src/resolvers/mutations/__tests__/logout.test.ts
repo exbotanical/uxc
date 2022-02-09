@@ -1,7 +1,8 @@
 import request from 'supertest';
 
-import { app } from '@/app';
 import { LOGOUT_MUTATION } from './fixtures/queries';
+
+import { app } from '@/app';
 
 describe('logout workflow', () => {
 	it('clears the cookie after logging out', async () => {

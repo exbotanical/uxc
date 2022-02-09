@@ -1,13 +1,13 @@
+import { useQuery } from '@apollo/client';
 import { ObjectID, User } from '@uxc/types';
 import React, { useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { UserAvatar } from '../User/UserAvatar';
 
-import { onEnterKeyPressed } from '@/utils';
 import { ThreadsContext } from '@/pages/ThreadsContext';
-import { useQuery } from '@apollo/client';
 import { GET_USER } from '@/services/api/queries';
+import { onEnterKeyPressed } from '@/utils';
 
 interface PrivateThreadProps {
 	id: ObjectID;
@@ -51,7 +51,7 @@ export function PrivateThread({ id }: PrivateThreadProps) {
 				<UserAvatar size="md" u={them} />
 			</div>
 			<div className="flex items-center">
-				<p className="text-lg font-semibold m-auto ml-3">{them?.username}</p>
+				<p className="text-lg font-semibold m-auto ml-3">{them.username}</p>
 			</div>
 			{/* @todo new messages */}
 			{/* {(id === '33' || id === '343') && (

@@ -1,7 +1,17 @@
-import type { Context, ObjectID } from '@uxc/types';
-import { User, Message, PrivateThread } from '@/db';
-
 import { faker } from '@faker-js/faker';
+
+import type { Context, ObjectID } from '@uxc/types';
+
+import { User, Message, PrivateThread } from '@/db';
+import { Document } from 'mongoose';
+import { Request } from 'express';
+
+interface Taskable {
+	save: () => Promise<any>;
+	_id: ObjectID;
+}
+
+type PartitionedTasks = [Promise<any>[], ObjectID[]];
 
 function createMessage(threadId: ObjectID, userId: ObjectID) {
 	const random = Math.floor(Math.random() * 11);
@@ -13,6 +23,20 @@ function createMessage(threadId: ObjectID, userId: ObjectID) {
 	});
 }
 
+async function createPuppetUser() {
+	const password = 'DOLMOND!';
+
+	const user = await User.create({
+		email: 'dolmond@gmail.com',
+		password,
+		username: 'redis',
+		userImage:
+			'https://upload.wikimedia.org/wikipedia/en/e/e7/CanMonsterMovieAlbumCover.jpg'
+	});
+
+	return Object.assign((user as any)._doc, { password });
+}
+
 function createUser() {
 	return User.build({
 		email: faker.internet.email(),
@@ -22,10 +46,9 @@ function createUser() {
 	});
 }
 
-type Taskable = { save: () => Promise<any>; _id: ObjectID };
-
 function partition(grp: Taskable[]) {
 	return grp.reduce(
+		// @ts-ignore
 		([tasks, ids], task) => {
 			return [
 				[...tasks, task.save()],
@@ -36,12 +59,35 @@ function partition(grp: Taskable[]) {
 	);
 }
 
-export async function seed(_, __, { req }: Context) {
-	const user = await User.findById((req.session as any).meta.id);
+export async function seedWrapper(_: any, __: any, { req }: Context) {
+	return await seed(req);
+}
+
+export async function seed(req?: Request) {
+	let userId = (req?.session as any)?.meta?.id;
+
+	let testUser = null;
+	if (!userId) {
+		const { email, password, _id } = await createPuppetUser();
+		userId = _id;
+		testUser = { email, password, _id };
+
+		console.info('New puppet account created', {
+			email,
+			password
+		});
+	}
+
+	const user = await User.findById(userId);
+
+	if (!user) {
+		throw new Error('[Seed script] unable to find puppet user');
+	}
+
 	const users = Array.from({ length: 10 }, createUser);
 
 	// create users
-	const [userTasks, userIds] = partition(users);
+	const [userTasks, userIds] = partition(users) as unknown as PartitionedTasks;
 	await Promise.all(userTasks);
 
 	// for each new user, create a private thread with my user
@@ -51,14 +97,14 @@ export async function seed(_, __, { req }: Context) {
 				users: [user, user2]
 			})
 		)
-	);
+	) as unknown as PartitionedTasks;
 
 	await Promise.all(threadTasks);
 
 	// correlate sender to its thread
 	const idSet = threadIds.map((threadId, idx) => [threadId, userIds[idx]]);
 
-	const messageTasks = [];
+	const messageTasks: Promise<Document>[] = [];
 
 	// generate 100 messages from sender and receiver each
 	idSet.forEach(([threadId, userId]) => {
@@ -72,5 +118,5 @@ export async function seed(_, __, { req }: Context) {
 
 	await Promise.all(messageTasks);
 
-	return user;
+	return { user: testUser, threadIds };
 }

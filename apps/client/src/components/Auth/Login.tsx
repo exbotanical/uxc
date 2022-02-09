@@ -2,10 +2,11 @@ import { useMutation, useQuery } from '@apollo/client';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate, Navigate, Link } from 'react-router-dom';
 
+import type { User } from '@uxc/types';
+
 import { Button } from '@/components/Buttons/Button';
 import { Input } from '@/components/Fields/Input';
 import { GET_USER, LOGIN } from '@/services/api/queries';
-import type { User } from '@uxc/types';
 
 export function Login() {
 	const [email, setEmail] = useState('');
@@ -60,8 +61,8 @@ export function Login() {
 					<p className="mt-2 text-center text-xl text-primary-100">
 						Or&nbsp;
 						<Link
-							to="/register"
 							className="font-medium text-accent hover:text-accent-disabled"
+							to="/register"
 						>
 							Create an Account{' '}
 						</Link>

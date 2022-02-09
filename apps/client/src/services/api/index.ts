@@ -9,7 +9,7 @@ export const client = new ApolloClient({
 	})
 });
 
-client.onResetStore(() => {
+client.onResetStore(async () => {
 	return Promise.resolve(() => {
 		console.log('store reset');
 	});

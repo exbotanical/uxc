@@ -12,5 +12,12 @@ export const ERROR_MESSAGES = {
 	E_CREDENTIALS_TAKEN: 'Email or username in use',
 	E_INVALID_PROGRAMMATIC_INPUTS:
 		'An input exception has occurred, and it appears to be a bug. Please notify the administrator.',
-	E_AUTHORIZATION_REQUIRED: 'Authorization is required'
+	E_AUTHORIZATION_REQUIRED: 'Authorization is required',
+	E_NO_USER_SESSION: 'User session no longer extant',
+	E_NO_THREAD_ID: 'threadId is required but was not supplied',
+	E_EMAIL_IN_USE: 'Email or username in use'
+};
+
+export const EVENTS = {
+	MESSAGE_CREATED: 'MESSAGE_CREATED'
 };

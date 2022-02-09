@@ -1,7 +1,9 @@
 import React from 'react';
 
-import type { Message, User } from '@uxc/types';
 import { UserAvatar } from '../User/UserAvatar';
+
+import type { Message, User } from '@uxc/types';
+
 import { toReadable } from '@/utils';
 
 export function ChatMessage(

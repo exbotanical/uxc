@@ -1,9 +1,11 @@
+import { useQuery } from '@apollo/client';
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 
-import { useQuery } from '@apollo/client';
-import { GET_USER } from '@/services/api/queries';
 import type { User } from '@uxc/types';
+
+import { GET_USER } from '@/services/api/queries';
+
 
 export function withProtectedRoute<P extends {}>(
 	Component: React.ComponentType<P & { user: User }>

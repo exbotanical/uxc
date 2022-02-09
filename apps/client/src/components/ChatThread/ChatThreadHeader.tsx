@@ -1,10 +1,9 @@
 import React from 'react';
 
-import { StatusIndicator } from '@/components/Badges/StatusIndicator';
-import { Input } from '@/components/Fields/Input';
-
 import type { User } from '@uxc/types';
 
+import { StatusIndicator } from '@/components/Badges/StatusIndicator';
+import { Input } from '@/components/Fields/Input';
 import { EditIcon } from '@/components/Icons/EditIcon';
 import { connector, PropsFromRedux } from '@/state';
 import { onEnterKeyPressed } from '@/utils';
@@ -16,7 +15,7 @@ interface ChatThreadHeaderProps {
 function ChatThreadHeader({
 	user,
 	showUpsertThreadModal
-}: PropsFromRedux & ChatThreadHeaderProps) {
+}: ChatThreadHeaderProps & PropsFromRedux) {
 	const handleClick = () => {
 		showUpsertThreadModal({
 			data: 'threadId',

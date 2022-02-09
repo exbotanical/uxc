@@ -1,7 +1,8 @@
 import request from 'supertest';
 
-import { app } from '@/app';
 import { GET_USER_QUERY } from './fixtures/queries';
+
+import { app } from '@/app';
 import { ERROR_MESSAGES } from '@/utils/constants';
 
 describe('user context workflow', () => {

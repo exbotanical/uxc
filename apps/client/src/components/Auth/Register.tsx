@@ -2,10 +2,11 @@ import { useMutation, useQuery } from '@apollo/client';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate, Link, Navigate } from 'react-router-dom';
 
+import type { User } from '@uxc/types';
+
 import { Button } from '@/components/Buttons/Button';
 import { Input } from '@/components/Fields/Input';
 import { GET_USER, JOIN } from '@/services/api/queries';
-import type { User } from '@uxc/types';
 
 export function Register() {
 	const { data, loading } = useQuery<{
@@ -161,20 +162,20 @@ export function Register() {
 							</label>
 
 							<input
-								type="file"
-								onChange={handleFileInput}
+								accept=".png,.jpg,.jpeg"
 								className="rounded-sm text-white focus:ring-accent-500 focus:z-10 text-md"
 								id="avatar"
 								name="avatar"
+								onChange={handleFileInput}
 								required
-								accept=".png,.jpg,.jpeg"
+								type="file"
 							/>
 						</div>
 					</div>
 
 					<Button
-						color="secondary-dark"
 						className="relative w-full flex justify-center py-2 px-4 mb-2 text-sm zcrounded-md "
+						color="secondary-dark"
 						type="submit"
 					>
 						<span className="absolute left-0 inset-y-0 flex items-center pl-3">

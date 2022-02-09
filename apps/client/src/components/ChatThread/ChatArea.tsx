@@ -1,17 +1,18 @@
+import { useMutation, useQuery } from '@apollo/client';
 import React from 'react';
+
+import { ChatMessageInput } from './ChatMessageInput';
+import { MessageList } from './MessageList';
 
 import type { Message, ObjectID, PrivateThread, User } from '@uxc/types';
 
-import { connector, PropsFromRedux } from '@/state';
-import { ChatMessageInput } from './ChatMessageInput';
-import { MessageList } from './MessageList';
-import { useMutation, useQuery } from '@apollo/client';
 import {
 	CREATE_MESSAGE,
 	GET_MESSAGES,
 	GET_THREAD,
 	GET_USER
 } from '@/services/api/queries';
+import { connector, PropsFromRedux } from '@/state';
 
 export interface SendMessage {
 	(message: string): void;
@@ -26,7 +27,7 @@ export function ChatArea({
 	className,
 	threadId,
 	showNotification
-}: PropsFromRedux & ChatAreaProps) {
+}: ChatAreaProps & PropsFromRedux) {
 	const { data: user, loading } = useQuery<{
 		getCurrentUser: User;
 	}>(GET_USER);
@@ -60,9 +61,14 @@ export function ChatArea({
 		}
 	});
 
-	const them = thread?.getThread?.users.find(
+	const them = thread?.getThread.users.find(
 		({ _id }) => _id !== user?.getCurrentUser._id
-	)!;
+	);
+
+	// if this happens, we've got a bigger problem...
+	if (!them) {
+		return null;
+	}
 
 	const sendMessage: SendMessage = async (message) => {
 		/** @todo update cache instead of sending back via subscription */
@@ -84,7 +90,7 @@ export function ChatArea({
 			</div>
 
 			<footer className="flex flex-col p-2">
-				<ChatMessageInput name={them?.username} sendMessage={sendMessage} />
+				<ChatMessageInput name={them.username} sendMessage={sendMessage} />
 			</footer>
 		</div>
 	);

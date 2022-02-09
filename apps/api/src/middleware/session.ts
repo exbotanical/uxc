@@ -1,14 +1,14 @@
 import session from 'express-session';
 
 import { buildStore } from '@/redis';
-import { isInsecureMode } from '@/utils';
+import { isTestRuntime } from '@/utils';
 
 export const sessionMiddleware = session({
 	cookie: {
-		httpOnly: !isInsecureMode,
+		httpOnly: !isTestRuntime,
 		maxAge: 24 * 60 * 60 * 1000,
-		sameSite: !isInsecureMode,
-		secure: !isInsecureMode,
+		sameSite: !isTestRuntime,
+		secure: !isTestRuntime,
 		signed: true
 	},
 	name: 'sid',

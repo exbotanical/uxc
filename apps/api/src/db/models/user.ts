@@ -1,8 +1,9 @@
 import { Schema, model } from 'mongoose';
+
+import type { User as UserType } from '@uxc/types';
 import type { Model, Document } from 'mongoose';
 
 import { toHash } from '@/utils';
-import type { User as UserType } from '@uxc/types';
 
 type UserWithPassword = UserType & { password: string };
 type ReturnDocument = UserWithPassword & { __v?: string };
@@ -40,6 +41,7 @@ const UserSchema = new Schema<UserWithPassword>(
 		toJSON: {
 			// mongoose types are terrible here
 			transform(_, ret: ReturnDocument) {
+				// @ts-ignore
 				delete ret.password;
 				delete ret.__v;
 			}

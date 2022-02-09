@@ -3,9 +3,9 @@ import { onError } from '@apollo/client/link/error';
 export const errorLink = onError(({ graphQLErrors, networkError }) => {
 	if (graphQLErrors)
 		graphQLErrors.forEach(({ message, locations, path }) =>
-			console.log(
+			{ console.log(
 				`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-			)
+			); }
 		);
 	if (networkError) console.log(`[Net    work error]: ${networkError}`);
 });

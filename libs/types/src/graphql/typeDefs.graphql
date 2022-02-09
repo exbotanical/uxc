@@ -55,8 +55,13 @@ type Subscription {
 	onThread: [PrivateThread]
 }
 
+type SeedReturnValue {
+	user: User
+	threadIds: [ID]
+}
+
 type Mutation {
-	seed: User
+	seed: SeedReturnValue
   createMessage(threadId: ID, body: String): Message
   updateMessage(messageId: ID, body: String): ID
 	createThread(receiverId: ID): PrivateThread

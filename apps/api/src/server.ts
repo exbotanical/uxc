@@ -13,6 +13,7 @@ import { SubscriptionServer } from 'subscriptions-transport-ws';
 import { app } from './app';
 import { corsOptions, errorhandler, NotFoundError } from './middleware';
 import { schema } from './schema';
+
 import type { JWTPayload } from '@uxc/types';
 
 declare module 'express-session' {

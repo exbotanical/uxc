@@ -15,14 +15,14 @@ export function toReadable(date: Date) {
 
 export function dateTo12Hour(date: Date) {
 	let hours = date.getHours();
-	let minutes: string | number = date.getMinutes();
+	let minutes: number | string = date.getMinutes();
 	const meridiem = hours >= 12 ? 'pm' : 'am';
 
-	hours = hours % 12;
+	hours %= 12;
 	hours = hours ? hours : 12;
-	minutes = minutes < 10 ? '0' + minutes : minutes;
+	minutes = minutes < 10 ? `0${  minutes}` : minutes;
 
-	const strTime = hours + ':' + minutes + ' ' + meridiem;
+	const strTime = `${hours  }:${  minutes  } ${  meridiem}`;
 	return strTime;
 }
 

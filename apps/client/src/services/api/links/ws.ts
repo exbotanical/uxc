@@ -1,7 +1,8 @@
-import { isInsecureMode } from '@/utils/runtime';
 import { WebSocketLink } from '@apollo/client/link/ws';
 
-const wsHostname = isInsecureMode
+import { isTestRuntime } from '@/utils/runtime';
+
+const wsHostname = isTestRuntime
 	? import.meta.env.VITE_API_SUBSCRIPTIONS_HOSTNAME
 	: import.meta.env.VITE_API_SUBSCRIPTIONS_HOSTNAME_SECURE;
 

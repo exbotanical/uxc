@@ -1,14 +1,15 @@
-import { BadRequestError } from '@/middleware';
-import { createSession } from '@/utils';
+import { UserInputError } from 'apollo-server-core';
 import isEmail from 'isemail';
 
-import { User } from '@/db';
 import type {
 	InputMaybe,
 	JoinInput,
 	MutationResolvers
 } from '@uxc/types/generated';
-import { UserInputError } from 'apollo-server-core';
+
+import { User } from '@/db';
+import { BadRequestError } from '@/middleware';
+import { createSession } from '@/utils';
 import { ERROR_MESSAGES } from '@/utils/constants';
 
 export const joinResolver: MutationResolvers['join'] = async (
@@ -23,14 +24,14 @@ export const joinResolver: MutationResolvers['join'] = async (
 	});
 
 	if (userExists) {
-		throw new BadRequestError('Email or username in use');
+		throw new BadRequestError(ERROR_MESSAGES.E_EMAIL_IN_USE);
 	}
 
 	const newUser = User.build({
 		email,
 		password,
 		username,
-		userImage
+		userImage: userImage ?? null
 	});
 
 	await newUser.save();

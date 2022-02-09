@@ -1,6 +1,8 @@
-import { sign } from './jwt';
 import { scrypt, randomBytes } from 'crypto';
 import { promisify } from 'util';
+
+import { sign } from './jwt';
+
 import type { ObjectID } from '@uxc/types';
 import type { Request } from 'express';
 

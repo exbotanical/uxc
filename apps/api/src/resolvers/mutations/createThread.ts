@@ -1,0 +1,21 @@
+import { ERROR_MESSAGES } from '@/utils/constants';
+import { AuthenticationError } from 'apollo-server-core';
+import { PrivateThread } from '@/db';
+import type { Resolver } from '../types';
+import type { ObjectID, PrivateThread as PrivateThreadType } from '@uxc/types';
+
+export const createThread: Resolver<
+	PrivateThreadType,
+	{ receiverId: ObjectID }
+> = async (_, { receiverId }, { req }) => {
+	const userId = req?.session?.meta?.id;
+	if (!userId) {
+		throw new AuthenticationError(ERROR_MESSAGES.E_NO_USER_SESSION);
+	}
+
+	const thread = await PrivateThread.create({
+		users: [, receiverId]
+	});
+
+	return thread;
+};

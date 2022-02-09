@@ -37,13 +37,13 @@ export function UserAvatar({ u, size = 'md', className = '' }: UserCardProps) {
 			}}
 		>
 			<img
-				alt={u?.username ? `${u.username}'s avatar` : 'your avatar'}
+				alt={u.username ? `${u.username}'s avatar` : 'your avatar'}
 				className="rounded-full"
-				src={u?.userImage || '../../../src/assets/gravatar.png'}
 				onError={({ currentTarget }) => {
 					currentTarget.onerror = null;
 					currentTarget.src = '../../../src/assets/gravatar.png';
 				}}
+				src={u.userImage || '../../../src/assets/gravatar.png'}
 			/>
 
 			<div className={`absolute border-primary-800 ${status}`}>

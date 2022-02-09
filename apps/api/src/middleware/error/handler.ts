@@ -8,6 +8,7 @@ export const errorhandler = (
 	res: Response,
 	next: NextFunction
 ) => {
+	console.log({ err });
 	// status codes will take effect in express but will be overridden in apollo
 	// which is what we want; the errors will propagate and be formatted per gql spec
 	if (err instanceof BaseError) {

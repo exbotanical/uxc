@@ -1,17 +1,19 @@
 /* eslint-disable jest/require-top-level-describe */
+import '../src/dotenv';
+
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import request from 'supertest';
 
+import type { User } from '@uxc/types';
+
+import { app } from '@/app';
+import { JOIN_MUTATION } from '@/resolvers/mutations/__tests__/fixtures/queries';
 import { initializeServer } from '@/server';
 
 (async () => {
 	await initializeServer();
 })();
-
-import { app } from '@/app';
-import { JOIN_MUTATION } from '@/resolvers/__tests__/fixtures/queries';
-import type { User } from '@uxc/types';
 
 declare global {
 	var join: () => Promise<string[]>;
@@ -22,7 +24,7 @@ declare global {
 
 globalThis.BASE_PATH = '/graphql';
 
-jest.setTimeout(20000);
+// jest.setTimeout(20000);
 
 let mongo: MongoMemoryServer;
 beforeAll(async () => {

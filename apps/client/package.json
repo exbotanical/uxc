@@ -5,7 +5,6 @@
   "author": "Matthew Zito (goldmund) <matthewtzito@gmail.com>",
   "scripts": {
     "dev": "vite",
-    "dev:solo": "INSECURE_MODE=1 vite",
     "lint": "eslint --ext .ts,.js,.tsx,.jsx,.json . --fix",
     "lint:css": "stylelint \"src/**/*.{css,scss,ts,tsx}\" --fix",
     "test:cy:dev": "cross-env VITE_CY_TEST=true CYPRESS_BASE_URL=http://localhost:3000 CYPRESS_STAGE=dev start-server-and-test dev http-get://localhost:3000/ \"cypress open\"",

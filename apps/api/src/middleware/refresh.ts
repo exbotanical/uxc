@@ -1,4 +1,5 @@
 import type { NextFunction, Request, Response } from 'express';
+
 import { decode, verify } from '@/utils';
 import { createSession } from '@/utils/auth';
 
@@ -9,14 +10,14 @@ export function refreshMiddleware(
 ) {
 	const { accessToken, refreshToken } = req.session;
 	if (!accessToken) {
-		return next();
+		next(); return;
 	}
 
 	const { payload, expired } = verify({ token: accessToken });
 
 	if (payload) {
 		req.session.meta = payload;
-		return next();
+		next(); return;
 	}
 
 	const { payload: refresh } =
@@ -25,7 +26,7 @@ export function refreshMiddleware(
 			: { payload: null };
 
 	if (!refresh) {
-		return next();
+		next(); return;
 	}
 
 	const session = createSession(refresh.id);
@@ -35,5 +36,5 @@ export function refreshMiddleware(
 
 	Object.assign(req.session, session, { meta });
 
-	return next();
+	next();
 }

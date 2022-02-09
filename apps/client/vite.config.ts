@@ -1,4 +1,3 @@
-
 import { resolve } from 'path';
 
 import react from '@vitejs/plugin-react';
@@ -16,21 +15,19 @@ export default defineConfig({
 	base: '/',
 	build: {
 		assetsInlineLimit: 10000,
-
 		rollupOptions: {
 			preserveEntrySignatures: 'strict'
 		}
 	},
-	optimizeDeps: {
-		include: ['react', 'react-dom', 'react-router-dom', 'redux', 'react-redux']
-	},
-
 	css: {
 		preprocessorOptions: {
 			scss: {
 				additionalData: "@import '@/styles/index';"
 			}
 		}
+	},
+	optimizeDeps: {
+		include: ['react', 'react-dom', 'react-router-dom', 'redux', 'react-redux']
 	},
 	plugins: [
 		react(),
@@ -45,7 +42,6 @@ export default defineConfig({
 			'@': r('./src')
 		}
 	},
-
 	server: {
 		// see https://github.com/vitejs/vite/issues/3002
 		hmr: {
