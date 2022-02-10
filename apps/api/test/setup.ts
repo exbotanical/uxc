@@ -10,6 +10,7 @@ import type { User } from '@uxc/types';
 import { app } from '@/app';
 import { JOIN_MUTATION } from '@/resolvers/mutations/__tests__/fixtures/queries';
 import { initializeServer } from '@/server';
+import { pubsub, client } from '@/redis';
 
 (async () => {
 	await initializeServer();
@@ -24,7 +25,7 @@ declare global {
 
 globalThis.BASE_PATH = '/graphql';
 
-// jest.setTimeout(20000);
+jest.setTimeout(20000);
 
 let mongo: MongoMemoryServer;
 beforeAll(async () => {
@@ -38,6 +39,9 @@ beforeAll(async () => {
 afterAll(() => {
 	mongo.stop();
 	mongoose.connection.close();
+
+	pubsub.close();
+	client.quit();
 });
 
 beforeEach(async () => {

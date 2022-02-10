@@ -24,13 +24,6 @@ declare module 'express-session' {
 	}
 }
 
-// declare module 'express-serve-static-core' {
-// 	export interface Request {
-// 		session: {
-// 		};
-// 	}
-// }
-
 // we keep this here so we can extract and test
 export async function initializeServer() {
 	const httpServer = createServer(app);
@@ -45,6 +38,7 @@ export async function initializeServer() {
 				async serverWillStart() {
 					return {
 						async drainServer() {
+							console.info('subscription server closing...');
 							subscriptionServer.close();
 						}
 					};

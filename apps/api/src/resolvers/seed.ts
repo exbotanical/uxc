@@ -60,7 +60,12 @@ function partition(grp: Taskable[]) {
 }
 
 export async function seedWrapper(_: any, __: any, { req }: Context) {
-	return await seed(req);
+	const { user, threadIds, fullUser } = await seed(req);
+
+	return {
+		user: fullUser,
+		threadIds
+	};
 }
 
 export async function seed(req?: Request) {
@@ -118,5 +123,5 @@ export async function seed(req?: Request) {
 
 	await Promise.all(messageTasks);
 
-	return { user: testUser, threadIds };
+	return { user: testUser, threadIds, fullUser: user };
 }

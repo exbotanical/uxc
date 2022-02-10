@@ -15,6 +15,10 @@ export const createMessage: Resolver<
 		throw new AuthenticationError(ERROR_MESSAGES.E_NO_USER_SESSION);
 	}
 
+	if (!threadId) {
+		throw new UserInputError(ERROR_MESSAGES.E_NO_THREAD_ID);
+	}
+
 	if (!isValidObjectId(threadId)) {
 		throw new UserInputError(
 			`The provided threadId ${threadId} is not a valid ObjectID`

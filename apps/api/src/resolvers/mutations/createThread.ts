@@ -1,8 +1,9 @@
 import { ERROR_MESSAGES } from '@/utils/constants';
-import { AuthenticationError } from 'apollo-server-core';
+import { AuthenticationError, UserInputError } from 'apollo-server-core';
 import { PrivateThread } from '@/db';
 import type { Resolver } from '../types';
 import type { ObjectID, PrivateThread as PrivateThreadType } from '@uxc/types';
+import { isValidObjectId } from 'mongoose';
 
 export const createThread: Resolver<
 	PrivateThreadType,
@@ -13,8 +14,18 @@ export const createThread: Resolver<
 		throw new AuthenticationError(ERROR_MESSAGES.E_NO_USER_SESSION);
 	}
 
+	if (!receiverId) {
+		throw new UserInputError(ERROR_MESSAGES.E_NO_RECEIVER_ID);
+	}
+
+	if (!isValidObjectId(receiverId)) {
+		throw new UserInputError(
+			`The provided receiverId ${receiverId} is not a valid ObjectID`
+		);
+	}
+
 	const thread = await PrivateThread.create({
-		users: [, receiverId]
+		users: [userId, receiverId]
 	});
 
 	return thread;

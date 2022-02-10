@@ -48,3 +48,26 @@ export const CREATE_MESSAGE = `
 		}
 	}
 `;
+
+export const UPDATE_MESSAGE = `
+	mutation ($messageId: ID, $body: String) {
+		updateMessage(body: $body, messageId: $messageId)
+	}
+`;
+
+export const CREATE_THREAD = `
+	mutation ($receiverId: ID) {
+		createThread(receiverId: $receiverId) {
+			_id
+			users {
+				_id
+			}
+		}
+	}
+`;
+
+export const DELETE_THREAD = `
+	mutation ($threadId: ID) {
+		deleteThread(threadId: $threadId)
+	}
+`;

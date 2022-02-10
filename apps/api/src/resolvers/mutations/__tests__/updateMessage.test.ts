@@ -1,6 +1,10 @@
 import request from 'supertest';
 
-import { CREATE_MESSAGE, LOGIN_MUTATION } from './fixtures/queries';
+import {
+	UPDATE_MESSAGE,
+	LOGIN_MUTATION,
+	CREATE_MESSAGE
+} from './fixtures/queries';
 
 import { ObjectId } from 'mongodb';
 
@@ -8,14 +12,14 @@ import { app } from '@/app';
 import { ERROR_MESSAGES } from '@/utils/constants';
 import { seed } from '@/resolvers/seed';
 
-describe('createMessage workflow', () => {
+describe('updateMessage workflow', () => {
 	it('fails with an Unauthorized error if the request does not include a valid session cookie', async () => {
 		const { body } = await request(app)
 			.post(BASE_PATH)
 			.send({
-				query: CREATE_MESSAGE,
+				query: UPDATE_MESSAGE,
 				variables: {
-					threadId: 'any',
+					messageId: 'any',
 					body: 'any'
 				}
 			})
@@ -25,21 +29,17 @@ describe('createMessage workflow', () => {
 		expect(body.errors[0].message).toEqual(
 			ERROR_MESSAGES.E_AUTHORIZATION_REQUIRED
 		);
-		expect(body.errors[0].path[0]).toBe('createMessage');
+		expect(body.errors[0].path[0]).toBe('updateMessage');
 	});
 
-	it.todo(
-		'it fails with a user session error if the request data passes the auth guard but the session does not exist on the req object (edge case)'
-	);
-
-	it('fails when not provided a threadId', async () => {
+	it('fails when not provided a messageId', async () => {
 		const cookie = await join();
 
 		const { body } = await request(app)
 			.post(BASE_PATH)
 			.set('Cookie', cookie)
 			.send({
-				query: CREATE_MESSAGE,
+				query: UPDATE_MESSAGE,
 				variables: {
 					body: '_test_message_'
 				}
@@ -47,48 +47,23 @@ describe('createMessage workflow', () => {
 			.expect(200);
 
 		expect(body.errors).toHaveLength(1);
-		expect(body.errors[0].message).toEqual(ERROR_MESSAGES.E_NO_THREAD_ID);
+		expect(body.errors[0].message).toEqual(ERROR_MESSAGES.E_NO_MESSAGE_ID);
 
-		expect(body.errors[0].path[0]).toBe('createMessage');
+		expect(body.errors[0].path[0]).toBe('updateMessage');
 	});
 
-	it('fails when provided a threadId that is not a valid ObjectID', async () => {
+	it('fails when provided a messageId that is not a valid ObjectID', async () => {
 		const cookie = await join();
 
-		const threadId = '123';
+		const messageId = '123';
 
 		const { body } = await request(app)
 			.post(BASE_PATH)
 			.set('Cookie', cookie)
 			.send({
-				query: CREATE_MESSAGE,
+				query: UPDATE_MESSAGE,
 				variables: {
-					threadId,
-					body: '_test_message_'
-				}
-			})
-			.expect(200);
-
-		expect(body.errors).toHaveLength(1);
-		expect(body.errors[0].message).toEqual(
-			`The provided threadId ${threadId} is not a valid ObjectID`
-		);
-
-		expect(body.errors[0].path[0]).toBe('createMessage');
-	});
-
-	it('fails when provided a threadId that does not exist in the database', async () => {
-		const cookie = await join();
-
-		const threadId = new ObjectId();
-
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: CREATE_MESSAGE,
-				variables: {
-					threadId,
+					messageId,
 					body: '_test_message_'
 				}
 			})
@@ -96,18 +71,43 @@ describe('createMessage workflow', () => {
 
 		expect(body.errors).toHaveLength(1);
 		expect(body.errors[0].message).toEqual(
-			`The provided threadId ${threadId} does not represent a resource in the database`
+			`The provided messageId ${messageId} is not a valid ObjectID`
 		);
-		expect(body.errors[0].path[0]).toBe('createMessage');
+
+		expect(body.errors[0].path[0]).toBe('updateMessage');
 	});
 
-	it('creates a new message', async () => {
+	it('fails when provided a messageId that does not exist in the database', async () => {
+		const cookie = await join();
+
+		const messageId = new ObjectId();
+
+		const { body } = await request(app)
+			.post(BASE_PATH)
+			.set('Cookie', cookie)
+			.send({
+				query: UPDATE_MESSAGE,
+				variables: {
+					messageId,
+					body: '_test_message_'
+				}
+			})
+			.expect(200);
+
+		expect(body.errors).toHaveLength(1);
+		expect(body.errors[0].message).toEqual(
+			`The provided messageId ${messageId} does not represent a resource in the database`
+		);
+		expect(body.errors[0].path[0]).toBe('updateMessage');
+	});
+
+	it('updates a message', async () => {
 		const { threadIds, user } = await seed();
 		if (!user) {
 			throw new Error('seeding op failed');
 		}
 
-		const response = await request(app)
+		const loginResponse = await request(app)
 			.post(BASE_PATH)
 			.send({
 				query: LOGIN_MUTATION,
@@ -120,24 +120,39 @@ describe('createMessage workflow', () => {
 			})
 			.expect(200);
 
-		const cookie = response.get('Set-Cookie');
-		const messageBody = '_test_message_';
+		const cookie = loginResponse.get('Set-Cookie');
+		const threadId = threadIds[0];
+		const body = 'body1';
+		const newBody = 'body2';
 
-		const { body } = await request(app)
+		const { body: createMessageResponse } = await request(app)
 			.post(BASE_PATH)
 			.set('Cookie', cookie)
 			.send({
 				query: CREATE_MESSAGE,
 				variables: {
-					threadId: threadIds[0],
-					body: messageBody
+					threadId,
+					body
 				}
 			})
 			.expect(200);
 
-		const { createMessage } = body.data;
+		const { createMessage } = createMessageResponse.data;
 
-		expect(createMessage.body).toEqual(messageBody);
-		expect(createMessage.threadId).toEqual(threadIds[0].toString());
+		const { body: updateMessageResponse } = await request(app)
+			.post(BASE_PATH)
+			.set('Cookie', cookie)
+			.send({
+				query: UPDATE_MESSAGE,
+				variables: {
+					messageId: createMessage._id,
+					body: newBody
+				}
+			})
+			.expect(200);
+
+		const { updateMessage } = updateMessageResponse.data;
+
+		expect(updateMessage).toEqual(createMessage._id);
 	});
 });

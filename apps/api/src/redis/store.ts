@@ -5,7 +5,7 @@ import { SessionMiddleware } from '../middleware';
 
 import { options } from '.';
 
-const client = new Redis(options)
+export const client = new Redis(options)
 	.on('error', console.error)
 	.on('connect', () => {
 		console.info('redis connect');
