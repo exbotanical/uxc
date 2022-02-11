@@ -1,12 +1,11 @@
 import request from 'supertest';
 
-import { JOIN_MUTATION } from './fixtures/queries';
+import { JOIN_MUTATION } from '@@/fixtures';
 
 import { app } from '@/app';
 import { ERROR_MESSAGES } from '@/utils/constants';
 
 describe('join workflow', () => {
-	console.log({ PATH: BASE_PATH });
 	it('sets a cookie when the user has been created', async () => {
 		const response = await request(app)
 			.post(BASE_PATH)

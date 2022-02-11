@@ -3,8 +3,7 @@ import React, { createContext, useCallback } from 'react';
 
 import type { PrivateThread, ObjectID, User } from '@uxc/types';
 
-import { GET_THREADS, GET_USER } from '@/services/api/queries';
-
+import { GET_THREADS, GET_CURRENT_USER } from '@/services/api/queries';
 
 interface ThreadsContext {
 	threads: PrivateThread[];
@@ -15,7 +14,7 @@ export const ThreadsContext = createContext({} as ThreadsContext);
 export function ThreadsProvider({ children }: { children: JSX.Element }) {
 	const { data: user } = useQuery<{
 		getCurrentUser: User;
-	}>(GET_USER);
+	}>(GET_CURRENT_USER);
 
 	const { data: threadsPayload } = useQuery<{
 		getThreads: PrivateThread[];

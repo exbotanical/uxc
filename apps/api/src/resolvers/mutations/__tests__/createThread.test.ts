@@ -1,6 +1,6 @@
 import request from 'supertest';
 
-import { CREATE_THREAD } from './fixtures/queries';
+import { CREATE_THREAD } from '@@/fixtures';
 
 import { app } from '@/app';
 import { ERROR_MESSAGES } from '@/utils/constants';
@@ -72,9 +72,6 @@ describe('createThread workflow', () => {
 
 	it('creates a new thread', async () => {
 		const { user } = await seed();
-		if (!user) {
-			throw new Error('seeding op failed');
-		}
 
 		const cookie = await join();
 

@@ -6,12 +6,12 @@ import type { User } from '@uxc/types';
 
 import { Button } from '@/components/Buttons/Button';
 import { Input } from '@/components/Fields/Input';
-import { GET_USER, JOIN } from '@/services/api/queries';
+import { GET_CURRENT_USER, JOIN } from '@/services/api/queries';
 
 export function Register() {
 	const { data, loading } = useQuery<{
 		getCurrentUser: User;
-	}>(GET_USER);
+	}>(GET_CURRENT_USER);
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');

@@ -10,7 +10,7 @@ import {
 	CREATE_MESSAGE,
 	GET_MESSAGES,
 	GET_THREAD,
-	GET_USER
+	GET_CURRENT_USER
 } from '@/services/api/queries';
 import { connector, PropsFromRedux } from '@/state';
 
@@ -30,7 +30,7 @@ export function ChatArea({
 }: ChatAreaProps & PropsFromRedux) {
 	const { data: user, loading } = useQuery<{
 		getCurrentUser: User;
-	}>(GET_USER);
+	}>(GET_CURRENT_USER);
 
 	const { data: thread } = useQuery<{ getThread: PrivateThread }>(GET_THREAD, {
 		variables: {

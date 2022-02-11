@@ -5,7 +5,8 @@ export default async (): Promise<Config.InitialOptions> => {
 	return {
 		errorOnDeprecated: true,
 		moduleNameMapper: {
-			'^@/(.*)': '<rootDir>/src/$1'
+			'^@/(.*)': '<rootDir>/src/$1',
+			'^@@/(.*)': '<rootDir>/test/$1'
 		},
 		preset: 'ts-jest',
 		setupFilesAfterEnv: ['./test/setup.ts'],

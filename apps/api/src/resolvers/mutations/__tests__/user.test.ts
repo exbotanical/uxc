@@ -1,6 +1,6 @@
 import request from 'supertest';
 
-import { GET_USER_QUERY } from './fixtures/queries';
+import { GET_CURRENT_USER } from '@@/fixtures';
 
 import { app } from '@/app';
 import { ERROR_MESSAGES } from '@/utils/constants';
@@ -13,7 +13,7 @@ describe('user context workflow', () => {
 			.post(globalThis.BASE_PATH)
 			.set('Cookie', cookie)
 			.send({
-				query: GET_USER_QUERY
+				query: GET_CURRENT_USER
 			})
 			.expect(200);
 
@@ -27,7 +27,7 @@ describe('user context workflow', () => {
 		const { body } = await request(app)
 			.post(globalThis.BASE_PATH)
 			.send({
-				query: GET_USER_QUERY
+				query: GET_CURRENT_USER
 			})
 			.expect(200);
 

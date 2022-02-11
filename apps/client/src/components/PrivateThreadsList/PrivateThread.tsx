@@ -6,7 +6,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { UserAvatar } from '../User/UserAvatar';
 
 import { ThreadsContext } from '@/pages/ThreadsContext';
-import { GET_USER } from '@/services/api/queries';
+import { GET_CURRENT_USER } from '@/services/api/queries';
 import { onEnterKeyPressed } from '@/utils';
 
 interface PrivateThreadProps {
@@ -18,7 +18,7 @@ export function PrivateThread({ id }: PrivateThreadProps) {
 	const thread = getThreadById(id);
 	const { data: user } = useQuery<{
 		getCurrentUser: User;
-	}>(GET_USER);
+	}>(GET_CURRENT_USER);
 
 	const navigate = useNavigate();
 	const location = useLocation();

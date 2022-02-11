@@ -1,22 +1,20 @@
 import request from 'supertest';
 
-import { CREATE_MESSAGE, LOGIN_MUTATION } from '@@/fixtures';
-
-import { ObjectId } from 'mongodb';
+import { GET_THREAD, LOGIN_MUTATION } from '@@/fixtures';
 
 import { app } from '@/app';
 import { ERROR_MESSAGES } from '@/utils/constants';
 import { seed } from '@/resolvers/seed';
+import { ObjectId } from 'mongodb';
 
-describe('createMessage workflow', () => {
+describe('getThread workflow', () => {
 	it('fails with an Unauthorized error if the request does not include a valid session cookie', async () => {
 		const { body } = await request(app)
 			.post(BASE_PATH)
 			.send({
-				query: CREATE_MESSAGE,
+				query: GET_THREAD,
 				variables: {
-					threadId: 'any',
-					body: 'any'
+					threadId: 'id'
 				}
 			})
 			.expect(200);
@@ -25,46 +23,39 @@ describe('createMessage workflow', () => {
 		expect(body.errors[0].message).toEqual(
 			ERROR_MESSAGES.E_AUTHORIZATION_REQUIRED
 		);
-		expect(body.errors[0].path[0]).toBe('createMessage');
+		expect(body.errors[0].path[0]).toBe('getThread');
 	});
-
-	it.todo(
-		'it fails with a user session error if the request data passes the auth guard but the session does not exist on the req object (edge case)'
-	);
 
 	it('fails when not provided a threadId', async () => {
 		const cookie = await join();
-
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: CREATE_MESSAGE,
-				variables: {
-					body: '_test_message_'
-				}
-			})
-			.expect(200);
-
-		expect(body.errors).toHaveLength(1);
-		expect(body.errors[0].message).toEqual(ERROR_MESSAGES.E_NO_THREAD_ID);
-
-		expect(body.errors[0].path[0]).toBe('createMessage');
-	});
-
-	it('fails when provided a threadId that is not a valid ObjectID', async () => {
-		const cookie = await join();
-
 		const threadId = '123';
 
 		const { body } = await request(app)
 			.post(BASE_PATH)
 			.set('Cookie', cookie)
 			.send({
-				query: CREATE_MESSAGE,
+				query: GET_THREAD,
+				variables: {}
+			})
+			.expect(200);
+
+		expect(body.errors).toHaveLength(1);
+		expect(body.errors[0].message).toEqual(ERROR_MESSAGES.E_NO_THREAD_ID);
+
+		expect(body.errors[0].path[0]).toBe('getThread');
+	});
+
+	it('fails when provided a threadId that is not a valid ObjectID', async () => {
+		const cookie = await join();
+		const threadId = '123';
+
+		const { body } = await request(app)
+			.post(BASE_PATH)
+			.set('Cookie', cookie)
+			.send({
+				query: GET_THREAD,
 				variables: {
-					threadId,
-					body: '_test_message_'
+					threadId
 				}
 			})
 			.expect(200);
@@ -74,35 +65,11 @@ describe('createMessage workflow', () => {
 			`The provided threadId ${threadId} is not a valid ObjectID`
 		);
 
-		expect(body.errors[0].path[0]).toBe('createMessage');
+		expect(body.errors[0].path[0]).toBe('getThread');
 	});
 
-	it('fails when provided a threadId that does not exist in the database', async () => {
-		const cookie = await join();
-
-		const threadId = new ObjectId();
-
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: CREATE_MESSAGE,
-				variables: {
-					threadId,
-					body: '_test_message_'
-				}
-			})
-			.expect(200);
-
-		expect(body.errors).toHaveLength(1);
-		expect(body.errors[0].message).toEqual(
-			`The provided threadId ${threadId} does not represent a resource in the database`
-		);
-		expect(body.errors[0].path[0]).toBe('createMessage');
-	});
-
-	it('creates a new message', async () => {
-		const { threadIds, user } = await seed();
+	it('returns null if the thread was not found', async () => {
+		const { user } = await seed();
 
 		const response = await request(app)
 			.post(BASE_PATH)
@@ -117,24 +84,51 @@ describe('createMessage workflow', () => {
 			})
 			.expect(200);
 
-		const cookie = response.get('Set-Cookie');
-		const messageBody = '_test_message_';
-
 		const { body } = await request(app)
 			.post(BASE_PATH)
-			.set('Cookie', cookie)
 			.send({
-				query: CREATE_MESSAGE,
+				query: GET_THREAD,
 				variables: {
-					threadId: threadIds[0],
-					body: messageBody
+					threadId: new ObjectId()
+				}
+			})
+			.set('Cookie', response.get('Set-Cookie'))
+			.expect(200);
+
+		const { getThread } = body.data;
+
+		expect(getThread).toEqual(null);
+	});
+
+	it('returns the requested thread', async () => {
+		const { user, threadIds } = await seed();
+
+		const response = await request(app)
+			.post(BASE_PATH)
+			.send({
+				query: LOGIN_MUTATION,
+				variables: {
+					args: {
+						email: user.email,
+						password: user.password
+					}
 				}
 			})
 			.expect(200);
 
-		const { createMessage } = body.data;
+		const { body } = await request(app)
+			.post(BASE_PATH)
+			.send({
+				query: GET_THREAD,
+				variables: {
+					threadId: threadIds[0]
+				}
+			})
+			.set('Cookie', response.get('Set-Cookie'))
+			.expect(200);
 
-		expect(createMessage.body).toEqual(messageBody);
-		expect(createMessage.threadId).toEqual(threadIds[0].toString());
+		const { getThread } = body.data;
+
+		expect(getThread._id).toEqual(threadIds[0].toString());
 	});
 });

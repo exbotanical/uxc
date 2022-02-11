@@ -1,6 +1,6 @@
 import request from 'supertest';
 
-import { LOGIN_MUTATION } from './fixtures/queries';
+import { LOGIN_MUTATION } from '@@/fixtures';
 
 import { app } from '@/app';
 import { ERROR_MESSAGES } from '@/utils/constants';

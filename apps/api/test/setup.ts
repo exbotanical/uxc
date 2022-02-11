@@ -8,7 +8,7 @@ import request from 'supertest';
 import type { User } from '@uxc/types';
 
 import { app } from '@/app';
-import { JOIN_MUTATION } from '@/resolvers/mutations/__tests__/fixtures/queries';
+import { JOIN_MUTATION } from '@@/fixtures';
 import { initializeServer } from '@/server';
 import { pubsub, client } from '@/redis';
 

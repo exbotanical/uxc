@@ -26,9 +26,20 @@ export const JOIN_MUTATION = `
 	}
 `;
 
-export const GET_USER_QUERY = `
+export const GET_CURRENT_USER = `
 	query {
 		getCurrentUser {
+			_id
+			username
+			email
+			userImage
+		}
+	}
+`;
+
+export const GET_USER = `
+	query getUser($userId: ID) {
+		getUser(userId: $userId) {
 			_id
 			username
 			email
@@ -69,5 +80,21 @@ export const CREATE_THREAD = `
 export const DELETE_THREAD = `
 	mutation ($threadId: ID) {
 		deleteThread(threadId: $threadId)
+	}
+`;
+
+export const GET_THREAD = `
+	query getThread($threadId: ID) {
+		getThread(threadId: $threadId) {
+			_id
+			createdAt
+			updatedAt
+			users {
+				_id
+				username
+				email
+				userImage
+			}
+		}
 	}
 `;

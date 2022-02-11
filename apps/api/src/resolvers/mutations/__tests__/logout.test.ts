@@ -1,6 +1,6 @@
 import request from 'supertest';
 
-import { LOGOUT_MUTATION } from './fixtures/queries';
+import { LOGOUT_MUTATION } from '@@/fixtures';
 
 import { app } from '@/app';
 

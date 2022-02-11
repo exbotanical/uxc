@@ -1,10 +1,6 @@
 import request from 'supertest';
 
-import {
-	UPDATE_MESSAGE,
-	LOGIN_MUTATION,
-	CREATE_MESSAGE
-} from './fixtures/queries';
+import { UPDATE_MESSAGE, LOGIN_MUTATION, CREATE_MESSAGE } from '@@/fixtures';
 
 import { ObjectId } from 'mongodb';
 
@@ -103,9 +99,6 @@ describe('updateMessage workflow', () => {
 
 	it('updates a message', async () => {
 		const { threadIds, user } = await seed();
-		if (!user) {
-			throw new Error('seeding op failed');
-		}
 
 		const loginResponse = await request(app)
 			.post(BASE_PATH)

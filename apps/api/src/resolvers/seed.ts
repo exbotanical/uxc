@@ -60,10 +60,14 @@ function partition(grp: Taskable[]) {
 }
 
 export async function seedWrapper(_: any, __: any, { req }: Context) {
-	const { user, threadIds, fullUser } = await seed(req);
+	const { user, threadIds } = await seed(req);
+
+	if (user.password) {
+		delete user.password;
+	}
 
 	return {
-		user: fullUser,
+		user,
 		threadIds
 	};
 }
@@ -75,7 +79,7 @@ export async function seed(req?: Request) {
 	if (!userId) {
 		const { email, password, _id } = await createPuppetUser();
 		userId = _id;
-		testUser = { email, password, _id };
+		testUser = { password };
 
 		console.info('New puppet account created', {
 			email,
@@ -123,5 +127,5 @@ export async function seed(req?: Request) {
 
 	await Promise.all(messageTasks);
 
-	return { user: testUser, threadIds, fullUser: user };
+	return { user: Object.assign(user, testUser), threadIds };
 }

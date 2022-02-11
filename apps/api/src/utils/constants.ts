@@ -15,6 +15,7 @@ export const ERROR_MESSAGES = {
 	E_AUTHORIZATION_REQUIRED: 'Authorization is required',
 	E_NO_USER_SESSION: 'User session no longer extant',
 	E_NO_THREAD_ID: 'threadId is required but was not supplied',
+	E_NO_USER_ID: 'userId is required but was not supplied',
 	E_NO_RECEIVER_ID: 'receiverId is required but was not supplied',
 	E_NO_MESSAGE_ID: 'messageId is required but was not supplied',
 	E_EMAIL_IN_USE: 'Email or username in use'

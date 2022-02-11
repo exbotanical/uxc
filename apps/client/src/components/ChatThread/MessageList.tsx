@@ -6,7 +6,7 @@ import type { Message, ObjectID, User } from '@uxc/types';
 import { ChatMessage } from '@/components/ChatThread/ChatMessage';
 import {
 	GET_MESSAGES,
-	GET_USER,
+	GET_CURRENT_USER,
 	MESSAGES_SUBSCRIPTION
 } from '@/services/api/queries';
 
@@ -28,7 +28,7 @@ export function MessageList({ threadId }: MessageListProps) {
 
 	const { data: user } = useQuery<{
 		getCurrentUser: User;
-	}>(GET_USER);
+	}>(GET_CURRENT_USER);
 
 	const { loading, data, error, subscribeToMore } = useQuery<{
 		getMessages: (Omit<Message, 'sender'> & { sender: User })[];
@@ -56,10 +56,13 @@ export function MessageList({ threadId }: MessageListProps) {
 				// @ts-expect-error
 				const newMessage = subscriptionData.data.onMessage[0];
 
-				const ret = { ...prev, getMessages: [
+				const ret = {
+					...prev,
+					getMessages: [
 						...prev.getMessages,
 						{ ...newMessage, sender: user?.getCurrentUser }
-					]};
+					]
+				};
 
 				return ret;
 			}

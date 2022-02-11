@@ -4,8 +4,7 @@ import { Navigate } from 'react-router-dom';
 
 import type { User } from '@uxc/types';
 
-import { GET_USER } from '@/services/api/queries';
-
+import { GET_CURRENT_USER } from '@/services/api/queries';
 
 export function withProtectedRoute<P extends {}>(
 	Component: React.ComponentType<P & { user: User }>
@@ -13,7 +12,7 @@ export function withProtectedRoute<P extends {}>(
 	return function (props: P) {
 		const { loading, data, error } = useQuery<{
 			getCurrentUser: User;
-		}>(GET_USER);
+		}>(GET_CURRENT_USER);
 
 		if (loading) {
 			return <>Loading...</>;

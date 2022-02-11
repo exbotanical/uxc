@@ -6,7 +6,7 @@ import type { User } from '@uxc/types';
 
 import { Button } from '@/components/Buttons/Button';
 import { Input } from '@/components/Fields/Input';
-import { GET_USER, LOGIN } from '@/services/api/queries';
+import { GET_CURRENT_USER, LOGIN } from '@/services/api/queries';
 
 export function Login() {
 	const [email, setEmail] = useState('');
@@ -14,7 +14,7 @@ export function Login() {
 	const navigate = useNavigate();
 	const { data, loading } = useQuery<{
 		getCurrentUser: User;
-	}>(GET_USER);
+	}>(GET_CURRENT_USER);
 	const [login] = useMutation(LOGIN);
 
 	if (loading) {
