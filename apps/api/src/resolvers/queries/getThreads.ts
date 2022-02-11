@@ -1,6 +1,7 @@
-import { PrivateThread } from '@/db';
-import type { ObjectID, PrivateThread as PrivateThreadType } from '@uxc/types';
 import type { Resolver } from '../types';
+import type { ObjectID, PrivateThread as PrivateThreadType } from '@uxc/types';
+
+import { PrivateThread } from '@/db';
 
 /**
  * @todo paginate

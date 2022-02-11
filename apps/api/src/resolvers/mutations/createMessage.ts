@@ -1,16 +1,19 @@
+import { AuthenticationError, UserInputError } from 'apollo-server-core';
+import { isValidObjectId } from 'mongoose';
+
+import type { Resolver } from '../types';
+import type { Message as MessageType, ObjectID } from '@uxc/types';
+
 import { Message, PrivateThread } from '@/db';
 import { pubsub } from '@/redis';
 import { ERROR_MESSAGES, EVENTS } from '@/utils/constants';
-import type { Message as MessageType, ObjectID } from '@uxc/types';
-import { AuthenticationError, UserInputError } from 'apollo-server-core';
-import { isValidObjectId } from 'mongoose';
-import type { Resolver } from '../types';
+
 
 export const createMessage: Resolver<
 	MessageType,
 	{ threadId: ObjectID; body: string }
 > = async (_, { threadId, body }, { req }) => {
-	const userId = req?.session?.meta?.id;
+	const userId = req.session.meta?.id;
 	if (!userId) {
 		throw new AuthenticationError(ERROR_MESSAGES.E_NO_USER_SESSION);
 	}

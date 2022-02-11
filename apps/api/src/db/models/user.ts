@@ -41,7 +41,7 @@ const UserSchema = new Schema<UserWithPassword>(
 		toJSON: {
 			// mongoose types are terrible here
 			transform(_, ret: ReturnDocument) {
-				// @ts-ignore
+				// @ts-expect-error
 				delete ret.password;
 				delete ret.__v;
 			}

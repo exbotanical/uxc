@@ -1,6 +1,6 @@
+import { GET_CURRENT_USER } from '@@/fixtures';
 import request from 'supertest';
 
-import { GET_CURRENT_USER } from '@@/fixtures';
 
 import { app } from '@/app';
 import { ERROR_MESSAGES } from '@/utils/constants';

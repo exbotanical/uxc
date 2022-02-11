@@ -8,13 +8,6 @@ import { seedWrapper } from '../resolvers/seed';
 import type { Resolvers } from '@uxc/types/generated';
 import type { GraphQLScalarType } from 'graphql';
 
-import {
-	getMessages,
-	getThreads,
-	getThread,
-	getCurrentUser,
-	getUser
-} from '@/resolvers/queries';
 
 import {
 	joinResolver as join,
@@ -22,9 +15,16 @@ import {
 	logoutResolver as logout
 } from '@/resolvers/mutations';
 import { createMessage } from '@/resolvers/mutations/createMessage';
-import { updateMessage } from '@/resolvers/mutations/updateMessage';
 import { createThread } from '@/resolvers/mutations/createThread';
 import { deleteThread } from '@/resolvers/mutations/deleteThread';
+import { updateMessage } from '@/resolvers/mutations/updateMessage';
+import {
+	getMessages,
+	getThreads,
+	getThread,
+	getCurrentUser,
+	getUser
+} from '@/resolvers/queries';
 import { onMessage } from '@/resolvers/subscriptions/onMessage';
 
 export const resolvers: Resolvers = {

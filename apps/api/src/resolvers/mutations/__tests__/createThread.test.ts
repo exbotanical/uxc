@@ -1,10 +1,10 @@
+import { CREATE_THREAD } from '@@/fixtures';
 import request from 'supertest';
 
-import { CREATE_THREAD } from '@@/fixtures';
 
 import { app } from '@/app';
-import { ERROR_MESSAGES } from '@/utils/constants';
 import { seed } from '@/resolvers/seed';
+import { ERROR_MESSAGES } from '@/utils/constants';
 
 describe('createThread workflow', () => {
 	it('fails with an Unauthorized error if the request does not include a valid session cookie', async () => {

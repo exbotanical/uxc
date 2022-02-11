@@ -1,6 +1,7 @@
-import { Message } from '@/db';
-import type { Message as MessageType, ObjectID } from '@uxc/types';
 import type { Resolver } from '../types';
+import type { Message as MessageType, ObjectID } from '@uxc/types';
+
+import { Message } from '@/db';
 
 /**
  * @todo paginate

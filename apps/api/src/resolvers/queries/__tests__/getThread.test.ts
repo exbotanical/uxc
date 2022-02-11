@@ -1,11 +1,11 @@
+import { GET_THREAD, LOGIN_MUTATION } from '@@/fixtures';
+import { ObjectId } from 'mongodb';
 import request from 'supertest';
 
-import { GET_THREAD, LOGIN_MUTATION } from '@@/fixtures';
 
 import { app } from '@/app';
-import { ERROR_MESSAGES } from '@/utils/constants';
 import { seed } from '@/resolvers/seed';
-import { ObjectId } from 'mongodb';
+import { ERROR_MESSAGES } from '@/utils/constants';
 
 describe('getThread workflow', () => {
 	it('fails with an Unauthorized error if the request does not include a valid session cookie', async () => {
@@ -97,7 +97,7 @@ describe('getThread workflow', () => {
 
 		const { getThread } = body.data;
 
-		expect(getThread).toEqual(null);
+		expect(getThread).toBeNull();
 	});
 
 	it('returns the requested thread', async () => {

@@ -1,6 +1,6 @@
+import { JOIN_MUTATION } from '@@/fixtures';
 import request from 'supertest';
 
-import { JOIN_MUTATION } from '@@/fixtures';
 
 import { app } from '@/app';
 import { ERROR_MESSAGES } from '@/utils/constants';

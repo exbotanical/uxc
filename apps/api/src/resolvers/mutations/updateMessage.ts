@@ -1,9 +1,11 @@
-import { Message } from '@/db';
-import { ERROR_MESSAGES } from '@/utils/constants';
 import { UserInputError } from 'apollo-server-core';
 import { isValidObjectId } from 'mongoose';
-import type { ObjectID } from '@uxc/types';
+
 import type { Resolver } from '../types';
+import type { ObjectID } from '@uxc/types';
+
+import { Message } from '@/db';
+import { ERROR_MESSAGES } from '@/utils/constants';
 
 // @todo disallow users to edit any message; restrict to sender/receiver
 export const updateMessage: Resolver<

@@ -1,10 +1,11 @@
 import { faker } from '@faker-js/faker';
+import { Request } from 'express';
+import { Document } from 'mongoose';
 
 import type { Context, ObjectID } from '@uxc/types';
 
 import { User, Message, PrivateThread } from '@/db';
-import { Document } from 'mongoose';
-import { Request } from 'express';
+
 
 interface Taskable {
 	save: () => Promise<any>;
@@ -48,7 +49,7 @@ function createUser() {
 
 function partition(grp: Taskable[]) {
 	return grp.reduce(
-		// @ts-ignore
+		// @ts-expect-error
 		([tasks, ids], task) => {
 			return [
 				[...tasks, task.save()],

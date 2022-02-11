@@ -1,12 +1,11 @@
-import request from 'supertest';
 
 import { UPDATE_MESSAGE, LOGIN_MUTATION, CREATE_MESSAGE } from '@@/fixtures';
-
 import { ObjectId } from 'mongodb';
+import request from 'supertest';
 
 import { app } from '@/app';
-import { ERROR_MESSAGES } from '@/utils/constants';
 import { seed } from '@/resolvers/seed';
+import { ERROR_MESSAGES } from '@/utils/constants';
 
 describe('updateMessage workflow', () => {
 	it('fails with an Unauthorized error if the request does not include a valid session cookie', async () => {

@@ -1,6 +1,7 @@
+import { withFilter } from 'graphql-subscriptions';
+
 import { pubsub } from '@/redis';
 import { EVENTS } from '@/utils/constants';
-import { withFilter } from 'graphql-subscriptions';
 
 export const onMessage = {
 	subscribe: withFilter(

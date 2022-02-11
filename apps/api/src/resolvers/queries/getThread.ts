@@ -1,13 +1,15 @@
-import { PrivateThread } from '@/db';
-import { ERROR_MESSAGES } from '@/utils/constants';
+import { UserInputError } from 'apollo-server-core';
+import { isValidObjectId } from 'mongoose';
+
+import type { Resolver } from '../types';
 import type {
 	ObjectID,
 	User,
 	PrivateThread as PrivateThreadType
 } from '@uxc/types';
-import { UserInputError } from 'apollo-server-core';
-import { isValidObjectId } from 'mongoose';
-import type { Resolver } from '../types';
+
+import { PrivateThread } from '@/db';
+import { ERROR_MESSAGES } from '@/utils/constants';
 
 export const getThread: Resolver<
 	PrivateThreadType & { users: User[] },

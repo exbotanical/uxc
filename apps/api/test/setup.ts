@@ -1,6 +1,7 @@
 /* eslint-disable jest/require-top-level-describe */
 import '../src/dotenv';
 
+import { JOIN_MUTATION } from '@@/fixtures';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import request from 'supertest';
@@ -8,9 +9,8 @@ import request from 'supertest';
 import type { User } from '@uxc/types';
 
 import { app } from '@/app';
-import { JOIN_MUTATION } from '@@/fixtures';
-import { initializeServer } from '@/server';
 import { pubsub, client } from '@/redis';
+import { initializeServer } from '@/server';
 
 (async () => {
 	await initializeServer();
