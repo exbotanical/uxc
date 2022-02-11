@@ -1,4 +1,6 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import type { ChangeEvent, FormEvent} from 'react';
+
+import React, { useState } from 'react';
 
 import type { SendMessage } from '@/components/ChatThread/ChatArea';
 

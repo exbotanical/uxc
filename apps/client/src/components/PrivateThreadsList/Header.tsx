@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { connector, PropsFromRedux } from '@/state';
+import type { PropsFromRedux } from '@/state';
+
+import { connector } from '@/state';
 import { onEnterKeyPressed } from '@/utils';
 
 interface HeaderProps {

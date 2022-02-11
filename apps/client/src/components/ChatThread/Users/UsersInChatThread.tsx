@@ -3,9 +3,10 @@ import { useLocation } from 'react-router-dom';
 
 import { ChatThreadUser } from './ChatThreadUser';
 
+import type { PropsFromRedux } from '@/state';
 import type { User } from '@uxc/types';
 
-import { connector, PropsFromRedux } from '@/state';
+import { connector } from '@/state';
 
 export function UsersInChatThread({
 	showNotification,

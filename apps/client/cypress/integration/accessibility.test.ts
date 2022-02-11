@@ -9,9 +9,7 @@ const assertAll = () => {
 		 */
 		{ id: 'landmark-complementary-is-top-level', enabled: false }
 	];
-	async function a() {
-		return 1;
-	}
+
 	const axeFalsePositives: Rule[] = [
 		{ id: 'duplicate-id', enabled: false },
 		{ id: 'document-title', enabled: false },

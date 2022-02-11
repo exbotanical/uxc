@@ -1,7 +1,8 @@
-import { User } from '@uxc/types';
 import React from 'react';
 
 import { UserAvatar } from '../User/UserAvatar';
+
+import type { User } from '@uxc/types';
 
 export function UserStatus({ user }: { user: User }) {
 	return (

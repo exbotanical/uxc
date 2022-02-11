@@ -4,6 +4,7 @@ import React from 'react';
 import { ChatMessageInput } from './ChatMessageInput';
 import { MessageList } from './MessageList';
 
+import type { PropsFromRedux } from '@/state';
 import type { Message, ObjectID, PrivateThread, User } from '@uxc/types';
 
 import {
@@ -12,7 +13,7 @@ import {
 	GET_THREAD,
 	GET_CURRENT_USER
 } from '@/services/api/queries';
-import { connector, PropsFromRedux } from '@/state';
+import { connector } from '@/state';
 
 export interface SendMessage {
 	(message: string): void;

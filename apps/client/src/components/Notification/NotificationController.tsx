@@ -1,7 +1,9 @@
 import React from 'react';
 
+import type { PropsFromRedux} from '@/state';
+
 import { Notification } from '@/components/Notification/Notification';
-import { PropsFromRedux, connector } from '@/state';
+import { connector } from '@/state';
 
 type NotificationControllerProps = PropsFromRedux;
 

@@ -1,10 +1,12 @@
 import { store } from '..';
 
 import {
-	ShowNotification,
-	HideNotification,
 	NOTIFICATION_ACTION
 } from './types';
+
+import type {
+	ShowNotification,
+	HideNotification} from './types';
 
 const SHOW_NOTIFICATION: ShowNotification = ({
 	message,

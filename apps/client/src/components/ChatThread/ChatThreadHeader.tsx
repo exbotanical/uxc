@@ -1,11 +1,12 @@
 import React from 'react';
 
+import type { PropsFromRedux } from '@/state';
 import type { User } from '@uxc/types';
 
 import { StatusIndicator } from '@/components/Badges/StatusIndicator';
 import { Input } from '@/components/Fields/Input';
 import { EditIcon } from '@/components/Icons/EditIcon';
-import { connector, PropsFromRedux } from '@/state';
+import { connector } from '@/state';
 import { onEnterKeyPressed } from '@/utils';
 
 interface ChatThreadHeaderProps {

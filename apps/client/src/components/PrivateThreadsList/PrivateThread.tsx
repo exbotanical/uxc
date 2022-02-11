@@ -1,9 +1,10 @@
 import { useQuery } from '@apollo/client';
-import { ObjectID, User } from '@uxc/types';
 import React, { useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { UserAvatar } from '../User/UserAvatar';
+
+import type { ObjectID, User } from '@uxc/types';
 
 import { ThreadsContext } from '@/pages/ThreadsContext';
 import { GET_CURRENT_USER } from '@/services/api/queries';

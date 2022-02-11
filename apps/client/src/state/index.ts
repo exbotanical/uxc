@@ -1,10 +1,12 @@
-import { connect, ConnectedProps } from 'react-redux';
+import { connect } from 'react-redux';
 import { combineReducers, createStore } from 'redux';
 
 import { showNotification, hideNotification } from './notification/actions';
 import { reducer as notification } from './notification/reducer';
 import { showUpsertThreadModal, hideUpsertThreadModal } from './thread/actions';
 import { reducer as channel } from './thread/reducer';
+
+import type { ConnectedProps } from 'react-redux';
 
 export type RootState = ReturnType<typeof store.getState>;
 

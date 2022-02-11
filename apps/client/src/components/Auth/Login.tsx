@@ -1,5 +1,7 @@
+import type { ChangeEvent, FormEvent} from 'react';
+
 import { useMutation, useQuery } from '@apollo/client';
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Navigate, Link } from 'react-router-dom';
 
 import type { User } from '@uxc/types';

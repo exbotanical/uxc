@@ -1,6 +1,5 @@
-import type { KeyboardEvent } from 'react';
+import type { KeyboardEvent , ChangeEvent, FormEvent } from 'react';
 
-import { ChangeEvent, FormEvent } from 'react';
 
 export const handleSubmit = (fn?: () => void) => (event: FormEvent) => {
 	event.preventDefault();
