@@ -26,7 +26,7 @@ export function PrivateThread({ id }: PrivateThreadProps) {
 	const paths = location.pathname.split('/');
 	const isActiveItem = paths[paths.length - 1] == id;
 	const activeClass = `${
-		isActiveItem ? 'bg-transparent-alt text-tertiary' : 'text-primary-100'
+		isActiveItem ? 'bg-red text-tertiary' : 'text-primary-100'
 	}`;
 
 	const them = thread?.users.find(

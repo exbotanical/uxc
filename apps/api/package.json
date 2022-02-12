@@ -6,7 +6,7 @@
   "author": "Matthew Zito <matthewtzito@gmail.com> (goldmund)",
   "main": "src/index.ts",
   "scripts": {
-    "dev": "NODE_ENV=test NODE_PORT=5000 ts-node-dev --log-error ./src/index.ts",
+    "dev": "NODE_PORT=5000 ts-node-dev --log-error ./src/index.ts",
     "lint": "eslint --ext .ts,.js,.tsx,.jsx,.json . --fix",
     "test": "jest",
     "test:dev": "jest src/resolvers/mutations/__tests__/createMessage.test.ts --watchAll --no-cache"

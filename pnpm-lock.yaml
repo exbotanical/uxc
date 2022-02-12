@@ -195,6 +195,9 @@ importers:
       subscriptions-transport-ws: ^0.11.0
       tailwind-scrollbar: 1.3.1
       tailwindcss: 3.0.12
+      tailwindcss-autofill: ^0.1.0
+      tailwindcss-shadow-fill: ^0.1.0
+      tailwindcss-text-fill: ^0.1.2
       ts-jest: ^27.1.3
       typescript: 4.4.2
       uuid: 8.3.2
@@ -219,6 +222,9 @@ importers:
       redux: 4.1.1
       resonant: 1.2.0
       subscriptions-transport-ws: 0.11.0_graphql@16.3.0
+      tailwindcss-autofill: 0.1.0_tailwindcss@3.0.12
+      tailwindcss-shadow-fill: 0.1.0_tailwindcss@3.0.12
+      tailwindcss-text-fill: 0.1.2_tailwindcss@3.0.12
       uuid: 8.3.2
     devDependencies:
       '@graphql-codegen/cli': 2.4.0_graphql@16.3.0+typescript@4.4.2
@@ -6264,6 +6270,10 @@ packages:
     resolution: {integrity: sha512-WIWGi2L3DyTUvUrwRKgGi9TwxQMUEqPOPQBVi71R96jZXJdFskXEmf54BoZaS1kknGODoIGASGEzBUYdyMCBJg==}
     dev: true
 
+  /flatten-tailwindcss-theme/0.1.1:
+    resolution: {integrity: sha512-H4VV6pXPVX+NZMy4Ddky+Ae3y8hRrDmYn1piauHx3nPWa/4YS6ufL2G4crxqisGawHGztSTJ5TjZkmiyTA035Q==}
+    dev: false
+
   /follow-redirects/1.14.7_debug@4.3.3:
     resolution: {integrity: sha512-+hbxoLbFMbRKDwohX8GkTataGqO6Jb7jGwpAlwgy2bIz25XtRm7KEzJM76R1WiNT5SwZkX4Y75SwBolkpmE7iQ==}
     engines: {node: '>=4.0'}
@@ -11667,6 +11677,32 @@ packages:
       - postcss
       - ts-node
     dev: true
+
+  /tailwindcss-autofill/0.1.0_tailwindcss@3.0.12:
+    resolution: {integrity: sha512-U7P+smNko8729EIe/FOXJvcoZt6LAzexevBuZ8pkrdoazAoabUGFdE/xOaGTb9P7rzkNp4OGH0WeE8Y8UvnDtw==}
+    peerDependencies:
+      tailwindcss: ^2.0.2
+    dependencies:
+      tailwindcss: 3.0.12_96f83969316717847b3edf58a3f353f3
+    dev: false
+
+  /tailwindcss-shadow-fill/0.1.0_tailwindcss@3.0.12:
+    resolution: {integrity: sha512-td+BBkMQuHFdsUKXRGogk8YfS3ptCK84zZFuDrlhNgWls6UIGUI7w+GaMTKleL1PthTZJqf0L2xmQOUxuEEM0A==}
+    peerDependencies:
+      tailwindcss: ^2.0.2
+    dependencies:
+      flatten-tailwindcss-theme: 0.1.1
+      tailwindcss: 3.0.12_96f83969316717847b3edf58a3f353f3
+    dev: false
+
+  /tailwindcss-text-fill/0.1.2_tailwindcss@3.0.12:
+    resolution: {integrity: sha512-zhff4E8tjWVriuiFBRtnw1n6R9HfaEGVTixUbiF8tnlzzbFTPLY+1a5LRWp6cE0T46GUVoXIQIa5rw1zc7NOqg==}
+    peerDependencies:
+      tailwindcss: ^2.0.2
+    dependencies:
+      flatten-tailwindcss-theme: 0.1.1
+      tailwindcss: 3.0.12_96f83969316717847b3edf58a3f353f3
+    dev: false
 
   /tailwindcss/3.0.12_96f83969316717847b3edf58a3f353f3:
     resolution: {integrity: sha512-VqhF86z2c34sJyS5ZS8Q2nYuN0KzqZw1GGsuQQO9kJ3mY1oG7Fsag0vICkxUVXk6P+1sUkTkjMjKWCjEF0hNHw==}

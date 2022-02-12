@@ -1,4 +1,4 @@
-import type { ChangeEvent, FormEvent} from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 
 import React, { useState } from 'react';
 
@@ -40,7 +40,6 @@ export function ChatMessageInput({ sendMessage, name }: ChatMessageInputProps) {
 							maxLength={512}
 							onChange={handleChange}
 							placeholder={`Send a message to ${name}`}
-							transparent
 							value={message}
 						/>
 

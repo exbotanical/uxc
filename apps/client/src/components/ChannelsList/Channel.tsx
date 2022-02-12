@@ -13,7 +13,7 @@ const randomIdx = randomIntFromInterval(0, mockImgs.length - 1);
 
 export function Channel() {
 	return (
-		<li className="rounded-xl m-1 p-0.5 flex items-center justify-center cursor-pointer hover:bg-transparent-alt transition ease-in-out transform hover:scale-105 duration-300">
+		<li className="rounded-xl m-1 p-0.5 flex items-center justify-center cursor-pointer transition ease-in-out transform hover:scale-105 duration-300">
 			<div className="h-[65px]">
 				<img
 					alt="@todo"

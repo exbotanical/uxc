@@ -34,10 +34,17 @@
   ::-webkit-resizer {
     background: theme('colors.primary.700');
   }
+
+	input:focus-within ~ label,
+	input:not(:placeholder-shown) ~ label {
+		@apply transform scale-75 -translate-y-6;
+	}
+
+	input:focus-within ~ label {
+		@apply text-blue-500;
+	}
 }
 
 @layer components {
-  .btn-hover {
-    @apply hover:bg-transparent-alt rounded-full transition ease-in-out transform hover:scale-125 duration-300;
-  }
+
 }

@@ -1,7 +1,7 @@
 import connectRedis from 'connect-redis';
 import Redis from 'ioredis';
 
-import { SessionMiddleware } from '../middleware';
+import { SessionMiddleware } from '@/middleware';
 
 import { options } from '.';
 
