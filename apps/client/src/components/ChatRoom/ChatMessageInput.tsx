@@ -2,7 +2,7 @@ import type { ChangeEvent, FormEvent } from 'react';
 
 import React, { useState } from 'react';
 
-import type { SendMessage } from '@/components/ChatThread/ChatArea';
+import type { SendMessage } from '@/components/ChatRoom';
 
 import { Input } from '@/components/Fields/Input';
 import { SmileyIcon } from '@/components/Icons/SmileyIcon';

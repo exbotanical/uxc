@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { SearchModal } from '../Search/Search';
+import { SearchModal } from '@/components/Modal/SearchModal';
 
 export function SearchButton() {
 	const [isOpen, setIsOpen] = useState(false);

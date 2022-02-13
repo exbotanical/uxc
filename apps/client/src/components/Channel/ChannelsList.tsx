@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Channel } from '@/components/ChannelsList/Channel';
+import { Channel } from '@/components/Channel/Channel';
 
 /** @todo rerenders when changing chat */
 export function ChannelsList({ className = '' }: { className?: string }) {

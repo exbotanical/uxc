@@ -7,9 +7,9 @@ import { useNavigate, Link, Navigate } from 'react-router-dom';
 import type { User } from '@uxc/types';
 
 import { Button } from '@/components/Buttons/Button';
-import { Input } from '@/components/Fields/Input';
 import { GET_CURRENT_USER, JOIN } from '@/services/api/queries';
 import bg from '../../../src/assets/splash.png';
+import { AdaptiveInput } from '../Fields/AdaptiveInput';
 
 export function Register() {
 	const { data, loading } = useQuery<{
@@ -41,7 +41,6 @@ export function Register() {
 	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 
-		console.log({ email, password, username });
 		await join({
 			variables: {
 				args: {
@@ -90,74 +89,44 @@ export function Register() {
 					className="flex flex-col rounded-md shadow-sm"
 					onSubmit={handleSubmit}
 				>
-					<div className="mt-1 relative focus-within:border-blue-500">
-						<Input
-							autoComplete="username"
-							id="username"
-							name="username"
-							onChange={handleChange}
-							placeholder=" "
-							required
-							type="text"
-							value={username}
-							className="block"
-						/>
-						<label
-							htmlFor="username"
-							style={{
-								transformOrigin: '-15% -75%'
-							}}
-							className="absolute top-0 duration-300 text-primary-200 text-opacity-80 text-xl p-4"
-						>
-							Username
-						</label>
-					</div>
+					<AdaptiveInput
+						autoComplete="username"
+						id="username"
+						name="username"
+						onChange={handleChange}
+						placeholder=" "
+						required
+						type="text"
+						value={username}
+						className="mt-1"
+						label="Username"
+					/>
 
-					<div className="mt-8 relative focus-within:border-blue-500">
-						<Input
-							autoComplete="email"
-							id="email-address"
-							name="email"
-							onChange={handleChange}
-							placeholder=" "
-							required
-							type="email"
-							value={email}
-							className="block"
-						/>
-						<label
-							htmlFor="email-address"
-							style={{
-								transformOrigin: '-15% -75%'
-							}}
-							className="absolute top-0 duration-300 text-primary-200 text-opacity-80 text-xl p-4"
-						>
-							Email address
-						</label>
-					</div>
+					<AdaptiveInput
+						autoComplete="email"
+						id="email-address"
+						name="email"
+						onChange={handleChange}
+						placeholder=" "
+						required
+						type="email"
+						value={email}
+						className="mt-8"
+						label="Email address"
+					/>
 
-					<div className="mt-8 relative focus-within:border-blue-500">
-						<Input
-							autoComplete="current-password"
-							id="password"
-							name="password"
-							onChange={handleChange}
-							placeholder=" "
-							required
-							type="password"
-							value={password}
-							className="block"
-						/>
-						<label
-							htmlFor="password"
-							style={{
-								transformOrigin: '-15% -75%'
-							}}
-							className="absolute top-0 duration-300 text-primary-200 text-opacity-80 text-xl p-4"
-						>
-							Password
-						</label>
-					</div>
+					<AdaptiveInput
+						autoComplete="current-password"
+						id="password"
+						name="password"
+						onChange={handleChange}
+						placeholder=" "
+						required
+						type="password"
+						value={password}
+						className="mt-8"
+						label="Password"
+					/>
 
 					<div className="self-center">
 						<Button type="submit" width="wide" className="mt-16">

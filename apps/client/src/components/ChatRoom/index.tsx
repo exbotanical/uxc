@@ -19,16 +19,16 @@ export interface SendMessage {
 	(message: string): void;
 }
 
-interface ChatAreaProps {
+interface ChatRoomProps {
 	className: string;
 	threadId: ObjectID;
 }
 
-export function ChatArea({
+export function ChatRoom({
 	className,
 	threadId,
 	showNotification
-}: ChatAreaProps & PropsFromRedux) {
+}: ChatRoomProps & PropsFromRedux) {
 	const { data: user, loading } = useQuery<{
 		getCurrentUser: User;
 	}>(GET_CURRENT_USER);
@@ -97,6 +97,6 @@ export function ChatArea({
 	);
 }
 
-ChatArea.displayName = 'ChatArea';
+ChatRoom.displayName = 'ChatRoom';
 
-export const ConnectedChatArea = connector(ChatArea);
+export const ConnectedChatRoom = connector(ChatRoom);

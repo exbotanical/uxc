@@ -5,16 +5,16 @@ import type { PropsFromRedux } from '@/state';
 import { connector } from '@/state';
 import { onEnterKeyPressed } from '@/utils';
 
-interface HeaderProps {
+interface DelimiterProps {
 	title: string;
 	className?: string;
 }
 
-function Header({
+function Delimiter({
 	title,
 	className = '',
 	showUpsertThreadModal
-}: HeaderProps & PropsFromRedux) {
+}: DelimiterProps & PropsFromRedux) {
 	const handleClick = () => {
 		showUpsertThreadModal({ type: 'create', data: null });
 	};
@@ -48,6 +48,6 @@ function Header({
 	);
 }
 
-Header.displayName = 'Header';
+Delimiter.displayName = 'Delimiter';
 
-export const ConnectedHeader = connector(Header);
+export const ConnectedDelimiter = connector(Delimiter);

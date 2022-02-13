@@ -7,9 +7,9 @@ import { useNavigate, Navigate, Link } from 'react-router-dom';
 import type { User } from '@uxc/types';
 
 import { Button } from '@/components/Buttons/Button';
-import { Input } from '@/components/Fields/Input';
 import { GET_CURRENT_USER, LOGIN } from '@/services/api/queries';
 import bg from '../../../src/assets/splash.png';
+import { AdaptiveInput } from '../Fields/AdaptiveInput';
 
 export function Login() {
 	const [email, setEmail] = useState('');
@@ -67,51 +67,31 @@ export function Login() {
 					className="flex flex-col rounded-md shadow-sm"
 					onSubmit={handleSubmit}
 				>
-					<div className="mt-1 relative focus-within:border-blue-500">
-						<Input
-							autoComplete="email"
-							id="email-address"
-							name="email"
-							onChange={handleChange}
-							placeholder=" "
-							required
-							type="email"
-							value={email}
-							className="block"
-						/>
-						<label
-							htmlFor="email-address"
-							style={{
-								transformOrigin: '-15% -75%'
-							}}
-							className="absolute top-0 duration-300 text-primary-200 text-opacity-80 text-xl p-4"
-						>
-							Email address
-						</label>
-					</div>
+					<AdaptiveInput
+						autoComplete="email"
+						id="email-address"
+						name="email"
+						onChange={handleChange}
+						placeholder=" "
+						required
+						type="email"
+						value={email}
+						className="mt-1"
+						label="Email address"
+					/>
 
-					<div className="mt-8 relative focus-within:border-blue-500">
-						<Input
-							autoComplete="current-password"
-							id="password"
-							name="password"
-							onChange={handleChange}
-							placeholder=" "
-							required
-							type="password"
-							value={password}
-							className="block"
-						/>
-						<label
-							htmlFor="password"
-							style={{
-								transformOrigin: '-15% -75%'
-							}}
-							className="absolute top-0 duration-300 text-primary-200 text-opacity-80 text-xl p-4"
-						>
-							Password
-						</label>
-					</div>
+					<AdaptiveInput
+						autoComplete="current-password"
+						id="password"
+						name="password"
+						onChange={handleChange}
+						placeholder=" "
+						required
+						type="password"
+						value={password}
+						className="mt-8"
+						label="Password"
+					/>
 
 					<Link to="/todo" className="self-end">
 						<p className="m-1 font-medium text-primary-100 hover:underline">

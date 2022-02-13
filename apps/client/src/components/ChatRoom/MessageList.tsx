@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import type { Message, ObjectID, User } from '@uxc/types';
 
-import { ChatMessage } from '@/components/ChatThread/ChatMessage';
+import { ChatMessage } from '@/components/ChatRoom/ChatMessage';
 import {
 	GET_MESSAGES,
 	GET_CURRENT_USER,

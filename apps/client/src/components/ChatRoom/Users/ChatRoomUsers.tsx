@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { ChatThreadUser } from './ChatThreadUser';
+import { ChatRoomUser } from './ChatRoomUser';
 
 import type { PropsFromRedux } from '@/state';
 import type { User } from '@uxc/types';
@@ -43,10 +43,10 @@ export function UsersInChatThread({
 			</h6>
 
 			<div className="flex flex-col mt-3 overflow-y-auto scrollbar-thin scrollbar-thumb-primary-700 overflow-x-hidden">
-				{/* <ChatThreadUser {...user} key={user.id} />
+				{/* <ChatRoomUser {...user} key={user.id} />
 
 				{users.map((u) => (
-					<ChatThreadUser key={u.id} {...u} />
+					<ChatRoomUser key={u.id} {...u} />
 				))} */}
 			</div>
 		</div>

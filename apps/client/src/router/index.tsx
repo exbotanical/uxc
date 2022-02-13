@@ -7,11 +7,9 @@ import type { RouteObject } from 'react-router-dom';
 
 import { Login } from '@/components/Auth/Login';
 import { Register } from '@/components/Auth/Register';
-import { ChatRoom } from '@/pages/ChatRoom';
-import { Dashboard } from '@/pages/Dashboard';
+import { MainLayout } from '@/components/Layout/MainLayout';
 
-const WrappedDashboard = withProtectedRoute(Dashboard);
-const WrappedChatRoom = withProtectedRoute(ChatRoom);
+const WrappedLayout = withProtectedRoute(MainLayout);
 
 /** @todo error boundaries */
 export function Routes(): RouteObject[] {
@@ -25,20 +23,17 @@ export function Routes(): RouteObject[] {
 			path: '/register'
 		},
 		{
-			element: <WrappedChatRoom />,
+			element: <WrappedLayout />,
 			path: 'thread',
 
 			children: [
 				{
-					element: <WrappedChatRoom />,
+					element: <WrappedLayout />,
 					path: ':threadId'
 				}
 			]
 		},
-		{
-			element: <WrappedDashboard />,
-			path: '/dashboard'
-		},
+
 		{
 			element: <Navigate to="/login" />,
 			path: '*'
