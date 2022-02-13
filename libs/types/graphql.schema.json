@@ -164,7 +164,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "LoginInput",
+        "name": "SigninInput",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -398,7 +398,7 @@
             "deprecationReason": null
           },
           {
-            "name": "login",
+            "name": "signin",
             "description": null,
             "args": [
               {
@@ -406,7 +406,7 @@
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "LoginInput",
+                  "name": "SigninInput",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -423,7 +423,7 @@
             "deprecationReason": null
           },
           {
-            "name": "logout",
+            "name": "signout",
             "description": null,
             "args": [],
             "type": {

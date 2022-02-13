@@ -1,5 +1,4 @@
-
-import { UPDATE_MESSAGE, LOGIN_MUTATION, CREATE_MESSAGE } from '@@/fixtures';
+import { UPDATE_MESSAGE, SIGNIN_MUTATION, CREATE_MESSAGE } from '@@/fixtures';
 import { ObjectId } from 'mongodb';
 import request from 'supertest';
 
@@ -99,10 +98,10 @@ describe('updateMessage workflow', () => {
 	it('updates a message', async () => {
 		const { threadIds, user } = await seed();
 
-		const loginResponse = await request(app)
+		const signinResponse = await request(app)
 			.post(BASE_PATH)
 			.send({
-				query: LOGIN_MUTATION,
+				query: SIGNIN_MUTATION,
 				variables: {
 					args: {
 						email: user.email,
@@ -112,7 +111,7 @@ describe('updateMessage workflow', () => {
 			})
 			.expect(200);
 
-		const cookie = loginResponse.get('Set-Cookie');
+		const cookie = signinResponse.get('Set-Cookie');
 		const threadId = threadIds[0];
 		const body = 'body1';
 		const newBody = 'body2';

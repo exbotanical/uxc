@@ -1,5 +1,4 @@
-
-import { CREATE_MESSAGE, LOGIN_MUTATION } from '@@/fixtures';
+import { CREATE_MESSAGE, SIGNIN_MUTATION } from '@@/fixtures';
 import { ObjectId } from 'mongodb';
 import request from 'supertest';
 
@@ -106,7 +105,7 @@ describe('createMessage workflow', () => {
 		const response = await request(app)
 			.post(BASE_PATH)
 			.send({
-				query: LOGIN_MUTATION,
+				query: SIGNIN_MUTATION,
 				variables: {
 					args: {
 						email: user.email,

@@ -1,7 +1,6 @@
-import { GET_THREAD, LOGIN_MUTATION } from '@@/fixtures';
+import { GET_THREAD, SIGNIN_MUTATION } from '@@/fixtures';
 import { ObjectId } from 'mongodb';
 import request from 'supertest';
-
 
 import { app } from '@/app';
 import { seed } from '@/resolvers/seed';
@@ -74,7 +73,7 @@ describe('getThread workflow', () => {
 		const response = await request(app)
 			.post(BASE_PATH)
 			.send({
-				query: LOGIN_MUTATION,
+				query: SIGNIN_MUTATION,
 				variables: {
 					args: {
 						email: user.email,
@@ -106,7 +105,7 @@ describe('getThread workflow', () => {
 		const response = await request(app)
 			.post(BASE_PATH)
 			.send({
-				query: LOGIN_MUTATION,
+				query: SIGNIN_MUTATION,
 				variables: {
 					args: {
 						email: user.email,

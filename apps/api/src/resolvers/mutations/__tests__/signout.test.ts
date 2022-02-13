@@ -1,10 +1,9 @@
-import { LOGOUT_MUTATION } from '@@/fixtures';
+import { SIGNOUT_MUTATION } from '@@/fixtures';
 import request from 'supertest';
-
 
 import { app } from '@/app';
 
-describe('logout workflow', () => {
+describe('signout workflow', () => {
 	it('clears the cookie after logging out', async () => {
 		const cookie = await join();
 
@@ -12,7 +11,7 @@ describe('logout workflow', () => {
 			.post(globalThis.BASE_PATH)
 			.set('Cookie', cookie)
 			.send({
-				query: LOGOUT_MUTATION
+				query: SIGNOUT_MUTATION
 			})
 			.expect(200);
 

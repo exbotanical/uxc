@@ -2,7 +2,7 @@ import { UserInputError } from 'apollo-server-core';
 
 import type {
 	InputMaybe,
-	LoginInput,
+	SigninInput,
 	MutationResolvers
 } from '@uxc/types/generated';
 
@@ -11,7 +11,7 @@ import { BadRequestError } from '@/middleware';
 import { compare, createSession } from '@/utils/auth';
 import { ERROR_MESSAGES } from '@/utils/constants';
 
-export const loginResolver: MutationResolvers['login'] = async (
+export const signinResolver: MutationResolvers['signin'] = async (
 	_,
 	{ args },
 	{ req }
@@ -34,7 +34,7 @@ export const loginResolver: MutationResolvers['login'] = async (
 	return user;
 };
 
-function validateInputs(args?: InputMaybe<LoginInput>) {
+function validateInputs(args?: InputMaybe<SigninInput>) {
 	if (!args) {
 		throw new UserInputError(ERROR_MESSAGES.E_NO_CREDENTIALS);
 	}

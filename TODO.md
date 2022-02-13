@@ -19,7 +19,7 @@
 
 ### Testing
 
-- [ ] login
+- [ ] signin
 - [ ] registration
 - [ ] chat simulation
 - [ ] error state (no/slow connection)
@@ -33,7 +33,7 @@
 - [ ] impl feed for popup messages
   - [ ] enable user to only allow popups from specific users
   (use id to filter feed subscription)
-- [ ] impl CTA / landing page (prior to login) w/ https://github.com/stephane-monnot/react-vertical-timeline
+- [ ] impl CTA / landing page (prior to signin) w/ https://github.com/stephane-monnot/react-vertical-timeline
 - [ ] replace express-session with raw redis store and cookie-parser
 - [ ] slash commands
 - [ ] discrete tsconfig for jest test files (avoid namespace pollution)

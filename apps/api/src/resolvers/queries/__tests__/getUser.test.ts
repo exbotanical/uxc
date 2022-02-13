@@ -1,6 +1,5 @@
-import { GET_USER, LOGIN_MUTATION } from '@@/fixtures';
+import { GET_USER, SIGNIN_MUTATION } from '@@/fixtures';
 import request from 'supertest';
-
 
 import { app } from '@/app';
 import { seed } from '@/resolvers/seed';

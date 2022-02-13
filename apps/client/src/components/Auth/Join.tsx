@@ -2,55 +2,77 @@ import type { ChangeEvent, FormEvent } from 'react';
 
 import { useMutation, useQuery } from '@apollo/client';
 import React, { useState } from 'react';
-import { useNavigate, Navigate, Link } from 'react-router-dom';
+import { useNavigate, Link, Navigate } from 'react-router-dom';
 
 import type { User } from '@uxc/types';
 
 import { Button } from '@/components/Buttons/Button';
-import { GET_CURRENT_USER, LOGIN } from '@/services/api/queries';
+import { GET_CURRENT_USER, JOIN } from '@/services/api/queries';
 import bg from '../../../src/assets/splash.png';
 import { AdaptiveInput } from '../Fields/AdaptiveInput';
 
-export function Login() {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-	const navigate = useNavigate();
+export function Join() {
 	const { data, loading } = useQuery<{
 		getCurrentUser: User;
 	}>(GET_CURRENT_USER);
-	const [login] = useMutation(LOGIN);
+
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [username, setUsername] = useState('');
+
+	const [join] = useMutation(JOIN);
+	const navigate = useNavigate();
 
 	if (loading) {
 		return <>Loading...</>;
 	}
 
 	if (data) {
+		console.log({ data });
 		return <Navigate to="/thread" />;
+	}
+
+	function resetState() {
+		setEmail('');
+		setPassword('');
+		setUsername('');
 	}
 
 	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 
-		await login({
+		await join({
 			variables: {
 				args: {
 					email,
-					password
+					password,
+					username
 				}
 			}
 		});
 
-		setEmail('');
-		setPassword('');
+		resetState();
 
 		navigate(`/thread`);
 	}
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-		const { value, name } = event.target;
-		const executor = name == 'email' ? setEmail : setPassword;
+		const { name, value } = event.target;
+		function executor(name: string) {
+			switch (name) {
+				case 'username':
+					setUsername(value);
+					break;
+				case 'password':
+					setPassword(value);
+					break;
+				case 'email':
+					setEmail(value);
+					break;
+			}
+		}
 
-		executor(value);
+		executor(name);
 	};
 
 	return (
@@ -68,6 +90,19 @@ export function Login() {
 					onSubmit={handleSubmit}
 				>
 					<AdaptiveInput
+						autoComplete="username"
+						id="username"
+						name="username"
+						onChange={handleChange}
+						placeholder=" "
+						required
+						type="text"
+						value={username}
+						className="mt-1"
+						label="Username"
+					/>
+
+					<AdaptiveInput
 						autoComplete="email"
 						id="email-address"
 						name="email"
@@ -76,7 +111,7 @@ export function Login() {
 						required
 						type="email"
 						value={email}
-						className="mt-1"
+						className="mt-8"
 						label="Email address"
 					/>
 
@@ -93,15 +128,9 @@ export function Login() {
 						label="Password"
 					/>
 
-					<Link to="/todo" className="self-end">
-						<p className="m-1 font-medium text-primary-100 hover:underline">
-							Forgot your password?
-						</p>
-					</Link>
-
 					<div className="self-center">
-						<Button type="submit" width="wide" className="mt-10">
-							Sign in
+						<Button type="submit" width="wide" className="mt-16">
+							Join
 						</Button>
 					</div>
 				</form>
@@ -111,9 +140,9 @@ export function Login() {
 				<div className="mt-2 flex">
 					<Link
 						className="text-primary-100 underline text-xl font-bold"
-						to="/register"
+						to="/signin"
 					>
-						<p>Don't have an account?&nbsp;Join now</p>
+						<p>Already have an account?&nbsp;Sign in</p>
 					</Link>
 				</div>
 			</div>
@@ -121,4 +150,4 @@ export function Login() {
 	);
 }
 
-Login.displayName = 'Login';
+Join.displayName = 'Join';

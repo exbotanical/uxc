@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import type { SendMessage } from '@/components/ChatRoom';
 
 import { Input } from '@/components/Fields/Input';
-import { SmileyIcon } from '@/components/Icons/SmileyIcon';
+import SvgIcon from '@/components/Icon';
 
 interface ChatMessageInputProps {
 	sendMessage: SendMessage;
@@ -45,7 +45,7 @@ export function ChatMessageInput({ sendMessage, name }: ChatMessageInputProps) {
 
 						<div className="right-12 cursor-pointer flex flex-row-reverse fill-current text-primary-100 mr-3">
 							<button className="btn-hover">
-								<SmileyIcon dimensions="22" />
+								<SvgIcon name="smiley" dimensions={22} />
 							</button>
 						</div>
 					</div>

@@ -30,7 +30,7 @@ type User {
 	userImage: String
 }
 
-input LoginInput {
+input SigninInput {
 	email: String
 	password: String
 }
@@ -66,7 +66,7 @@ type Mutation {
   updateMessage(messageId: ID, body: String): ID
 	createThread(receiverId: ID): PrivateThread
 	deleteThread(threadId: ID): ID
-  login(args: LoginInput): User
-	logout: ID
+  signin(args: SigninInput): User
+	signout: ID
   join(args: JoinInput): User
 }

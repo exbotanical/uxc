@@ -2,77 +2,55 @@ import type { ChangeEvent, FormEvent } from 'react';
 
 import { useMutation, useQuery } from '@apollo/client';
 import React, { useState } from 'react';
-import { useNavigate, Link, Navigate } from 'react-router-dom';
+import { useNavigate, Navigate, Link } from 'react-router-dom';
 
 import type { User } from '@uxc/types';
 
 import { Button } from '@/components/Buttons/Button';
-import { GET_CURRENT_USER, JOIN } from '@/services/api/queries';
+import { GET_CURRENT_USER, SIGNIN } from '@/services/api/queries';
 import bg from '../../../src/assets/splash.png';
 import { AdaptiveInput } from '../Fields/AdaptiveInput';
 
-export function Register() {
+export function Signin() {
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const navigate = useNavigate();
 	const { data, loading } = useQuery<{
 		getCurrentUser: User;
 	}>(GET_CURRENT_USER);
-
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-	const [username, setUsername] = useState('');
-
-	const [join] = useMutation(JOIN);
-	const navigate = useNavigate();
+	const [signin] = useMutation(SIGNIN);
 
 	if (loading) {
 		return <>Loading...</>;
 	}
 
 	if (data) {
-		console.log({ data });
 		return <Navigate to="/thread" />;
-	}
-
-	function resetState() {
-		setEmail('');
-		setPassword('');
-		setUsername('');
 	}
 
 	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 
-		await join({
+		await signin({
 			variables: {
 				args: {
 					email,
-					password,
-					username
+					password
 				}
 			}
 		});
 
-		resetState();
+		setEmail('');
+		setPassword('');
 
 		navigate(`/thread`);
 	}
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = event.target;
-		function executor(name: string) {
-			switch (name) {
-				case 'username':
-					setUsername(value);
-					break;
-				case 'password':
-					setPassword(value);
-					break;
-				case 'email':
-					setEmail(value);
-					break;
-			}
-		}
+		const { value, name } = event.target;
+		const executor = name == 'email' ? setEmail : setPassword;
 
-		executor(name);
+		executor(value);
 	};
 
 	return (
@@ -90,19 +68,6 @@ export function Register() {
 					onSubmit={handleSubmit}
 				>
 					<AdaptiveInput
-						autoComplete="username"
-						id="username"
-						name="username"
-						onChange={handleChange}
-						placeholder=" "
-						required
-						type="text"
-						value={username}
-						className="mt-1"
-						label="Username"
-					/>
-
-					<AdaptiveInput
 						autoComplete="email"
 						id="email-address"
 						name="email"
@@ -111,7 +76,7 @@ export function Register() {
 						required
 						type="email"
 						value={email}
-						className="mt-8"
+						className="mt-1"
 						label="Email address"
 					/>
 
@@ -128,9 +93,15 @@ export function Register() {
 						label="Password"
 					/>
 
+					<Link to="/todo" className="self-end">
+						<p className="m-1 font-medium text-primary-100 hover:underline">
+							Forgot your password?
+						</p>
+					</Link>
+
 					<div className="self-center">
-						<Button type="submit" width="wide" className="mt-16">
-							Join
+						<Button type="submit" width="wide" className="mt-10">
+							Sign in
 						</Button>
 					</div>
 				</form>
@@ -140,9 +111,9 @@ export function Register() {
 				<div className="mt-2 flex">
 					<Link
 						className="text-primary-100 underline text-xl font-bold"
-						to="/login"
+						to="/join"
 					>
-						<p>Already have an account?&nbsp;Sign in</p>
+						<p>Don't have an account?&nbsp;Join now</p>
 					</Link>
 				</div>
 			</div>
@@ -150,4 +121,4 @@ export function Register() {
 	);
 }
 
-Register.displayName = 'Register';
+Signin.displayName = 'Signin';

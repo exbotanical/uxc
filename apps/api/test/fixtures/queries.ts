@@ -1,6 +1,6 @@
-export const LOGIN_MUTATION = `
-	mutation($args: LoginInput) {
-		login(args: $args) {
+export const SIGNIN_MUTATION = `
+	mutation($args: SigninInput) {
+		signin(args: $args) {
 			_id
 			email
 			username
@@ -9,9 +9,9 @@ export const LOGIN_MUTATION = `
 	}
 `;
 
-export const LOGOUT_MUTATION = `
+export const SIGNOUT_MUTATION = `
 	mutation {
-		logout
+		signout
 	}
 `;
 

@@ -6,8 +6,8 @@ export * from './deleteThread';
 
 export * from './join';
 
-export * from './logout';
+export * from './signout';
 
-export * from './login';
+export * from './signin';
 
 export * from './updateMessage';

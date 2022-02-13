@@ -33,8 +33,8 @@ export default defineConfig({
 		react(),
 		SvgLoader({
 			// https://github.com/svg/svgo
-			iconDirs: [resolve(process.cwd(), 'src/components/Icons')],
-			symbolId: 'icon-[dir]-[name]'
+			iconDirs: [resolve(process.cwd(), 'src/assets/icons')],
+			symbolId: 'icon-[name]'
 		})
 	],
 	resolve: {

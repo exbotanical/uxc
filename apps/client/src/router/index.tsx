@@ -5,8 +5,8 @@ import { withProtectedRoute } from './ProtectedRoute';
 
 import type { RouteObject } from 'react-router-dom';
 
-import { Login } from '@/components/Auth/Login';
-import { Register } from '@/components/Auth/Register';
+import { Signin } from '@/components/Auth/Signin';
+import { Join } from '@/components/Auth/Join';
 import { MainLayout } from '@/components/Layout/MainLayout';
 
 const WrappedLayout = withProtectedRoute(MainLayout);
@@ -15,12 +15,12 @@ const WrappedLayout = withProtectedRoute(MainLayout);
 export function Routes(): RouteObject[] {
 	return [
 		{
-			element: <Login />,
-			path: '/login'
+			element: <Signin />,
+			path: '/signin'
 		},
 		{
-			element: <Register />,
-			path: '/register'
+			element: <Join />,
+			path: '/join'
 		},
 		{
 			element: <WrappedLayout />,
@@ -35,7 +35,7 @@ export function Routes(): RouteObject[] {
 		},
 
 		{
-			element: <Navigate to="/login" />,
+			element: <Navigate to="/signin" />,
 			path: '*'
 		}
 	];

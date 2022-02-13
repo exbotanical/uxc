@@ -1,18 +1,17 @@
-import { LOGIN_MUTATION } from '@@/fixtures';
+import { SIGNIN_MUTATION } from '@@/fixtures';
 import request from 'supertest';
-
 
 import { app } from '@/app';
 import { ERROR_MESSAGES } from '@/utils/constants';
 
-describe('login workflow', () => {
-	it('responds with a cookie when login is successful', async () => {
+describe('signin workflow', () => {
+	it('responds with a cookie when signin is successful', async () => {
 		await join();
 
 		const response = await request(app)
 			.post(globalThis.BASE_PATH)
 			.send({
-				query: LOGIN_MUTATION,
+				query: SIGNIN_MUTATION,
 				variables: {
 					args: {
 						email: user.email,
@@ -25,13 +24,13 @@ describe('login workflow', () => {
 		expect(response.get('Set-Cookie')).toBeDefined();
 	});
 
-	it('responds with the user when login is successful', async () => {
+	it('responds with the user when signin is successful', async () => {
 		await join();
 
 		const { body } = await request(app)
 			.post(globalThis.BASE_PATH)
 			.send({
-				query: LOGIN_MUTATION,
+				query: SIGNIN_MUTATION,
 				variables: {
 					args: {
 						email: user.email,
@@ -41,7 +40,7 @@ describe('login workflow', () => {
 			})
 			.expect(200);
 
-		expect(body.data.login).toMatchObject({
+		expect(body.data.signin).toMatchObject({
 			...user,
 			_id: expect.any(String)
 		});
@@ -53,7 +52,7 @@ describe('login workflow', () => {
 		const { body } = await request(app)
 			.post(BASE_PATH)
 			.send({
-				query: LOGIN_MUTATION,
+				query: SIGNIN_MUTATION,
 				variables: {
 					args: {
 						email: null,
@@ -72,7 +71,7 @@ describe('login workflow', () => {
 		const { body } = await request(app)
 			.post(BASE_PATH)
 			.send({
-				query: LOGIN_MUTATION,
+				query: SIGNIN_MUTATION,
 				variables: {
 					args: {
 						email: user.email,
@@ -91,7 +90,7 @@ describe('login workflow', () => {
 		const { body } = await request(app)
 			.post(BASE_PATH)
 			.send({
-				query: LOGIN_MUTATION,
+				query: SIGNIN_MUTATION,
 				variables: {
 					args: {
 						email: user.email,
@@ -112,7 +111,7 @@ describe('login workflow', () => {
 		const { body } = await request(app)
 			.post(BASE_PATH)
 			.send({
-				query: LOGIN_MUTATION,
+				query: SIGNIN_MUTATION,
 				variables: {
 					args: {
 						email: 'random@mail.com',

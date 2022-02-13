@@ -11,9 +11,9 @@ export const GET_CURRENT_USER = gql`
 	}
 `;
 
-export const LOGIN = gql`
-	mutation ($args: LoginInput) {
-		login(args: $args) {
+export const SIGNIN = gql`
+	mutation ($args: SigninInput) {
+		signin(args: $args) {
 			_id
 			email
 			username

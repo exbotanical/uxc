@@ -8,11 +8,10 @@ import { seedWrapper } from '../resolvers/seed';
 import type { Resolvers } from '@uxc/types/generated';
 import type { GraphQLScalarType } from 'graphql';
 
-
 import {
 	joinResolver as join,
-	loginResolver as login,
-	logoutResolver as logout
+	signinResolver as signin,
+	signoutResolver as signout
 } from '@/resolvers/mutations';
 import { createMessage } from '@/resolvers/mutations/createMessage';
 import { createThread } from '@/resolvers/mutations/createThread';
@@ -45,8 +44,8 @@ export const resolvers: Resolvers = {
 
 	Mutation: {
 		seed: authGuard(seedWrapper),
-		logout,
-		login,
+		signout,
+		signin,
 		join,
 		createMessage: authGuard(createMessage),
 		updateMessage: authGuard(updateMessage),

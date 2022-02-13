@@ -2,7 +2,7 @@ import type { MutationResolvers } from '@uxc/types/generated';
 
 import { invalidateSession } from '@/utils';
 
-export const logoutResolver: MutationResolvers['logout'] = async (
+export const signoutResolver: MutationResolvers['signout'] = async (
 	_,
 	__,
 	{ req }

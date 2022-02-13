@@ -1,6 +1,5 @@
-import { GET_CURRENT_USER, LOGIN_MUTATION } from '@@/fixtures';
+import { GET_CURRENT_USER, SIGNIN_MUTATION } from '@@/fixtures';
 import request from 'supertest';
-
 
 import { app } from '@/app';
 import { seed } from '@/resolvers/seed';
@@ -42,7 +41,7 @@ describe('getCurrentUser workflow', () => {
 		const response = await request(app)
 			.post(BASE_PATH)
 			.send({
-				query: LOGIN_MUTATION,
+				query: SIGNIN_MUTATION,
 				variables: {
 					args: {
 						email: user.email,
