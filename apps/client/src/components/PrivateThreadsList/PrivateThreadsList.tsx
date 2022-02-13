@@ -10,10 +10,10 @@ export function PrivateThreadsList({ className = '' }: { className?: string }) {
 	const { threads } = useContext(ThreadsContext);
 
 	return (
-		<aside className={`flex flex-col bg-primary-800 h-full ${className}`}>
+		<aside className={`flex flex-col h-full ${className}`}>
 			<SearchButton />
 
-			<Header className="bg-primary-800 sticky" title="Direct Messages" />
+			<Header className="bg-primary-1100  sticky" title="Direct Messages" />
 			<nav className="overflow-y-auto w-[22rem]">
 				<ul className="flex flex-1 flex-col">
 					{/* @todo del btn on hover */}
