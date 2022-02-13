@@ -6,7 +6,7 @@
 @layer base {
   * {
     /* Firefox */
-    scrollbar-color: theme('colors.primary.700') rgba(0, 0, 0, 0);
+    scrollbar-color: theme('colors.primary.1100') rgba(0, 0, 0, 0);
     scrollbar-width: thin;
   }
 
@@ -14,7 +14,7 @@
   html {
     height: 100vh;
     box-sizing: border-box;
-    background-color: theme('colors.primary.900');
+    background-color: theme('colors.primary.1200');
   }
 
   ::-webkit-scrollbar {
@@ -27,12 +27,12 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: theme('colors.primary.700');
+    background-color: theme('colors.primary.1200');
     border-radius: 5px;
   }
 
   ::-webkit-resizer {
-    background: theme('colors.primary.700');
+    background: theme('colors.primary.1200');
   }
 
 	input:focus-within ~ label,

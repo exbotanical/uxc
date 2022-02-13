@@ -20,12 +20,10 @@ export interface SendMessage {
 }
 
 interface ChatRoomProps {
-	className: string;
 	threadId: ObjectID;
 }
 
 export function ChatRoom({
-	className,
 	threadId,
 	showNotification
 }: ChatRoomProps & PropsFromRedux) {
@@ -82,15 +80,10 @@ export function ChatRoom({
 	};
 
 	return (
-		<div
-			className={`${className} flex flex-col bg-primary-800 rounded-sm h-screen`}
-		>
-			{/* <Header user={user} /> */}
-			<div className="flex flex-1 overflow-auto">
-				<MessageList threadId={threadId} />
-			</div>
+		<div className={`flex grow flex-col bg-primary-1000`}>
+			<MessageList threadId={threadId} />
 
-			<footer className="flex flex-col p-2">
+			<footer className="flex flex-auto flex-col p-2">
 				<ChatMessageInput name={them.username} sendMessage={sendMessage} />
 			</footer>
 		</div>

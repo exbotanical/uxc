@@ -7,7 +7,6 @@
   "scripts": {
     "dev": "./scripts/dev.bash",
     "format": "prettier --write \"src/**/*.{ts,tsx,md,css,scss}\"",
-    "pnpm-context": "scripts/pnpm-context.mjs",
     "preview": "vite preview",
     "lint": "pnpm -r --parallel --filter {apps} run lint",
     "lint:css": "stylelint \"src/**/*.{css,scss,ts,tsx}\" --fix"

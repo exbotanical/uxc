@@ -100,7 +100,7 @@ export function MessageList({ threadId }: MessageListProps) {
 		}) || [];
 
 	return (
-		<div className="overflow-y-auto flex-auto">
+		<div className=" overflow-y-auto h-full">
 			{messages.map((message) => (
 				<ChatMessage key={message._id} {...message} />
 			))}
