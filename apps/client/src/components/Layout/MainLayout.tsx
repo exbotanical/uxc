@@ -6,7 +6,6 @@ import { SidebarLayout } from './SidebarLayout';
 
 import { ChannelsList } from '@/components/Channel/ChannelsList';
 import { NotificationController } from '@/components/Notification/NotificationController';
-import { ConnectedCreatePrivateThreadModal as Modal } from '@/components/PrivateThread/CreatePrivateThread';
 import { useViewportSize } from '@/hooks/useViewportSize';
 import { ThreadsProvider } from '@/state/context/ThreadsContext';
 
@@ -26,7 +25,7 @@ export function MainLayout() {
 				<ContentLayout />
 
 				<NotificationController />
-				<Modal />
+				{/* <Modal /> */}
 			</div>
 		</ThreadsProvider>
 	);

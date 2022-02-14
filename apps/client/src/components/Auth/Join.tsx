@@ -70,6 +70,8 @@ export function Join() {
 				case 'email':
 					setEmail(value);
 					break;
+				default:
+					break;
 			}
 		}
 

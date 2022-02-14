@@ -16,8 +16,8 @@ export function ChatMessageInput({ sendMessage, name }: ChatMessageInputProps) {
 
 	const chatOptions = [
 		{
-			iconName: 'smiley',
-			handleClick: console.log
+			handleClick: console.log,
+			iconName: 'smiley'
 		}
 	];
 

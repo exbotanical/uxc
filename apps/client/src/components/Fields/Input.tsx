@@ -32,6 +32,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 								className="btn-hover cursor-pointer"
 								key={idx}
 								onClick={handleClick}
+								type="button"
 							>
 								<SvgIcon dimensions={22} name={iconName} />
 							</button>

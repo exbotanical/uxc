@@ -22,8 +22,8 @@ export function useOnline() {
 	};
 
 	useEffect(() => {
-		window.addEventListener('offline', setOffline),
-			window.addEventListener('online', setOnline);
+		window.addEventListener('offline', setOffline);
+		window.addEventListener('online', setOnline);
 
 		return function cleanup() {
 			window.removeEventListener('offline', setOffline);

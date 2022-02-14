@@ -7,16 +7,19 @@ import type { Message, User } from '@uxc/types';
 
 import { toReadable } from '@/utils';
 
-export function ChatMessage(
-	message: Omit<Message, 'sender'> & {
-		sender: User;
-		isSender: boolean;
-		skipMeta: boolean;
-	}
-) {
+export function ChatMessage({
+	body,
+	createdAt,
+	isSender,
+	sender,
+	skipMeta
+}: Omit<Message, 'sender'> & {
+	isSender: boolean;
+	sender: User;
+	skipMeta: boolean;
+}) {
 	const [hover, setHover] = useState(false);
 
-	const { username } = message.sender;
 	const colors = [
 		'#ff2366',
 		'#fd51d9',
@@ -53,40 +56,38 @@ export function ChatMessage(
 			}}
 		>
 			{hover ? (
-				<div
-					className="right-0 -top-2 absolute bg-primary-1000 text-primary-100 p-2 w-20 rounded-sm shadow-lg flex justify-evenly border-t border-blue-500"
-				>
-					<button>
+				<div className="right-0 -top-2 absolute bg-primary-1000 text-primary-100 p-2 w-20 rounded-sm shadow-lg flex justify-evenly border-t border-blue-500">
+					<button type="button">
 						<SvgIcon dimensions={20} name="smiley" />
 					</button>
-					<button>
+					<button type="button">
 						<SvgIcon dimensions={20} name="edit" />
 					</button>
 				</div>
 			) : null}
 
-			{message.skipMeta ? (
+			{skipMeta ? (
 				<div className="flex ml-[5.3rem] pb-1 mx-3 ">
-					<p className="text-primary-100">{message.body}</p>
+					<p className="text-primary-100">{body}</p>
 				</div>
 			) : (
 				<div className="flex py-2 pb-1 mx-3">
 					<div className="flex justify-center mx-3">
-						<UserAvatar size="lg" u={message.sender} withIndicator={false} />
+						<UserAvatar size="lg" u={sender} withIndicator={false} />
 					</div>
 
 					<div className="flex flex-col items-start">
 						<div className="flex items-center">
 							<p className="text-primary-100 font-bold mr-2">
-								{message.sender.username}
+								{sender.username}
 							</p>
 
 							<p className="text-primary-200 text-sm">
-								{toReadable(message.createdAt)}
+								{toReadable(createdAt)}
 							</p>
 						</div>
 
-						<p className="text-primary-100">{message.body}</p>
+						<p className="text-primary-100">{body}</p>
 					</div>
 				</div>
 			)}

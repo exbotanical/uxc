@@ -4,6 +4,7 @@
     "prettier"
   ],
   "rules": {
-    "@typescript-eslint/no-unnecessary-type-assertion": "off"
+    "@typescript-eslint/no-unnecessary-type-assertion": "off",
+    "sort-keys": "off"
   }
 }

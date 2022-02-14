@@ -1,15 +1,13 @@
+import { ApolloProvider } from '@apollo/client';
+import { AnimatePresence } from 'framer-motion';
 import React from 'react';
 import ReactModal from 'react-modal';
 import { useRoutes } from 'react-router-dom';
 
-import './App.scss';
-import { AnimatePresence } from 'framer-motion';
-
 import { Routes } from '@/router';
-
-import { ApolloProvider } from '@apollo/client';
-
 import { client } from '@/services/api';
+import './App.scss';
+
 ReactModal.setAppElement('#root');
 
 export function App() {

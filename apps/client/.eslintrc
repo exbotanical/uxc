@@ -3,5 +3,8 @@
   "extends": [
     "@magister_zito/react",
     "prettier"
-  ]
+  ],
+  "rules": {
+    "sort-keys": "off"
+  }
 }

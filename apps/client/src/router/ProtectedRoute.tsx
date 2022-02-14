@@ -6,10 +6,10 @@ import type { User } from '@uxc/types';
 
 import { GET_CURRENT_USER } from '@/services/api/queries';
 
-export function withProtectedRoute<P extends {}>(
+export function withProtectedRoute<P extends Record<string, unknown>>(
 	Component: React.ComponentType<P & { user: User }>
 ) {
-	return function (props: P) {
+	function ProtectedRoute(props: P) {
 		const { loading, data, error } = useQuery<{
 			getCurrentUser: User;
 		}>(GET_CURRENT_USER);
@@ -23,7 +23,11 @@ export function withProtectedRoute<P extends {}>(
 		}
 
 		return <Component {...props} user={data.getCurrentUser} />;
-	};
+	}
+
+	ProtectedRoute.displayName = 'ProtectedRoute';
+
+	return ProtectedRoute;
 }
 
 withProtectedRoute.displayName = 'ProtectedRoute';

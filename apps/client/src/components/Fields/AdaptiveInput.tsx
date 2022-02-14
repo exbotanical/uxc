@@ -30,3 +30,5 @@ export const AdaptiveInput = forwardRef<HTMLInputElement, InputProps>(
 		);
 	}
 );
+
+AdaptiveInput.displayName = 'AdaptiveInput';

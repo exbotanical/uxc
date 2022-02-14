@@ -25,8 +25,8 @@ const store = createStore(
 
 const mapStateToProps = (state: RootState) => {
 	return {
-		threadModalState: state.channel,
-		notifications: state.notification
+		notifications: state.notification,
+		threadModalState: state.channel
 	};
 };
 

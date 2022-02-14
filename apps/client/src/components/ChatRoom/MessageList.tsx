@@ -41,9 +41,7 @@ export function MessageList({ threadId }: MessageListProps) {
 	useEffect(() => {
 		subscribeToMore({
 			document: MESSAGES_SUBSCRIPTION,
-			variables: { threadId },
 			updateQuery: (prev, { subscriptionData }) => {
-				console.log({ prev, subscriptionData });
 				if (Object.keys(prev || {}).length === 0) {
 					return { getMessages: [] };
 				}
@@ -65,7 +63,8 @@ export function MessageList({ threadId }: MessageListProps) {
 				};
 
 				return ret;
-			}
+			},
+			variables: { threadId }
 		});
 	}, []);
 
@@ -114,8 +113,8 @@ export function MessageList({ threadId }: MessageListProps) {
 
 			return {
 				...message,
-				skipMeta,
-				isSender
+				isSender,
+				skipMeta
 			};
 		}) || [];
 

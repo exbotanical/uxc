@@ -9,11 +9,11 @@ export function reducer(
 	action: ModalAction
 ): State {
 	if (isHideAction(action)) {
-		return { ...state, showing: false, data: null };
+		return { ...state, data: null, showing: false };
 	}
 
 	if (isShowAction(action)) {
-		return { ...state, showing: true, ...action.payload };
+		return { ...state, ...action.payload, showing: true };
 	}
 
 	return state;

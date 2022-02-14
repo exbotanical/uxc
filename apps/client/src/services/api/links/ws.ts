@@ -11,10 +11,10 @@ const wsUri = `${wsHostname}/${import.meta.env.VITE_API_SUBSCRIPTIONS_PATH}`;
 export const wsLink = new WebSocketLink({
 	uri: wsUri,
 	options: {
-		reconnect: true,
 		connectionParams: {
-			token: localStorage.getItem('token'),
-			refreshToken: localStorage.getItem('refreshToken')
-		}
+			refreshToken: localStorage.getItem('refreshToken'),
+			token: localStorage.getItem('token')
+		},
+		reconnect: true
 	}
 });

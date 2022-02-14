@@ -1,7 +1,5 @@
 import React from 'react';
 
-import SvgIcon from '../Icon';
-
 import { UserAvatar } from './UserAvatar';
 
 import type { User } from '@uxc/types';

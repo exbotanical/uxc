@@ -43,18 +43,13 @@ export function Notification({
 		<div
 			className={`flex rounded-8 p-3 relative w-full items-center justify-center text-button transition-transform duration-300 ${color}`}
 		>
-			{onClose ? (
-				<div
-					className="flex absolute cursor-pointer h-4 w-12 right-2 bottom-5 pt-1"
-					onClick={onClose}
-					onKeyPress={onEnterKeyPressed(onClose)}
-					role="button"
-					tabIndex={0}
-				>
-					<CloseButton style={{ transform: 'rotate(45deg)' }} />
-				</div>
-			) : null}
-
+			<CloseButton
+				onClick={onClose}
+				onKeyPress={onEnterKeyPressed(onClose)}
+				role="button"
+				style={{ transform: 'rotate(45deg)' }}
+				tabIndex={0}
+			/>
 			<div className="flex space-x-4 items-center">
 				<div className="bold">{message}</div>
 

@@ -31,11 +31,16 @@ export function PrivateThread({ id }: PrivateThreadProps) {
 
 	const them = thread?.users.find(
 		({ _id }) => _id !== user?.getCurrentUser._id
-	)!;
+	);
 
 	const handleClick = () => {
 		navigate(`/${id}`);
 	};
+
+	/** @todo handler erroneous state */
+	if (!them) {
+		return null;
+	}
 
 	return (
 		<li

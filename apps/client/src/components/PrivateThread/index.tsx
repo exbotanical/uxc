@@ -36,7 +36,9 @@ export function PrivateThreadsList() {
 			<ul>
 				<li
 					className={`w-full flex items-center p-4 rounded-sm hover:bg-primary-1000 ${activeClass}`}
-					onClick={(e) => { handleClick(''); }}
+					onClick={() => {
+						handleClick('');
+					}}
 					onKeyPress={(e) => {
 						onEnterKeyPressed(e, '/');
 					}}

@@ -1,4 +1,3 @@
-/* eslint-disable sort-keys */
 const { colors } = require('./config/colors');
 
 module.exports = {

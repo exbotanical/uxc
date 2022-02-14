@@ -10,7 +10,10 @@ export function ContentLayout() {
 		<div className="flex flex-col items-center w-full bg-primary-1000">
 			<header
 				className="flex justify-start gap-2 items-center border-b-2 border-primary-1200 w-full p-4"
-				style={{ minHeight: '75px', height: '75px' }}
+				style={{
+					height: '75px',
+					minHeight: '75px'
+				}}
 			>
 				<SvgIcon dimensions={21} name="people" />
 				<p className="text-primary-100 text-xl font-bold">Friends</p>

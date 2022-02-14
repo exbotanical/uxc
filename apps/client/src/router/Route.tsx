@@ -3,19 +3,19 @@ import { generatePath } from 'react-router';
 import { NavLink } from 'react-router-dom';
 
 export interface Route<T> {
-	path: string;
 	params: Params<T>;
+	path: string;
 	legacy?: boolean;
 }
 
 type Params<T> = T | null;
 
 export function from<A, B>(baseRoute: Route<A>, appendRoute: Route<B>) {
-	const { path, params } = appendRoute;
+	const { params, path } = appendRoute;
 
 	const result: Route<A & B> = {
-		path: `${baseRoute.path}${path}`,
-		params: (params as A & B) ?? null
+		params: params as A & B,
+		path: `${baseRoute.path}${path}`
 	};
 
 	return result;
@@ -23,9 +23,9 @@ export function from<A, B>(baseRoute: Route<A>, appendRoute: Route<B>) {
 
 export interface LinkProps<T> {
 	children?: React.ReactNode;
+	innerRef?: React.Ref<HTMLAnchorElement>;
 	to: Route<T>;
 	params?: T;
-	innerRef?: React.Ref<HTMLAnchorElement>;
 }
 
 export function build<T>(route: Route<T>, params: T) {

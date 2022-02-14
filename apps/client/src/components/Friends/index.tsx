@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 
 import { Input } from '@/components/Fields/Input';
 
-
 export function Friends() {
 	const [searchText, setSearchText] = useState('');
 
@@ -29,7 +28,7 @@ export function Friends() {
 	];
 
 	/** @todo robust impl */
-	function naiveSearch(friend: string, idx: number) {
+	function naiveSearch(friend: string) {
 		const cleanSearchText = searchText.trim().toLowerCase();
 		const cleanFriendText = friend.toLowerCase();
 

@@ -5,11 +5,12 @@ import type { PrivateThread, ObjectID, User } from '@uxc/types';
 
 import { GET_THREADS, GET_CURRENT_USER } from '@/services/api/queries';
 
-interface ThreadsContext {
+interface ThreadsContextType {
 	threads: PrivateThread[];
 	getThreadById: (threadId: ObjectID) => PrivateThread | null;
 }
-export const ThreadsContext = createContext({} as ThreadsContext);
+
+export const ThreadsContext = createContext({} as ThreadsContextType);
 
 export function ThreadsProvider({ children }: { children: JSX.Element }) {
 	const { data: user } = useQuery<{
@@ -35,7 +36,10 @@ export function ThreadsProvider({ children }: { children: JSX.Element }) {
 		[threads]
 	);
 
-	const value = { threads, getThreadById };
+	const value = {
+		getThreadById,
+		threads
+	};
 
 	return (
 		<ThreadsContext.Provider value={value}>{children}</ThreadsContext.Provider>

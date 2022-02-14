@@ -6,7 +6,7 @@ import { ChatMessageInput } from './ChatMessageInput';
 import { MessageList } from './MessageList';
 
 import type { PropsFromRedux } from '@/state';
-import type { Message, ObjectID, PrivateThread, User } from '@uxc/types';
+import type { Message, PrivateThread, User } from '@uxc/types';
 
 import {
 	CREATE_MESSAGE,
@@ -46,13 +46,13 @@ export function ChatRoom({ showNotification }: ChatRoomProps & PropsFromRedux) {
 
 			/** @todo deduplicate in subscription */
 			cache.writeQuery({
-				query: GET_MESSAGES,
 				data: {
 					getMessages: [
 						...(allMessages?.getMessages ?? []),
 						{ ...data?.createMessage, sender: user?.getCurrentUser }
 					]
-				}
+				},
+				query: GET_MESSAGES
 			});
 		}
 	});
@@ -74,8 +74,8 @@ export function ChatRoom({ showNotification }: ChatRoomProps & PropsFromRedux) {
 		/** @todo update cache instead of sending back via subscription */
 		await createMessage({
 			variables: {
-				threadId,
-				body: message
+				body: message,
+				threadId
 			}
 		});
 	};
