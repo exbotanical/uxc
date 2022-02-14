@@ -25,7 +25,7 @@ export function Signin() {
 	}
 
 	if (data) {
-		return <Navigate to="/thread" />;
+		return <Navigate to="/" />;
 	}
 
 	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -43,7 +43,7 @@ export function Signin() {
 		setEmail('');
 		setPassword('');
 
-		navigate(`/thread`);
+		navigate(`/`);
 	}
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {

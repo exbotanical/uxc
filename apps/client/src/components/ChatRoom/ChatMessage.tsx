@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { UserAvatar } from '../User/UserAvatar';
 
 import type { Message, User } from '@uxc/types';
 
 import { toReadable } from '@/utils';
+import SvgIcon from '../Icon';
 
 export function ChatMessage(
-	message: Omit<Message, 'sender'> & { sender: User; isSender: boolean }
+	message: Omit<Message, 'sender'> & {
+		sender: User;
+		isSender: boolean;
+		skipMeta: boolean;
+	}
 ) {
+	const [hover, setHover] = useState(false);
+
 	const { username } = message.sender;
 	const colors = [
 		'#ff2366',
@@ -34,25 +41,55 @@ export function ChatMessage(
 	}
 
 	return (
-		<div className="flex flex-col text-lg pb-1 mx-3">
-			<div className="flex py-2">
-				<div className="flex justify-center mx-3">
-					<UserAvatar size="lg" u={message.sender} />
+		<div
+			className={`flex flex-col text-lg ${
+				hover ? 'bg-primary-1100' : ''
+			} relative`}
+			onMouseEnter={() => {
+				setHover(true);
+			}}
+			onMouseLeave={() => {
+				setHover(false);
+			}}
+		>
+			{hover ? (
+				<div
+					className={`right-0 -top-2 absolute bg-primary-1000 text-primary-100 p-2 w-20 rounded-sm shadow-lg flex justify-evenly border-t border-blue-500`}
+				>
+					<button>
+						<SvgIcon name="smiley" dimensions={20} />
+					</button>
+					<button>
+						<SvgIcon name="edit" dimensions={20} />
+					</button>
 				</div>
+			) : null}
 
-				<div className="flex flex-col items-start">
-					<div className="flex items-center">
-						<p className="text-primary-100 font-bold mr-2">
-							{message.sender.username}
-						</p>
-
-						<p className="text-primary-200 text-sm">
-							{toReadable(message.createdAt)}
-						</p>
-					</div>
+			{message.skipMeta ? (
+				<div className="flex ml-[5.3rem] pb-1 mx-3 ">
 					<p className="text-primary-100">{message.body}</p>
 				</div>
-			</div>
+			) : (
+				<div className="flex py-2 pb-1 mx-3">
+					<div className="flex justify-center mx-3">
+						<UserAvatar size="lg" u={message.sender} withIndicator={false} />
+					</div>
+
+					<div className="flex flex-col items-start">
+						<div className="flex items-center">
+							<p className="text-primary-100 font-bold mr-2">
+								{message.sender.username}
+							</p>
+
+							<p className="text-primary-200 text-sm">
+								{toReadable(message.createdAt)}
+							</p>
+						</div>
+
+						<p className="text-primary-100">{message.body}</p>
+					</div>
+				</div>
+			)}
 		</div>
 	);
 }

@@ -7,15 +7,15 @@ import { StatusIndicator } from '@/components/Badges/StatusIndicator';
 export const sizeMap = {
 	lg: {
 		avatar: '60px',
-		status: 'top-5 left-2'
+		status: 'left-6 w-5 h-5'
 	},
 	md: {
 		avatar: '50px',
-		status: 'top-4'
+		status: 'left-5 w-5 h-5'
 	},
 	sm: {
 		avatar: '40px',
-		status: ''
+		status: 'left-4 w-4 h-4'
 	}
 };
 
@@ -23,9 +23,15 @@ interface UserCardProps {
 	size: keyof typeof sizeMap;
 	u: User;
 	className?: string;
+	withIndicator?: boolean;
 }
 
-export function UserAvatar({ u, size = 'md', className = '' }: UserCardProps) {
+export function UserAvatar({
+	u,
+	size = 'md',
+	className = '',
+	withIndicator = true
+}: UserCardProps) {
 	const { status, avatar } = sizeMap[size];
 
 	return (
@@ -45,10 +51,11 @@ export function UserAvatar({ u, size = 'md', className = '' }: UserCardProps) {
 				}}
 				src={u.userImage || '../../../src/assets/gravatar.png'}
 			/>
-
-			<div className={`absolute border-primary-800 ${status}`}>
-				<StatusIndicator placementClass="top-4 left-3" />
-			</div>
+			{withIndicator ? (
+				<div className={`absolute border-primary-800`}>
+					<StatusIndicator placementClass={status} />
+				</div>
+			) : null}
 		</div>
 	);
 }

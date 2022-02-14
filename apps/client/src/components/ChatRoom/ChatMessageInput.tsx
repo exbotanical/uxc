@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import type { SendMessage } from '@/components/ChatRoom';
 
 import { Input } from '@/components/Fields/Input';
-import SvgIcon from '@/components/Icon';
 
 interface ChatMessageInputProps {
 	sendMessage: SendMessage;
@@ -14,6 +13,13 @@ interface ChatMessageInputProps {
 
 export function ChatMessageInput({ sendMessage, name }: ChatMessageInputProps) {
 	const [message, setMessage] = useState('');
+
+	const chatOptions = [
+		{
+			iconName: 'smiley',
+			handleClick: console.log
+		}
+	];
 
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -30,27 +36,16 @@ export function ChatMessageInput({ sendMessage, name }: ChatMessageInputProps) {
 	};
 
 	return (
-		<form className="flex flex-col w-auto m-2" onSubmit={handleSubmit}>
-			<div className="flex items-stretch">
-				<div className="flex-1">
-					<div className="flex flex-1 lg:mr-0 items-center bg-primary-700 rounded-8">
-						<Input
-							autoComplete="off"
-							className="text-primary-100"
-							maxLength={512}
-							onChange={handleChange}
-							placeholder={`Send a message to ${name}`}
-							value={message}
-						/>
-
-						<div className="right-12 cursor-pointer flex flex-row-reverse fill-current text-primary-100 mr-3">
-							<button className="btn-hover">
-								<SvgIcon name="smiley" dimensions={22} />
-							</button>
-						</div>
-					</div>
-				</div>
-			</div>
+		<form className="flex flex-col w-auto" onSubmit={handleSubmit}>
+			<Input
+				autoComplete="off"
+				maxLength={512}
+				onChange={handleChange}
+				placeholder={`Send a message to ${name}`}
+				value={message}
+				label="Send message"
+				options={chatOptions}
+			/>
 		</form>
 	);
 }

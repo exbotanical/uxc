@@ -11,7 +11,7 @@ export function StatusIndicator({
 	sansBorder = false,
 	animate = false
 }: StatusIndicatorProps) {
-	const color = 'bg-green-400 w-3 h-3';
+	const color = 'bg-green-400';
 	const border = sansBorder ? '' : 'bottom-0 border-2 border-primary-800';
 
 	return (

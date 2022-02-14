@@ -53,7 +53,7 @@ export function Join() {
 
 		resetState();
 
-		navigate(`/thread`);
+		navigate(`/`);
 	}
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {

@@ -14,19 +14,16 @@ import {
 	GET_CURRENT_USER
 } from '@/services/api/queries';
 import { connector } from '@/state';
+import { useParams } from 'react-router-dom';
 
 export interface SendMessage {
 	(message: string): void;
 }
 
-interface ChatRoomProps {
-	threadId: ObjectID;
-}
+interface ChatRoomProps {}
 
-export function ChatRoom({
-	threadId,
-	showNotification
-}: ChatRoomProps & PropsFromRedux) {
+export function ChatRoom({ showNotification }: ChatRoomProps & PropsFromRedux) {
+	const { threadId } = useParams();
 	const { data: user, loading } = useQuery<{
 		getCurrentUser: User;
 	}>(GET_CURRENT_USER);
@@ -69,6 +66,10 @@ export function ChatRoom({
 		return null;
 	}
 
+	if (!threadId) {
+		return null;
+	}
+
 	const sendMessage: SendMessage = async (message) => {
 		/** @todo update cache instead of sending back via subscription */
 		await createMessage({
@@ -80,10 +81,10 @@ export function ChatRoom({
 	};
 
 	return (
-		<div className={`flex grow flex-col bg-primary-1000`}>
+		<div className={`flex flex-col h-full w-full bg-primary-1000`}>
 			<MessageList threadId={threadId} />
 
-			<footer className="flex flex-auto flex-col p-2">
+			<footer className="mt-auto p-2">
 				<ChatMessageInput name={them.username} sendMessage={sendMessage} />
 			</footer>
 		</div>

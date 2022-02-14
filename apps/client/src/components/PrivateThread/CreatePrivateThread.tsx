@@ -1,4 +1,4 @@
-import type { ChangeEvent, FormEvent} from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -16,14 +16,6 @@ function CreatePrivateThreadModal({
 	showNotification
 }: PropsFromRedux) {
 	const navigate = useNavigate();
-
-	// const [channelName, setChannelName] = useState(
-	// 	threadModalState.data?.name || ''
-	// );
-
-	// const [channelDesc, setChannelDesc] = useState(
-	// 	threadModalState.data?.desc || ''
-	// );
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		// const { value, name } = event.target;

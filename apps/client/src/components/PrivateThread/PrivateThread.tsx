@@ -26,7 +26,7 @@ export function PrivateThread({ id }: PrivateThreadProps) {
 	const paths = location.pathname.split('/');
 	const isActiveItem = paths[paths.length - 1] == id;
 	const activeClass = `${
-		isActiveItem ? 'bg-red text-tertiary' : 'text-primary-100'
+		isActiveItem ? 'bg-primary-1000 text-primary-200' : 'text-primary-100'
 	}`;
 
 	const them = thread?.users.find(
@@ -34,12 +34,12 @@ export function PrivateThread({ id }: PrivateThreadProps) {
 	)!;
 
 	const handleClick = () => {
-		navigate(`/thread/${id}`);
+		navigate(`/${id}`);
 	};
 
 	return (
 		<li
-			className={`${activeClass} w-full flex items-center p-2 rounded-sm text-primary-100`}
+			className={`${activeClass} w-full flex items-center p-2 rounded-sm hover:bg-primary-1000`}
 			onClick={handleClick}
 			onKeyPress={(e) => {
 				onEnterKeyPressed(handleClick)<HTMLLIElement>(e);

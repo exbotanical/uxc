@@ -1,14 +1,14 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
 
 import { ThreadsProvider } from '@/state/context/ThreadsContext';
 
 import { ChannelsList } from '@/components/Channel/ChannelsList';
 import { NotificationController } from '@/components/Notification/NotificationController';
 import { ConnectedCreatePrivateThreadModal as Modal } from '@/components/PrivateThread/CreatePrivateThread';
-import { PrivateThreadsList } from '@/components/PrivateThread';
 import { useViewportSize } from '@/hooks/useViewportSize';
-import { ContentContainer } from '@/components/Content';
+import { Outlet } from 'react-router-dom';
+import { SidebarLayout } from './SidebarLayout';
+import { ContentLayout } from './ContentLayout';
 
 export function MainLayout() {
 	const viewport = useViewportSize();
@@ -21,9 +21,9 @@ export function MainLayout() {
 			<div className="h-screen flex flex-1">
 				{isSmallViewport ? null : <ChannelsList className="bg-primary-1200" />}
 
-				{gtsm ? <PrivateThreadsList className="bg-primary-1100" /> : null}
+				{gtsm ? <SidebarLayout body={<Outlet />} /> : null}
 
-				<ContentContainer />
+				<ContentLayout />
 
 				<NotificationController />
 				<Modal />

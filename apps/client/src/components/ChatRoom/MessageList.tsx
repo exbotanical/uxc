@@ -84,18 +84,38 @@ export function MessageList({ threadId }: MessageListProps) {
 		return null;
 	}
 
+	/**
+	 * Tracks the last message sender
+	 */
+	let userId: string | null = null;
+
 	const messages =
 		data?.getMessages.map((message) => {
-			if (message.sender._id === user?.getCurrentUser._id) {
-				return {
-					...message,
-					isSender: true
-				};
+			/**
+			 * Is this message mine?
+			 */
+			let isSender = false;
+			/**
+			 * Skip metadata (e.g. username, avatar) in display?
+			 */
+			let skipMeta = false;
+
+			if (userId === message.sender._id) {
+				skipMeta = true;
 			}
+
+			if (message.sender._id === user?.getCurrentUser._id) {
+				isSender = true;
+			} else {
+				isSender = false;
+			}
+
+			userId = message.sender._id;
 
 			return {
 				...message,
-				isSender: false
+				skipMeta,
+				isSender
 			};
 		}) || [];
 
