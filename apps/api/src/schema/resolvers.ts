@@ -30,7 +30,6 @@ export const resolvers: Resolvers = {
 	Date: GraphQLDateTime as unknown as GraphQLScalarType,
 
 	Subscription: {
-		// @ts-expect-error
 		onMessage
 	},
 

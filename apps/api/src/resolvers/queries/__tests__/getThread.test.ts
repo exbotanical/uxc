@@ -19,7 +19,7 @@ describe('getThread workflow', () => {
 			.expect(200);
 
 		expect(body.errors).toHaveLength(1);
-		expect(body.errors[0].message).toEqual(
+		expect(body.errors[0].message).toStrictEqual(
 			ERROR_MESSAGES.E_AUTHORIZATION_REQUIRED
 		);
 		expect(body.errors[0].path[0]).toBe('getThread');
@@ -27,7 +27,6 @@ describe('getThread workflow', () => {
 
 	it('fails when not provided a threadId', async () => {
 		const cookie = await join();
-		const threadId = '123';
 
 		const { body } = await request(app)
 			.post(BASE_PATH)
@@ -39,7 +38,7 @@ describe('getThread workflow', () => {
 			.expect(200);
 
 		expect(body.errors).toHaveLength(1);
-		expect(body.errors[0].message).toEqual(ERROR_MESSAGES.E_NO_THREAD_ID);
+		expect(body.errors[0].message).toStrictEqual(ERROR_MESSAGES.E_NO_THREAD_ID);
 
 		expect(body.errors[0].path[0]).toBe('getThread');
 	});
@@ -60,7 +59,7 @@ describe('getThread workflow', () => {
 			.expect(200);
 
 		expect(body.errors).toHaveLength(1);
-		expect(body.errors[0].message).toEqual(
+		expect(body.errors[0].message).toStrictEqual(
 			`The provided threadId ${threadId} is not a valid ObjectID`
 		);
 
@@ -128,6 +127,6 @@ describe('getThread workflow', () => {
 
 		const { getThread } = body.data;
 
-		expect(getThread._id).toEqual(threadIds[0].toString());
+		expect(getThread._id).toStrictEqual(threadIds[0].toString());
 	});
 });

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
+import SvgIcon from '../Icon';
 import { UserAvatar } from '../User/UserAvatar';
 
 import type { Message, User } from '@uxc/types';
 
 import { toReadable } from '@/utils';
-import SvgIcon from '../Icon';
 
 export function ChatMessage(
 	message: Omit<Message, 'sender'> & {
@@ -54,13 +54,13 @@ export function ChatMessage(
 		>
 			{hover ? (
 				<div
-					className={`right-0 -top-2 absolute bg-primary-1000 text-primary-100 p-2 w-20 rounded-sm shadow-lg flex justify-evenly border-t border-blue-500`}
+					className="right-0 -top-2 absolute bg-primary-1000 text-primary-100 p-2 w-20 rounded-sm shadow-lg flex justify-evenly border-t border-blue-500"
 				>
 					<button>
-						<SvgIcon name="smiley" dimensions={20} />
+						<SvgIcon dimensions={20} name="smiley" />
 					</button>
 					<button>
-						<SvgIcon name="edit" dimensions={20} />
+						<SvgIcon dimensions={20} name="edit" />
 					</button>
 				</div>
 			) : null}

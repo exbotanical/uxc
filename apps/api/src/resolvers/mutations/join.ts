@@ -30,8 +30,8 @@ export const joinResolver: MutationResolvers['join'] = async (
 	const newUser = User.build({
 		email,
 		password,
-		username,
-		userImage: userImage ?? null
+		userImage: userImage ?? null,
+		username
 	});
 
 	await newUser.save();
@@ -84,5 +84,5 @@ function validateInputs(args?: InputMaybe<JoinInput>) {
 		throw new UserInputError(ERROR_MESSAGES.E_INVALID_PROGRAMMATIC_INPUTS);
 	}
 
-	return { email, password, username, userImage };
+	return { email, password, userImage, username };
 }

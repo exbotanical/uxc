@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client';
 import React from 'react';
+import { useParams } from 'react-router-dom';
 
 import { ChatMessageInput } from './ChatMessageInput';
 import { MessageList } from './MessageList';
@@ -14,7 +15,6 @@ import {
 	GET_CURRENT_USER
 } from '@/services/api/queries';
 import { connector } from '@/state';
-import { useParams } from 'react-router-dom';
 
 export interface SendMessage {
 	(message: string): void;
@@ -81,7 +81,7 @@ export function ChatRoom({ showNotification }: ChatRoomProps & PropsFromRedux) {
 	};
 
 	return (
-		<div className={`flex flex-col h-full w-full bg-primary-1000`}>
+		<div className="flex flex-col h-full w-full bg-primary-1000">
 			<MessageList threadId={threadId} />
 
 			<footer className="mt-auto p-2">

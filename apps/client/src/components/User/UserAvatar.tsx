@@ -52,7 +52,7 @@ export function UserAvatar({
 				src={u.userImage || '../../../src/assets/gravatar.png'}
 			/>
 			{withIndicator ? (
-				<div className={`absolute border-primary-800`}>
+				<div className="absolute border-primary-800">
 					<StatusIndicator placementClass={status} />
 				</div>
 			) : null}

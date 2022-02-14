@@ -1,4 +1,4 @@
-/* eslint-disable jest/require-top-level-describe */
+/* eslint-disable jest/require-top-level-describe,vars-on-top,no-var */
 import '../src/dotenv';
 
 import { JOIN_MUTATION } from '@@/fixtures';
@@ -11,10 +11,6 @@ import type { User } from '@uxc/types';
 import { app } from '@/app';
 import { pubsub, client } from '@/redis';
 import { initializeServer } from '@/server';
-
-(async () => {
-	await initializeServer();
-})();
 
 declare global {
 	var join: () => Promise<string[]>;
@@ -29,6 +25,8 @@ jest.setTimeout(20000);
 
 let mongo: MongoMemoryServer;
 beforeAll(async () => {
+	await initializeServer();
+
 	process.env.JWT_SIGNING_KEY = 'test';
 
 	mongo = await MongoMemoryServer.create();
@@ -60,8 +58,8 @@ globalThis.password = 'password';
 
 globalThis.user = {
 	email: 'test@test.com',
-	username: 'username',
-	userImage: 'url'
+	userImage: 'url',
+	username: 'username'
 };
 
 globalThis.join = async () => {

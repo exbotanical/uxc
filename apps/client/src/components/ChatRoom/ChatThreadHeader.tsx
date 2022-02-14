@@ -1,5 +1,7 @@
 import React from 'react';
 
+import SvgIcon from '../Icon';
+
 import type { PropsFromRedux } from '@/state';
 import type { User } from '@uxc/types';
 
@@ -7,7 +9,6 @@ import { StatusIndicator } from '@/components/Badges/StatusIndicator';
 import { Input } from '@/components/Fields/Input';
 import { connector } from '@/state';
 import { onEnterKeyPressed } from '@/utils';
-import SvgIcon from '../Icon';
 
 interface ChatThreadHeaderProps {
 	user: User;
@@ -30,7 +31,7 @@ function ChatThreadHeader({
 			style={{ minHeight: '50px', height: '50px' }}
 		>
 			<div className="flex justify-between items-center text-primary-100 font-bold">
-				<SvgIcon name="ampersat" dimensions={21} />
+				<SvgIcon dimensions={21} name="ampersat" />
 				whitney
 			</div>
 
@@ -43,7 +44,7 @@ function ChatThreadHeader({
 
 				<div className="ml-4 mt-1 text-primary-100">
 					<button className="btn-hover">
-						<SvgIcon name="info" dimensions={21} />
+						<SvgIcon dimensions={21} name="info" />
 					</button>
 				</div>
 			</div>

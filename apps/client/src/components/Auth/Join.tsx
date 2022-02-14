@@ -4,12 +4,13 @@ import { useMutation, useQuery } from '@apollo/client';
 import React, { useState } from 'react';
 import { useNavigate, Link, Navigate } from 'react-router-dom';
 
+import bg from '../../../src/assets/splash.png';
+import { AdaptiveInput } from '../Fields/AdaptiveInput';
+
 import type { User } from '@uxc/types';
 
 import { Button } from '@/components/Buttons/Button';
 import { GET_CURRENT_USER, JOIN } from '@/services/api/queries';
-import bg from '../../../src/assets/splash.png';
-import { AdaptiveInput } from '../Fields/AdaptiveInput';
 
 export function Join() {
 	const { data, loading } = useQuery<{
@@ -77,8 +78,8 @@ export function Join() {
 
 	return (
 		<div
-			style={{ backgroundImage: `url(${bg})` }}
 			className="min-h-screen flex flex-col justify-center items-center bg-primary-600 py-12 px-4 sm:px-6 lg:px-8 text-primary"
+			style={{ backgroundImage: `url(${bg})` }}
 		>
 			<div>
 				<h1 className="text-primary-100 text-7xl font-bold mb-4">uxc</h1>
@@ -91,45 +92,45 @@ export function Join() {
 				>
 					<AdaptiveInput
 						autoComplete="username"
+						className="mt-1"
 						id="username"
+						label="Username"
 						name="username"
 						onChange={handleChange}
 						placeholder=" "
 						required
 						type="text"
 						value={username}
-						className="mt-1"
-						label="Username"
 					/>
 
 					<AdaptiveInput
 						autoComplete="email"
+						className="mt-8"
 						id="email-address"
+						label="Email address"
 						name="email"
 						onChange={handleChange}
 						placeholder=" "
 						required
 						type="email"
 						value={email}
-						className="mt-8"
-						label="Email address"
 					/>
 
 					<AdaptiveInput
 						autoComplete="current-password"
+						className="mt-8"
 						id="password"
+						label="Password"
 						name="password"
 						onChange={handleChange}
 						placeholder=" "
 						required
 						type="password"
 						value={password}
-						className="mt-8"
-						label="Password"
 					/>
 
 					<div className="self-center">
-						<Button type="submit" width="wide" className="mt-16">
+						<Button className="mt-16" type="submit" width="wide">
 							Join
 						</Button>
 					</div>

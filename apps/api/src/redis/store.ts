@@ -1,9 +1,10 @@
 import connectRedis from 'connect-redis';
 import Redis from 'ioredis';
 
+import { options } from '.';
+
 import { SessionMiddleware } from '@/middleware';
 
-import { options } from '.';
 
 export const client = new Redis(options)
 	.on('error', console.error)

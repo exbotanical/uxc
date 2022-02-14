@@ -18,19 +18,19 @@ interface MessageModel extends Model<MessageType> {
 
 const MessageSchema = new Schema(
 	{
-		threadId: {
-			type: Schema.Types.ObjectId,
-			ref: 'PrivateThread',
-			required: true
+		body: {
+			required: true,
+			type: String
 		},
 		sender: {
-			type: Schema.Types.ObjectId,
 			ref: 'User',
-			required: true
+			required: true,
+			type: Schema.Types.ObjectId
 		},
-		body: {
-			type: String,
-			required: true
+		threadId: {
+			ref: 'PrivateThread',
+			required: true,
+			type: Schema.Types.ObjectId
 		}
 	},
 	{

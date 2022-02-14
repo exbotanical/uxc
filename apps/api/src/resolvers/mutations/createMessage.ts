@@ -8,7 +8,6 @@ import { Message, PrivateThread } from '@/db';
 import { pubsub } from '@/redis';
 import { ERROR_MESSAGES, EVENTS } from '@/utils/constants';
 
-
 export const createMessage: Resolver<
 	MessageType,
 	{ threadId: ObjectID; body: string }
@@ -38,8 +37,8 @@ export const createMessage: Resolver<
 
 	const message = await Message.create({
 		body,
-		threadId,
-		sender: userId
+		sender: userId,
+		threadId
 	});
 
 	pubsub.publish(EVENTS.MESSAGE_CREATED, {

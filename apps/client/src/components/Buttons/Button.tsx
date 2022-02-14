@@ -18,7 +18,7 @@ export type ButtonProps = DetailedHTMLProps<
 	loading?: boolean;
 	icon?: ReactNode;
 	transition?: boolean;
-	width?: 'wide' | 'regular';
+	width?: 'regular' | 'wide';
 };
 
 export function Button({

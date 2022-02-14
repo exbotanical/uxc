@@ -6,8 +6,8 @@ import { UserAvatar } from '../User/UserAvatar';
 
 import type { ObjectID, User } from '@uxc/types';
 
-import { ThreadsContext } from '@/state/context/ThreadsContext';
 import { GET_CURRENT_USER } from '@/services/api/queries';
+import { ThreadsContext } from '@/state/context/ThreadsContext';
 import { onEnterKeyPressed } from '@/utils';
 
 interface PrivateThreadProps {

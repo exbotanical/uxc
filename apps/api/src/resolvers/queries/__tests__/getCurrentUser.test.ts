@@ -15,7 +15,7 @@ describe('getCurrentUser workflow', () => {
 			.expect(200);
 
 		expect(body.errors).toHaveLength(1);
-		expect(body.errors[0].message).toEqual(
+		expect(body.errors[0].message).toStrictEqual(
 			ERROR_MESSAGES.E_AUTHORIZATION_REQUIRED
 		);
 		expect(body.errors[0].path[0]).toBe('getCurrentUser');
@@ -33,7 +33,7 @@ describe('getCurrentUser workflow', () => {
 			.set('Cookie', cookie)
 			.expect(200);
 
-		expect(firstUserResponse.data.getCurrentUser.username).toEqual(
+		expect(firstUserResponse.data.getCurrentUser.username).toStrictEqual(
 			globalThis.user.username
 		);
 
@@ -61,7 +61,7 @@ describe('getCurrentUser workflow', () => {
 			.set('Cookie', cookie2)
 			.expect(200);
 
-		expect(secondUserResponse.data.getCurrentUser.username).toEqual(
+		expect(secondUserResponse.data.getCurrentUser.username).toStrictEqual(
 			user.username
 		);
 	});

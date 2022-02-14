@@ -1,7 +1,6 @@
 import { GET_CURRENT_USER } from '@@/fixtures';
 import request from 'supertest';
 
-
 import { app } from '@/app';
 import { ERROR_MESSAGES } from '@/utils/constants';
 
@@ -31,7 +30,7 @@ describe('user context workflow', () => {
 			})
 			.expect(200);
 
-		expect(body.errors[0].message).toEqual(
+		expect(body.errors[0].message).toStrictEqual(
 			ERROR_MESSAGES.E_AUTHORIZATION_REQUIRED
 		);
 	});

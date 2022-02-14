@@ -10,8 +10,8 @@ export function sign({ id, isRefresh }: { id: ObjectID; isRefresh?: boolean }) {
 	const expiresIn = isRefresh ? '7d' : '1h';
 
 	const token = jwt.sign({ id }, secret!, {
-		issuer: process.env.JWT_AUTHORITY!,
-		expiresIn
+		expiresIn,
+		issuer: process.env.JWT_AUTHORITY!
 	});
 
 	return token;
@@ -34,9 +34,18 @@ export function verify({
 
 	try {
 		const decoded = jwt.verify(token, secret!);
-		return { payload: decoded as unknown as JWTPayload, expired: false };
+		return {
+			expired: false,
+			payload: decoded as unknown as JWTPayload
+		};
 	} catch (ex: any) {
-		return { payload: null, expired: ex?.message?.includes('jwt expired') };
+		const expired =
+			ex instanceof Error ? ex.message.includes('jwt expired') : false;
+
+		return {
+			expired,
+			payload: null
+		};
 	}
 }
 

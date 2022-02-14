@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/require-await */
 import 'module-alias/register';
 import './dotenv';
 import { createServer } from 'http';

@@ -1,14 +1,14 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 
-import { ThreadsProvider } from '@/state/context/ThreadsContext';
+import { ContentLayout } from './ContentLayout';
+import { SidebarLayout } from './SidebarLayout';
 
 import { ChannelsList } from '@/components/Channel/ChannelsList';
 import { NotificationController } from '@/components/Notification/NotificationController';
 import { ConnectedCreatePrivateThreadModal as Modal } from '@/components/PrivateThread/CreatePrivateThread';
 import { useViewportSize } from '@/hooks/useViewportSize';
-import { Outlet } from 'react-router-dom';
-import { SidebarLayout } from './SidebarLayout';
-import { ContentLayout } from './ContentLayout';
+import { ThreadsProvider } from '@/state/context/ThreadsContext';
 
 export function MainLayout() {
 	const viewport = useViewportSize();

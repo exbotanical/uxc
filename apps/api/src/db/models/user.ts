@@ -5,7 +5,7 @@ import type { Model, Document } from 'mongoose';
 
 import { toHash } from '@/utils';
 
-type UserWithPassword = UserType & { password: string };
+type UserWithPassword = UserType & { password?: string };
 type ReturnDocument = UserWithPassword & { __v?: string };
 
 interface UserDocument extends UserType, Omit<Document, '_id'> {}
@@ -16,10 +16,6 @@ interface UserModel extends Model<ReturnDocument> {
 
 const UserSchema = new Schema<UserWithPassword>(
 	{
-		username: {
-			required: true,
-			type: String
-		},
 		email: {
 			required: true,
 			type: String
@@ -31,6 +27,10 @@ const UserSchema = new Schema<UserWithPassword>(
 		userImage: {
 			default: null,
 			type: String
+		},
+		username: {
+			required: true,
+			type: String
 		}
 	},
 	{
@@ -41,7 +41,6 @@ const UserSchema = new Schema<UserWithPassword>(
 		toJSON: {
 			// mongoose types are terrible here
 			transform(_, ret: ReturnDocument) {
-				// @ts-expect-error
 				delete ret.password;
 				delete ret.__v;
 			}
@@ -63,4 +62,4 @@ UserSchema.statics.build = (attrs: Omit<ReturnDocument, '_id'>) => {
 	return new User(attrs);
 };
 
-export const User = model<ReturnDocument, UserModel>('User', UserSchema as any);
+export const User = model<ReturnDocument, UserModel>('User', UserSchema);

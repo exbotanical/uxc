@@ -1,7 +1,6 @@
 import { CREATE_THREAD } from '@@/fixtures';
 import request from 'supertest';
 
-
 import { app } from '@/app';
 import { seed } from '@/resolvers/seed';
 import { ERROR_MESSAGES } from '@/utils/constants';
@@ -19,7 +18,7 @@ describe('createThread workflow', () => {
 			.expect(200);
 
 		expect(body.errors).toHaveLength(1);
-		expect(body.errors[0].message).toEqual(
+		expect(body.errors[0].message).toStrictEqual(
 			ERROR_MESSAGES.E_AUTHORIZATION_REQUIRED
 		);
 		expect(body.errors[0].path[0]).toBe('createThread');
@@ -42,7 +41,9 @@ describe('createThread workflow', () => {
 			.expect(200);
 
 		expect(body.errors).toHaveLength(1);
-		expect(body.errors[0].message).toEqual(ERROR_MESSAGES.E_NO_RECEIVER_ID);
+		expect(body.errors[0].message).toStrictEqual(
+			ERROR_MESSAGES.E_NO_RECEIVER_ID
+		);
 
 		expect(body.errors[0].path[0]).toBe('createThread');
 	});
@@ -63,7 +64,7 @@ describe('createThread workflow', () => {
 			.expect(200);
 
 		expect(body.errors).toHaveLength(1);
-		expect(body.errors[0].message).toEqual(
+		expect(body.errors[0].message).toStrictEqual(
 			`The provided receiverId ${receiverId} is not a valid ObjectID`
 		);
 
@@ -88,7 +89,7 @@ describe('createThread workflow', () => {
 
 		const { createThread } = body.data;
 
-		expect(createThread.users).toEqual(
+		expect(createThread.users).toStrictEqual(
 			expect.arrayContaining([
 				expect.objectContaining({ _id: user._id.toString() })
 			])

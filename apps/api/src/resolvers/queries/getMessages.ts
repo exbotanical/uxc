@@ -8,7 +8,7 @@ import { Message } from '@/db';
  * @todo deduplicate sender
  */
 export const getMessages: Resolver<MessageType[], { threadId: ObjectID }> =
-	async (_, { threadId }, context) => {
+	async (_, { threadId }) => {
 		const messages = await Message.find({ threadId }).populate('sender');
 
 		return messages;

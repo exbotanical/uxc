@@ -14,7 +14,7 @@ import { ERROR_MESSAGES } from '@/utils/constants';
 export const getThread: Resolver<
 	PrivateThreadType & { users: User[] },
 	{ threadId: ObjectID }
-> = async (_, { threadId }, context) => {
+> = async (_, { threadId }) => {
 	if (!threadId) {
 		throw new UserInputError(ERROR_MESSAGES.E_NO_THREAD_ID);
 	}

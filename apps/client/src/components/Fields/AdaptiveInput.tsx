@@ -12,17 +12,17 @@ export const AdaptiveInput = forwardRef<HTMLInputElement, InputProps>(
 		return (
 			<div className={`${className} relative focus-within:border-blue-500`}>
 				<input
+					className={`block rounded-lg w-full p-4 autofill:shadow-fill-rowan-700 autofill:text-fill-primary-100 bg-rowan-700 text-primary-100 placeholder-primary-200 placeholder-opacity-80 text-xl focus:outline-none `}
 					id={id}
 					ref={ref}
-					className={`block rounded-lg w-full p-4 autofill:shadow-fill-rowan-700 autofill:text-fill-primary-100 bg-rowan-700 text-primary-100 placeholder-primary-200 placeholder-opacity-80 text-xl focus:outline-none `}
 					{...props}
 				/>
 				<label
+					className="absolute top-0 duration-300 text-primary-200 text-opacity-80 text-xl p-4"
 					htmlFor={id}
 					style={{
 						transformOrigin: '-15% -75%'
 					}}
-					className="absolute top-0 duration-300 text-primary-200 text-opacity-80 text-xl p-4"
 				>
 					{label}
 				</label>

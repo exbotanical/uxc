@@ -9,8 +9,7 @@ import { ERROR_MESSAGES } from '@/utils/constants';
 
 export const deleteThread: Resolver<ObjectID, { threadId: ObjectID }> = async (
 	_,
-	{ threadId },
-	context
+	{ threadId }
 ) => {
 	if (!threadId) {
 		throw new UserInputError(ERROR_MESSAGES.E_NO_THREAD_ID);

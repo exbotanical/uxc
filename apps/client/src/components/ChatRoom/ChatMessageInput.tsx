@@ -39,12 +39,12 @@ export function ChatMessageInput({ sendMessage, name }: ChatMessageInputProps) {
 		<form className="flex flex-col w-auto" onSubmit={handleSubmit}>
 			<Input
 				autoComplete="off"
+				label="Send message"
 				maxLength={512}
 				onChange={handleChange}
+				options={chatOptions}
 				placeholder={`Send a message to ${name}`}
 				value={message}
-				label="Send message"
-				options={chatOptions}
 			/>
 		</form>
 	);

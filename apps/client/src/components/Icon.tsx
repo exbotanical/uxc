@@ -15,8 +15,8 @@ export default function SvgIcon({
 	const symbolId = `#icon-${name}`;
 
 	return (
-		<svg {...props} aria-hidden="true" width={dimensions} height={dimensions}>
-			<use href={symbolId} fill={color} />
+		<svg {...props} aria-hidden="true" height={dimensions} width={dimensions}>
+			<use fill={color} href={symbolId} />
 		</svg>
 	);
 }

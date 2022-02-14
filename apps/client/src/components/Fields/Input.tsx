@@ -1,6 +1,7 @@
 import type { ComponentPropsWithoutRef } from 'react';
 
 import React, { forwardRef } from 'react';
+
 import SvgIcon from '../Icon';
 
 interface OptionConfig {
@@ -29,13 +30,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 						return handleClick ? (
 							<button
 								className="btn-hover cursor-pointer"
-								onClick={handleClick}
 								key={idx}
+								onClick={handleClick}
 							>
-								<SvgIcon name={iconName} dimensions={22} />
+								<SvgIcon dimensions={22} name={iconName} />
 							</button>
 						) : (
-							<SvgIcon name={iconName} dimensions={22} key={idx} />
+							<SvgIcon dimensions={22} key={idx} name={iconName} />
 						);
 					})}
 				</div>

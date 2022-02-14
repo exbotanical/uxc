@@ -1,7 +1,6 @@
 import { DELETE_THREAD } from '@@/fixtures';
 import request from 'supertest';
 
-
 import { app } from '@/app';
 import { seed } from '@/resolvers/seed';
 import { ERROR_MESSAGES } from '@/utils/constants';
@@ -19,7 +18,7 @@ describe('deleteThread workflow', () => {
 			.expect(200);
 
 		expect(body.errors).toHaveLength(1);
-		expect(body.errors[0].message).toEqual(
+		expect(body.errors[0].message).toStrictEqual(
 			ERROR_MESSAGES.E_AUTHORIZATION_REQUIRED
 		);
 		expect(body.errors[0].path[0]).toBe('deleteThread');
@@ -27,7 +26,6 @@ describe('deleteThread workflow', () => {
 
 	it('fails when not provided a threadId', async () => {
 		const cookie = await join();
-		const threadId = '123';
 
 		const { body } = await request(app)
 			.post(BASE_PATH)
@@ -39,7 +37,7 @@ describe('deleteThread workflow', () => {
 			.expect(200);
 
 		expect(body.errors).toHaveLength(1);
-		expect(body.errors[0].message).toEqual(ERROR_MESSAGES.E_NO_THREAD_ID);
+		expect(body.errors[0].message).toStrictEqual(ERROR_MESSAGES.E_NO_THREAD_ID);
 
 		expect(body.errors[0].path[0]).toBe('deleteThread');
 	});
@@ -60,7 +58,7 @@ describe('deleteThread workflow', () => {
 			.expect(200);
 
 		expect(body.errors).toHaveLength(1);
-		expect(body.errors[0].message).toEqual(
+		expect(body.errors[0].message).toStrictEqual(
 			`The provided threadId ${threadId} is not a valid ObjectID`
 		);
 

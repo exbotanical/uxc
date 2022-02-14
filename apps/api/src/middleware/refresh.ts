@@ -10,23 +10,29 @@ export function refreshMiddleware(
 ) {
 	const { accessToken, refreshToken } = req.session;
 	if (!accessToken) {
-		next(); return;
+		next();
+		return;
 	}
 
 	const { payload, expired } = verify({ token: accessToken });
 
 	if (payload) {
 		req.session.meta = payload;
-		next(); return;
+		next();
+		return;
 	}
 
 	const { payload: refresh } =
 		expired && refreshToken
-			? verify({ token: refreshToken, isRefresh: true })
+			? verify({
+					isRefresh: true,
+					token: refreshToken
+			  })
 			: { payload: null };
 
 	if (!refresh) {
-		next(); return;
+		next();
+		return;
 	}
 
 	const session = createSession(refresh.id);

@@ -20,7 +20,7 @@ describe('updateMessage workflow', () => {
 			.expect(200);
 
 		expect(body.errors).toHaveLength(1);
-		expect(body.errors[0].message).toEqual(
+		expect(body.errors[0].message).toStrictEqual(
 			ERROR_MESSAGES.E_AUTHORIZATION_REQUIRED
 		);
 		expect(body.errors[0].path[0]).toBe('updateMessage');
@@ -41,7 +41,9 @@ describe('updateMessage workflow', () => {
 			.expect(200);
 
 		expect(body.errors).toHaveLength(1);
-		expect(body.errors[0].message).toEqual(ERROR_MESSAGES.E_NO_MESSAGE_ID);
+		expect(body.errors[0].message).toStrictEqual(
+			ERROR_MESSAGES.E_NO_MESSAGE_ID
+		);
 
 		expect(body.errors[0].path[0]).toBe('updateMessage');
 	});
@@ -64,7 +66,7 @@ describe('updateMessage workflow', () => {
 			.expect(200);
 
 		expect(body.errors).toHaveLength(1);
-		expect(body.errors[0].message).toEqual(
+		expect(body.errors[0].message).toStrictEqual(
 			`The provided messageId ${messageId} is not a valid ObjectID`
 		);
 
@@ -89,7 +91,7 @@ describe('updateMessage workflow', () => {
 			.expect(200);
 
 		expect(body.errors).toHaveLength(1);
-		expect(body.errors[0].message).toEqual(
+		expect(body.errors[0].message).toStrictEqual(
 			`The provided messageId ${messageId} does not represent a resource in the database`
 		);
 		expect(body.errors[0].path[0]).toBe('updateMessage');
@@ -144,6 +146,6 @@ describe('updateMessage workflow', () => {
 
 		const { updateMessage } = updateMessageResponse.data;
 
-		expect(updateMessage).toEqual(createMessage._id);
+		expect(updateMessage).toStrictEqual(createMessage._id);
 	});
 });

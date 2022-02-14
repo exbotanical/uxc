@@ -9,8 +9,7 @@ import { ERROR_MESSAGES } from '@/utils/constants';
 
 export const getUser: Resolver<UserType, { userId: ObjectID }> = async (
 	_,
-	{ userId },
-	{ req }
+	{ userId }
 ) => {
 	if (!userId) {
 		throw new UserInputError(ERROR_MESSAGES.E_NO_USER_ID);

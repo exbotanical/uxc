@@ -2,10 +2,9 @@ import { faker } from '@faker-js/faker';
 import { Request } from 'express';
 import { Document } from 'mongoose';
 
-import type { Context, ObjectID } from '@uxc/types';
+import type { Context, ObjectID, User as UserType } from '@uxc/types';
 
 import { User, Message, PrivateThread } from '@/db';
-
 
 interface Taskable {
 	save: () => Promise<any>;
@@ -14,13 +13,17 @@ interface Taskable {
 
 type PartitionedTasks = [Promise<any>[], ObjectID[]];
 
+interface MaybePassword {
+	password?: string;
+}
+
 function createMessage(threadId: ObjectID, userId: ObjectID) {
 	const random = Math.floor(Math.random() * 11);
 
 	return Message.build({
 		body: random % 2 === 0 ? faker.lorem.sentence() : faker.lorem.sentences(),
-		threadId,
-		sender: userId
+		sender: userId,
+		threadId
 	});
 }
 
@@ -30,20 +33,22 @@ async function createPuppetUser() {
 	const user = await User.create({
 		email: 'dolmond@gmail.com',
 		password,
-		username: 'redis',
 		userImage:
-			'https://upload.wikimedia.org/wikipedia/en/e/e7/CanMonsterMovieAlbumCover.jpg'
+			'https://upload.wikimedia.org/wikipedia/en/e/e7/CanMonsterMovieAlbumCover.jpg',
+		username: 'redis'
 	});
 
-	return Object.assign((user as any)._doc, { password });
+	return Object.assign((user as unknown as { _doc: UserType })._doc, {
+		password
+	});
 }
 
 function createUser() {
 	return User.build({
 		email: faker.internet.email(),
 		password: faker.internet.password(10),
-		username: faker.internet.userName(),
-		userImage: faker.internet.avatar()
+		userImage: faker.internet.avatar(),
+		username: faker.internet.userName()
 	});
 }
 
@@ -68,15 +73,15 @@ export async function seedWrapper(_: any, __: any, { req }: Context) {
 	}
 
 	return {
-		user,
-		threadIds
+		threadIds,
+		user
 	};
 }
 
 export async function seed(req?: Request) {
-	let userId = (req?.session as any)?.meta?.id;
+	let userId: ObjectID | null = req?.session.meta?.id ?? null;
 
-	let testUser = null;
+	let testUser: MaybePassword | null = null;
 	if (!userId) {
 		const { email, password, _id } = await createPuppetUser();
 		userId = _id;
@@ -128,5 +133,8 @@ export async function seed(req?: Request) {
 
 	await Promise.all(messageTasks);
 
-	return { user: Object.assign(user, testUser), threadIds };
+	return {
+		threadIds,
+		user: Object.assign(user, testUser) as MaybePassword & UserType
+	};
 }

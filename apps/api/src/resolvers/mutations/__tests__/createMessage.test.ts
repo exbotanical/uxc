@@ -20,7 +20,7 @@ describe('createMessage workflow', () => {
 			.expect(200);
 
 		expect(body.errors).toHaveLength(1);
-		expect(body.errors[0].message).toEqual(
+		expect(body.errors[0].message).toStrictEqual(
 			ERROR_MESSAGES.E_AUTHORIZATION_REQUIRED
 		);
 		expect(body.errors[0].path[0]).toBe('createMessage');
@@ -45,7 +45,7 @@ describe('createMessage workflow', () => {
 			.expect(200);
 
 		expect(body.errors).toHaveLength(1);
-		expect(body.errors[0].message).toEqual(ERROR_MESSAGES.E_NO_THREAD_ID);
+		expect(body.errors[0].message).toStrictEqual(ERROR_MESSAGES.E_NO_THREAD_ID);
 
 		expect(body.errors[0].path[0]).toBe('createMessage');
 	});
@@ -68,7 +68,7 @@ describe('createMessage workflow', () => {
 			.expect(200);
 
 		expect(body.errors).toHaveLength(1);
-		expect(body.errors[0].message).toEqual(
+		expect(body.errors[0].message).toStrictEqual(
 			`The provided threadId ${threadId} is not a valid ObjectID`
 		);
 
@@ -93,7 +93,7 @@ describe('createMessage workflow', () => {
 			.expect(200);
 
 		expect(body.errors).toHaveLength(1);
-		expect(body.errors[0].message).toEqual(
+		expect(body.errors[0].message).toStrictEqual(
 			`The provided threadId ${threadId} does not represent a resource in the database`
 		);
 		expect(body.errors[0].path[0]).toBe('createMessage');
@@ -132,7 +132,7 @@ describe('createMessage workflow', () => {
 
 		const { createMessage } = body.data;
 
-		expect(createMessage.body).toEqual(messageBody);
-		expect(createMessage.threadId).toEqual(threadIds[0].toString());
+		expect(createMessage.body).toStrictEqual(messageBody);
+		expect(createMessage.threadId).toStrictEqual(threadIds[0].toString());
 	});
 });

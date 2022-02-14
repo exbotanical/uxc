@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
+import SvgIcon from '@/components/Icon';
 import { Delimiter } from '@/components/PrivateThread/Delimiter';
 import { PrivateThread } from '@/components/PrivateThread/PrivateThread';
 import { ThreadsContext } from '@/state/context/ThreadsContext';
-import SvgIcon from '@/components/Icon';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 export function PrivateThreadsList() {
 	const { threads } = useContext(ThreadsContext);
@@ -36,7 +36,7 @@ export function PrivateThreadsList() {
 			<ul>
 				<li
 					className={`w-full flex items-center p-4 rounded-sm hover:bg-primary-1000 ${activeClass}`}
-					onClick={(e) => handleClick('')}
+					onClick={(e) => { handleClick(''); }}
 					onKeyPress={(e) => {
 						onEnterKeyPressed(e, '/');
 					}}
@@ -44,7 +44,7 @@ export function PrivateThreadsList() {
 					style={{ transition: 'color 0.3s, background-color 0.4s' }}
 					tabIndex={0}
 				>
-					<SvgIcon name="people" dimensions={21} />
+					<SvgIcon dimensions={21} name="people" />
 					<p className="text-primary-200 text-lg font-semibold ml-6">Friends</p>
 				</li>
 			</ul>

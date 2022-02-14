@@ -1,7 +1,9 @@
+import type { ChangeEvent } from 'react';
+
 import React, { useState } from 'react';
+
 import { Input } from '@/components/Fields/Input';
 
-import type { ChangeEvent } from 'react';
 
 export function Friends() {
 	const [searchText, setSearchText] = useState('');
@@ -41,12 +43,12 @@ export function Friends() {
 			<form className="my-12 self-center">
 				<Input
 					autoComplete="off"
-					maxLength={512}
-					placeholder="Search friends"
 					className="text-primary-200 bg-primary-1300 text-lg"
 					label="Search friends"
-					options={searchOptions}
+					maxLength={512}
 					onChange={handleChange}
+					options={searchOptions}
+					placeholder="Search friends"
 					value={searchText}
 				/>
 			</form>
@@ -64,8 +66,8 @@ export function Friends() {
 							</h4>
 							<p className="text-xs font-bold text-primary-200">user status</p>
 							<div className="flex justify-evenly my-2 gap-1">
-								<div className="rounded-full bg-primary-1200 h-8 w-8"></div>
-								<div className="rounded-full bg-primary-1200 h-8 w-8"></div>
+								<div className="rounded-full bg-primary-1200 h-8 w-8" />
+								<div className="rounded-full bg-primary-1200 h-8 w-8" />
 							</div>
 						</li>
 					);

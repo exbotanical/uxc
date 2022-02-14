@@ -22,9 +22,9 @@ const PrivateThreadSchema = new Schema(
 	{
 		users: [
 			{
-				type: Schema.Types.ObjectId,
 				ref: 'User',
-				required: true
+				required: true,
+				type: Schema.Types.ObjectId
 			}
 		]
 	},
