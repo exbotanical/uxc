@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { UserAvatar } from '../User/UserAvatar';
@@ -7,16 +7,31 @@ import { UserAvatar } from '../User/UserAvatar';
 import type { ObjectID, User } from '@uxc/types';
 
 import { GET_CURRENT_USER } from '@/services/api/queries';
-import { ThreadsContext } from '@/state/context/ThreadsContext';
+import { StatefulThread, ThreadsContext } from '@/state/context/ThreadsContext';
 import { onEnterKeyPressed } from '@/utils';
+import { NotificationBadge } from '../Badges/NotificationBadge';
 
 interface PrivateThreadProps {
 	id: ObjectID;
 }
 
+function UnreadMessagesBadge({ newMessages }: StatefulThread) {
+	if (!newMessages) {
+		return null;
+	}
+
+	return (
+		<NotificationBadge className="mb-1">
+			<p>{newMessages}</p>
+		</NotificationBadge>
+	);
+}
+UnreadMessagesBadge.displayName = 'UnreadMessagesBadge';
+
 export function PrivateThread({ id }: PrivateThreadProps) {
 	const { getThreadById } = useContext(ThreadsContext);
 	const thread = getThreadById(id);
+
 	const { data: user } = useQuery<{
 		getCurrentUser: User;
 	}>(GET_CURRENT_USER);
@@ -38,7 +53,7 @@ export function PrivateThread({ id }: PrivateThreadProps) {
 	};
 
 	/** @todo handler erroneous state */
-	if (!them) {
+	if (!them || !thread) {
 		return null;
 	}
 
@@ -54,17 +69,10 @@ export function PrivateThread({ id }: PrivateThreadProps) {
 			tabIndex={0}
 		>
 			<div className="flex justify-center items-center">
-				<UserAvatar size="md" u={them} />
-			</div>
-			<div className="flex items-center">
+				<UserAvatar size="md" u={them} newMessagesCount={thread.newMessages} />
+
 				<p className="text-lg font-semibold m-auto ml-3">{them.username}</p>
 			</div>
-			{/* @todo new messages */}
-			{/* {(id === '33' || id === '343') && (
-				<NotificationBadge className="mb-1">
-					<p>2</p>
-				</NotificationBadge>
-			)} */}
 		</li>
 	);
 }

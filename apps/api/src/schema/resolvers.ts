@@ -24,13 +24,17 @@ import {
 	getCurrentUser,
 	getUser
 } from '@/resolvers/queries';
-import { onMessage } from '@/resolvers/subscriptions/onMessage';
+import {
+	onThreadMessageCreated,
+	onAnyMessageCreated
+} from '@/resolvers/subscriptions';
 
 export const resolvers: Resolvers = {
 	Date: GraphQLDateTime as unknown as GraphQLScalarType,
 
 	Subscription: {
-		onMessage
+		onThreadMessageCreated,
+		onAnyMessageCreated
 	},
 
 	Query: {

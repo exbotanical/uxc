@@ -5,22 +5,30 @@ import { createServer } from 'http';
 
 import {
 	ApolloServerPluginDrainHttpServer,
-	ApolloServerPluginLandingPageLocalDefault
+	ApolloServerPluginLandingPageLocalDefault,
+	AuthenticationError
 } from 'apollo-server-core';
 import { ApolloServer } from 'apollo-server-express';
 import { execute, subscribe } from 'graphql';
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 
 import { app } from './app';
-import { corsOptions, errorhandler, NotFoundError } from './middleware';
+import {
+	corsOptions,
+	errorhandler,
+	NotFoundError,
+	sessionMiddleware
+} from './middleware';
 import { schema } from './schema';
 
-import type { JWTPayload } from '@uxc/types';
+import type { JWT, JWTPayload } from '@uxc/types';
+import type { Request } from 'express';
+import { ERROR_MESSAGES } from './utils/constants';
 
 declare module 'express-session' {
 	export interface SessionData {
-		accessToken: string;
-		refreshToken: string;
+		accessToken: JWT;
+		refreshToken: JWT;
 		meta?: JWTPayload;
 	}
 }
@@ -62,7 +70,25 @@ export async function initializeServer() {
 		{
 			execute,
 			schema,
-			subscribe
+			subscribe,
+
+			async onConnect(_: {}, socket: { upgradeReq: Request }) {
+				const { id } = await new Promise<JWTPayload>((resolve) => {
+					sessionMiddleware(socket.upgradeReq, {} as any, () => {
+						if (socket.upgradeReq.session.meta) {
+							resolve(socket.upgradeReq.session.meta);
+						}
+					});
+				});
+
+				if (!id) {
+					throw new AuthenticationError(
+						ERROR_MESSAGES.E_AUTHORIZATION_REQUIRED
+					);
+				}
+
+				return { id };
+			}
 		},
 		{
 			path: process.env.VITE_API_SUBSCRIPTIONS_PATH,

@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 
 import type { Notification as NotifType } from '@/state/types';
 
-import { CloseButton } from '@/components/Buttons/CloseButton';
 import { onEnterKeyPressed } from '@/utils';
+import SvgIcon from '../Icon';
 
 export type NotificationDuration = 'default' | 'sticky';
 
@@ -13,7 +13,6 @@ export type NotificationProps = Partial<NotifType> & {
 
 export function Notification({
 	message,
-	button,
 	duration = 'default',
 	type,
 	onClose = () => {}
@@ -41,20 +40,19 @@ export function Notification({
 
 	return (
 		<div
-			className={`flex rounded-8 p-3 relative w-full items-center justify-center text-button transition-transform duration-300 ${color}`}
+			className={`flex rounded-md w-96 p-3 items-center self-center justify-between text-button transition-transform duration-300 mb-2 ${color}`}
 		>
-			<CloseButton
+			<div className="font-bold ">{message}</div>
+
+			<button
 				onClick={onClose}
 				onKeyPress={onEnterKeyPressed(onClose)}
 				role="button"
-				style={{ transform: 'rotate(45deg)' }}
 				tabIndex={0}
-			/>
-			<div className="flex space-x-4 items-center">
-				<div className="bold">{message}</div>
-
-				{button}
-			</div>
+				className="self-end"
+			>
+				<SvgIcon name="close" dimensions={32} />
+			</button>
 		</div>
 	);
 }

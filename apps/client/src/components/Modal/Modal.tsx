@@ -3,8 +3,6 @@ import type { KeyboardEvent } from 'react';
 import React from 'react';
 import ReactModal from 'react-modal';
 
-import { CloseButton } from '@/components/Buttons/CloseButton';
-
 const modalStyles = {
 	default: {
 		content: {
@@ -83,7 +81,7 @@ export function Modal({
 						}}
 						type="button"
 					>
-						<CloseButton className="transform rotate-45" />
+						<button>CLOSE</button>
 					</button>
 				</div>
 

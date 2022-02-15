@@ -4,7 +4,9 @@ export const errorLink = onError(({ graphQLErrors, networkError }) => {
 	if (graphQLErrors)
 		graphQLErrors.forEach(({ message, locations, path }) => {
 			console.error(
-				`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+				`[GraphQL error]: Message: ${message}, Location: ${locations?.map(
+					({ column, line }) => `Col: ${column} / Line: ${line}`
+				)}, Path: ${path}`
 			);
 		});
 	if (networkError) {

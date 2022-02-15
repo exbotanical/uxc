@@ -5,11 +5,11 @@ export type ObjectID = string;
 
 export type JWT = string;
 
-export type UNIX_TS = number;
+export type UnixTimestamp = number;
 
 export interface JWTPayload {
 	id: ObjectID;
-	iat: UNIX_TS;
-	exp: UNIX_TS;
+	iat: UnixTimestamp;
+	exp: UnixTimestamp;
 	iss: string;
 }

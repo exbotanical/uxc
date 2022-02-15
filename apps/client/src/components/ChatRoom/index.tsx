@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client';
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { ChatMessageInput } from './ChatMessageInput';
@@ -15,6 +15,7 @@ import {
 	GET_CURRENT_USER
 } from '@/services/api/queries';
 import { connector } from '@/state';
+import { ThreadsContext } from '@/state/context/ThreadsContext';
 
 export interface SendMessage {
 	(message: string): void;
@@ -27,12 +28,9 @@ export function ChatRoom({ showNotification }: ChatRoomProps & PropsFromRedux) {
 	const { data: user, loading } = useQuery<{
 		getCurrentUser: User;
 	}>(GET_CURRENT_USER);
+	const { getThreadById, updateThread } = useContext(ThreadsContext);
 
-	const { data: thread } = useQuery<{ getThread: PrivateThread }>(GET_THREAD, {
-		variables: {
-			threadId
-		}
-	});
+	const thread = getThreadById(threadId);
 
 	/** @todo deduplicate types */
 	const [createMessage] = useMutation<{
@@ -57,9 +55,16 @@ export function ChatRoom({ showNotification }: ChatRoomProps & PropsFromRedux) {
 		}
 	});
 
-	const them = thread?.getThread.users.find(
+	const them = thread?.users.find(
 		({ _id }) => _id !== user?.getCurrentUser._id
 	);
+
+	useEffect(() => {
+		if (!thread) return;
+
+		thread.newMessages = 0;
+		updateThread(thread);
+	}, [thread]);
 
 	// if this happens, we've got a bigger problem...
 	if (!them) {

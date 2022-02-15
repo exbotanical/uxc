@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { ContentLayout } from './ContentLayout';
@@ -8,6 +8,10 @@ import { ChannelsList } from '@/components/Channel/ChannelsList';
 import { NotificationController } from '@/components/Notification/NotificationController';
 import { useViewportSize } from '@/hooks/useViewportSize';
 import { ThreadsProvider } from '@/state/context/ThreadsContext';
+import { useSubscription } from '@apollo/client';
+import type { Message, User } from '@uxc/types';
+import { ON_ANY_MESSAGE_CREATED } from '@/services/api/queries';
+import { connector, PropsFromRedux, showNotification, store } from '@/state';
 
 export function MainLayout() {
 	const viewport = useViewportSize();
@@ -32,3 +36,5 @@ export function MainLayout() {
 }
 
 MainLayout.displayName = 'MainLayout';
+
+export const ConnectedMainLayout = MainLayout;

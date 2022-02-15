@@ -7,7 +7,7 @@ import type { RouteObject } from 'react-router-dom';
 
 import { Join } from '@/components/Auth/Join';
 import { Signin } from '@/components/Auth/Signin';
-import { MainLayout } from '@/components/Layout/MainLayout';
+import { ConnectedMainLayout as MainLayout } from '@/components/Layout/MainLayout';
 import { PrivateThreadsList } from '@/components/PrivateThread';
 
 const WrappedLayout = withProtectedRoute(MainLayout);

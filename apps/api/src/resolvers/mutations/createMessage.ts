@@ -41,8 +41,10 @@ export const createMessage: Resolver<
 		threadId
 	});
 
+	const populatedMessage = await message.populate('sender');
+
 	pubsub.publish(EVENTS.MESSAGE_CREATED, {
-		onMessage: [message]
+		message: populatedMessage
 	});
 
 	return message;

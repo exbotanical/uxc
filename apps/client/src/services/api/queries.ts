@@ -82,9 +82,27 @@ export const GET_MESSAGES = gql`
 	}
 `;
 
-export const MESSAGES_SUBSCRIPTION = gql`
-	subscription onMessage($threadId: ID) {
-		onMessage(threadId: $threadId) {
+export const ON_THREAD_MESSAGE_CREATED = gql`
+	subscription onThreadMessageCreated($threadId: ID) {
+		onThreadMessageCreated(threadId: $threadId) {
+			_id
+			body
+			createdAt
+			updatedAt
+			threadId
+			sender {
+				_id
+				email
+				userImage
+				username
+			}
+		}
+	}
+`;
+
+export const ON_ANY_MESSAGE_CREATED = gql`
+	subscription onAnyMessageCreated {
+		onAnyMessageCreated {
 			_id
 			body
 			createdAt

@@ -3,6 +3,7 @@ import React from 'react';
 import type { User } from '@uxc/types';
 
 import { StatusIndicator } from '@/components/Badges/StatusIndicator';
+import { UnreadMessagesBadge } from '../Badges/UnreadMessages';
 
 export const sizeMap = {
 	lg: {
@@ -24,13 +25,15 @@ interface UserCardProps {
 	u: User;
 	className?: string;
 	withIndicator?: boolean;
+	newMessagesCount?: number;
 }
 
 export function UserAvatar({
 	u,
 	size = 'md',
 	className = '',
-	withIndicator = true
+	withIndicator = true,
+	newMessagesCount = 0
 }: UserCardProps) {
 	const { status, avatar } = sizeMap[size];
 
@@ -53,7 +56,11 @@ export function UserAvatar({
 			/>
 			{withIndicator ? (
 				<div className="absolute border-primary-800">
-					<StatusIndicator placementClass={status} />
+					{newMessagesCount > 0 ? (
+						<UnreadMessagesBadge newMessages={newMessagesCount} />
+					) : (
+						<StatusIndicator placementClass={status} />
+					)}
 				</div>
 			) : null}
 		</div>

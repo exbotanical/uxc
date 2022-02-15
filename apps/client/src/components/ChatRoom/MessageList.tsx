@@ -7,7 +7,7 @@ import { ChatMessage } from '@/components/ChatRoom/ChatMessage';
 import {
 	GET_MESSAGES,
 	GET_CURRENT_USER,
-	MESSAGES_SUBSCRIPTION
+	ON_THREAD_MESSAGE_CREATED
 } from '@/services/api/queries';
 
 interface MessageListProps {
@@ -40,7 +40,7 @@ export function MessageList({ threadId }: MessageListProps) {
 
 	useEffect(() => {
 		subscribeToMore({
-			document: MESSAGES_SUBSCRIPTION,
+			document: ON_THREAD_MESSAGE_CREATED,
 			updateQuery: (prev, { subscriptionData }) => {
 				if (Object.keys(prev || {}).length === 0) {
 					return { getMessages: [] };
@@ -52,7 +52,7 @@ export function MessageList({ threadId }: MessageListProps) {
 
 				/** @todo */
 				// @ts-expect-error
-				const newMessage = subscriptionData.data.onMessage[0];
+				const newMessage = subscriptionData.data.onThreadMessageCreated[0];
 
 				const ret = {
 					...prev,

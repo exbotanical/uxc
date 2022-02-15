@@ -7,6 +7,7 @@ import type {
 } from '@uxc/types/generated';
 
 import { User } from '@/db';
+import type { User as UserType } from '@uxc/types';
 import { BadRequestError } from '@/middleware';
 import { compare, createSession } from '@/utils/auth';
 import { ERROR_MESSAGES } from '@/utils/constants';
@@ -18,7 +19,9 @@ export const signinResolver: MutationResolvers['signin'] = async (
 ) => {
 	const { email, password } = validateInputs(args);
 
-	const user = await User.findOne({ email });
+	const user = (await User.findOne({ email })) as UserType & {
+		password: string;
+	};
 
 	if (!user) {
 		throw new BadRequestError(ERROR_MESSAGES.E_INVALID_CREDENTIALS);

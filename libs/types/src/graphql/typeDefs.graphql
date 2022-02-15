@@ -51,8 +51,9 @@ type Query {
 }
 
 type Subscription {
-  onMessage(threadId: ID): [Message]
-	onThread: [PrivateThread]
+  onThreadMessageCreated(threadId: ID): [Message]
+	onAnyMessageCreated: [Message]
+	onThreadCreated: [PrivateThread]
 }
 
 type SeedReturnValue {
