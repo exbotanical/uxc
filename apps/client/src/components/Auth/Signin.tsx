@@ -4,13 +4,18 @@ import { useMutation, useQuery } from '@apollo/client';
 import React, { useState } from 'react';
 import { useNavigate, Navigate, Link } from 'react-router-dom';
 
-import bg from '../../../src/assets/splash.png';
-import { AdaptiveInput } from '../Fields/AdaptiveInput';
+import bg from '@/assets/splash.png';
+import { AdaptiveInput } from '@/components/Fields/AdaptiveInput';
 
 import type { User } from '@uxc/types';
 
-import { Button } from '@/components/Buttons/Button';
 import { GET_CURRENT_USER, SIGNIN } from '@/services/api/queries';
+import * as S from './styles';
+import styled from 'styled-components';
+
+const AlignedLink = styled(Link)`
+	align-self: flex-end;
+`;
 
 export function Signin() {
 	const [email, setEmail] = useState('');
@@ -55,22 +60,12 @@ export function Signin() {
 	};
 
 	return (
-		<div
-			className="min-h-screen flex flex-col justify-center items-center bg-primary-600 py-12 px-4 sm:px-6 lg:px-8 text-primary"
-			style={{ backgroundImage: `url(${bg})` }}
-		>
-			<div>
-				<h1 className="text-primary-100 text-7xl font-bold mb-4">uxc</h1>
-			</div>
-
-			<div className="w-full p-8 mb-12 max-w-lg bg-indigo-1000 rounded-lg">
-				<form
-					className="flex flex-col rounded-md shadow-sm"
-					onSubmit={handleSubmit}
-				>
+		<S.Container style={{ backgroundImage: `url(${bg})` }}>
+			<h1>uxc</h1>
+			<S.InnerCard>
+				<S.Form onSubmit={handleSubmit}>
 					<AdaptiveInput
 						autoComplete="email"
-						className="mt-1"
 						id="email-address"
 						label="Email address"
 						name="email"
@@ -81,9 +76,8 @@ export function Signin() {
 						value={email}
 					/>
 
-					<AdaptiveInput
+					<S.BottomInput
 						autoComplete="current-password"
-						className="mt-8"
 						id="password"
 						label="Password"
 						name="password"
@@ -94,31 +88,22 @@ export function Signin() {
 						value={password}
 					/>
 
-					<Link className="self-end" to="/todo">
-						<p className="m-1 font-medium text-primary-100 hover:underline">
-							Forgot your password?
-						</p>
-					</Link>
+					<AlignedLink to="/todo">
+						<S.FieldCaptionLink>Forgot your password?</S.FieldCaptionLink>
+					</AlignedLink>
 
-					<div className="self-center">
-						<Button className="mt-10" type="submit" width="wide">
-							Sign in
-						</Button>
-					</div>
-				</form>
-			</div>
+					<S.ButtonContainer>
+						<S.CTAButton type="submit">Sign in</S.CTAButton>
+					</S.ButtonContainer>
+				</S.Form>
+			</S.InnerCard>
 
-			<div className="flex items-center justify-center">
-				<div className="mt-2 flex">
-					<Link
-						className="text-primary-100 underline text-xl font-bold"
-						to="/join"
-					>
-						<p>Don't have an account?&nbsp;Join now</p>
-					</Link>
-				</div>
-			</div>
-		</div>
+			<S.SwapModeContainer>
+				<S.SwapModeLink to="/join">
+					<p>Don't have an account?&nbsp;Join now</p>
+				</S.SwapModeLink>
+			</S.SwapModeContainer>
+		</S.Container>
 	);
 }
 

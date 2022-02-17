@@ -4,21 +4,7 @@ import type { User } from '@uxc/types';
 
 import { StatusIndicator } from '@/components/Badges/StatusIndicator';
 import { UnreadMessagesBadge } from '../Badges/UnreadMessages';
-
-export const sizeMap = {
-	lg: {
-		avatar: '60px',
-		status: 'left-6 w-5 h-5'
-	},
-	md: {
-		avatar: '50px',
-		status: 'left-5 w-5 h-5'
-	},
-	sm: {
-		avatar: '40px',
-		status: 'left-4 w-4 h-4'
-	}
-};
+import { sizeMap } from './util';
 
 interface UserCardProps {
 	size: keyof typeof sizeMap;
@@ -27,6 +13,8 @@ interface UserCardProps {
 	withIndicator?: boolean;
 	newMessagesCount?: number;
 }
+
+const defaultAvatar = '../../../src/assets/gravatar.png';
 
 export function UserAvatar({
 	u,
@@ -50,10 +38,11 @@ export function UserAvatar({
 				className="rounded-full"
 				onError={({ currentTarget }) => {
 					currentTarget.onerror = null;
-					currentTarget.src = '../../../src/assets/gravatar.png';
+					currentTarget.src = defaultAvatar;
 				}}
-				src={u.userImage || '../../../src/assets/gravatar.png'}
+				src={u.userImage || defaultAvatar}
 			/>
+
 			{withIndicator ? (
 				<div className="absolute border-primary-800">
 					{newMessagesCount > 0 ? (

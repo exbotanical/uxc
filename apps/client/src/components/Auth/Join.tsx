@@ -4,8 +4,9 @@ import { useMutation, useQuery } from '@apollo/client';
 import React, { useState } from 'react';
 import { useNavigate, Link, Navigate } from 'react-router-dom';
 
-import bg from '../../../src/assets/splash.png';
-import { AdaptiveInput } from '../Fields/AdaptiveInput';
+import bg from '@/assets/splash.png';
+import { AdaptiveInput } from '@/components/Fields/AdaptiveInput';
+import * as S from './styles';
 
 import type { User } from '@uxc/types';
 
@@ -79,22 +80,13 @@ export function Join() {
 	};
 
 	return (
-		<div
-			className="min-h-screen flex flex-col justify-center items-center bg-primary-600 py-12 px-4 sm:px-6 lg:px-8 text-primary"
-			style={{ backgroundImage: `url(${bg})` }}
-		>
-			<div>
-				<h1 className="text-primary-100 text-7xl font-bold mb-4">uxc</h1>
-			</div>
+		<S.Container style={{ backgroundImage: `url(${bg})` }}>
+			<h1>uxc</h1>
 
-			<div className="w-full p-8 mb-12 max-w-lg bg-indigo-1000 rounded-lg">
-				<form
-					className="flex flex-col rounded-md shadow-sm"
-					onSubmit={handleSubmit}
-				>
+			<S.InnerCard>
+				<S.Form onSubmit={handleSubmit}>
 					<AdaptiveInput
 						autoComplete="username"
-						className="mt-1"
 						id="username"
 						label="Username"
 						name="username"
@@ -105,9 +97,8 @@ export function Join() {
 						value={username}
 					/>
 
-					<AdaptiveInput
+					<S.BottomInput
 						autoComplete="email"
-						className="mt-8"
 						id="email-address"
 						label="Email address"
 						name="email"
@@ -118,11 +109,11 @@ export function Join() {
 						value={email}
 					/>
 
-					<AdaptiveInput
+					<S.BottomInput
 						autoComplete="current-password"
-						className="mt-8"
 						id="password"
 						label="Password"
+						style={{ marginBottom: '2rem' }}
 						name="password"
 						onChange={handleChange}
 						placeholder=" "
@@ -132,24 +123,17 @@ export function Join() {
 					/>
 
 					<div className="self-center">
-						<Button className="mt-16" type="submit" width="wide">
-							Join
-						</Button>
+						<S.CTAButton type="submit">Join</S.CTAButton>
 					</div>
-				</form>
-			</div>
+				</S.Form>
+			</S.InnerCard>
 
-			<div className="flex items-center justify-center">
-				<div className="mt-2 flex">
-					<Link
-						className="text-primary-100 underline text-xl font-bold"
-						to="/signin"
-					>
-						<p>Already have an account?&nbsp;Sign in</p>
-					</Link>
-				</div>
-			</div>
-		</div>
+			<S.SwapModeContainer>
+				<S.SwapModeLink to="/signin">
+					<p>Already have an account?&nbsp;Sign in</p>
+				</S.SwapModeLink>
+			</S.SwapModeContainer>
+		</S.Container>
 	);
 }
 

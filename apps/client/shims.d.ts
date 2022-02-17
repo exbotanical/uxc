@@ -11,3 +11,17 @@ interface ImportMeta {
 		VITE_API_SUBSCRIPTIONS_HOSTNAME_SECURE: string;
 	};
 }
+
+import 'styled-components';
+
+declare module 'styled-components' {
+	type Palettes = 'blue' | 'indigo' | 'purple' | 'cerise' | 'rowan' | 'primary';
+
+	export interface DefaultTheme {
+		colors: {
+			[K in Palettes]: {
+				[k: string]: string;
+			};
+		};
+	}
+}

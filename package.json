@@ -6,17 +6,16 @@
   "author": "Matthew Zito <matthewtzito@gmail.com> (goldmund)",
   "scripts": {
     "dev": "./scripts/dev.bash",
-    "format": "prettier --write \"src/**/*.{ts,tsx,md,css,scss}\"",
-    "preview": "vite preview",
-    "lint": "pnpm -r --parallel --filter {apps} run lint",
-    "lint:css": "stylelint \"src/**/*.{css,scss,ts,tsx}\" --fix"
+    "format": "pnpm -r --parallel --filter {apps,libs} run format",
+    "lint": "pnpm -r --parallel --filter {apps,libs} run lint",
+    "lint:css": "pnpm -r --parallel --filter {apps,libs} run lint:css"
   },
   "lint-staged": {
-    "apps/**/*.{ts,tsx,js,jsx}": [
+    "{apps,libs}/**/*.{ts,tsx,js,jsx}": [
       "pnpm format",
       "pnpm lint"
     ],
-    "apps/**/*.{css,scss}": [
+    "{apps,libs}/**/*.{css,scss}": [
       "pnpm format",
       "pnpm lint:css"
     ]

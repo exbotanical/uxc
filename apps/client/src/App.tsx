@@ -7,6 +7,7 @@ import { useRoutes } from 'react-router-dom';
 import { Routes } from '@/router';
 import { client } from '@/services/api';
 import './App.scss';
+import { ThemeProvider } from './theme';
 
 ReactModal.setAppElement('#root');
 
@@ -14,7 +15,9 @@ export function App() {
 	return (
 		<ApolloProvider client={client}>
 			<AnimatePresence exitBeforeEnter initial={false}>
-				<>{useRoutes(Routes())}</>
+				<ThemeProvider>
+					<>{useRoutes(Routes())}</>
+				</ThemeProvider>
 			</AnimatePresence>
 		</ApolloProvider>
 	);

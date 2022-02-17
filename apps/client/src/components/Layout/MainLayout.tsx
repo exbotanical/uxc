@@ -29,7 +29,6 @@ export function MainLayout() {
 				<ContentLayout />
 
 				<NotificationController />
-				{/* <Modal /> */}
 			</div>
 		</ThreadsProvider>
 	);
