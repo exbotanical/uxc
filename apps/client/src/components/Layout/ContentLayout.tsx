@@ -1,30 +1,60 @@
+import { FlexCol } from '@/theme/Layout';
+import { FontSizeXl } from '@/theme/Typography/FontSize';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { ConnectedChatRoom as ChatRoom } from '../ChatRoom';
-import { Friends } from '../Friends';
-import SvgIcon from '../Icon';
+import { ConnectedChatRoom as ChatRoom } from '@/components/ChatRoom';
+import { Friends } from '@/components/Friends';
+import SvgIcon from '@/components/Icon';
+
+const Container = styled.div`
+	${FlexCol}
+	align-items: center;
+	width: 100%;
+	background-color: ${({ theme }) => theme.colors.primary['1000']};
+	color: ${({ theme }) => theme.colors.primary['100']};
+`;
+
+const Header = styled.header`
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	border-bottom-width: 2px;
+	border-color: ${({ theme }) => theme.colors.primary['1200']};
+	width: 100%;
+	padding: 1rem;
+	height: 75px;
+	min-height: 75px;
+`;
+
+const HeaderLabel = styled.p`
+	${FontSizeXl}
+	font-weight: 700;
+`;
+
+const ContentContainer = styled.div`
+	display: flex;
+	justify-content: center;
+	overflow: hidden;
+	height: 100%;
+	width: 100%;
+`;
 
 export function ContentLayout() {
 	return (
-		<div className="flex flex-col items-center w-full bg-primary-1000">
-			<header
-				className="flex justify-start gap-2 items-center border-b-2 border-primary-1200 w-full p-4"
-				style={{
-					height: '75px',
-					minHeight: '75px'
-				}}
-			>
+		<Container>
+			<Header>
 				<SvgIcon dimensions={21} name="people" />
-				<p className="text-primary-100 text-xl font-bold">Friends</p>
-			</header>
+				<HeaderLabel>Friends</HeaderLabel>
+			</Header>
 
-			<div className="flex overflow-hidden h-full w-full justify-center">
+			<ContentContainer>
 				<Routes>
 					<Route element={<Friends />} path="/" />
 					<Route element={<ChatRoom />} path="/:threadId" />
 				</Routes>
-			</div>
-		</div>
+			</ContentContainer>
+		</Container>
 	);
 }

@@ -44,14 +44,32 @@ const StyledButton = styled(RowCenter).attrs({
 	}
 ` as StyledComponent<'button', DefaultTheme, {}, never>;
 
-export function Button({ children, disabled, loading, ...props }: ButtonProps) {
+const Loading = `opacity: 0;`;
+
+const Normal = `
+	display:flex;
+	align-items:center;
+`;
+
+const ContentContainer = styled.span<{ loading: boolean }>`
+	${({ loading }) => (loading ? Loading : Normal)}
+`;
+
+const Spinner = styled.span`
+	position: absolute;
+`;
+
+export function Button({
+	children,
+	disabled,
+	loading = false,
+	...props
+}: ButtonProps) {
 	return (
 		<StyledButton disabled={!!disabled || !!loading} {...props}>
-			<span className={loading ? 'opacity-0' : 'flex items-center'}>
-				{children}
-			</span>
+			<ContentContainer loading={loading}>{children}</ContentContainer>
 
-			{loading ? <span className="absolute">spinner</span> : null}
+			{loading ? <Spinner>@todo</Spinner> : null}
 		</StyledButton>
 	);
 }

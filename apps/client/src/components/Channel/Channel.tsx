@@ -1,4 +1,7 @@
 import React from 'react';
+import styled from 'styled-components';
+import { RowCenter } from '@/theme/Layout';
+
 const mockImgs = [
 	'https://upload.wikimedia.org/wikipedia/en/8/8e/Can_-_Tago_Mago.jpg',
 	'https://upload.wikimedia.org/wikipedia/en/e/e7/CanMonsterMovieAlbumCover.jpg',
@@ -11,17 +14,32 @@ function randomIntFromInterval(min: number, max: number) {
 
 const randomIdx = randomIntFromInterval(0, mockImgs.length - 1);
 
+const ListItem = styled(RowCenter).attrs({ as: 'li' })`
+	border-radius: 0.75rem;
+	border-radius: 0.75rem;
+	margin: 0.25rem;
+	padding: 0.125rem;
+	cursor: pointer;
+	transition-duration: 300ms;
+
+	&:hover {
+		/* transform: scale(1.05); */
+	}
+`;
+
+const ChannelImg = styled.img`
+	border-radius: 0.375rem;
+	width: 100%;
+	height: 4rem;
+`;
+
 export function Channel() {
 	return (
-		<li className="rounded-xl m-1 p-0.5 flex items-center justify-center cursor-pointer transition ease-in-out transform hover:scale-105 duration-300">
-			<div className="h-[65px]">
-				<img
-					alt="@todo"
-					className="rounded-md w-full h-[4rem]"
-					src={mockImgs[randomIdx()]}
-				/>
+		<ListItem>
+			<div>
+				<ChannelImg alt="@todo" src={mockImgs[randomIdx()]} />
 			</div>
-		</li>
+		</ListItem>
 	);
 }
 

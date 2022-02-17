@@ -4,6 +4,7 @@ import type { Notification as NotifType } from '@/state/types';
 
 import { onEnterKeyPressed } from '@/utils';
 import SvgIcon from '../Icon';
+import styled from 'styled-components';
 
 export type NotificationDuration = 'default' | 'sticky';
 
@@ -11,10 +12,42 @@ export type NotificationProps = Partial<NotifType> & {
 	onClose?: () => void;
 };
 
+const Container = styled.div<{ type: NotifType['type'] }>`
+	align-self: center;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-radius: 0.375rem;
+	width: 24rem;
+	margin-bottom: 0.5rem;
+	padding: 0.75rem;
+	transition-property: transform;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	transition-duration: 150ms;
+	transition-duration: 300ms;
+
+	background-color: ${({ theme, type }) => {
+		switch (type) {
+			case 'error':
+				return theme.colors.accent['100'];
+
+			case 'success':
+				return theme.colors.accent['600'];
+
+			default:
+				return theme.colors.accent['500'];
+		}
+	}};
+`;
+
+const AlignedButton = styled.button`
+	align-self: flex-end;
+`;
+
 export function Notification({
 	message,
 	duration = 'default',
-	type,
+	type = 'info',
 	onClose = () => {}
 }: NotificationProps) {
 	useEffect(() => {
@@ -31,29 +64,19 @@ export function Notification({
 		};
 	}, [duration]);
 
-	const color =
-		type === 'error'
-			? 'bg-accent'
-			: type === 'success'
-			? 'bg-green-400'
-			: 'bg-secondary';
-
 	return (
-		<div
-			className={`flex rounded-md w-96 p-3 items-center self-center justify-between text-button transition-transform duration-300 mb-2 ${color}`}
-		>
-			<div className="font-bold ">{message}</div>
+		<Container type={type}>
+			<p>{message}</p>
 
-			<button
+			<AlignedButton
 				onClick={onClose}
 				onKeyPress={onEnterKeyPressed(onClose)}
 				role="button"
 				tabIndex={0}
-				className="self-end"
 			>
 				<SvgIcon name="close" dimensions={32} />
-			</button>
-		</div>
+			</AlignedButton>
+		</Container>
 	);
 }
 

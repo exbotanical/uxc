@@ -5,17 +5,37 @@ import SvgIcon from '@/components/Icon';
 import { Delimiter } from '@/components/PrivateThread/Delimiter';
 import { PrivateThread } from '@/components/PrivateThread/PrivateThread';
 import { ThreadsContext } from '@/state/context/ThreadsContext';
+import styled from 'styled-components';
+import { FontSizeLg } from '@/theme/Typography/FontSize';
+import { FlexCol } from '@/theme/Layout';
+import { ListItem } from './styles';
 
+const PaddedListItem = styled(ListItem)`
+	padding: 1rem;
+`;
+
+const FriendsLabel = styled.p`
+	${FontSizeLg}
+	font-weight: 600;
+	margin-left: 1rem;
+`;
+
+const ThreadsListContainer = styled.ul`
+	${FlexCol}
+	overflow-y: auto;
+	height: 100%;
+`;
+
+/**
+ * @todo scrollto selected item
+ */
 export function PrivateThreadsList() {
 	const { threads } = useContext(ThreadsContext);
 	const navigate = useNavigate();
 	const location = useLocation();
-	const paths = location.pathname.split('/');
 
+	const paths = location.pathname.split('/');
 	const isActiveItem = paths[paths.length - 1] == '';
-	const activeClass = `${
-		isActiveItem ? 'bg-primary-1000 text-primary-200' : 'text-primary-100'
-	}`;
 
 	const handleClick = (path: string) => {
 		navigate(`/${path}`);
@@ -34,8 +54,8 @@ export function PrivateThreadsList() {
 	return (
 		<>
 			<ul>
-				<li
-					className={`w-full flex items-center p-4 rounded-sm hover:bg-primary-1000 ${activeClass}`}
+				<PaddedListItem
+					isActiveItem={isActiveItem}
 					onClick={() => {
 						handleClick('');
 					}}
@@ -43,22 +63,20 @@ export function PrivateThreadsList() {
 						onEnterKeyPressed(e, '/');
 					}}
 					role="button"
-					style={{ transition: 'color 0.3s, background-color 0.4s' }}
 					tabIndex={0}
 				>
 					<SvgIcon dimensions={21} name="people" />
-					<p className="text-primary-200 text-lg font-semibold ml-6">Friends</p>
-				</li>
+					<FriendsLabel>Friends</FriendsLabel>
+				</PaddedListItem>
 			</ul>
 
 			<Delimiter title="Direct Messages" />
 
-			<ul className="flex flex-col overflow-y-auto h-full">
+			<ThreadsListContainer>
 				{threads.map(({ _id: id }) => (
-					// @todo scrollto selected
 					<PrivateThread id={id} key={id} />
 				))}
-			</ul>
+			</ThreadsListContainer>
 		</>
 	);
 }

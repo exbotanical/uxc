@@ -5,11 +5,18 @@ import React, { useState } from 'react';
 import type { SendMessage } from '@/components/ChatRoom';
 
 import { Input } from '@/components/Fields/Input';
+import styled from 'styled-components';
+import { FlexCol } from '@/theme/Layout';
 
 interface ChatMessageInputProps {
 	sendMessage: SendMessage;
 	name: string;
 }
+
+const Form = styled.form`
+	${FlexCol}
+	width: auto;
+`;
 
 export function ChatMessageInput({ sendMessage, name }: ChatMessageInputProps) {
 	const [message, setMessage] = useState('');
@@ -36,7 +43,7 @@ export function ChatMessageInput({ sendMessage, name }: ChatMessageInputProps) {
 	};
 
 	return (
-		<form className="flex flex-col w-auto" onSubmit={handleSubmit}>
+		<Form onSubmit={handleSubmit}>
 			<Input
 				autoComplete="off"
 				label="Send message"
@@ -46,7 +53,7 @@ export function ChatMessageInput({ sendMessage, name }: ChatMessageInputProps) {
 				placeholder={`Send a message to ${name}`}
 				value={message}
 			/>
-		</form>
+		</Form>
 	);
 }
 

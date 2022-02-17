@@ -6,48 +6,92 @@ import { UserAvatar } from '../User/UserAvatar';
 import type { Message, User } from '@uxc/types';
 
 import { toReadable } from '@/utils';
+import styled from 'styled-components';
+import { FlexCol } from '@/theme/Layout';
+import { FontSizeLg, FontSizeSm } from '@/theme/Typography/FontSize';
+
+const Container = styled.div<{ hover: boolean }>`
+	${FlexCol}
+	${FontSizeLg}
+	background-color:${({ theme, hover }) => hover && theme.colors.primary['1100']};
+	position: relative;
+`;
+
+const OptionsContainer = styled.div`
+	display: flex;
+	justify-content: space-evenly;
+	position: absolute;
+	right: 0px;
+	top: -0.5rem;
+	width: 5rem;
+	padding: 0.5rem;
+	border-radius: 0.125rem;
+	border-top-width: 1px;
+	border-color: ${({ theme }) => theme.colors.blue['500']};
+	background-color: ${({ theme }) => theme.colors.primary['1000']};
+	color: ${({ theme }) => theme.colors.primary['100']};
+	box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+`;
+
+const BodyContainerSansMeta = styled.div`
+	display: flex;
+	padding-bottom: 0.25rem;
+	margin-left: 6rem;
+	margin-right: 0.75rem;
+`;
+
+const BodyContainer = styled.div`
+	display: flex;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	padding-bottom: 0.25rem;
+	margin-left: 0.75rem;
+	margin-right: 0.75rem;
+`;
+
+const AvatarContainer = styled.div`
+	display: flex;
+	justify-content: center;
+	margin-left: 0.75rem;
+	margin-right: 0.75rem;
+`;
+
+const MetaContainer = styled.div`
+	${FlexCol}
+	align-items: flex-start;
+`;
+
+const MetaLabelContainer = styled.div`
+	display: flex;
+	align-items: center;
+`;
+
+const UsernameBody = styled.p`
+	font-weight: 700;
+	margin-right: 0.5rem;
+`;
+
+const SentDateBody = styled.p`
+	${FontSizeSm}
+	color: ${({ theme }) => theme.colors.primary['200']};
+`;
 
 export function ChatMessage({
 	body,
 	createdAt,
 	isSender,
 	sender,
-	skipMeta
+	sansMeta
 }: Omit<Message, 'sender'> & {
 	isSender: boolean;
 	sender: User;
-	skipMeta: boolean;
+	sansMeta: boolean;
 }) {
 	const [hover, setHover] = useState(false);
 
-	const colors = [
-		'#ff2366',
-		'#fd51d9',
-		'#face15',
-		'#8d4de8',
-		'#6859ea',
-		'#7ed321',
-		'#56b2ba',
-		'#00CCFF',
-		'#AA19FA',
-		'#FFFF66'
-	];
-
-	// TODO serverside
-	function generateColor(str: string) {
-		let sum = 0;
-		for (let i = 0; i < str.length; i++) {
-			sum += i * str.charCodeAt(i);
-		}
-
-		return colors[sum % colors.length];
-	}
-
 	return (
-		<div
-			className={`flex flex-col text-lg ${
-				hover ? 'bg-primary-1100' : ''
-			} relative`}
+		<Container
+			hover={hover}
 			onMouseEnter={() => {
 				setHover(true);
 			}}
@@ -56,42 +100,38 @@ export function ChatMessage({
 			}}
 		>
 			{hover ? (
-				<div className="right-0 -top-2 absolute bg-primary-1000 text-primary-100 p-2 w-20 rounded-sm shadow-lg flex justify-evenly border-t border-blue-500">
+				<OptionsContainer>
 					<button type="button">
 						<SvgIcon dimensions={20} name="smiley" />
 					</button>
 					<button type="button">
 						<SvgIcon dimensions={20} name="edit" />
 					</button>
-				</div>
+				</OptionsContainer>
 			) : null}
 
-			{skipMeta ? (
-				<div className="flex ml-[5.3rem] pb-1 mx-3 ">
-					<p className="text-primary-100">{body}</p>
-				</div>
+			{sansMeta ? (
+				<BodyContainerSansMeta>
+					<p>{body}</p>
+				</BodyContainerSansMeta>
 			) : (
-				<div className="flex py-2 pb-1 mx-3">
-					<div className="flex justify-center mx-3">
+				<BodyContainer>
+					<AvatarContainer>
 						<UserAvatar size="lg" u={sender} withIndicator={false} />
-					</div>
+					</AvatarContainer>
 
-					<div className="flex flex-col items-start">
-						<div className="flex items-center">
-							<p className="text-primary-100 font-bold mr-2">
-								{sender.username}
-							</p>
+					<MetaContainer>
+						<MetaLabelContainer>
+							<UsernameBody>{sender.username}</UsernameBody>
 
-							<p className="text-primary-200 text-sm">
-								{toReadable(createdAt)}
-							</p>
-						</div>
+							<SentDateBody>{toReadable(createdAt)}</SentDateBody>
+						</MetaLabelContainer>
 
-						<p className="text-primary-100">{body}</p>
-					</div>
-				</div>
+						<p>{body}</p>
+					</MetaContainer>
+				</BodyContainer>
 			)}
-		</div>
+		</Container>
 	);
 }
 

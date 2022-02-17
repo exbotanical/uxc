@@ -15,7 +15,14 @@ interface ImportMeta {
 import 'styled-components';
 
 declare module 'styled-components' {
-	type Palettes = 'blue' | 'indigo' | 'purple' | 'cerise' | 'rowan' | 'primary';
+	type Palettes =
+		| 'blue'
+		| 'indigo'
+		| 'purple'
+		| 'cerise'
+		| 'rowan'
+		| 'primary'
+		| 'accent';
 
 	export interface DefaultTheme {
 		colors: {

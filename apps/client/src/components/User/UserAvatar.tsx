@@ -4,38 +4,51 @@ import type { User } from '@uxc/types';
 
 import { StatusIndicator } from '@/components/Badges/StatusIndicator';
 import { UnreadMessagesBadge } from '../Badges/UnreadMessages';
-import { sizeMap } from './util';
+import styled from 'styled-components';
 
+type Size = keyof typeof SizeMap;
 interface UserCardProps {
-	size: keyof typeof sizeMap;
+	size: Size;
 	u: User;
-	className?: string;
 	withIndicator?: boolean;
 	newMessagesCount?: number;
 }
 
-const defaultAvatar = '../../../src/assets/gravatar.png';
+const SizeMap = {
+	sm: '40px',
+	md: '50px',
+	lg: '60px'
+};
+
+const defaultAvatar = new URL('../../assets/gravatar.png', import.meta.url)
+	.href;
+
+const Container = styled.div<{ size: Size }>`
+	position: relative;
+	margin-bottom: 0.25rem;
+	height: ${({ size }) => SizeMap[size]};
+	width: ${({ size }) => SizeMap[size]};
+`;
+
+const RoundedImg = styled.img`
+	border-radius: 9999px;
+`;
+
+const IndicatorContainer = styled.div`
+	position: absolute;
+	border-color: ${({ theme }) => theme.colors.primary['800']};
+`;
 
 export function UserAvatar({
 	u,
 	size = 'md',
-	className = '',
 	withIndicator = true,
 	newMessagesCount = 0
 }: UserCardProps) {
-	const { status, avatar } = sizeMap[size];
-
 	return (
-		<div
-			className={`relative mb-1 ${className}`}
-			style={{
-				height: avatar,
-				width: avatar
-			}}
-		>
-			<img
+		<Container size={size}>
+			<RoundedImg
 				alt={u.username ? `${u.username}'s avatar` : 'your avatar'}
-				className="rounded-full"
 				onError={({ currentTarget }) => {
 					currentTarget.onerror = null;
 					currentTarget.src = defaultAvatar;
@@ -44,15 +57,15 @@ export function UserAvatar({
 			/>
 
 			{withIndicator ? (
-				<div className="absolute border-primary-800">
+				<IndicatorContainer>
 					{newMessagesCount > 0 ? (
 						<UnreadMessagesBadge newMessages={newMessagesCount} />
 					) : (
-						<StatusIndicator placementClass={status} />
+						<StatusIndicator size={size} />
 					)}
-				</div>
+				</IndicatorContainer>
 			) : null}
-		</div>
+		</Container>
 	);
 }
 

@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { UserAvatar } from '../User/UserAvatar';
@@ -9,24 +9,25 @@ import type { ObjectID, User } from '@uxc/types';
 import { GET_CURRENT_USER } from '@/services/api/queries';
 import { StatefulThread, ThreadsContext } from '@/state/context/ThreadsContext';
 import { onEnterKeyPressed } from '@/utils';
-import { NotificationBadge } from '../Badges/NotificationBadge';
+import styled from 'styled-components';
+import { ListItem } from './styles';
+import { RowCenter } from '@/theme/Layout';
+import { FontSizeLg } from '@/theme/Typography/FontSize';
 
 interface PrivateThreadProps {
 	id: ObjectID;
 }
 
-function UnreadMessagesBadge({ newMessages }: StatefulThread) {
-	if (!newMessages) {
-		return null;
-	}
+const PaddedListItem = styled(ListItem)`
+	padding: 0.5rem;
+`;
 
-	return (
-		<NotificationBadge className="mb-1">
-			<p>{newMessages}</p>
-		</NotificationBadge>
-	);
-}
-UnreadMessagesBadge.displayName = 'UnreadMessagesBadge';
+const UsernameLabel = styled.p`
+	${FontSizeLg}
+	font-weight: 600;
+	margin: auto;
+	margin-left: 0.75rem;
+`;
 
 export function PrivateThread({ id }: PrivateThreadProps) {
 	const { getThreadById } = useContext(ThreadsContext);
@@ -40,9 +41,6 @@ export function PrivateThread({ id }: PrivateThreadProps) {
 	const location = useLocation();
 	const paths = location.pathname.split('/');
 	const isActiveItem = paths[paths.length - 1] == id;
-	const activeClass = `${
-		isActiveItem ? 'bg-primary-1000 text-primary-200' : 'text-primary-100'
-	}`;
 
 	const them = thread?.users.find(
 		({ _id }) => _id !== user?.getCurrentUser._id
@@ -58,22 +56,21 @@ export function PrivateThread({ id }: PrivateThreadProps) {
 	}
 
 	return (
-		<li
-			className={`${activeClass} w-full flex items-center p-2 rounded-sm hover:bg-primary-1000`}
+		<PaddedListItem
+			isActiveItem={isActiveItem}
 			onClick={handleClick}
 			onKeyPress={(e) => {
 				onEnterKeyPressed(handleClick)<HTMLLIElement>(e);
 			}}
 			role="button"
-			style={{ transition: 'color 0.3s, background-color 0.4s' }}
 			tabIndex={0}
 		>
-			<div className="flex justify-center items-center">
+			<RowCenter>
 				<UserAvatar size="md" u={them} newMessagesCount={thread.newMessages} />
 
-				<p className="text-lg font-semibold m-auto ml-3">{them.username}</p>
-			</div>
-		</li>
+				<UsernameLabel>{them.username}</UsernameLabel>
+			</RowCenter>
+		</PaddedListItem>
 	);
 }
 

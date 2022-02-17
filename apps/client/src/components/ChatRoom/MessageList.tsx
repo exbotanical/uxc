@@ -9,10 +9,16 @@ import {
 	GET_CURRENT_USER,
 	ON_THREAD_MESSAGE_CREATED
 } from '@/services/api/queries';
+import styled from 'styled-components';
 
 interface MessageListProps {
 	threadId: ObjectID;
 }
+
+const Container = styled.div`
+	overflow-y: auto;
+	height: 100%;
+`;
 
 export function MessageList({ threadId }: MessageListProps) {
 	const bottomRef = useRef<HTMLDivElement | null>(null);
@@ -97,10 +103,10 @@ export function MessageList({ threadId }: MessageListProps) {
 			/**
 			 * Skip metadata (e.g. username, avatar) in display?
 			 */
-			let skipMeta = false;
+			let sansMeta = false;
 
 			if (userId === message.sender._id) {
-				skipMeta = true;
+				sansMeta = true;
 			}
 
 			if (message.sender._id === user?.getCurrentUser._id) {
@@ -114,17 +120,17 @@ export function MessageList({ threadId }: MessageListProps) {
 			return {
 				...message,
 				isSender,
-				skipMeta
+				sansMeta
 			};
 		}) || [];
 
 	return (
-		<div className=" overflow-y-auto h-full">
+		<Container>
 			{messages.map((message) => (
 				<ChatMessage key={message._id} {...message} />
 			))}
 
 			<div ref={bottomRef} />
-		</div>
+		</Container>
 	);
 }

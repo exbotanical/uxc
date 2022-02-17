@@ -4,18 +4,31 @@ import type { PropsFromRedux } from '@/state';
 
 import { Notification } from '@/components/Notification/Notification';
 import { connector } from '@/state';
+import styled from 'styled-components';
+import { FlexCol } from '@/theme/Layout';
 
 type NotificationControllerProps = PropsFromRedux;
+
+const Container = styled.div`
+	${FlexCol}
+	justify-content: center;
+	position: absolute;
+	width: 100%;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 0.75rem;
+	z-index: 1001;
+`;
 
 function NotificationControllerBase({
 	notifications,
 	hideNotification
 }: NotificationControllerProps & PropsFromRedux) {
 	return (
-		<div
-			className="absolute flex flex-col bottom-0 justify-center mx-auto w-full inset-x-0 mb-3 "
-			style={{ zIndex: 1001 }}
-		>
+		<Container>
 			{notifications.map(({ id, message, duration, ...otherProps }) => (
 				<Notification
 					duration={duration}
@@ -25,7 +38,7 @@ function NotificationControllerBase({
 					key={id}
 				/>
 			))}
-		</div>
+		</Container>
 	);
 }
 

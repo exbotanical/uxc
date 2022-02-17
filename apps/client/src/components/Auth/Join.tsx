@@ -2,7 +2,7 @@ import type { ChangeEvent, FormEvent } from 'react';
 
 import { useMutation, useQuery } from '@apollo/client';
 import React, { useState } from 'react';
-import { useNavigate, Link, Navigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 
 import bg from '@/assets/splash.png';
 import { AdaptiveInput } from '@/components/Fields/AdaptiveInput';
@@ -10,7 +10,6 @@ import * as S from './styles';
 
 import type { User } from '@uxc/types';
 
-import { Button } from '@/components/Buttons/Button';
 import { GET_CURRENT_USER, JOIN } from '@/services/api/queries';
 
 export function Join() {
@@ -122,9 +121,9 @@ export function Join() {
 						value={password}
 					/>
 
-					<div className="self-center">
+					<S.ButtonContainer>
 						<S.CTAButton type="submit">Join</S.CTAButton>
-					</div>
+					</S.ButtonContainer>
 				</S.Form>
 			</S.InnerCard>
 

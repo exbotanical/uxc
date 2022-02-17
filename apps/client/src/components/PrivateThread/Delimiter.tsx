@@ -1,19 +1,30 @@
+import { FontSizeSm } from '@/theme/Typography/FontSize';
 import React from 'react';
+import styled from 'styled-components';
 
 interface DelimiterProps {
 	title: string;
-	className?: string;
 }
 
-export function Delimiter({ title, className = '' }: DelimiterProps) {
+const Container = styled.div`
+	padding: 1rem;
+	justify-content: space-between;
+	color: ${({ theme }) => theme.colors.primary['100']};
+`;
+
+const Label = styled.p`
+	${FontSizeSm}
+	font-weight: 700;
+	text-transform: uppercase;
+	white-space: nowrap;
+	opacity: 0.75;
+`;
+
+export function Delimiter({ title }: DelimiterProps) {
 	return (
-		<div
-			className={`flex justify-between items-center text-primary-100 p-4 ${className}`}
-		>
-			<p className="whitespace-nowrap font-bold text-sm opacity-75 uppercase">
-				{title}
-			</p>
-		</div>
+		<Container>
+			<Label>{title}</Label>
+		</Container>
 	);
 }
 

@@ -1,11 +1,28 @@
+import { FontSizeXs } from '@/theme/Typography/FontSize';
 import React from 'react';
-import { NotificationBadge } from './NotificationBadge';
+import styled from 'styled-components';
 
 interface UnreadMessagesBadgeProps {
 	newMessages: number;
 }
 
 const THRESHOLD = 10;
+
+const Container = styled.span<{ size: 'sm' | 'lg' }>`
+	${FontSizeXs}
+	font-weight: 700;
+	position: relative;
+	left: 1.75rem;
+	bottom: 1.25rem;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	line-height: 1;
+	border-radius: 9999px;
+	width: ${({ size }) => (size === 'sm' ? 1.25 : 1.75)}rem;
+	height: 1.25rem;
+	background-color: ${({ theme }) => theme.colors.accent['100']};
+`;
 
 export function UnreadMessagesBadge({ newMessages }: UnreadMessagesBadgeProps) {
 	if (!newMessages) {
@@ -14,14 +31,12 @@ export function UnreadMessagesBadge({ newMessages }: UnreadMessagesBadgeProps) {
 
 	const manyMessages = newMessages > THRESHOLD;
 	const formattedCount = manyMessages ? `${THRESHOLD}+` : newMessages;
-	const badgeSize = manyMessages ? 'w-7 h-5' : 'w-5 h-5';
+	const badgeSize = manyMessages ? 'lg' : 'sm';
 
 	return (
-		<span
-			className={`bg-message-100 inline-flex items-center justify-center leading-none font-bold text-xs rounded-full relative left-7 bottom-5 ${badgeSize}`}
-		>
+		<Container size={badgeSize}>
 			<p>{formattedCount}</p>
-		</span>
+		</Container>
 	);
 }
 UnreadMessagesBadge.displayName = 'UnreadMessagesBadge';

@@ -8,10 +8,13 @@ import { ChannelsList } from '@/components/Channel/ChannelsList';
 import { NotificationController } from '@/components/Notification/NotificationController';
 import { useViewportSize } from '@/hooks/useViewportSize';
 import { ThreadsProvider } from '@/state/context/ThreadsContext';
-import { useSubscription } from '@apollo/client';
-import type { Message, User } from '@uxc/types';
-import { ON_ANY_MESSAGE_CREATED } from '@/services/api/queries';
-import { connector, PropsFromRedux, showNotification, store } from '@/state';
+import styled from 'styled-components';
+
+const Container = styled.div`
+	display: flex;
+	flex: 1 1 0%;
+	height: 100vh;
+`;
 
 export function MainLayout() {
 	const viewport = useViewportSize();
@@ -21,15 +24,15 @@ export function MainLayout() {
 
 	return (
 		<ThreadsProvider>
-			<div className="h-screen flex flex-1">
-				{isSmallViewport ? null : <ChannelsList className="bg-primary-1200" />}
+			<Container>
+				{isSmallViewport ? null : <ChannelsList />}
 
 				{gtsm ? <SidebarLayout body={<Outlet />} /> : null}
 
 				<ContentLayout />
 
 				<NotificationController />
-			</div>
+			</Container>
 		</ThreadsProvider>
 	);
 }

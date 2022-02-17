@@ -2,13 +2,35 @@ import { useQuery } from '@apollo/client';
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 
-import SvgIcon from '../Icon';
-import { UserStatus } from '../User/UserStatus';
+import SvgIcon from '@/components/Icon';
+import { UserStatus } from '@/components/User/UserStatus';
 
 import type { User } from '@uxc/types';
 
 import { SearchButton } from '@/components/PrivateThread/SearchButton';
 import { GET_CURRENT_USER } from '@/services/api/queries';
+import styled from 'styled-components';
+import { FlexCol } from '@/theme/Layout';
+
+const Container = styled.aside`
+	${FlexCol}
+	height: 100vh;
+	width: 22rem;
+	min-width: 22rem;
+	background-color: ${({ theme }) => theme.colors.primary['1100']};
+`;
+
+const Footer = styled.footer`
+	margin-top: auto;
+	height: 5rem;
+	background-color: ${({ theme }) => theme.colors.primary['1200']};
+`;
+
+const FooterContainer = styled.div`
+	display: flex;
+	justify-content: space-between;
+	padding: 1rem;
+`;
 
 export function SidebarLayout({ body }: { body: React.ReactNode }) {
 	const { loading, data, error } = useQuery<{
@@ -25,18 +47,18 @@ export function SidebarLayout({ body }: { body: React.ReactNode }) {
 	}
 
 	return (
-		<aside className="flex flex-col h-screen w-[22rem] min-w-[22rem] bg-primary-1100">
+		<Container>
 			<SearchButton />
 
 			{body}
-			<footer className="mt-auto h-20 bg-primary-1200">
-				<div className="flex justify-between p-4">
+			<Footer>
+				<FooterContainer>
 					<UserStatus user={data.getCurrentUser} />
 					<button type="button">
 						<SvgIcon dimensions={28} name="gear" />
 					</button>
-				</div>
-			</footer>
-		</aside>
+				</FooterContainer>
+			</Footer>
+		</Container>
 	);
 }

@@ -3,7 +3,50 @@ import React from 'react';
 import { Button } from '@/components/Buttons/Button';
 import { Input } from '@/components/Fields/Input';
 import { Modal } from '@/components/Modal/Modal';
+import styled from 'styled-components';
+import { FontSizeXl } from '@/theme/Typography/FontSize';
 
+const Form = styled.form`
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 1rem;
+	width: 100%;
+
+	&:focus {
+		outline: 2px solid transparent;
+		outline-offset: 2px;
+	}
+`;
+
+const HeaderContainer = styled.header`
+	grid-column: span 3 / span 3;
+	display: block;
+`;
+
+const Header = styled.h1`
+	${FontSizeXl}
+	margin-bottom: 0.5rem;
+`;
+
+const InputContainer = styled.div`
+	grid-column: span 2 / span 2;
+	display: flex;
+	height: 100%;
+	width: 100%;
+`;
+
+const ActionContainer = styled.div`
+	grid-column: 1 / -1;
+
+	display: flex;
+	align-items: center;
+
+	padding-top: 0.5rem;
+
+	& > * + * {
+		margin-left: 0.75rem;
+	}
+`;
 export function SearchModal({
 	isOpen,
 	closeSearch
@@ -13,30 +56,28 @@ export function SearchModal({
 }) {
 	return (
 		<Modal isOpen={isOpen} onRequestClose={closeSearch}>
-			<form className="grid grid-cols-3 gap-4 focus:outline-none w-full">
-				<div className="col-span-3 block">
-					<h4 className="mb-2 text-primary-100">Search for channels or DMs</h4>
-				</div>
+			<Form>
+				<HeaderContainer>
+					<Header>Search for channels or DMs</Header>
+				</HeaderContainer>
 
-				<div className="flex h-full w-full col-span-2">
+				<InputContainer>
 					<Input
 						autoComplete="off"
-						className="rounded-8 bg-primary-700 h-6"
 						maxLength={60}
-						name="name"
+						name="Search"
+						label="Search"
 					/>
-				</div>
+				</InputContainer>
 
-				<div className="flex pt-2 space-x-3 col-span-full items-center">
-					<Button color="primary-300" onClick={closeSearch} type="button">
+				<ActionContainer>
+					<Button onClick={closeSearch} type="button">
 						Cancel
 					</Button>
 
-					<Button className="mr-3" type="submit">
-						Search
-					</Button>
-				</div>
-			</form>
+					<Button type="submit">Search</Button>
+				</ActionContainer>
+			</Form>
 		</Modal>
 	);
 }

@@ -16,12 +16,26 @@ import {
 } from '@/services/api/queries';
 import { connector } from '@/state';
 import { ThreadsContext } from '@/state/context/ThreadsContext';
+import styled from 'styled-components';
+import { FlexCol } from '@/theme/Layout';
 
 export interface SendMessage {
 	(message: string): void;
 }
 
 interface ChatRoomProps {}
+
+const Container = styled.div`
+	${FlexCol}
+	height: 100%;
+	width: 100%;
+	background-color: ${({ theme }) => theme.colors.primary['1000']};
+`;
+
+const Footer = styled.footer`
+	margin-top: auto;
+	padding: 0.5rem;
+`;
 
 export function ChatRoom({ showNotification }: ChatRoomProps & PropsFromRedux) {
 	const { threadId } = useParams();
@@ -86,13 +100,12 @@ export function ChatRoom({ showNotification }: ChatRoomProps & PropsFromRedux) {
 	};
 
 	return (
-		<div className="flex flex-col h-full w-full bg-primary-1000">
+		<Container>
 			<MessageList threadId={threadId} />
-
-			<footer className="mt-auto p-2">
+			<Footer>
 				<ChatMessageInput name={them.username} sendMessage={sendMessage} />
-			</footer>
-		</div>
+			</Footer>
+		</Container>
 	);
 }
 
