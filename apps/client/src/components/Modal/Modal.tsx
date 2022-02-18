@@ -1,7 +1,9 @@
+import { FlexCol } from '@/styles/Layout';
 import type { KeyboardEvent } from 'react';
 
 import React from 'react';
 import ReactModal from 'react-modal';
+import styled from 'styled-components';
 
 const modalStyles = {
 	default: {
@@ -48,6 +50,19 @@ const modalStyles = {
 	}
 };
 
+const InnerContainer = styled.div`
+	${FlexCol}
+	width: 100%;
+`;
+
+const ButtonContainer = styled.div`
+	display: flex;
+	justify-content: flex-end;
+	position: absolute;
+	right: 0.75rem;
+	top: 0.75rem;
+`;
+
 export function Modal({
 	children,
 	variant = 'default',
@@ -70,30 +85,23 @@ export function Modal({
 			style={modalStyles[variant]}
 			{...props}
 		>
-			<div className="flex flex-col w-full">
-				<div className="flex justify-end absolute right-3 top-3">
+			<InnerContainer>
+				<ButtonContainer>
 					<button
-						className="p-1 text-primary-100"
-						data-testid="close-modal"
 						onClick={(e) => {
 							console.log({ e });
 							props.onRequestClose?.(e);
 						}}
 						type="button"
 					>
-						<button>CLOSE</button>
+						CLOSE
 					</button>
-				</div>
+				</ButtonContainer>
 
-				<div
-					className="focus:outline-none"
-					onKeyDown={onKeyDown}
-					role="tab"
-					tabIndex={-1}
-				>
+				<div onKeyDown={onKeyDown} role="tab" tabIndex={-1}>
 					{children}
 				</div>
-			</div>
+			</InnerContainer>
 		</ReactModal>
 	);
 }

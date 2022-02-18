@@ -64,7 +64,7 @@ type SeedReturnValue {
 type Mutation {
 	seed: SeedReturnValue
   createMessage(threadId: ID, body: String): Message
-  updateMessage(messageId: ID, body: String): ID
+  updateMessage(messageId: ID, body: String): Message
 	createThread(receiverId: ID): PrivateThread
 	deleteThread(threadId: ID): ID
   signin(args: SigninInput): User

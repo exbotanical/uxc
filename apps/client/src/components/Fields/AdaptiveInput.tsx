@@ -1,4 +1,4 @@
-import { FontSizeLg, FontSizeXl } from '@/theme/Typography/FontSize';
+import { FontSizeLg, FontSizeXl } from '@/styles/Typography/FontSize';
 import type { ComponentPropsWithoutRef } from 'react';
 
 import React, { forwardRef } from 'react';

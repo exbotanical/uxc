@@ -6,7 +6,6 @@ export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K]
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -51,7 +50,7 @@ export type Mutation = {
   seed?: Maybe<SeedReturnValue>;
   signin?: Maybe<User>;
   signout?: Maybe<Scalars['ID']>;
-  updateMessage?: Maybe<Scalars['ID']>;
+  updateMessage?: Maybe<Message>;
 };
 
 
@@ -280,14 +279,14 @@ export type MessageResolvers<ContextType = Context, ParentType extends Resolvers
 };
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  createMessage?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, RequireFields<MutationCreateMessageArgs, never>>;
-  createThread?: Resolver<Maybe<ResolversTypes['PrivateThread']>, ParentType, ContextType, RequireFields<MutationCreateThreadArgs, never>>;
-  deleteThread?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType, RequireFields<MutationDeleteThreadArgs, never>>;
-  join?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationJoinArgs, never>>;
+  createMessage?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, Partial<MutationCreateMessageArgs>>;
+  createThread?: Resolver<Maybe<ResolversTypes['PrivateThread']>, ParentType, ContextType, Partial<MutationCreateThreadArgs>>;
+  deleteThread?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType, Partial<MutationDeleteThreadArgs>>;
+  join?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<MutationJoinArgs>>;
   seed?: Resolver<Maybe<ResolversTypes['SeedReturnValue']>, ParentType, ContextType>;
-  signin?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationSigninArgs, never>>;
+  signin?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<MutationSigninArgs>>;
   signout?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
-  updateMessage?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType, RequireFields<MutationUpdateMessageArgs, never>>;
+  updateMessage?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, Partial<MutationUpdateMessageArgs>>;
 };
 
 export type PrivateThreadResolvers<ContextType = Context, ParentType extends ResolversParentTypes['PrivateThread'] = ResolversParentTypes['PrivateThread']> = {
@@ -300,10 +299,10 @@ export type PrivateThreadResolvers<ContextType = Context, ParentType extends Res
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   getCurrentUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
-  getMessages?: Resolver<Maybe<Array<Maybe<ResolversTypes['Message']>>>, ParentType, ContextType, RequireFields<QueryGetMessagesArgs, never>>;
-  getThread?: Resolver<Maybe<ResolversTypes['PrivateThread']>, ParentType, ContextType, RequireFields<QueryGetThreadArgs, never>>;
-  getThreads?: Resolver<Maybe<Array<Maybe<ResolversTypes['PrivateThread']>>>, ParentType, ContextType, RequireFields<QueryGetThreadsArgs, never>>;
-  getUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetUserArgs, never>>;
+  getMessages?: Resolver<Maybe<Array<Maybe<ResolversTypes['Message']>>>, ParentType, ContextType, Partial<QueryGetMessagesArgs>>;
+  getThread?: Resolver<Maybe<ResolversTypes['PrivateThread']>, ParentType, ContextType, Partial<QueryGetThreadArgs>>;
+  getThreads?: Resolver<Maybe<Array<Maybe<ResolversTypes['PrivateThread']>>>, ParentType, ContextType, Partial<QueryGetThreadsArgs>>;
+  getUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<QueryGetUserArgs>>;
 };
 
 export type SeedReturnValueResolvers<ContextType = Context, ParentType extends ResolversParentTypes['SeedReturnValue'] = ResolversParentTypes['SeedReturnValue']> = {
@@ -315,7 +314,7 @@ export type SeedReturnValueResolvers<ContextType = Context, ParentType extends R
 export type SubscriptionResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
   onAnyMessageCreated?: SubscriptionResolver<Maybe<Array<Maybe<ResolversTypes['Message']>>>, "onAnyMessageCreated", ParentType, ContextType>;
   onThreadCreated?: SubscriptionResolver<Maybe<Array<Maybe<ResolversTypes['PrivateThread']>>>, "onThreadCreated", ParentType, ContextType>;
-  onThreadMessageCreated?: SubscriptionResolver<Maybe<Array<Maybe<ResolversTypes['Message']>>>, "onThreadMessageCreated", ParentType, ContextType, RequireFields<SubscriptionOnThreadMessageCreatedArgs, never>>;
+  onThreadMessageCreated?: SubscriptionResolver<Maybe<Array<Maybe<ResolversTypes['Message']>>>, "onThreadMessageCreated", ParentType, ContextType, Partial<SubscriptionOnThreadMessageCreatedArgs>>;
 };
 
 export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {

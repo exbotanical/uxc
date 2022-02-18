@@ -1,5 +1,5 @@
-import { ScreenReaderOnly } from '@/theme/Layout';
-import { FontSizeXl } from '@/theme/Typography/FontSize';
+import { ScreenReaderOnly } from '@/styles/Layout';
+import { FontSizeXl } from '@/styles/Typography/FontSize';
 import type { ComponentPropsWithoutRef } from 'react';
 
 import React, { forwardRef } from 'react';
@@ -52,7 +52,10 @@ const Label = styled.label`
 const ButtonContainer = styled.div`
 	display: flex;
 	margin-right: 0.75rem;
-	/* color: ${({ theme }) => theme.colors.primary['100']}; */
+`;
+
+const Button = styled.button`
+	color: ${({ theme }) => theme.colors.primary['100']};
 `;
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -65,9 +68,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 				<ButtonContainer>
 					{options?.map(({ iconName, handleClick }, idx) => {
 						return handleClick ? (
-							<button key={idx} onClick={handleClick} type="button">
+							<Button key={idx} onClick={handleClick} type="button">
 								<SvgIcon dimensions={22} name={iconName} />
-							</button>
+							</Button>
 						) : (
 							<SvgIcon dimensions={22} key={idx} name={iconName} />
 						);

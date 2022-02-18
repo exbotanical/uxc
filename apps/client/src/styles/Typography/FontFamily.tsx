@@ -1,5 +1,5 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 const Inter = `Inter:wght@100;300;400;500;600;700`;
 const FiraSans = `Fira+Sans:ital,wght@0,400;0,500;1,400`;

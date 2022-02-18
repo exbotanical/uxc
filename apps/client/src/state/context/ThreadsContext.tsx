@@ -100,7 +100,6 @@ export function ThreadsProvider({ children }: { children: JSX.Element }) {
 		copiedThreads.splice(idx, 1, thread);
 
 		setThreads(copiedThreads);
-		console.log({ NEWTHREADS: copiedThreads });
 	}
 
 	const value = {

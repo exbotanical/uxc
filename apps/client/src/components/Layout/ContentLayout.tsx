@@ -1,5 +1,5 @@
-import { FlexCol } from '@/theme/Layout';
-import { FontSizeXl } from '@/theme/Typography/FontSize';
+import { FlexCol } from '@/styles/Layout';
+import { FontSizeXl } from '@/styles/Typography/FontSize';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';

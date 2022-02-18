@@ -6,7 +6,7 @@ import type { SendMessage } from '@/components/ChatRoom';
 
 import { Input } from '@/components/Fields/Input';
 import styled from 'styled-components';
-import { FlexCol } from '@/theme/Layout';
+import { FlexCol } from '@/styles/Layout';
 
 interface ChatMessageInputProps {
 	sendMessage: SendMessage;

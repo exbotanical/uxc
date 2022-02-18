@@ -7,24 +7,24 @@ import { UserAvatar } from '../User/UserAvatar';
 import type { ObjectID, User } from '@uxc/types';
 
 import { GET_CURRENT_USER } from '@/services/api/queries';
-import { StatefulThread, ThreadsContext } from '@/state/context/ThreadsContext';
+import { ThreadsContext } from '@/state/context/ThreadsContext';
 import { onEnterKeyPressed } from '@/utils';
 import styled from 'styled-components';
 import { ListItem } from './styles';
-import { RowCenter } from '@/theme/Layout';
-import { FontSizeLg } from '@/theme/Typography/FontSize';
+import { RowCenter } from '@/styles/Layout';
+import { FontSizeLg } from '@/styles/Typography/FontSize';
 
 interface PrivateThreadProps {
 	id: ObjectID;
 }
 
 const PaddedListItem = styled(ListItem)`
-	padding: 0.5rem;
+	padding: 0.75rem;
+	cursor: pointer;
 `;
 
 const UsernameLabel = styled.p`
 	${FontSizeLg}
-	font-weight: 600;
 	margin: auto;
 	margin-left: 0.75rem;
 `;

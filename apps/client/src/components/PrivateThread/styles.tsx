@@ -10,7 +10,6 @@ export const ListItem = styled.li<{ isActiveItem: boolean }>`
 		isActiveItem ? theme.colors.primary['200'] : theme.colors.primary['100']};
 	background-color: ${({ theme, isActiveItem }) =>
 		isActiveItem && theme.colors.primary['1000']};
-	/* outline: none; */
 
 	&:hover {
 		background-color: ${({ theme }) => theme.colors.primary['1000']};

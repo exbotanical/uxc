@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 
 import { SearchModal } from '@/components/Modal/SearchModal';
 import styled from 'styled-components';
-import { FlexCol } from '@/theme/Layout';
-import { FontSizeLg } from '@/theme/Typography/FontSize';
+import { FlexCol } from '@/styles/Layout';
+import { FontSizeBase } from '@/styles/Typography/FontSize';
 
 const SearchButtonContainer = styled.div`
 	${FlexCol}
@@ -19,11 +19,12 @@ const SearchButtonContainer = styled.div`
 `;
 
 const Button = styled.button`
-	${FontSizeLg}
+	${FontSizeBase}
 	display: flex;
 	align-items: center;
 	height: 2.25rem;
 	width: 100%;
+	border-radius: 5px;
 	padding: 0.5rem 1rem;
 	color: ${({ theme }) => theme.colors.primary['200']};
 	background-color: ${({ theme }) => theme.colors.primary['1300']};
@@ -34,6 +35,7 @@ const Button = styled.button`
 		outline: none;
 	}
 `;
+
 export function SearchButton() {
 	const [isOpen, setIsOpen] = useState(false);
 	const close = () => {

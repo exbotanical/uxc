@@ -6,12 +6,13 @@ import { Delimiter } from '@/components/PrivateThread/Delimiter';
 import { PrivateThread } from '@/components/PrivateThread/PrivateThread';
 import { ThreadsContext } from '@/state/context/ThreadsContext';
 import styled from 'styled-components';
-import { FontSizeLg } from '@/theme/Typography/FontSize';
-import { FlexCol } from '@/theme/Layout';
+import { FontSizeLg } from '@/styles/Typography/FontSize';
+import { FlexCol } from '@/styles/Layout';
 import { ListItem } from './styles';
 
 const PaddedListItem = styled(ListItem)`
 	padding: 1rem;
+	cursor: pointer;
 `;
 
 const FriendsLabel = styled.p`

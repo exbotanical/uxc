@@ -72,6 +72,7 @@ export const GET_MESSAGES = gql`
 			body
 			createdAt
 			updatedAt
+			threadId
 			sender {
 				_id
 				username
@@ -121,6 +122,18 @@ export const ON_ANY_MESSAGE_CREATED = gql`
 export const CREATE_MESSAGE = gql`
 	mutation ($threadId: ID, $body: String) {
 		createMessage(body: $body, threadId: $threadId) {
+			_id
+			threadId
+			body
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const UPDATE_MESSAGE = gql`
+	mutation ($messageId: ID, $body: String) {
+		updateMessage(body: $body, messageId: $messageId) {
 			_id
 			threadId
 			body

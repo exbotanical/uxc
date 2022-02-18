@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { RowCenter } from '@/theme/Layout';
+import { RowCenter } from '@/styles/Layout';
 
 const mockImgs = [
 	'https://upload.wikimedia.org/wikipedia/en/8/8e/Can_-_Tago_Mago.jpg',

@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 
 import { Input } from '@/components/Fields/Input';
 import styled from 'styled-components';
-import { FlexCol } from '@/theme/Layout';
-import { FontSizeBase, FontSizeXs } from '@/theme/Typography/FontSize';
+import { FlexCol } from '@/styles/Layout';
+import { FontSizeBase, FontSizeXs } from '@/styles/Typography/FontSize';
 
 const Container = styled.div`
 	${FlexCol}

@@ -1,5 +1,5 @@
-import { FlexCol, RowCenter } from '@/theme/Layout';
-import { FontSizeSm, FontSizeXl } from '@/theme/Typography/FontSize';
+import { FlexCol, RowCenter } from '@/styles/Layout';
+import { FontSizeSm, FontSizeXl } from '@/styles/Typography/FontSize';
 import styled from 'styled-components';
 import { AdaptiveInput } from '../Fields/AdaptiveInput';
 import { Button } from '@/components/Buttons/Button';

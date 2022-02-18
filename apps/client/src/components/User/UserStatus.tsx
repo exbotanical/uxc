@@ -4,7 +4,7 @@ import { UserAvatar } from './UserAvatar';
 
 import type { User } from '@uxc/types';
 import styled from 'styled-components';
-import { FontSizeBase } from '@/theme/Typography/FontSize';
+import { FontSizeBase } from '@/styles/Typography/FontSize';
 
 const Container = styled.div`
 	display: flex;
@@ -21,7 +21,7 @@ const UsernameLabel = styled.p`
 export function UserStatus({ user }: { user: User }) {
 	return (
 		<Container>
-			<UserAvatar size="sm" u={user} />
+			<UserAvatar size="lg" u={user} />
 			<UsernameLabel>{user.username}</UsernameLabel>
 		</Container>
 	);

@@ -10,7 +10,7 @@ import type { User } from '@uxc/types';
 import { SearchButton } from '@/components/PrivateThread/SearchButton';
 import { GET_CURRENT_USER } from '@/services/api/queries';
 import styled from 'styled-components';
-import { FlexCol } from '@/theme/Layout';
+import { FlexCol } from '@/styles/Layout';
 
 const Container = styled.aside`
 	${FlexCol}
@@ -22,7 +22,6 @@ const Container = styled.aside`
 
 const Footer = styled.footer`
 	margin-top: auto;
-	height: 5rem;
 	background-color: ${({ theme }) => theme.colors.primary['1200']};
 `;
 

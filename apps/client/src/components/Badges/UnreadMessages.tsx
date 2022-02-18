@@ -1,4 +1,4 @@
-import { FontSizeXs } from '@/theme/Typography/FontSize';
+import { FontSizeXs } from '@/styles/Typography/FontSize';
 import React from 'react';
 import styled from 'styled-components';
 

@@ -17,7 +17,7 @@ import {
 import { connector } from '@/state';
 import { ThreadsContext } from '@/state/context/ThreadsContext';
 import styled from 'styled-components';
-import { FlexCol } from '@/theme/Layout';
+import { FlexCol } from '@/styles/Layout';
 
 export interface SendMessage {
 	(message: string): void;
@@ -73,12 +73,13 @@ export function ChatRoom({ showNotification }: ChatRoomProps & PropsFromRedux) {
 		({ _id }) => _id !== user?.getCurrentUser._id
 	);
 
-	useEffect(() => {
-		if (!thread) return;
+	// useEffect(() => {
+	// 	if (!thread) return;
 
-		thread.newMessages = 0;
-		updateThread(thread);
-	}, [thread]);
+	// 	thread.newMessages = 0;
+	// 	console.log('run effect');
+	// 	updateThread(thread);
+	// }, [thread]);
 
 	// if this happens, we've got a bigger problem...
 	if (!them) {

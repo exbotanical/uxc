@@ -24,10 +24,6 @@ export function Join() {
 	const [join] = useMutation(JOIN);
 	const navigate = useNavigate();
 
-	if (loading) {
-		return <>Loading...</>;
-	}
-
 	if (data) {
 		console.log({ data });
 		return <Navigate to="/thread" />;
@@ -122,7 +118,9 @@ export function Join() {
 					/>
 
 					<S.ButtonContainer>
-						<S.CTAButton type="submit">Join</S.CTAButton>
+						<S.CTAButton type="submit" loading={loading}>
+							Join
+						</S.CTAButton>
 					</S.ButtonContainer>
 				</S.Form>
 			</S.InnerCard>

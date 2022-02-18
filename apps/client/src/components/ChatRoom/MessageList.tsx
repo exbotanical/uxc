@@ -24,6 +24,7 @@ export function MessageList({ threadId }: MessageListProps) {
 	const bottomRef = useRef<HTMLDivElement | null>(null);
 	const [isScrolledToTop] = useState(false);
 
+	// @todo prevent scroll on update
 	useEffect(() => {
 		isScrolledToTop ||
 			bottomRef.current?.scrollIntoView({

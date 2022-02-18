@@ -5,7 +5,7 @@ import type { PropsFromRedux } from '@/state';
 import { Notification } from '@/components/Notification/Notification';
 import { connector } from '@/state';
 import styled from 'styled-components';
-import { FlexCol } from '@/theme/Layout';
+import { FlexCol } from '@/styles/Layout';
 
 type NotificationControllerProps = PropsFromRedux;
 

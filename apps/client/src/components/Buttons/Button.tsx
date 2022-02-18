@@ -1,5 +1,5 @@
-import { RowCenter } from '@/theme/Layout';
-import { FontSizeXl } from '@/theme/Typography/FontSize';
+import { RowCenter } from '@/styles/Layout';
+import { FontSizeXl } from '@/styles/Typography/FontSize';
 import type { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from 'react';
 
 import React from 'react';

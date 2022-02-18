@@ -2,14 +2,14 @@ import { UserInputError } from 'apollo-server-core';
 import { isValidObjectId } from 'mongoose';
 
 import type { Resolver } from '../types';
-import type { ObjectID } from '@uxc/types';
+import type { ObjectID, Message as MessageType } from '@uxc/types';
 
 import { Message } from '@/db';
 import { ERROR_MESSAGES } from '@/utils/constants';
 
 // @todo disallow users to edit any message; restrict to sender/receiver
 export const updateMessage: Resolver<
-	ObjectID | null,
+	MessageType | null,
 	{ messageId: ObjectID; body: string }
 > = async (_, { messageId, body }) => {
 	if (!messageId) {
@@ -32,5 +32,5 @@ export const updateMessage: Resolver<
 
 	const message = await Message.findOneAndUpdate({ _id: messageId }, { body });
 
-	return message?._id ?? null;
+	return message;
 };

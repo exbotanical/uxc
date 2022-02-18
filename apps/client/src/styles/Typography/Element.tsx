@@ -260,7 +260,7 @@ export const LinkWithStyle = css`
 `;
 
 export const ButtonLabelWithStyle = css`
-	font-family: 'Fira Sans', sans-serif;
+	${FontFamilyCode}
 	${FontSizeLg}
 	font-style: normal;
 	font-weight: 500;

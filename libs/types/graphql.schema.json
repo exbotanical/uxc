@@ -441,8 +441,8 @@
               }
             ],
             "type": {
-              "kind": "SCALAR",
-              "name": "ID",
+              "kind": "OBJECT",
+              "name": "Message",
               "ofType": null
             },
             "isDeprecated": false,

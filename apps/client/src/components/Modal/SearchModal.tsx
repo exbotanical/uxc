@@ -4,7 +4,7 @@ import { Button } from '@/components/Buttons/Button';
 import { Input } from '@/components/Fields/Input';
 import { Modal } from '@/components/Modal/Modal';
 import styled from 'styled-components';
-import { FontSizeXl } from '@/theme/Typography/FontSize';
+import { FontSizeXl } from '@/styles/Typography/FontSize';
 
 const Form = styled.form`
 	display: grid;
