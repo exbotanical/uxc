@@ -80,7 +80,6 @@ export function MessageList({ threadId }: MessageListProps) {
 	}
 
 	if (error) {
-		console.log({ error });
 		// showNotification({
 		// 	message:
 		// 		'Something went wrong while grabbing info for this channel. Please try again later.',

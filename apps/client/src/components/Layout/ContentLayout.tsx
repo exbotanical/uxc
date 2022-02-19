@@ -12,16 +12,16 @@ const Container = styled.div`
 	${FlexCol}
 	align-items: center;
 	width: 100%;
-	background-color: ${({ theme }) => theme.colors.primary['1000']};
-	color: ${({ theme }) => theme.colors.primary['100']};
+	color: ${({ theme }) => theme.colors.font.strong};
+	background-color: ${({ theme }) => theme.colors.background.weak};
+	border: 1px solid ${({ theme }) => theme.colors.border.weak};
 `;
 
 const Header = styled.header`
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
-	border-bottom-width: 2px;
-	border-color: ${({ theme }) => theme.colors.primary['1200']};
+	border: 1px solid ${({ theme }) => theme.colors.border.weak};
 	width: 100%;
 	padding: 1rem;
 	height: 75px;
@@ -39,13 +39,15 @@ const ContentContainer = styled.div`
 	overflow: hidden;
 	height: 100%;
 	width: 100%;
+	background-color: ${({ theme }) => theme.colors.background.norm};
+	border-radius: 4px;
 `;
 
 export function ContentLayout() {
 	return (
 		<Container>
 			<Header>
-				<SvgIcon dimensions={21} name="people" />
+				<SvgIcon size={21} name="people" />
 				<HeaderLabel>Friends</HeaderLabel>
 			</Header>
 

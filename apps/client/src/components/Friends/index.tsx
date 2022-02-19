@@ -46,7 +46,7 @@ const Username = styled.h4`
 const UserStatus = styled.h5`
 	${FontSizeXs}
 	font-weight: 700;
-	color: ${({ theme }) => theme.colors.primary['200']};
+	color: ${({ theme }) => theme.colors.font.weak};
 `;
 
 const ActionsContainer = styled.div`
@@ -61,7 +61,7 @@ const ActionBubble = styled.div`
 	border-radius: 9999px;
 	height: 2rem;
 	width: 2rem;
-	background-color: ${({ theme }) => theme.colors.primary['1200']};
+	background-color: ${({ theme }) => theme.colors.accent.norm};
 `;
 
 export function Friends() {

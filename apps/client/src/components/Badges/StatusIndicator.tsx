@@ -43,7 +43,7 @@ const IndicatorBase = styled.div<{ size: Size }>`
 	bottom: 0px;
 	margin-top: -0.25rem;
 	border-radius: 9999px;
-	background-color: ${({ theme }) => theme.colors.accent['600']};
+	background-color: ${({ theme }) => theme.colors.success.norm};
 	${({ size }) => SizeMap[size]}
 `;
 
@@ -59,7 +59,7 @@ const Indicator = styled(IndicatorBase)<{
 
 const Border = css`
 	border-width: 2px;
-	border-color: ${({ theme }) => theme.colors.primary['800']};
+	border-color: ${({ theme }) => theme.colors.border.norm};
 `;
 
 export function StatusIndicator({

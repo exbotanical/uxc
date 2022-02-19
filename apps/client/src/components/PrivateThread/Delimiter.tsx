@@ -9,7 +9,7 @@ interface DelimiterProps {
 const Container = styled.div`
 	padding: 1rem;
 	justify-content: space-between;
-	color: ${({ theme }) => theme.colors.primary['100']};
+	color: ${({ theme }) => theme.colors.font.strong};
 `;
 
 const Label = styled.p`

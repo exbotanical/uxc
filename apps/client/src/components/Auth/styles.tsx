@@ -1,5 +1,9 @@
 import { FlexCol, RowCenter } from '@/styles/Layout';
-import { FontSizeSm, FontSizeXl } from '@/styles/Typography/FontSize';
+import {
+	FontSizeBase,
+	FontSizeSm,
+	FontSizeXl
+} from '@/styles/Typography/FontSize';
 import styled from 'styled-components';
 import { AdaptiveInput } from '../Fields/AdaptiveInput';
 import { Button } from '@/components/Buttons/Button';
@@ -40,35 +44,32 @@ export const Container = styled.div`
 	align-items: center;
 	height: 100vh;
 	padding: 3rem 1rem;
-	background-color: ${(props) => props.theme.colors.primary['600']};
 `;
 
-export const InnerCard = styled.div`
+export const InnerCard = styled.div<{ size: 'sm' | 'lg' }>`
 	width: 100%;
-	max-width: 32rem;
+	min-height: ${({ size }) => (size === 'sm' ? 22 : 26)}rem;
+	max-width: 28rem;
 	border-radius: 0.5rem;
-	background: ${({ theme }) => theme.colors.indigo['1000']};
+	background: ${({ theme }) => theme.colors.background.strong};
 	margin-bottom: 3rem;
-	padding: 2rem;
+	padding: 1.75rem;
 	box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
 `;
 
 export const Form = styled.form`
 	${FlexCol}
 	border-radius: 0.375rem;
+	height: 100%;
 `;
 
 export const FieldCaptionLink = styled.p`
+	${FontSizeBase}
 	margin: 0.5rem;
-	${FontSizeSm}
 
 	&:hover {
 		text-decoration-line: underline;
 	}
-`;
-
-export const ButtonContainer = styled.div`
-	align-self: center;
 `;
 
 export const SwapModeContainer = styled(RowCenter)`
@@ -76,15 +77,23 @@ export const SwapModeContainer = styled(RowCenter)`
 `;
 
 export const BottomInput = styled(AdaptiveInput)`
-	margin-top: 1rem;
+	margin-top: 1.5rem;
 `;
 
 export const CTAButton = styled(Button)`
-	margin-top: 2.5rem;
+	margin-top: auto;
+	background-color: ${({ theme }) => theme.colors.font.strong};
 `;
 
 export const SwapModeLink = styled(Link)`
 	${FontSizeXl}
 	font-weight: 700;
 	text-decoration-line: underline;
+`;
+
+export const ErrorText = styled.p`
+	${FontSizeSm}
+	padding: 1rem;
+	text-align: center;
+	color: red;
 `;

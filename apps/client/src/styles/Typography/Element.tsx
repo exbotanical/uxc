@@ -90,7 +90,7 @@ export const MobileLink = css`
 	${FontFamilyCode}
 	${FontSizeBase}
 	letter-spacing: 0.5px;
-	color: ${({ theme }) => theme.colors.primary['100']};
+	color: ${({ theme }) => theme.colors.font.strong};
 
 	&:hover {
 		text-decoration-line: underline;
@@ -101,7 +101,7 @@ export const DesktopH1 = css`
 	${FontFamilyBase}
 	${FontSize7Xl}
 	font-weight: 700;
-	color: ${({ theme }) => theme.colors.primary['100']};
+	color: ${({ theme }) => theme.colors.font.strong};
 	margin-bottom: 1rem;
 `;
 
@@ -175,7 +175,7 @@ export const DesktopLink = css`
 	${FontFamilyCode}
 	${FontSizeLg}
 	font-weight: normal;
-	color: ${({ theme }) => theme.colors.primary['100']};
+	color: ${({ theme }) => theme.colors.font.strong};
 
 	&:hover {
 		text-decoration-line: underline;

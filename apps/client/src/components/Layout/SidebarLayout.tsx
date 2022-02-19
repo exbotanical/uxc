@@ -17,12 +17,16 @@ const Container = styled.aside`
 	height: 100vh;
 	width: 22rem;
 	min-width: 22rem;
-	background-color: ${({ theme }) => theme.colors.primary['1100']};
+	background-color: ${({ theme }) => theme.colors.background.dark};
 `;
 
 const Footer = styled.footer`
 	margin-top: auto;
-	background-color: ${({ theme }) => theme.colors.primary['1200']};
+	background-color: ${({ theme }) => theme.colors.background.dark};
+	border-top: 1px solid ${({ theme }) => theme.colors.border.norm};
+	border-radius: 4px;
+	height: 75px;
+	max-height: 75px;
 `;
 
 const FooterContainer = styled.div`
@@ -54,7 +58,7 @@ export function SidebarLayout({ body }: { body: React.ReactNode }) {
 				<FooterContainer>
 					<UserStatus user={data.getCurrentUser} />
 					<button type="button">
-						<SvgIcon dimensions={28} name="gear" />
+						<SvgIcon size={22} color="#979bb0" name="gear" />
 					</button>
 				</FooterContainer>
 			</Footer>

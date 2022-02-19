@@ -26,7 +26,8 @@ import { useMutation } from '@apollo/client';
 const Container = styled.div<{ hover: boolean }>`
 	${FlexCol}
 	${FontSizeLg}
-	background-color:${({ theme, hover }) => hover && theme.colors.primary['1100']};
+	background-color:${({ theme, hover }) =>
+		hover && theme.colors.background.hover};
 	position: relative;
 `;
 
@@ -42,8 +43,8 @@ const OptionsContainer = styled.div`
 	border-radius: 0.25rem;
 	border-top-width: 1px;
 	border-color: ${({ theme }) => theme.colors.blue['500']};
-	background-color: ${({ theme }) => theme.colors.primary['1000']};
-	color: ${({ theme }) => theme.colors.primary['100']};
+	background-color: ${({ theme }) => theme.colors.background.strong};
+	color: ${({ theme }) => theme.colors.font.strong};
 	box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 `;
 
@@ -86,26 +87,26 @@ const UsernameBody = styled.p`
 
 const SentDateBody = styled.p`
 	${FontSizeSm}
-	color: ${({ theme }) => theme.colors.primary['200']};
+	color: ${({ theme }) => theme.colors.font.weak};
 `;
 
 const Button = styled.button`
-	color: ${({ theme }) => theme.colors.primary['100']};
+	color: ${({ theme }) => theme.colors.font.strong};
 `;
 
 const StyledTextArea = styled.textarea`
 	${FontSizeBase}
 	padding: 1rem;
-	color: ${({ theme }) => theme.colors.primary['200']};
-	background-color: ${({ theme }) => theme.colors.primary['1300']};
+	color: ${({ theme }) => theme.colors.font.weak};
+	background-color: ${({ theme }) => theme.colors.background.dark};
 	width: 100%;
 	border-radius: 3px;
 
 	// @todo reuse
 	&:focus {
 		outline: none !important;
-		border: 1px solid ${({ theme }) => theme.colors.primary['1300']};
-		box-shadow: 0 0 3px ${({ theme }) => theme.colors.primary['200']};
+		border: 1px solid ${({ theme }) => theme.colors.background.dark};
+		box-shadow: 0 0 3px ${({ theme }) => theme.colors.font.weak};
 	}
 `;
 
@@ -212,7 +213,7 @@ export function ChatMessage({
 			{hover && isSender ? (
 				<OptionsContainer>
 					<Button type="button" tabIndex={-1}>
-						<SvgIcon dimensions={21} name="smiley" />
+						<SvgIcon size={21} name="smiley" />
 					</Button>
 					<Button
 						type="button"
@@ -220,7 +221,7 @@ export function ChatMessage({
 							setEditModeProxy(true);
 						}}
 					>
-						<SvgIcon dimensions={21} name="edit" />
+						<SvgIcon size={21} name="edit" />
 					</Button>
 				</OptionsContainer>
 			) : null}

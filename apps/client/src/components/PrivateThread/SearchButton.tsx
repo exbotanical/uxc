@@ -14,8 +14,9 @@ const SearchButtonContainer = styled.div`
 	min-height: 75px;
 	padding: 0.75rem;
 	border-bottom-width: 2px;
-	border-color: ${({ theme }) => theme.colors.primary['1200']};
-	background-color: ${({ theme }) => theme.colors.primary['1100']};
+	background-color: ${({ theme }) => theme.colors.background.dark};
+	border-top: 1px solid ${({ theme }) => theme.colors.border.weak};
+	border-bottom: 1px solid ${({ theme }) => theme.colors.border.weak};
 `;
 
 const Button = styled.button`
@@ -24,10 +25,10 @@ const Button = styled.button`
 	align-items: center;
 	height: 2.25rem;
 	width: 100%;
-	border-radius: 5px;
+	border-radius: 3px;
 	padding: 0.5rem 1rem;
-	color: ${({ theme }) => theme.colors.primary['200']};
-	background-color: ${({ theme }) => theme.colors.primary['1300']};
+	color: ${({ theme }) => theme.colors.font.weak};
+	background-color: ${({ theme }) => theme.colors.background.hover};
 	text-transform: none;
 	letter-spacing: normal;
 

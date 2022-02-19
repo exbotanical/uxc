@@ -23,7 +23,12 @@ const Container = styled.div`
 	flex: 1 1 0%;
 	align-items: center;
 	border-radius: 0.5rem;
-	background-color: ${({ theme }) => theme.colors.primary['1300']};
+	background-color: ${({ theme }) => theme.colors.background.dark};
+
+	&:hover {
+		outline: none !important;
+		box-shadow: 0 0 3px ${({ theme }) => theme.colors.font.weak};
+	}
 `;
 
 const StyledInput = styled.input`
@@ -31,16 +36,15 @@ const StyledInput = styled.input`
 	width: 100%;
 	padding: 0.75rem;
 	border-radius: 0.5rem;
-	background-color: ${({ theme }) => theme.colors.primary['1300']};
-	color: ${({ theme }) => theme.colors.primary['100']};
+	background-color: ${({ theme }) => theme.colors.background.dark};
+	color: ${({ theme }) => theme.colors.font.strong};
 
 	&:focus {
-		outline: 2px solid transparent;
-		outline-offset: 2px;
+		outline: none !important;
 	}
 
 	&::placeholder {
-		color: ${({ theme }) => theme.colors.primary['200']};
+		color: ${({ theme }) => theme.colors.font.weak};
 		opacity: 0.8;
 	}
 `;
@@ -55,7 +59,7 @@ const ButtonContainer = styled.div`
 `;
 
 const Button = styled.button`
-	color: ${({ theme }) => theme.colors.primary['100']};
+	color: ${({ theme }) => theme.colors.font.strong};
 `;
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -69,10 +73,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 					{options?.map(({ iconName, handleClick }, idx) => {
 						return handleClick ? (
 							<Button key={idx} onClick={handleClick} type="button">
-								<SvgIcon dimensions={22} name={iconName} />
+								<SvgIcon size={22} name={iconName} />
 							</Button>
 						) : (
-							<SvgIcon dimensions={22} key={idx} name={iconName} />
+							<SvgIcon size={22} key={idx} name={iconName} />
 						);
 					})}
 				</ButtonContainer>

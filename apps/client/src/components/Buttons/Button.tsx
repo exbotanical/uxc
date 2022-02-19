@@ -1,5 +1,5 @@
 import { RowCenter } from '@/styles/Layout';
-import { FontSizeXl } from '@/styles/Typography/FontSize';
+import { FontSizeLg } from '@/styles/Typography/FontSize';
 import type { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from 'react';
 
 import React from 'react';
@@ -20,27 +20,33 @@ export type ButtonProps = Omit<ButtonAttrs, 'ref'> & {
 const StyledButton = styled(RowCenter).attrs({
 	as: 'button'
 })`
-	${FontSizeXl}
-	width: 12rem;
-	outline: 2px solid transparent;
+	${FontSizeLg}
+	width: 100%;
 	outline-offset: 2px;
 	font-weight: 700;
-	padding: 1rem 1.5rem;
-	border-radius: 9999px;
-	transition-property: color, background-color, border-color,
-		text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
-		backdrop-filter;
+	padding: 0.75rem 1.5rem;
+	border-radius: 4px;
+	transition-property: color, background-color;
 	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 	transition-duration: 700ms;
-	color: ${({ theme }) => theme.colors.primary['900']};
-	background-color: ${({ theme }) => theme.colors.primary['100']};
+	color: ${({ theme }) => theme.colors.font.strong};
+	background-color: ${({ theme }) => theme.colors.interactive.norm} !important;
 
 	&:active {
-		transform: translateY(1px);
+		transform: translateY(0.1px);
+		background-color: ${({ theme }) =>
+			theme.colors.interactive.active} !important;
+	}
+
+	&:disabled {
+		background-color: ${({ theme }) =>
+			theme.colors.interactive.hover} !important;
+		cursor: auto;
 	}
 
 	&:hover {
-		transform: scale(1.05);
+		background-color: ${({ theme }) =>
+			theme.colors.interactive.hover} !important;
 	}
 ` as StyledComponent<'button', DefaultTheme, {}, never>;
 
@@ -51,23 +57,20 @@ const Normal = `
 	align-items:center;
 `;
 
-const ContentContainer = styled.span<{ loading: boolean }>`
-	${({ loading }) => (loading ? Loading : Normal)}
+const ContentContainer = styled.div<{ loadingState: boolean }>`
+	${({ loadingState }) => {
+		return !!loadingState ? Loading : Normal;
+	}}
 `;
 
 const Spinner = styled.span`
 	position: absolute;
 `;
 
-export function Button({
-	children,
-	disabled,
-	loading = false,
-	...props
-}: ButtonProps) {
+export function Button({ children, loading = false, ...props }: ButtonProps) {
 	return (
-		<StyledButton disabled={!!disabled || !!loading} {...props}>
-			<ContentContainer loading={loading}>{children}</ContentContainer>
+		<StyledButton {...props}>
+			<ContentContainer loadingState={loading}>{children}</ContentContainer>
 
 			{loading ? <Spinner>@todo</Spinner> : null}
 		</StyledButton>

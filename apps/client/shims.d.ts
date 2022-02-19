@@ -17,16 +17,27 @@ import 'styled-components';
 declare module 'styled-components' {
 	type Palettes =
 		| 'blue'
-		| 'indigo'
-		| 'purple'
-		| 'cerise'
-		| 'rowan'
-		| 'primary'
-		| 'accent';
+		| 'success'
+		| 'font'
+		| 'accent'
+		| 'background'
+		| 'interactive'
+		| 'background'
+		| 'field'
+		| 'scrollbar'
+		| 'border'
+		| 'interactive';
 
 	export interface DefaultTheme {
 		colors: {
 			[K in Palettes]: {
+				norm: string;
+				weak: string;
+				strong: string;
+				disabled: string;
+				hover: string;
+				active: string;
+				dark: string;
 				[k: string]: string;
 			};
 		};

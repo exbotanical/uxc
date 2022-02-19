@@ -74,7 +74,7 @@ export function Notification({
 				role="button"
 				tabIndex={0}
 			>
-				<SvgIcon name="close" dimensions={32} />
+				<SvgIcon name="close" size={32} />
 			</AlignedButton>
 		</Container>
 	);

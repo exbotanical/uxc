@@ -29,7 +29,7 @@ const Container = styled.div`
 	${FlexCol}
 	height: 100%;
 	width: 100%;
-	background-color: ${({ theme }) => theme.colors.primary['1000']};
+	background-color: ${({ theme }) => theme.colors.background.norm};
 `;
 
 const Footer = styled.footer`

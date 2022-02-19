@@ -15,13 +15,13 @@ const UsernameLabel = styled.p`
 	${FontSizeBase}
 	font-weight: 600;
 	margin-left: 0.5rem;
-	color: ${({ theme }) => theme.colors.primary['100']};
+	color: ${({ theme }) => theme.colors.font.strong};
 `;
 
 export function UserStatus({ user }: { user: User }) {
 	return (
 		<Container>
-			<UserAvatar size="lg" u={user} />
+			<UserAvatar size="sm" u={user} />
 			<UsernameLabel>{user.username}</UsernameLabel>
 		</Container>
 	);

@@ -78,7 +78,7 @@ export function Join() {
 		<S.Container style={{ backgroundImage: `url(${bg})` }}>
 			<h1>uxc</h1>
 
-			<S.InnerCard>
+			<S.InnerCard size="lg">
 				<S.Form onSubmit={handleSubmit}>
 					<AdaptiveInput
 						autoComplete="username"
@@ -86,7 +86,7 @@ export function Join() {
 						label="Username"
 						name="username"
 						onChange={handleChange}
-						placeholder=" "
+						placeholder="yourusername"
 						required
 						type="text"
 						value={username}
@@ -98,7 +98,7 @@ export function Join() {
 						label="Email address"
 						name="email"
 						onChange={handleChange}
-						placeholder=" "
+						placeholder="youremail@domain.com"
 						required
 						type="email"
 						value={email}
@@ -108,20 +108,17 @@ export function Join() {
 						autoComplete="current-password"
 						id="password"
 						label="Password"
-						style={{ marginBottom: '2rem' }}
 						name="password"
 						onChange={handleChange}
-						placeholder=" "
+						placeholder="************"
 						required
 						type="password"
 						value={password}
 					/>
 
-					<S.ButtonContainer>
-						<S.CTAButton type="submit" loading={loading}>
-							Join
-						</S.CTAButton>
-					</S.ButtonContainer>
+					<S.CTAButton type="submit" loading={loading}>
+						Join
+					</S.CTAButton>
 				</S.Form>
 			</S.InnerCard>
 

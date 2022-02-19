@@ -1,4 +1,4 @@
-import type { ChangeEvent, FormEvent } from 'react';
+import { ChangeEvent, FormEvent, useEffect } from 'react';
 
 import { useMutation, useQuery } from '@apollo/client';
 import React, { useState } from 'react';
@@ -20,11 +20,52 @@ const AlignedLink = styled(Link)`
 export function Signin() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [error, setError] = useState('');
+	const [disabled, setDisabled] = useState(true);
+
 	const navigate = useNavigate();
 	const { data, loading } = useQuery<{
 		getCurrentUser: User;
 	}>(GET_CURRENT_USER);
 	const [signin] = useMutation(SIGNIN);
+
+	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+		event.preventDefault();
+
+		try {
+			await signin({
+				variables: {
+					args: {
+						email,
+						password
+					}
+				}
+			});
+
+			navigate(`/`);
+		} catch (ex: any) {
+			setError(ex?.message || 'Something went wrong');
+		} finally {
+			setEmail('');
+			setPassword('');
+		}
+	}
+
+	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+		setError('');
+		const { value, name } = event.target;
+		const executor = name == 'email' ? setEmail : setPassword;
+
+		executor(value);
+	};
+
+	useEffect(() => {
+		if (email && password) {
+			setDisabled(false);
+		} else {
+			setDisabled(true);
+		}
+	}, [email, password]);
 
 	if (loading) {
 		return <>Loading...</>;
@@ -34,35 +75,10 @@ export function Signin() {
 		return <Navigate to="/" />;
 	}
 
-	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-		event.preventDefault();
-
-		await signin({
-			variables: {
-				args: {
-					email,
-					password
-				}
-			}
-		});
-
-		setEmail('');
-		setPassword('');
-
-		navigate(`/`);
-	}
-
-	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-		const { value, name } = event.target;
-		const executor = name == 'email' ? setEmail : setPassword;
-
-		executor(value);
-	};
-
 	return (
 		<S.Container style={{ backgroundImage: `url(${bg})` }}>
 			<h1>uxc</h1>
-			<S.InnerCard>
+			<S.InnerCard size="sm">
 				<S.Form onSubmit={handleSubmit}>
 					<AdaptiveInput
 						autoComplete="email"
@@ -70,31 +86,31 @@ export function Signin() {
 						label="Email address"
 						name="email"
 						onChange={handleChange}
-						placeholder=" "
+						placeholder="youremail@domain.com"
 						required
 						type="email"
 						value={email}
 					/>
-
 					<S.BottomInput
 						autoComplete="current-password"
 						id="password"
 						label="Password"
 						name="password"
 						onChange={handleChange}
-						placeholder=" "
+						placeholder="************"
 						required
 						type="password"
 						value={password}
 					/>
-
 					<AlignedLink to="/todo">
 						<S.FieldCaptionLink>Forgot your password?</S.FieldCaptionLink>
 					</AlignedLink>
 
-					<S.ButtonContainer>
-						<S.CTAButton type="submit">Sign in</S.CTAButton>
-					</S.ButtonContainer>
+					<S.ErrorText>{error}</S.ErrorText>
+
+					<S.CTAButton type="submit" loading={loading} disabled={disabled}>
+						Sign in
+					</S.CTAButton>
 				</S.Form>
 			</S.InnerCard>
 

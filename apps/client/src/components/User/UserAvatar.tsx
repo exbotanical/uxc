@@ -36,7 +36,7 @@ const RoundedImg = styled.img`
 
 const IndicatorContainer = styled.div`
 	position: absolute;
-	border-color: ${({ theme }) => theme.colors.primary['800']};
+	border-color: ${({ theme }) => theme.colors.interactive.norm};
 `;
 
 export function UserAvatar({

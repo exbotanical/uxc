@@ -66,7 +66,7 @@ export function PrivateThreadsList() {
 					role="button"
 					tabIndex={0}
 				>
-					<SvgIcon dimensions={21} name="people" />
+					<SvgIcon size={21} name="people" />
 					<FriendsLabel>Friends</FriendsLabel>
 				</PaddedListItem>
 			</ul>

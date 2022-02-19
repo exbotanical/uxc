@@ -7,11 +7,14 @@ export const ListItem = styled.li<{ isActiveItem: boolean }>`
 	width: 100%;
 	transition: color 0.3s, background-color 0.4s;
 	color: ${({ theme, isActiveItem }) =>
-		isActiveItem ? theme.colors.primary['200'] : theme.colors.primary['100']};
+		isActiveItem ? theme.colors.accent.norm : theme.colors.font.strong};
 	background-color: ${({ theme, isActiveItem }) =>
-		isActiveItem && theme.colors.primary['1000']};
+		isActiveItem && theme.colors.background.hover};
+
+	border-left: ${({ theme, isActiveItem }) =>
+		isActiveItem && `4px solid ${theme.colors.interactive.norm}`};
 
 	&:hover {
-		background-color: ${({ theme }) => theme.colors.primary['1000']};
+		background-color: ${({ theme }) => theme.colors.background.hover};
 	}
 `;

@@ -9,15 +9,13 @@ export const Reset = createGlobalStyle<{
 		width: 100vw;
 		height: 100vh;
 		box-sizing: border-box;
-		background-color: ${({ theme }) => theme.colors.primary['1200']};
-
+		background-color: ${({ theme }) => theme.colors.background.dark};
+		overflow: hidden;
 	}
 
 	* {
 		${FontFamilyBase}
-		scrollbar-color: ${({ theme }) =>
-			theme.colors.primary['1100']} rgba(0, 0, 0, 0);
-		scrollbar-width: thin;
+
 	}
 
 	*,
@@ -38,13 +36,13 @@ export const Reset = createGlobalStyle<{
 	}
 
 	::-webkit-scrollbar-thumb {
-		background-color: ${({ theme }) => theme.colors.primary['1200']};
-		border-radius: 2px;
+		background-color: ${({ theme }) => theme.colors.scrollbar.norm};
+		border-radius: 9999px;
 	}
 
-	::-webkit-resizer {
-		background-color: ${({ theme }) => theme.colors.primary['1200']};
-	}
+	::selection {
+  background: ${({ theme }) => theme.colors.interactive.norm};
+}
 
 	*,
 	*::before,
