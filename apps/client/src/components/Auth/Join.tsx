@@ -80,7 +80,7 @@ export function Join() {
 
 			<S.InnerCard size="lg">
 				<S.Form onSubmit={handleSubmit}>
-					<AdaptiveInput
+					<S.AdjustedInput
 						autoComplete="username"
 						id="username"
 						label="Username"
@@ -92,7 +92,7 @@ export function Join() {
 						value={username}
 					/>
 
-					<S.BottomInput
+					<S.AdjustedInput
 						autoComplete="email"
 						id="email-address"
 						label="Email address"
@@ -104,7 +104,7 @@ export function Join() {
 						value={email}
 					/>
 
-					<S.BottomInput
+					<S.AdjustedInput
 						autoComplete="current-password"
 						id="password"
 						label="Password"
@@ -120,13 +120,13 @@ export function Join() {
 						Join
 					</S.CTAButton>
 				</S.Form>
-			</S.InnerCard>
 
-			<S.SwapModeContainer>
-				<S.SwapModeLink to="/signin">
-					<p>Already have an account?&nbsp;Sign in</p>
-				</S.SwapModeLink>
-			</S.SwapModeContainer>
+				<S.Footer>
+					<S.SwapModeLink to="/signin">
+						<p>Already have an account?&nbsp;Sign in</p>
+					</S.SwapModeLink>
+				</S.Footer>
+			</S.InnerCard>
 		</S.Container>
 	);
 }

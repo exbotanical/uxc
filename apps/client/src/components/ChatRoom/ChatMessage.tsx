@@ -110,6 +110,7 @@ const StyledTextArea = styled.textarea`
 	}
 `;
 
+// @todo opts for all (e.g. emoji)
 export function ChatMessage({
 	body,
 	createdAt,

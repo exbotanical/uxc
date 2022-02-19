@@ -14,18 +14,18 @@ const Container = styled.div`
 	width: 100%;
 	color: ${({ theme }) => theme.colors.font.strong};
 	background-color: ${({ theme }) => theme.colors.background.weak};
-	border: 1px solid ${({ theme }) => theme.colors.border.weak};
 `;
 
 const Header = styled.header`
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
-	border: 1px solid ${({ theme }) => theme.colors.border.weak};
 	width: 100%;
 	padding: 1rem;
 	height: 75px;
 	min-height: 75px;
+	border-left: 1px solid ${({ theme }) => theme.colors.border.norm};
+	border-bottom: 1px solid ${({ theme }) => theme.colors.border.norm};
 `;
 
 const HeaderLabel = styled.p`
@@ -40,6 +40,7 @@ const ContentContainer = styled.div`
 	height: 100%;
 	width: 100%;
 	background-color: ${({ theme }) => theme.colors.background.norm};
+	border-left: 1px solid ${({ theme }) => theme.colors.border.norm};
 	border-radius: 4px;
 `;
 

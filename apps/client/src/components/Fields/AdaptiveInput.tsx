@@ -1,4 +1,3 @@
-import { ScreenReaderOnly } from '@/styles/Layout';
 import { FontSizeXs, FontSizeXl } from '@/styles/Typography/FontSize';
 import type { ComponentPropsWithoutRef } from 'react';
 
@@ -35,13 +34,13 @@ const Input = styled.input<{ hasError: boolean }>`
 		background: ${({ theme }) => theme.colors.field.disabled};
 	}
 
-	&:focus {
-		outline: 0.5px solid ${({ theme }) => theme.colors.accent.norm};
-		outline-offset: -1px;
-	}
-
 	&:hover {
 		background: ${({ theme }) => theme.colors.field.hover};
+	}
+
+	&:focus {
+		outline: none !important;
+		box-shadow: 0 0 3px ${({ theme }) => theme.colors.font.strong};
 	}
 `;
 

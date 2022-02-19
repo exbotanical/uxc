@@ -80,7 +80,7 @@ export function Signin() {
 			<h1>uxc</h1>
 			<S.InnerCard size="sm">
 				<S.Form onSubmit={handleSubmit}>
-					<AdaptiveInput
+					<S.AdjustedInput
 						autoComplete="email"
 						id="email-address"
 						label="Email address"
@@ -91,7 +91,7 @@ export function Signin() {
 						type="email"
 						value={email}
 					/>
-					<S.BottomInput
+					<AdaptiveInput
 						autoComplete="current-password"
 						id="password"
 						label="Password"
@@ -112,13 +112,13 @@ export function Signin() {
 						Sign in
 					</S.CTAButton>
 				</S.Form>
-			</S.InnerCard>
 
-			<S.SwapModeContainer>
-				<S.SwapModeLink to="/join">
-					<p>Don't have an account?&nbsp;Join now</p>
-				</S.SwapModeLink>
-			</S.SwapModeContainer>
+				<S.Footer>
+					<S.SwapModeLink to="/join">
+						<p>Don't have an account?&nbsp;Join now</p>
+					</S.SwapModeLink>
+				</S.Footer>
+			</S.InnerCard>
 		</S.Container>
 	);
 }

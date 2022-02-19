@@ -9,7 +9,7 @@ const Container = styled.div`
 	height: 100%;
 	color: white;
 	background-color: ${({ theme }) => theme.colors.background.dark};
-	border-right: 1px solid ${({ theme }) => theme.colors.border.weak};
+	border-right: 1px solid ${({ theme }) => theme.colors.border.norm};
 `;
 
 /** @todo rerenders when changing chat */

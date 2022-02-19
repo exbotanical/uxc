@@ -29,6 +29,9 @@ export const colors = {
 	success: {
 		norm: '#11ff8d'
 	},
+	error: {
+		norm: '#ff0040'
+	},
 	background: {
 		norm: '#171926',
 		weak: '#1e2130',
@@ -49,16 +52,4 @@ export const colors = {
 		hover: '#f04d7a',
 		active: '#f5678f'
 	}
-	// accent: {
-	// 	100: '#ff2366',
-	// 	200: '#fd51d9',
-	// 	300: '#face15',
-	// 	400: '#8d4de8',
-	// 	500: '#6859ea',
-	// 	600: '#4ade80',
-	// 	700: '#56b2ba',
-	// 	800: '#0cf',
-	// 	900: '#f93040',
-	// 	1000: '#ff6'
-	// }
 };

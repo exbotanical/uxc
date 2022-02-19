@@ -7,7 +7,7 @@ import { UserStatus } from '@/components/User/UserStatus';
 
 import type { User } from '@uxc/types';
 
-import { SearchButton } from '@/components/PrivateThread/SearchButton';
+import { Search } from '@/components/PrivateThread/Search';
 import { GET_CURRENT_USER } from '@/services/api/queries';
 import styled from 'styled-components';
 import { FlexCol } from '@/styles/Layout';
@@ -23,8 +23,9 @@ const Container = styled.aside`
 const Footer = styled.footer`
 	margin-top: auto;
 	background-color: ${({ theme }) => theme.colors.background.dark};
-	border-top: 1px solid ${({ theme }) => theme.colors.border.norm};
 	border-radius: 4px;
+	border-top: 1px solid ${({ theme }) => theme.colors.border.norm};
+
 	height: 75px;
 	max-height: 75px;
 `;
@@ -51,7 +52,7 @@ export function SidebarLayout({ body }: { body: React.ReactNode }) {
 
 	return (
 		<Container>
-			<SearchButton />
+			<Search />
 
 			{body}
 			<Footer>

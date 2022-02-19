@@ -35,6 +35,7 @@ const Container = styled.div`
 const Footer = styled.footer`
 	margin-top: auto;
 	padding: 0.5rem;
+	border-top: 1px solid ${({ theme }) => theme.colors.border.weak};
 `;
 
 export function ChatRoom({ showNotification }: ChatRoomProps & PropsFromRedux) {

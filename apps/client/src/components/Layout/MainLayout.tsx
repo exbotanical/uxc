@@ -14,6 +14,7 @@ const Container = styled.div`
 	display: flex;
 	flex: 1 1 0%;
 	height: 100vh;
+	border: 1px solid ${({ theme }) => theme.colors.border.norm};
 `;
 
 export function MainLayout() {
