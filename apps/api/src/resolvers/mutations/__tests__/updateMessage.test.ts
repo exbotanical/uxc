@@ -146,6 +146,6 @@ describe('updateMessage workflow', () => {
 
 		const { updateMessage } = updateMessageResponse.data;
 
-		expect(updateMessage).toStrictEqual(createMessage._id);
+		expect(updateMessage._id).toStrictEqual(createMessage._id);
 	});
 });

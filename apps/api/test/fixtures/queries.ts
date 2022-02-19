@@ -62,7 +62,13 @@ export const CREATE_MESSAGE = `
 
 export const UPDATE_MESSAGE = `
 	mutation ($messageId: ID, $body: String) {
-		updateMessage(body: $body, messageId: $messageId)
+		updateMessage(body: $body, messageId: $messageId) {
+			_id
+			threadId
+			body
+			createdAt
+			updatedAt
+		}
 	}
 `;
 
