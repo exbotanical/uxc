@@ -1,15 +1,14 @@
 import { useQuery } from '@apollo/client';
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-
-import SvgIcon from '@/components/Icon';
-import { UserStatus } from '@/components/User/UserStatus';
+import styled from 'styled-components';
 
 import type { User } from '@uxc/types';
 
+import SvgIcon from '@/components/Icon';
 import { Search } from '@/components/PrivateThread/Search';
+import { UserStatus } from '@/components/User/UserStatus';
 import { GET_CURRENT_USER } from '@/services/api/queries';
-import styled from 'styled-components';
 import { FlexCol } from '@/styles/Layout';
 
 const Container = styled.aside`
@@ -59,7 +58,7 @@ export function SidebarLayout({ body }: { body: React.ReactNode }) {
 				<FooterContainer>
 					<UserStatus user={data.getCurrentUser} />
 					<button type="button">
-						<SvgIcon size={22} color="#979bb0" name="gear" />
+						<SvgIcon color="#979bb0" name="gear" size={22} />
 					</button>
 				</FooterContainer>
 			</Footer>

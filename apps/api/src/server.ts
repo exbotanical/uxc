@@ -20,10 +20,10 @@ import {
 	sessionMiddleware
 } from './middleware';
 import { schema } from './schema';
+import { ERROR_MESSAGES } from './utils/constants';
 
 import type { JWT, JWTPayload } from '@uxc/types';
 import type { Request } from 'express';
-import { ERROR_MESSAGES } from './utils/constants';
 
 declare module 'express-session' {
 	export interface SessionData {
@@ -72,7 +72,10 @@ export async function initializeServer() {
 			schema,
 			subscribe,
 
-			async onConnect(_: {}, socket: { upgradeReq: Request }) {
+			async onConnect(
+				_: Record<string, unknown>,
+				socket: { upgradeReq: Request }
+			) {
 				const { id } = await new Promise<JWTPayload>((resolve) => {
 					sessionMiddleware(socket.upgradeReq, {} as any, () => {
 						if (socket.upgradeReq.session.meta) {

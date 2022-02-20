@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
+import styled from 'styled-components';
+
+import SvgIcon from '../Icon';
 
 import type { Notification as NotifType } from '@/state/types';
 
 import { onEnterKeyPressed } from '@/utils';
-import SvgIcon from '../Icon';
-import styled from 'styled-components';
 
 export type NotificationDuration = 'default' | 'sticky';
 

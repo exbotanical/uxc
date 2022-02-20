@@ -1,6 +1,8 @@
 import { css } from 'styled-components';
+
 import { colors } from '../colors';
 import { BREAKPOINTS } from '../Layout';
+
 import { FontFamilyBase, FontFamilyCode, FontFamilyCode2 } from './FontFamily';
 import {
 	FontSize2Xl,

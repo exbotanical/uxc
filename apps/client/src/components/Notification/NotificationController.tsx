@@ -1,10 +1,10 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import type { PropsFromRedux } from '@/state';
 
 import { Notification } from '@/components/Notification/Notification';
 import { connector } from '@/state';
-import styled from 'styled-components';
 import { FlexCol } from '@/styles/Layout';
 
 type NotificationControllerProps = PropsFromRedux;

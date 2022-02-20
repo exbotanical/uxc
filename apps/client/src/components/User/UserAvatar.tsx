@@ -1,10 +1,11 @@
 import React from 'react';
+import styled from 'styled-components';
+
+import { UnreadMessagesBadge } from '../Badges/UnreadMessages';
 
 import type { User } from '@uxc/types';
 
 import { StatusIndicator } from '@/components/Badges/StatusIndicator';
-import { UnreadMessagesBadge } from '../Badges/UnreadMessages';
-import styled from 'styled-components';
 
 type Size = keyof typeof SizeMap;
 interface UserCardProps {

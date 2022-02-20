@@ -1,8 +1,9 @@
-import { FontSizeXs, FontSizeXl } from '@/styles/Typography/FontSize';
 import type { ComponentPropsWithoutRef } from 'react';
 
 import React, { forwardRef } from 'react';
 import styled from 'styled-components';
+
+import { FontSizeXs, FontSizeXl } from '@/styles/Typography/FontSize';
 
 interface InputProps extends ComponentPropsWithoutRef<'input'> {
 	label: string;
@@ -62,7 +63,7 @@ export const AdaptiveInput = forwardRef<HTMLInputElement, InputProps>(
 	({ id, label, className, error = false, ...props }, ref) => {
 		return (
 			<Container className={className}>
-				<Input id={id} ref={ref} hasError={error} {...props} />
+				<Input hasError={error} id={id} ref={ref} {...props} />
 				<Label htmlFor={id}>{label}</Label>
 			</Container>
 		);

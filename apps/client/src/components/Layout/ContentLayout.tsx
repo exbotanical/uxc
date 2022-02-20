@@ -1,12 +1,17 @@
-import { FlexCol } from '@/styles/Layout';
-import { FontSizeXl } from '@/styles/Typography/FontSize';
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
+import React, { useContext } from 'react';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+
+import type { User } from '@uxc/types';
 
 import { ConnectedChatRoom as ChatRoom } from '@/components/ChatRoom';
 import { Friends } from '@/components/Friends';
 import SvgIcon from '@/components/Icon';
+import { GET_CURRENT_USER } from '@/services/api/queries';
+import { ThreadsContext } from '@/state/context/ThreadsContext';
+import { FlexCol } from '@/styles/Layout';
+import { FontSizeXl } from '@/styles/Typography/FontSize';
 
 const Container = styled.div`
 	${FlexCol}
@@ -21,7 +26,6 @@ const Header = styled.header`
 	align-items: center;
 	gap: 0.5rem;
 	width: 100%;
-	padding: 1rem;
 	height: 75px;
 	min-height: 75px;
 	border-left: 1px solid ${({ theme }) => theme.colors.border.norm};
@@ -44,12 +48,42 @@ const ContentContainer = styled.div`
 	border-radius: 4px;
 `;
 
+const ItemPadding = `1rem`;
+const Item = styled.div`
+	padding: ${ItemPadding};
+	display: flex;
+	align-items: center;
+	border-right: 1px solid ${({ theme }) => theme.colors.border.norm};
+	height: 100%;
+
+	& > svg {
+		margin-right: ${ItemPadding};
+	}
+`;
+
 export function ContentLayout() {
+	const location = useLocation();
+	const paths = location.pathname.split('/');
+	const threadId = paths[paths.length - 1];
+
+	const { getThreadById } = useContext(ThreadsContext);
+	const { data: user } = useQuery<{
+		getCurrentUser: User;
+	}>(GET_CURRENT_USER);
+
+	const thread = getThreadById(threadId);
+
+	const them = thread?.users.find(
+		({ _id }) => _id !== user?.getCurrentUser._id
+	);
+
 	return (
 		<Container>
 			<Header>
-				<SvgIcon size={21} name="people" />
-				<HeaderLabel>Friends</HeaderLabel>
+				<Item>
+					<SvgIcon name="people" size={21} />
+					<HeaderLabel>{them?.username || 'Friends'}</HeaderLabel>
+				</Item>
 			</Header>
 
 			<ContentContainer>

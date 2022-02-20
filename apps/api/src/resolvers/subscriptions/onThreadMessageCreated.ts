@@ -1,9 +1,10 @@
 import { SubscriptionResolvers } from '@uxc/types/generated';
 import { withFilter } from 'graphql-subscriptions';
 
+import type { Message } from '@uxc/types';
+
 import { pubsub } from '@/redis';
 import { EVENTS } from '@/utils/constants';
-import type { Message } from '@uxc/types';
 
 export const onThreadMessageCreated: SubscriptionResolvers['onThreadMessageCreated'] =
 	{
@@ -14,6 +15,7 @@ export const onThreadMessageCreated: SubscriptionResolvers['onThreadMessageCreat
 				return payload.message.threadId === threadId;
 			}
 		),
+		// @ts-expect-error
 		resolve: ({ message }: { message: Message }) => {
 			return [message];
 		}

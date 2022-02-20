@@ -6,8 +6,8 @@
   "author": "Matthew Zito <matthewtzito@gmail.com> (goldmund)",
   "scripts": {
     "dev": "./scripts/dev.bash",
-    "format": "pnpm -r --parallel --filter {apps,libs} run format",
-    "lint": "pnpm -r --parallel --filter {apps,libs} run lint",
+    "format": "pnpm -r --parallel --filter {apps} --filter {libs} run format",
+    "lint": "pnpm -r --parallel --filter {apps} --filter {libs} run lint",
     "lint:css": "pnpm -r --parallel --filter {apps,libs} run lint:css"
   },
   "lint-staged": {

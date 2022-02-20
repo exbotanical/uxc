@@ -2,22 +2,22 @@
   "name": "@uxc/types",
   "version": "1.0.0",
   "private": true,
-  "main": "src/index.ts",
-  "exports": {
-    ".": "./src/index.ts",
-    "./generated": "./generated/index.ts"
-  },
+  "license": "MIT",
+  "author": "Matthew Zito <matthewtzito@gmail.com> (goldmund)",
   "files": [
     "src",
     "generated"
   ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./generated": "./generated/index.ts"
+  },
+  "main": "src/index.ts",
   "scripts": {
     "format": "prettier --write \"src/**/*.{ts,tsx,md}\"",
     "lint": "eslint --ext .ts,.js,.tsx,.jsx,.json . --fix",
     "schema": "graphql-codegen --config codegen.yml"
   },
-  "author": "Matthew Zito <matthewtzito@gmail.com> (goldmund)",
-  "license": "MIT",
   "dependencies": {
     "@graphql-codegen/cli": "^2.4.0",
     "@graphql-codegen/fragment-matcher": "^3.2.1",

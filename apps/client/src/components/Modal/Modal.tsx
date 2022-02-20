@@ -1,9 +1,10 @@
-import { FlexCol } from '@/styles/Layout';
 import type { KeyboardEvent } from 'react';
 
 import React from 'react';
 import ReactModal from 'react-modal';
 import styled from 'styled-components';
+
+import { FlexCol } from '@/styles/Layout';
 
 const modalStyles = {
 	default: {

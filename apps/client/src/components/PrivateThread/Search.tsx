@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 
 import { SearchModal } from '@/components/Modal/SearchModal';
-import styled from 'styled-components';
 import { FlexCol } from '@/styles/Layout';
 import { FontSizeBase } from '@/styles/Typography/FontSize';
 

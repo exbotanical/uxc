@@ -5,6 +5,7 @@
   ],
   "rules": {
     "@typescript-eslint/no-unnecessary-type-assertion": "off",
-    "sort-keys": "off"
+    "sort-keys": "off",
+    "no-console": "off"
   }
 }

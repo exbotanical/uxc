@@ -1,14 +1,16 @@
 import React, { useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
+import { ListItem } from './styles';
 
 import SvgIcon from '@/components/Icon';
 import { Delimiter } from '@/components/PrivateThread/Delimiter';
 import { PrivateThread } from '@/components/PrivateThread/PrivateThread';
 import { ThreadsContext } from '@/state/context/ThreadsContext';
-import styled from 'styled-components';
-import { FontSizeLg } from '@/styles/Typography/FontSize';
 import { FlexCol } from '@/styles/Layout';
-import { ListItem } from './styles';
+import { FontSizeLg } from '@/styles/Typography/FontSize';
+
 
 const PaddedListItem = styled(ListItem)`
 	padding: 1rem;
@@ -66,7 +68,7 @@ export function PrivateThreadsList() {
 					role="button"
 					tabIndex={0}
 				>
-					<SvgIcon size={21} name="people" />
+					<SvgIcon name="people" size={21} />
 					<FriendsLabel>Friends</FriendsLabel>
 				</PaddedListItem>
 			</ul>

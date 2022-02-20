@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client';
 import React, { useEffect, useRef, useState } from 'react';
+import styled from 'styled-components';
 
 import type { Message, ObjectID, User } from '@uxc/types';
 
@@ -9,7 +10,6 @@ import {
 	GET_CURRENT_USER,
 	ON_THREAD_MESSAGE_CREATED
 } from '@/services/api/queries';
-import styled from 'styled-components';
 
 interface MessageListProps {
 	threadId: ObjectID;

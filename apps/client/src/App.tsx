@@ -8,6 +8,7 @@ import { Routes } from '@/router';
 import { client } from '@/services/api';
 import './App.scss';
 import { ThemeProvider } from '@/styles';
+
 import { HelmetProvider } from 'react-helmet-async';
 
 ReactModal.setAppElement('#root');

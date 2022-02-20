@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Outlet } from 'react-router-dom';
+import styled from 'styled-components';
 
 import { ContentLayout } from './ContentLayout';
 import { SidebarLayout } from './SidebarLayout';
@@ -8,7 +9,6 @@ import { ChannelsList } from '@/components/Channel/ChannelsList';
 import { NotificationController } from '@/components/Notification/NotificationController';
 import { useViewportSize } from '@/hooks/useViewportSize';
 import { ThreadsProvider } from '@/state/context/ThreadsContext';
-import styled from 'styled-components';
 
 const Container = styled.div`
 	display: flex;

@@ -1,10 +1,12 @@
-import { RowCenter } from '@/styles/Layout';
-import { FontSizeLg } from '@/styles/Typography/FontSize';
 import type { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from 'react';
 
 import React from 'react';
 import styled from 'styled-components';
+
 import type { DefaultTheme, StyledComponent } from 'styled-components';
+
+import { RowCenter } from '@/styles/Layout';
+import { FontSizeLg } from '@/styles/Typography/FontSize';
 
 type ButtonAttrs = DetailedHTMLProps<
 	ButtonHTMLAttributes<HTMLButtonElement>,
@@ -48,7 +50,7 @@ const StyledButton = styled(RowCenter).attrs({
 		background-color: ${({ theme }) =>
 			theme.colors.interactive.hover} !important;
 	}
-` as StyledComponent<'button', DefaultTheme, {}, never>;
+` as StyledComponent<'button', DefaultTheme>;
 
 const Loading = `opacity: 0;`;
 
@@ -59,7 +61,7 @@ const Normal = `
 
 const ContentContainer = styled.div<{ loadingState: boolean }>`
 	${({ loadingState }) => {
-		return !!loadingState ? Loading : Normal;
+		return loadingState ? Loading : Normal;
 	}}
 `;
 

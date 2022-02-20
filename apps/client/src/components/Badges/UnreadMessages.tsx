@@ -1,6 +1,7 @@
-import { FontSizeXs } from '@/styles/Typography/FontSize';
 import React from 'react';
 import styled from 'styled-components';
+
+import { FontSizeXs } from '@/styles/Typography/FontSize';
 
 interface UnreadMessagesBadgeProps {
 	newMessages: number;
@@ -8,7 +9,7 @@ interface UnreadMessagesBadgeProps {
 
 const THRESHOLD = 10;
 
-const Container = styled.span<{ size: 'sm' | 'lg' }>`
+const Container = styled.span<{ size: 'lg' | 'sm' }>`
 	${FontSizeXs}
 	font-weight: 700;
 	position: relative;

@@ -1,3 +1,4 @@
+import { useMutation } from '@apollo/client';
 import React, {
 	ChangeEvent,
 	ComponentPropsWithoutRef,
@@ -6,22 +7,17 @@ import React, {
 	useRef,
 	useState
 } from 'react';
+import styled from 'styled-components';
 
 import SvgIcon from '../Icon';
 import { UserAvatar } from '../User/UserAvatar';
 
 import type { Message, User } from '@uxc/types';
 
-import { toReadable } from '@/utils';
-import styled from 'styled-components';
+import { UPDATE_MESSAGE } from '@/services/api/queries';
 import { FlexCol } from '@/styles/Layout';
-import {
-	FontSizeLg,
-	FontSizeSm,
-	FontSizeBase
-} from '@/styles/Typography/FontSize';
-import { GET_MESSAGES, UPDATE_MESSAGE } from '@/services/api/queries';
-import { useMutation } from '@apollo/client';
+import { FontSizeLg, FontSizeSm } from '@/styles/Typography/FontSize';
+import { toReadable } from '@/utils';
 
 const Container = styled.div<{ hover: boolean }>`
 	${FlexCol}
@@ -95,7 +91,7 @@ const Button = styled.button`
 `;
 
 const StyledTextArea = styled.textarea`
-	${FontSizeBase}
+	${FontSizeLg}
 	padding: 1rem;
 	color: ${({ theme }) => theme.colors.font.weak};
 	background-color: ${({ theme }) => theme.colors.background.dark};
@@ -183,12 +179,12 @@ export function ChatMessage({
 	}, [editMode]);
 
 	function focusEndOfTextarea(body: string) {
-		textareaRef?.current?.focus();
+		textareaRef.current?.focus();
 
-		textareaRef?.current?.setSelectionRange(body.length, body.length);
+		textareaRef.current?.setSelectionRange(body.length, body.length);
 
-		if (textareaRef?.current?.scrollTop != null) {
-			textareaRef.current.scrollTop = textareaRef?.current?.scrollHeight;
+		if (textareaRef.current?.scrollTop != null) {
+			textareaRef.current.scrollTop = textareaRef.current.scrollHeight;
 		}
 	}
 
@@ -213,16 +209,16 @@ export function ChatMessage({
 		>
 			{hover && isSender ? (
 				<OptionsContainer>
-					<Button type="button" tabIndex={-1}>
-						<SvgIcon size={21} name="smiley" />
+					<Button tabIndex={-1} type="button">
+						<SvgIcon name="smiley" size={21} />
 					</Button>
 					<Button
-						type="button"
 						onClick={() => {
 							setEditModeProxy(true);
 						}}
+						type="button"
 					>
-						<SvgIcon size={21} name="edit" />
+						<SvgIcon name="edit" size={21} />
 					</Button>
 				</OptionsContainer>
 			) : null}
@@ -231,9 +227,9 @@ export function ChatMessage({
 				<BodyContainerSansMeta {...isSenderActions}>
 					{editMode ? (
 						<StyledTextArea
-							value={messageBody}
 							onChange={handleChange}
 							ref={textareaRef}
+							value={messageBody}
 						/>
 					) : (
 						<p>{body}</p>
@@ -253,9 +249,9 @@ export function ChatMessage({
 
 						{editMode ? (
 							<StyledTextArea
-								value={messageBody}
 								onChange={handleChange}
 								ref={textareaRef}
+								value={messageBody}
 							/>
 						) : (
 							<p>{body}</p>

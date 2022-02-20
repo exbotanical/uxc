@@ -1,9 +1,13 @@
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+import { AdaptiveInput } from '../Fields/AdaptiveInput';
+
+import { Button } from '@/components/Buttons/Button';
 import { FlexCol, RowCenter } from '@/styles/Layout';
 import { FontSizeBase, FontSizeXl } from '@/styles/Typography/FontSize';
-import styled from 'styled-components';
-import { AdaptiveInput } from '../Fields/AdaptiveInput';
-import { Button } from '@/components/Buttons/Button';
-import { Link } from 'react-router-dom';
+
+
 
 // sm:px-6 lg:px-8
 export const Container = styled.div`
@@ -13,7 +17,7 @@ export const Container = styled.div`
 	height: 100vh;
 `;
 
-export const InnerCard = styled.div<{ size: 'sm' | 'lg' }>`
+export const InnerCard = styled.div<{ size: 'lg' | 'sm' }>`
 	width: 100%;
 	min-height: ${({ size }) => (size === 'sm' ? 32 : 36)}rem;
 	max-width: 32rem;

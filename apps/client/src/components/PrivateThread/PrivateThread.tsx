@@ -1,18 +1,19 @@
 import { useQuery } from '@apollo/client';
 import React, { useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import styled from 'styled-components';
 
 import { UserAvatar } from '../User/UserAvatar';
+
+import { ListItem } from './styles';
 
 import type { ObjectID, User } from '@uxc/types';
 
 import { GET_CURRENT_USER } from '@/services/api/queries';
 import { ThreadsContext } from '@/state/context/ThreadsContext';
-import { onEnterKeyPressed } from '@/utils';
-import styled from 'styled-components';
-import { ListItem } from './styles';
 import { RowCenter } from '@/styles/Layout';
 import { FontSizeLg } from '@/styles/Typography/FontSize';
+import { onEnterKeyPressed } from '@/utils';
 
 interface PrivateThreadProps {
 	id: ObjectID;
@@ -66,7 +67,7 @@ export function PrivateThread({ id }: PrivateThreadProps) {
 			tabIndex={0}
 		>
 			<RowCenter>
-				<UserAvatar size="md" u={them} newMessagesCount={thread.newMessages} />
+				<UserAvatar newMessagesCount={thread.newMessages} size="md" u={them} />
 
 				<UsernameLabel>{them.username}</UsernameLabel>
 			</RowCenter>

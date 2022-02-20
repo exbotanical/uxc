@@ -1,9 +1,10 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import { UserAvatar } from './UserAvatar';
 
 import type { User } from '@uxc/types';
-import styled from 'styled-components';
+
 import { FontSizeBase } from '@/styles/Typography/FontSize';
 
 const Container = styled.div`

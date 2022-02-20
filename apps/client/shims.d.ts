@@ -1,3 +1,5 @@
+import 'styled-components';
+
 interface ImportMeta {
 	env: {
 		NODE_ENV: 'development' | 'production' | 'test';
@@ -12,21 +14,9 @@ interface ImportMeta {
 	};
 }
 
-import 'styled-components';
-
 declare module 'styled-components' {
 	type Palettes =
-		| 'blue'
-		| 'success'
-		| 'font'
-		| 'accent'
-		| 'background'
-		| 'interactive'
-		| 'background'
-		| 'field'
-		| 'scrollbar'
-		| 'border'
-		| 'interactive';
+		'accent' | 'background' | 'background' | 'blue' | 'border' | 'field' | 'font' | 'interactive' | 'interactive' | 'scrollbar' | 'success';
 
 	export interface DefaultTheme {
 		colors: {

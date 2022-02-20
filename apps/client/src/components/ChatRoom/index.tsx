@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client';
 import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
 
 import { ChatMessageInput } from './ChatMessageInput';
 import { MessageList } from './MessageList';
@@ -16,7 +17,6 @@ import {
 } from '@/services/api/queries';
 import { connector } from '@/state';
 import { ThreadsContext } from '@/state/context/ThreadsContext';
-import styled from 'styled-components';
 import { FlexCol } from '@/styles/Layout';
 
 export interface SendMessage {

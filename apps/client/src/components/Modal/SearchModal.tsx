@@ -1,9 +1,9 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import { Button } from '@/components/Buttons/Button';
 import { Input } from '@/components/Fields/Input';
 import { Modal } from '@/components/Modal/Modal';
-import styled from 'styled-components';
 import { FontSizeXl } from '@/styles/Typography/FontSize';
 
 const Form = styled.form`
@@ -64,9 +64,9 @@ export function SearchModal({
 				<InputContainer>
 					<Input
 						autoComplete="off"
+						label="Search"
 						maxLength={60}
 						name="Search"
-						label="Search"
 					/>
 				</InputContainer>
 

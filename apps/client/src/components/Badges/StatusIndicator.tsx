@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
-type Size = 'sm' | 'md' | 'lg';
+type Size = 'lg' | 'md' | 'sm';
 interface StatusIndicatorProps {
 	size?: Size;
 	sansBorder?: boolean;
@@ -70,7 +70,7 @@ export function StatusIndicator({
 	return (
 		<Container>
 			{animate ? <AnimatedIndicatorOverlay size={size} /> : null}
-			<Indicator size={size} sansBorder={sansBorder} />
+			<Indicator sansBorder={sansBorder} size={size} />
 		</Container>
 	);
 }

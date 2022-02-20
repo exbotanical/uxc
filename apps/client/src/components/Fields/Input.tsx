@@ -1,11 +1,11 @@
-import { ScreenReaderOnly } from '@/styles/Layout';
-import { FontSizeXl } from '@/styles/Typography/FontSize';
 import type { ComponentPropsWithoutRef } from 'react';
 
 import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 
 import SvgIcon from '@/components/Icon';
+import { ScreenReaderOnly } from '@/styles/Layout';
+import { FontSizeXl } from '@/styles/Typography/FontSize';
 
 interface OptionConfig {
 	iconName: string;
@@ -73,10 +73,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 					{options?.map(({ iconName, handleClick }, idx) => {
 						return handleClick ? (
 							<Button key={idx} onClick={handleClick} type="button">
-								<SvgIcon size={22} name={iconName} />
+								<SvgIcon name={iconName} size={22} />
 							</Button>
 						) : (
-							<SvgIcon size={22} key={idx} name={iconName} />
+							<SvgIcon key={idx} name={iconName} size={22} />
 						);
 					})}
 				</ButtonContainer>

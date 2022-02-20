@@ -1,7 +1,7 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import { Channel } from '@/components/Channel/Channel';
-import styled from 'styled-components';
 
 const Container = styled.div`
 	display: flex;

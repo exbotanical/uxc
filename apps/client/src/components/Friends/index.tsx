@@ -1,9 +1,9 @@
 import type { ChangeEvent } from 'react';
 
 import React, { useState } from 'react';
+import styled from 'styled-components';
 
 import { Input } from '@/components/Fields/Input';
-import styled from 'styled-components';
 import { FlexCol } from '@/styles/Layout';
 import { FontSizeBase, FontSizeXs } from '@/styles/Typography/FontSize';
 

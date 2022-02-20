@@ -1,6 +1,8 @@
 import { useQuery, useSubscription } from '@apollo/client';
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 
+import { showNotification } from '../notification/actions';
+
 import type { PrivateThread, ObjectID, User, Message } from '@uxc/types';
 
 import {
@@ -8,7 +10,6 @@ import {
 	GET_CURRENT_USER,
 	ON_ANY_MESSAGE_CREATED
 } from '@/services/api/queries';
-import { showNotification } from '../notification/actions';
 
 export type StatefulThread = PrivateThread & {
 	newMessages: number;

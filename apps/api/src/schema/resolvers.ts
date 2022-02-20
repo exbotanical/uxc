@@ -1,5 +1,3 @@
-/* eslint-disable sort-keys */
-'@uxc/types';
 import { GraphQLDateTime } from 'graphql-iso-date';
 
 import { authGuard } from '../middleware/auth';

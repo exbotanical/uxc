@@ -7,6 +7,7 @@ import type { RouteObject } from 'react-router-dom';
 
 import { Join } from '@/components/Auth/Join';
 import { Signin } from '@/components/Auth/Signin';
+import { Wrapper } from '@/components/Auth/Wrapper';
 import { ConnectedMainLayout as MainLayout } from '@/components/Layout/MainLayout';
 import { PrivateThreadsList } from '@/components/PrivateThread';
 
@@ -16,11 +17,11 @@ const WrappedLayout = withProtectedRoute(MainLayout);
 export function Routes(): RouteObject[] {
 	return [
 		{
-			element: <Signin />,
+			element: <Wrapper content={<Signin />} />,
 			path: '/signin'
 		},
 		{
-			element: <Join />,
+			element: <Wrapper content={<Join />} />,
 			path: '/join'
 		},
 		{
