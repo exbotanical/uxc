@@ -43,7 +43,7 @@ const StyledButton = styled(RowCenter).attrs({
 	&:disabled {
 		background-color: ${({ theme }) =>
 			theme.colors.interactive.hover} !important;
-		cursor: auto;
+		cursor: not-allowed;
 	}
 
 	&:hover {

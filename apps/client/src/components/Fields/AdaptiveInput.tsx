@@ -21,7 +21,8 @@ const Input = styled.input<{ hasError: boolean }>`
 		`outline: solid 1px ${theme.colors.accent['900']};outline-offset: -2px;`}
 	padding: 0.75rem;
 	margin-top: 0.25rem;
-	border-radius: 0.25rem;
+	border-top-left-radius: 0.25rem;
+	border-top-right-radius: 0.25rem;
 	width: 100%;
 	color: ${({ theme }) => theme.colors.font.strong};
 	background: ${({ theme }) => theme.colors.field.norm};

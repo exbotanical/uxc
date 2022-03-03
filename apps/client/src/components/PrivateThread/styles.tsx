@@ -11,10 +11,16 @@ export const ListItem = styled.li<{ isActiveItem: boolean }>`
 	background-color: ${({ theme, isActiveItem }) =>
 		isActiveItem && theme.colors.background.hover};
 
-	border-left: ${({ theme, isActiveItem }) =>
-		isActiveItem && `4px solid ${theme.colors.interactive.norm}`};
-
 	&:hover {
 		background-color: ${({ theme }) => theme.colors.background.hover};
 	}
+`;
+
+export const ActiveItemIndicator = styled.div`
+	background-color: ${({ theme }) => theme.colors.interactive.norm};
+	height: 100%;
+	width: 4px;
+	position: absolute;
+	z-index: 1;
+	left: 0px;
 `;

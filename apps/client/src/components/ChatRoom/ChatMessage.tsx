@@ -1,12 +1,5 @@
 import { useMutation } from '@apollo/client';
-import React, {
-	ChangeEvent,
-	ComponentPropsWithoutRef,
-	forwardRef,
-	useEffect,
-	useRef,
-	useState
-} from 'react';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import SvgIcon from '../Icon';
@@ -90,7 +83,9 @@ const Button = styled.button`
 	color: ${({ theme }) => theme.colors.font.strong};
 `;
 
-const StyledTextArea = styled.textarea`
+const StyledTextArea = styled.textarea.attrs({
+	spellCheck: false
+})`
 	${FontSizeLg}
 	padding: 1rem;
 	color: ${({ theme }) => theme.colors.font.weak};

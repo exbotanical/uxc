@@ -40,4 +40,5 @@ export function UnreadMessagesBadge({ newMessages }: UnreadMessagesBadgeProps) {
 		</Container>
 	);
 }
+
 UnreadMessagesBadge.displayName = 'UnreadMessagesBadge';

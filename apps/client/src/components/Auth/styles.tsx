@@ -7,9 +7,6 @@ import { Button } from '@/components/Buttons/Button';
 import { FlexCol, RowCenter } from '@/styles/Layout';
 import { FontSizeBase, FontSizeXl } from '@/styles/Typography/FontSize';
 
-
-
-// sm:px-6 lg:px-8
 export const Container = styled.div`
 	${FlexCol}
 	justify-content: center;
@@ -30,7 +27,7 @@ export const Form = styled.form`
 	${FlexCol}
 	padding: 0 1.75rem;
 	padding-top: 5rem;
-	padding-bottom: 2rem;
+	padding-bottom: 1.5rem;
 	height: 100%;
 `;
 

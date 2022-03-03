@@ -3,9 +3,9 @@ import React, { useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { UserAvatar } from '../User/UserAvatar';
+import { UserAvatar } from '@/components/User/UserAvatar';
 
-import { ListItem } from './styles';
+import * as S from './styles';
 
 import type { ObjectID, User } from '@uxc/types';
 
@@ -19,9 +19,10 @@ interface PrivateThreadProps {
 	id: ObjectID;
 }
 
-const PaddedListItem = styled(ListItem)`
+const PaddedListItem = styled(S.ListItem)`
 	padding: 0.75rem;
 	cursor: pointer;
+	position: relative;
 `;
 
 const UsernameLabel = styled.p`
@@ -66,6 +67,7 @@ export function PrivateThread({ id }: PrivateThreadProps) {
 			role="button"
 			tabIndex={0}
 		>
+			{isActiveItem ? <S.ActiveItemIndicator /> : null}
 			<RowCenter>
 				<UserAvatar newMessagesCount={thread.newMessages} size="md" u={them} />
 
