@@ -1,4 +1,4 @@
-import { FontSizeSm } from '@/styles/Typography/FontSize';
+import { FontSizeBase } from '@/styles/Typography/FontSize';
 import styled from 'styled-components';
 
 export const SearchHit = styled.li.attrs<{ isActiveRecord: boolean }>(
@@ -62,7 +62,7 @@ export const SearchHitContent = styled.div`
 `;
 
 export const SearchHitTitle = styled.span`
-	${FontSizeSm}
+	${FontSizeBase}
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;

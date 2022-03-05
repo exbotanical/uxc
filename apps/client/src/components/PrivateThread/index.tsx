@@ -11,7 +11,6 @@ import { ThreadsContext } from '@/state/context/ThreadsContext';
 import { FlexCol } from '@/styles/Layout';
 import { FontSizeLg } from '@/styles/Typography/FontSize';
 
-
 const PaddedListItem = styled(ListItem)`
 	padding: 1rem;
 	cursor: pointer;
@@ -27,6 +26,7 @@ const ThreadsListContainer = styled.ul`
 	${FlexCol}
 	overflow-y: auto;
 	height: 100%;
+	padding: 0.5rem;
 `;
 
 /**
@@ -65,8 +65,6 @@ export function PrivateThreadsList() {
 					onKeyPress={(e) => {
 						onEnterKeyPressed(e, '/');
 					}}
-					role="button"
-					tabIndex={0}
 				>
 					<SvgIcon name="people" size={21} />
 					<FriendsLabel>Friends</FriendsLabel>

@@ -10,8 +10,8 @@ const SearchContainer = styled.div`
 	justify-content: center;
 	align-items: center;
 	width: 100%;
-	height: 75px;
-	min-height: 75px;
+	height: 65px;
+	min-height: 65px;
 	padding: 0.75rem;
 	background-color: ${({ theme }) => theme.colors.background.dark};
 	border-bottom: 1px solid ${({ theme }) => theme.colors.border.weak};

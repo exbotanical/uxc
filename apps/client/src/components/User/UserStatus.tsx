@@ -22,7 +22,7 @@ const UsernameLabel = styled.p`
 export function UserStatus({ user }: { user: User }) {
 	return (
 		<Container>
-			<UserAvatar size="sm" u={user} />
+			<UserAvatar size="md" u={user} />
 			<UsernameLabel>{user.username}</UsernameLabel>
 		</Container>
 	);

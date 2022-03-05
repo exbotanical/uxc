@@ -23,6 +23,7 @@ export function useSearch() {
 	}
 
 	useEffect(() => {
+		console.log('here');
 		if (!query) return;
 
 		const rawHits = mockData.filter((record) =>
@@ -37,7 +38,7 @@ export function useSearch() {
 		}));
 
 		setResults(hits);
-	}, [query]);
+	}, [query, setQuery]);
 
 	return {
 		history,

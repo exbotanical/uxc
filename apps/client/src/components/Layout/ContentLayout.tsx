@@ -26,8 +26,8 @@ const Header = styled.header`
 	align-items: center;
 	gap: 0.5rem;
 	width: 100%;
-	height: 75px;
-	min-height: 75px;
+	height: 65px;
+	min-height: 65px;
 	border-left: 1px solid ${({ theme }) => theme.colors.border.norm};
 	border-bottom: 1px solid ${({ theme }) => theme.colors.border.norm};
 `;

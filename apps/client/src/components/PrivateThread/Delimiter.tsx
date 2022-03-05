@@ -11,9 +11,6 @@ const Container = styled.div`
 	padding: 1rem;
 	justify-content: space-between;
 	color: ${({ theme }) => theme.colors.font.strong};
-	background-color: ${({ theme }) => theme.colors.background.strong};
-	border-top: 1px solid ${({ theme }) => theme.colors.border.norm};
-	border-bottom: 1px solid ${({ theme }) => theme.colors.border.norm};
 `;
 
 const Label = styled.p`

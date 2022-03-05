@@ -15,9 +15,9 @@ const SizeMap = {
 	height: 1rem;
 `,
 	md: `
-  left: 1.25rem;
-	width: 1.25rem;
-	height: 1.25rem;
+  left: 1rem;
+	width: 1rem;
+	height: 1rem;
 `,
 	lg: `
   left: 1.5rem;
@@ -28,7 +28,7 @@ const SizeMap = {
 
 const Container = styled.div`
 	position: relative;
-	margin-left: 0.75rem;
+	margin-left: 0.65rem;
 `;
 
 const ping = keyframes`
@@ -41,7 +41,6 @@ const ping = keyframes`
 const IndicatorBase = styled.div<{ size: Size }>`
 	position: absolute;
 	bottom: 0px;
-	margin-top: -0.25rem;
 	border-radius: 9999px;
 	background-color: ${({ theme }) => theme.colors.success.norm};
 	${({ size }) => SizeMap[size]}
@@ -58,7 +57,7 @@ const Indicator = styled(IndicatorBase)<{
 `;
 
 const Border = css`
-	border-width: 2px;
+	border-width: 3px;
 	border-color: ${({ theme }) => theme.colors.border.norm};
 `;
 

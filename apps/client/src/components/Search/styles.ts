@@ -72,6 +72,11 @@ export const SearchInput = styled.input.attrs({
 	&:focus {
 		outline: none !important;
 	}
+
+	::-webkit-search-cancel-button {
+		-webkit-appearance: none;
+		appearance: none;
+	}
 `;
 
 export const CloseButton = styled.button`

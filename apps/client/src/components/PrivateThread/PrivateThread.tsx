@@ -20,7 +20,7 @@ interface PrivateThreadProps {
 }
 
 const PaddedListItem = styled(S.ListItem)`
-	padding: 0.75rem;
+	padding: 0.5rem;
 	cursor: pointer;
 	position: relative;
 `;

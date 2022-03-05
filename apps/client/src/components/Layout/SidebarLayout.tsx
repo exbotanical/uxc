@@ -25,8 +25,8 @@ const Footer = styled.footer`
 	border-radius: 4px;
 	border-top: 1px solid ${({ theme }) => theme.colors.border.norm};
 
-	height: 75px;
-	max-height: 75px;
+	height: 71px;
+	max-height: 71px;
 `;
 
 const FooterContainer = styled.div`
