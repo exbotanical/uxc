@@ -1,0 +1,58 @@
+[
+	{
+		"type": "user",
+		"_id": "ObjectID",
+		"username": "czukay",
+		"email": "string",
+		"userImage": ""
+	},
+	{
+		"type": "user",
+		"_id": "ObjectID2",
+		"username": "corleone",
+		"email": "string",
+		"userImage": ""
+	},
+	{
+		"type": "user",
+		"_id": "ObjectID3",
+		"username": "corinthia",
+		"email": "string",
+		"userImage": ""
+	},
+	{
+		"type": "user",
+		"_id": "ObjectID4",
+		"username": "abuelita",
+		"email": "string",
+		"userImage": ""
+	},
+	{
+		"type": "user",
+		"_id": "ObjectID4",
+		"username": "abuelita",
+		"email": "string",
+		"userImage": ""
+	},
+	{
+		"type": "thread",
+		"_id": "ObjectID42",
+		"username": "abuelita",
+		"email": "string",
+		"userImage": ""
+	},
+	{
+		"type": "thread",
+		"_id": "ObjectID14",
+		"username": "arnoldson",
+		"email": "string",
+		"userImage": ""
+	},
+	{
+		"type": "thread",
+		"_id": "ObjectID44",
+		"username": "capoeira",
+		"email": "string",
+		"userImage": ""
+	}
+]

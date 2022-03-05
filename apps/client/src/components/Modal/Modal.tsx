@@ -2,6 +2,7 @@ import React, { createContext, createRef, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { createPortal } from 'react-dom';
+import { cycleRange } from '@/utils/computed';
 
 const ModalOverlay = styled.div.attrs({
 	role: 'dialog',
@@ -72,29 +73,33 @@ export function Modal({ onModalClose, modalRef, children }: ModalProps) {
 	}
 
 	const handleTabKey = (e: KeyboardEvent) => {
-		const focusableModalElements =
+		// @todo hoist this up
+		const focusableModalElements = Array.from(
 			modalRef?.current?.querySelectorAll<HTMLElement>(
-				'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], input[type="search"], select'
-			);
+				'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], input[type="search"], select, li'
+			) || []
+		);
 
 		if (!focusableModalElements) {
 			return;
 		}
 
-		const firstElement = focusableModalElements[0];
-		const lastElement =
-			focusableModalElements[focusableModalElements.length - 1];
+		const currentActive = document.activeElement;
+		const currentIdx = focusableModalElements.findIndex(
+			(el) => el === currentActive
+		);
 
-		if (!e.shiftKey && document.activeElement !== firstElement) {
-			firstElement?.focus();
+		const next = cycleRange(
+			e.shiftKey ? -1 : 1,
+			currentIdx,
+			focusableModalElements.length
+		);
 
-			return e.preventDefault();
-		}
+		const nextEl = focusableModalElements[next];
 
-		if (e.shiftKey && document.activeElement !== lastElement) {
-			lastElement?.focus();
-			e.preventDefault();
-		}
+		nextEl?.focus();
+
+		e.preventDefault();
 	};
 
 	const keyListenersMap = new Map([

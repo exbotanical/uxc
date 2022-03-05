@@ -26,6 +26,9 @@ export const colors = {
 		hover: '#575c75',
 		disabled: '#34384e'
 	},
+	link: {
+		norm: '#0284c7'
+	},
 	success: {
 		norm: '#11ff8d'
 	},

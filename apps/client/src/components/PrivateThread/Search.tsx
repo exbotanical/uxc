@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { SearchModal } from '@/components/Search/SearchModal';
+import { SearchModal } from '@/components/Search';
 import { FlexCol } from '@/styles/Layout';
 import { FontSizeBase } from '@/styles/Typography/FontSize';
 
@@ -29,10 +29,6 @@ const Button = styled.button`
 	background-color: ${({ theme }) => theme.colors.background.hover} !important;
 	text-transform: none;
 	letter-spacing: normal;
-
-	&:focus {
-		outline: none;
-	}
 `;
 
 export function Search() {

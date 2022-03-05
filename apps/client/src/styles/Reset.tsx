@@ -16,7 +16,6 @@ export const Reset = createGlobalStyle<{
 
 	* {
 		${FontFamilyBase}
-
 	}
 
 	*,
@@ -84,5 +83,9 @@ export const Reset = createGlobalStyle<{
 
 	textarea {
 		${FontFamilyCode}
+	}
+
+	ul, ol {
+		list-style: none;
 	}
 `;

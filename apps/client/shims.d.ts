@@ -27,7 +27,8 @@ declare module 'styled-components' {
 		| 'interactive'
 		| 'scrollbar'
 		| 'success'
-		| 'error';
+		| 'error'
+		| 'link';
 
 	export interface DefaultTheme {
 		colors: {
