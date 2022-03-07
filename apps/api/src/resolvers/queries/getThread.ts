@@ -6,10 +6,10 @@ import type {
 	ObjectID,
 	User,
 	PrivateThread as PrivateThreadType
-} from '@uxc/types';
+} from '@uxc/types/node';
 
 import { PrivateThread } from '@/db';
-import { ERROR_MESSAGES } from '@uxc/types';
+import { ERROR_MESSAGES } from '@uxc/types/node';
 
 export const getThread: Resolver<
 	PrivateThreadType & { users: User[] },

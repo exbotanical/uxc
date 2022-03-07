@@ -1,5 +1,8 @@
 import type { Resolver } from '../types';
-import type { ObjectID, PrivateThread as PrivateThreadType } from '@uxc/types';
+import type {
+	ObjectID,
+	PrivateThread as PrivateThreadType
+} from '@uxc/types/node';
 
 import { PrivateThread } from '@/db';
 

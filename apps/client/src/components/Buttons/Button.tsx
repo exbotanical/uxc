@@ -1,4 +1,9 @@
-import type { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from 'react';
+import {
+	ButtonHTMLAttributes,
+	DetailedHTMLProps,
+	forwardRef,
+	ReactNode
+} from 'react';
 
 import React from 'react';
 import styled from 'styled-components';
@@ -40,7 +45,7 @@ const StyledButton = styled(RowCenter).attrs({
 			theme.colors.interactive.active} !important;
 	}
 
-	&:disabled {
+	&[aria-disabled='true'] {
 		background-color: ${({ theme }) =>
 			theme.colors.interactive.hover} !important;
 		cursor: not-allowed;
@@ -69,14 +74,16 @@ const Spinner = styled.span`
 	position: absolute;
 `;
 
-export function Button({ children, loading = false, ...props }: ButtonProps) {
-	return (
-		<StyledButton {...props}>
-			<ContentContainer loadingState={loading}>{children}</ContentContainer>
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+	({ children, loading = false, ...props }, ref) => {
+		return (
+			<StyledButton ref={ref} {...props}>
+				<ContentContainer loadingState={loading}>{children}</ContentContainer>
 
-			{loading ? <Spinner>@todo</Spinner> : null}
-		</StyledButton>
-	);
-}
+				{loading ? <Spinner>@todo</Spinner> : null}
+			</StyledButton>
+		);
+	}
+);
 
 Button.displayName = 'Button';

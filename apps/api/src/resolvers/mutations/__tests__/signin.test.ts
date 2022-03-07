@@ -2,7 +2,7 @@ import { SIGNIN_MUTATION } from '@@/fixtures';
 import request from 'supertest';
 
 import { app } from '@/app';
-import { ERROR_MESSAGES } from '@uxc/types';
+import { ERROR_MESSAGES } from '@uxc/types/node';
 
 describe('signin workflow', () => {
 	it('responds with a cookie when signin is successful', async () => {
@@ -62,7 +62,9 @@ describe('signin workflow', () => {
 			})
 			.expect(200);
 
-		expect(body.errors[0].message).toStrictEqual(ERROR_MESSAGES.E_NO_EMAIL);
+		expect(body.errors[0].message).toStrictEqual(
+			ERROR_MESSAGES.E_INVALID_EMAIL
+		);
 	});
 
 	it('returns an error when provided no password', async () => {

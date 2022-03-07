@@ -20,9 +20,9 @@ import {
 	sessionMiddleware
 } from './middleware';
 import { schema } from './schema';
-import { ERROR_MESSAGES } from '@uxc/types';
+import { ERROR_MESSAGES } from '@uxc/types/node';
 
-import type { JWT, JWTPayload } from '@uxc/types';
+import type { JWT, JWTPayload } from '@uxc/types/node';
 import type { Request } from 'express';
 
 declare module 'express-session' {

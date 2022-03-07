@@ -1,4 +1,4 @@
-import { Message as MessageType } from '@uxc/types';
+import { Message as MessageType } from '@uxc/types/node';
 import { Schema, model } from 'mongoose';
 
 import type { Model, Document } from 'mongoose';

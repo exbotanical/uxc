@@ -1,4 +1,4 @@
-import { PrivateThread as PrivateThreadType } from '@uxc/types';
+import { PrivateThread as PrivateThreadType } from '@uxc/types/node';
 import { Schema, model } from 'mongoose';
 
 import type { Model, Document } from 'mongoose';

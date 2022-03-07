@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { Request } from 'express';
 import { Document } from 'mongoose';
 
-import type { Context, ObjectID, User as UserType } from '@uxc/types';
+import type { Context, ObjectID, User as UserType } from '@uxc/types/node';
 
 import { User, Message, PrivateThread } from '@/db';
 

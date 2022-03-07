@@ -2,12 +2,12 @@ import { AuthenticationError, UserInputError } from 'apollo-server-core';
 import { isValidObjectId } from 'mongoose';
 
 import type { Resolver } from '../types';
-import type { Message as MessageType, ObjectID } from '@uxc/types';
+import type { Message as MessageType, ObjectID } from '@uxc/types/node';
 
 import { Message, PrivateThread } from '@/db';
 import { pubsub } from '@/redis';
 import { EVENTS } from '@/utils/constants';
-import { ERROR_MESSAGES } from '@uxc/types';
+import { ERROR_MESSAGES } from '@uxc/types/node';
 
 export const createMessage: Resolver<
 	MessageType,

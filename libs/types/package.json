@@ -6,10 +6,12 @@
   "author": "Matthew Zito <matthewtzito@gmail.com> (goldmund)",
   "files": [
     "src",
-    "generated"
+    "generated",
+		"node"
   ],
   "exports": {
     ".": "./src/index.ts",
+    "./node": "./node/index.ts",
     "./generated": "./generated/index.ts"
   },
   "main": "src/index.ts",

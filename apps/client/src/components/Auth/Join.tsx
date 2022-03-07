@@ -16,7 +16,7 @@ import {
 	validatePassword,
 	validateUsername
 } from './validators';
-import { AdaptiveInput } from '../Fields/AdaptiveInput';
+import { AdaptiveInput } from '@/components/Fields/AdaptiveInput';
 
 export function Join() {
 	const { data, loading } = useQuery<{
@@ -24,6 +24,7 @@ export function Join() {
 	}>(GET_CURRENT_USER);
 
 	const firstInteractiveRef = useRef<HTMLInputElement>(null);
+	const buttonRef = useRef<HTMLButtonElement>(null);
 
 	const [join] = useMutation(JOIN);
 	const navigate = useNavigate();
@@ -49,7 +50,13 @@ export function Join() {
 		error: passwordError
 	} = useValidation(validatePassword);
 
-	const formInvalid = !!usernameError || !!emailError || !!passwordError;
+	const formInvalid =
+		!username ||
+		!email ||
+		!password ||
+		!!usernameError ||
+		!!emailError ||
+		!!passwordError;
 
 	function resetState() {
 		setEmail('');
@@ -81,8 +88,11 @@ export function Join() {
 
 	async function handleSubmit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
+		if (formInvalid) {
+			return;
+		}
 
-		await join({
+		const data = await join({
 			variables: {
 				args: {
 					email,
@@ -91,6 +101,8 @@ export function Join() {
 				}
 			}
 		});
+
+		console.log({ data });
 
 		resetState();
 
@@ -154,8 +166,9 @@ export function Join() {
 				<S.CTAButton
 					loading={loading}
 					type="submit"
-					disabled={formInvalid}
 					data-testid="join-button"
+					aria-disabled={formInvalid}
+					aria-describedby="disabledReason"
 				>
 					Join
 				</S.CTAButton>

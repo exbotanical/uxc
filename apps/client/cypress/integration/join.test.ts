@@ -1,9 +1,18 @@
 import { aliasQuery } from '../utils';
+import {
+	USERNAME_CHARS_MAX,
+	USERNAME_CHARS_MIN,
+	ERROR_MESSAGES,
+	PASSWORD_CHARS_MAX,
+	PASSWORD_CHARS_MIN,
+	EMAIL_CHARS_MAX,
+	EMAIL_CHARS_MIN
+} from '@uxc/types';
 
 describe('join workflow', () => {
 	const goodUsername = 'cypress_user';
 	const goodEmail = 'cypress@cypress.com';
-	const goodPassword = 'cypress_1password';
+	const goodPassword = 'cypress_password';
 
 	const badUsername = 'cy';
 	const badEmail = 'cy';
@@ -56,22 +65,22 @@ describe('join workflow', () => {
 	});
 
 	it.skip('disables the join button if missing required fields', () => {
-		cy.get('@btn').should('have.attr', 'disabled');
+		cy.get('@btn').should('have.attr', 'aria-disabled');
 
 		cy.get('@username').type(goodUsername);
-		cy.get('@btn').should('have.attr', 'disabled');
+		cy.get('@btn').should('have.attr', 'aria-disabled', 'true');
 
 		cy.get('@email').type(goodEmail);
-		cy.get('@btn').should('have.attr', 'disabled');
+		cy.get('@btn').should('have.attr', 'aria-disabled', 'true');
 
 		cy.get('@password').type(goodPassword);
-		cy.get('@btn').should('not.have.attr', 'disabled');
+		cy.get('@btn').should('have.attr', 'aria-disabled', 'false');
 
 		cy.get('@email').clear();
-		cy.get('@btn').should('have.attr', 'disabled');
+		cy.get('@btn').should('have.attr', 'aria-disabled', 'true');
 
 		cy.get('@email').type(goodEmail);
-		cy.get('@btn').should('not.have.attr', 'disabled');
+		cy.get('@btn').should('have.attr', 'aria-disabled', 'false');
 	});
 
 	it.skip('clicking on the swap mode button takes the user to the signin page', () => {
@@ -80,53 +89,120 @@ describe('join workflow', () => {
 	});
 
 	it.skip('validates each input lazily, on unfocus', () => {
-		cy.get('@username');
-		cy.get('@email').focus();
-		cy.get('@username')
-			.getByTestId('input-error')
-			.then((el) => {
-				expect(el).to.contain('A valid username is required.');
-			});
-
-		cy.get('@email');
-		cy.get('@password').focus();
-		cy.get('@username')
-			.getByTestId('input-error')
-			.then((el) => {
-				expect(el).to.contain('A valid email address is required.');
-			});
-
-		cy.get('@password');
 		cy.get('@username').focus();
-		cy.get('@username')
-			.getByTestId('input-error')
-			.then((el) => {
-				expect(el).to.contain('A valid password is required.');
-			});
+		cy.get('@username').blur();
+		cy.getByTestId('username-error').should(
+			'contain',
+			ERROR_MESSAGES.E_NO_USERNAME
+		);
+
+		cy.get('@email').focus();
+		cy.get('@email').blur();
+		cy.getByTestId('email-address-error').should(
+			'contain',
+			ERROR_MESSAGES.E_INVALID_EMAIL
+		);
+
+		cy.get('@password').focus();
+		cy.get('@password').blur();
+		cy.getByTestId('password-error').should(
+			'contain',
+			ERROR_MESSAGES.E_NO_NEW_PASSWORD
+		);
 	});
 
-	it('validates the username', () => {
-		cy.get('@username').type('cy');
-		cy.get('@email').focus();
-		cy.get('@username')
-			.getByTestId('input-error')
-			.then((el) => {
-				expect(el).to.contain(
-					'Your username must contain more than 3 characters.'
-				);
-			});
-
-		cy.get('@username').type(
-			'cyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
+	it.skip('validates the provided username', () => {
+		cy.get('@username').type('x'.repeat(USERNAME_CHARS_MIN - 1));
+		cy.get('@username').blur();
+		cy.getByTestId('username-error').should(
+			'contain',
+			ERROR_MESSAGES.E_SHORT_USERNAME
 		);
-		cy.get('@email').focus();
-		cy.get('@username')
-			.getByTestId('input-error')
-			.then((el) => {
-				expect(el).to.contain(
-					'Your username must contain fewer than 22 characters.'
-				);
-			});
+
+		cy.get('@username').clear();
+
+		cy.get('@username').type('x'.repeat(USERNAME_CHARS_MAX + 1));
+		cy.get('@username').blur();
+		cy.getByTestId('username-error').should(
+			'contain',
+			ERROR_MESSAGES.E_LONG_USERNAME
+		);
+
+		cy.get('@username').clear();
+
+		cy.get('@username').focus();
+		cy.get('@username').blur();
+		cy.getByTestId('username-error').should(
+			'contain',
+			ERROR_MESSAGES.E_NO_USERNAME
+		);
+
+		cy.get('@username').clear();
+
+		cy.get('@username').type(goodUsername);
+		cy.get('@username').blur();
+		cy.getByTestId('username-error').should('not.exist');
+	});
+
+	it.skip('validates the provided email address', () => {
+		cy.get('@email').type('x@x.');
+		cy.get('@email').blur();
+		cy.getByTestId('email-address-error').should(
+			'contain',
+			ERROR_MESSAGES.E_INVALID_EMAIL
+		);
+
+		cy.get('@email').clear();
+
+		cy.get('@email').type('x@x.' + 'x'.repeat(EMAIL_CHARS_MAX + 1));
+		cy.get('@email').blur();
+		cy.getByTestId('email-address-error').should(
+			'contain',
+			ERROR_MESSAGES.E_INVALID_EMAIL
+		);
+
+		cy.get('@email').clear();
+		cy.get('@email').blur();
+		cy.getByTestId('email-address-error').should(
+			'contain',
+			ERROR_MESSAGES.E_INVALID_EMAIL
+		);
+
+		cy.get('@email').clear();
+		cy.get('@email').type('xxx@xxx');
+
+		cy.get('@email').blur();
+		cy.getByTestId('email-address-error').should(
+			'contain',
+			ERROR_MESSAGES.E_INVALID_EMAIL
+		);
+	});
+
+	it.skip('validates the provided password', () => {
+		cy.get('@password').focus();
+		cy.get('@password').blur();
+		cy.getByTestId('password-error').should(
+			'contain',
+			ERROR_MESSAGES.E_NO_NEW_PASSWORD
+		);
+
+		cy.get('@password').clear();
+
+		cy.get('@password').type('x'.repeat(PASSWORD_CHARS_MIN - 1));
+		cy.get('@password').blur();
+		cy.getByTestId('password-error').should(
+			'contain',
+			ERROR_MESSAGES.E_SHORT_PASSWORD
+		);
+
+		cy.get('@password').clear();
+
+		cy.get('@password').type('x'.repeat(PASSWORD_CHARS_MAX + 1));
+		cy.get('@password').blur();
+		cy.getByTestId('password-error').should(
+			'contain',
+			ERROR_MESSAGES.E_LONG_PASSWORD
+		);
 	});
 
 	it.skip('displays an error if the email address is taken', () => {

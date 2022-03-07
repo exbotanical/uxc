@@ -3,7 +3,7 @@ import { promisify } from 'util';
 
 import { sign } from './jwt';
 
-import type { ObjectID } from '@uxc/types';
+import type { ObjectID } from '@uxc/types/node';
 import type { Request } from 'express';
 
 const scryptAsync = promisify(scrypt);

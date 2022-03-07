@@ -1,4 +1,4 @@
-import type { AllNullableOrUndef, Context } from '@uxc/types';
+import type { AllNullableOrUndef, Context } from '@uxc/types/node';
 
 export type Resolver<ReturnValue, Args = Record<string, unknown>> = (
 	parent: Record<string, unknown>,

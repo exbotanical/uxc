@@ -1,5 +1,5 @@
 import type { Resolver } from '../types';
-import type { Message as MessageType, ObjectID } from '@uxc/types';
+import type { Message as MessageType, ObjectID } from '@uxc/types/node';
 
 import { Message } from '@/db';
 

@@ -1,14 +1,14 @@
 import { Schema, model } from 'mongoose';
 
 import {
-	User as UserType,
 	USERNAME_CHARS_MAX,
 	USERNAME_CHARS_MIN,
 	PASSWORD_CHARS_MAX,
 	PASSWORD_CHARS_MIN,
 	EMAIL_CHARS_MAX,
 	EMAIL_CHARS_MIN
-} from '@uxc/types';
+} from '@uxc/types/node';
+import type { User as UserType } from '@uxc/types/node';
 import type { Model, Document } from 'mongoose';
 
 import { toHash } from '@/utils';

@@ -1,4 +1,4 @@
-import type { Context } from '@uxc/types';
+import type { Context } from '@uxc/types/node';
 
 export function buildWrapResolver(
 	middleware: (context: Context) => Promise<void> | void

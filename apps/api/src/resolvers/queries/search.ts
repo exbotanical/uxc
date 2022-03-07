@@ -1,10 +1,10 @@
 import { UserInputError } from 'apollo-server-core';
 
 import type { Resolver } from '../types';
-import type { User as UserType, Message as MessageType } from '@uxc/types';
+import type { User as UserType, Message as MessageType } from '@uxc/types/node';
 
 import { Message, User } from '@/db';
-import { ERROR_MESSAGES } from '@uxc/types';
+import { ERROR_MESSAGES } from '@uxc/types/node';
 
 export const search: Resolver<(UserType | MessageType)[], { query: string }> =
 	async (_, { query }) => {

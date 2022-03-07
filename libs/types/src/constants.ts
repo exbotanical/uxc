@@ -11,7 +11,6 @@ export const ERROR_MESSAGES = {
 	E_CREDENTIALS_TAKEN: 'Email or username in use.',
 	E_EMAIL_IN_USE: 'Email or username in use.',
 	E_INVALID_CREDENTIALS: 'The provided credentials are invalid.',
-	E_INVALID_EMAIL: 'A valid email address is required.',
 	E_INVALID_PROGRAMMATIC_INPUTS:
 		'An input exception has occurred, and it appears to be a bug. Please notify the administrator..',
 	E_LONG_PASSWORD: `Your password must contain fewer than ${
@@ -21,7 +20,7 @@ export const ERROR_MESSAGES = {
 		USERNAME_CHARS_MAX + 1
 	} characters.`,
 	E_NO_CREDENTIALS: 'Credentials must be provided.',
-	E_NO_EMAIL: 'A valid email address is required.',
+	E_INVALID_EMAIL: 'A valid email address is required.',
 	E_NO_MESSAGE_ID: 'messageId is required but was not supplied.',
 	E_NO_PASSWORD: 'A password must be provided.',
 	E_NO_NEW_PASSWORD: 'A valid password is required.',
@@ -36,5 +35,7 @@ export const ERROR_MESSAGES = {
 	} characters.`,
 	E_SHORT_USERNAME: `Your username must contain more than ${
 		USERNAME_CHARS_MIN - 1
-	} characters.`
+	} characters.`,
+	E_DISALLOWED_CHAR_USERNAME:
+		'Your username contains a disallowed special character.'
 };

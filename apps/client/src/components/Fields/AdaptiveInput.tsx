@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 import { v4 } from 'uuid';
 
@@ -116,7 +116,7 @@ export const AdaptiveInput = forwardRef<HTMLInputElement, InputProps>(
 					</Label>
 				</InputWrapper>
 				{!!error ? (
-					<InputError data-testid="input-error">{error}</InputError>
+					<InputError data-testid={`${id}-error`}>{error}</InputError>
 				) : null}
 			</Container>
 		);

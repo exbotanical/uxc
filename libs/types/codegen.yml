@@ -1,13 +1,13 @@
 overwrite: true
-schema: "./src/**/*.graphql"
+schema: "./**/*.graphql"
 generates:
   ./generated/index.ts:
     config:
-      contextType: ../src/index#Context
+      contextType: ../node/index#Context
       mapperTypeSuffix: Model
       mappers:
-          User: ../src/index#User
-          Message: ../src/index#Message
+          User: ../node/index#User
+          Message: ../node/index#Message
     plugins:
       - "typescript"
       - "typescript-operations"

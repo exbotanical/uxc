@@ -1,8 +1,7 @@
-import isEmail from 'isemail';
-
 import {
 	EMAIL_CHARS_MAX,
 	EMAIL_CHARS_MIN,
+	ERROR_MESSAGES,
 	PASSWORD_CHARS_MAX,
 	PASSWORD_CHARS_MIN,
 	USERNAME_CHARS_MAX,
@@ -10,39 +9,38 @@ import {
 } from '@uxc/types';
 
 export function validateUsername(input: string) {
+	// @todo impl on backend
 	const disallowedCharsRegex = /[ `!@#%^*()+=\[\]{};':"\\|,.<>\/?~]/;
 
 	if (!input) {
-		return 'A valid username is required.';
+		return ERROR_MESSAGES.E_NO_USERNAME;
 	}
 
 	if (input.length < USERNAME_CHARS_MIN) {
-		return `Your username must contain more than ${
-			USERNAME_CHARS_MIN - 1
-		} characters.`;
+		return ERROR_MESSAGES.E_SHORT_USERNAME;
 	}
 
 	if (input.length > USERNAME_CHARS_MAX) {
-		return `Your username must contain fewer than ${
-			USERNAME_CHARS_MAX + 1
-		} characters.`;
+		return ERROR_MESSAGES.E_LONG_USERNAME;
 	}
 
 	if (disallowedCharsRegex.test(input)) {
-		return 'Your username contains a disallowed special character.';
+		return ERROR_MESSAGES.E_DISALLOWED_CHAR_USERNAME;
 	}
 
 	return null;
 }
 
 export function validateEmail(input: string) {
+	const emailRegex =
+		/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 	if (
 		!input ||
 		input.length < EMAIL_CHARS_MIN ||
 		input.length > EMAIL_CHARS_MAX ||
-		!isEmail.validate(input, { minDomainAtoms: 2 })
+		!emailRegex.test(input)
 	) {
-		return 'A valid email address is required.';
+		return ERROR_MESSAGES.E_INVALID_EMAIL;
 	}
 
 	return null;
@@ -50,19 +48,15 @@ export function validateEmail(input: string) {
 
 export function validatePassword(input: string) {
 	if (!input) {
-		return 'A valid password is required.';
+		return ERROR_MESSAGES.E_NO_NEW_PASSWORD;
 	}
 
 	if (input.length < PASSWORD_CHARS_MIN) {
-		return `Your password must contain more than ${
-			PASSWORD_CHARS_MIN - 1
-		} characters.`;
+		return ERROR_MESSAGES.E_SHORT_PASSWORD;
 	}
 
 	if (input.length > PASSWORD_CHARS_MAX) {
-		return `Your password must contain fewer than ${
-			PASSWORD_CHARS_MAX + 1
-		} characters.`;
+		return ERROR_MESSAGES.E_LONG_PASSWORD;
 	}
 
 	return null;

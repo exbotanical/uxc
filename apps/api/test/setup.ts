@@ -6,7 +6,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import request from 'supertest';
 
-import type { User } from '@uxc/types';
+import type { User } from '@uxc/types/node';
 
 import { app } from '@/app';
 import { pubsub, client } from '@/redis';

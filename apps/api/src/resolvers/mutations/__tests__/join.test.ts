@@ -4,13 +4,12 @@ import request from 'supertest';
 import { app } from '@/app';
 import {
 	EMAIL_CHARS_MAX,
-	EMAIL_CHARS_MIN,
 	ERROR_MESSAGES,
 	PASSWORD_CHARS_MAX,
 	PASSWORD_CHARS_MIN,
 	USERNAME_CHARS_MAX,
 	USERNAME_CHARS_MIN
-} from '@uxc/types';
+} from '@uxc/types/node';
 
 describe('join workflow', () => {
 	it('sets a cookie when the user has been created', async () => {
@@ -87,7 +86,9 @@ describe('join workflow', () => {
 			})
 			.expect(200);
 
-		expect(body.errors[0].message).toStrictEqual(ERROR_MESSAGES.E_NO_EMAIL);
+		expect(body.errors[0].message).toStrictEqual(
+			ERROR_MESSAGES.E_INVALID_EMAIL
+		);
 	});
 
 	it('returns an error when provided no password', async () => {
@@ -181,7 +182,9 @@ describe('join workflow', () => {
 			})
 			.expect(200);
 
-		expect(body.errors[0].message).toStrictEqual(ERROR_MESSAGES.E_NO_EMAIL);
+		expect(body.errors[0].message).toStrictEqual(
+			ERROR_MESSAGES.E_INVALID_EMAIL
+		);
 	});
 
 	it('returns an error when provided a username that is too long', async () => {

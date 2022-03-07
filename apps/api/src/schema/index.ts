@@ -1,5 +1,5 @@
 import { makeExecutableSchema } from '@graphql-tools/schema';
-import { typeDefs } from '@uxc/types';
+import { typeDefs } from '@uxc/types/node';
 
 import { resolvers } from './resolvers';
 

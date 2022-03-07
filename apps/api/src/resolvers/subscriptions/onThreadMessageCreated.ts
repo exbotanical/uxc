@@ -1,7 +1,7 @@
 import { SubscriptionResolvers } from '@uxc/types/generated';
 import { withFilter } from 'graphql-subscriptions';
 
-import type { Message } from '@uxc/types';
+import type { Message } from '@uxc/types/node';
 
 import { pubsub } from '@/redis';
 import { EVENTS } from '@/utils/constants';

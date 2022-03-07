@@ -17,7 +17,7 @@ import {
 	PASSWORD_CHARS_MIN,
 	USERNAME_CHARS_MAX,
 	USERNAME_CHARS_MIN
-} from '@uxc/types';
+} from '@uxc/types/node';
 
 export const joinResolver: MutationResolvers['join'] = async (
 	_,
@@ -56,7 +56,7 @@ function validateInputs(args?: InputMaybe<JoinInput>) {
 	const { email, password, username, userImage } = args;
 
 	if (!email) {
-		throw new UserInputError(ERROR_MESSAGES.E_NO_EMAIL);
+		throw new UserInputError(ERROR_MESSAGES.E_INVALID_EMAIL);
 	}
 
 	if (!password) {
@@ -68,7 +68,7 @@ function validateInputs(args?: InputMaybe<JoinInput>) {
 	}
 
 	if (email.length > EMAIL_CHARS_MAX) {
-		throw new UserInputError(ERROR_MESSAGES.E_NO_EMAIL);
+		throw new UserInputError(ERROR_MESSAGES.E_INVALID_EMAIL);
 	}
 
 	if (!isEmail.validate(email, { minDomainAtoms: 2 })) {
