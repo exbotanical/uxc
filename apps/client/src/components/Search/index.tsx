@@ -4,7 +4,7 @@ import { Modal } from '@/components/Modal/Modal';
 import { SearchProvider } from '@/components/Search/SearchContext';
 import * as S from '@/components/Search/styles';
 import SvgIcon from '@/components/Icon';
-import { SearchInput } from '@/components/Search/SearchInput';
+import { SearchForm } from '@/components/Search/SearchForm';
 import { SearchContent } from '@/components/Search/SearchContent';
 
 export function SearchModal({
@@ -23,12 +23,7 @@ export function SearchModal({
 
 				<S.Container ref={modalRef}>
 					<S.Header>
-						<S.Form>
-							<S.SearchLabel>
-								<SvgIcon name="search" size={18} />
-							</S.SearchLabel>
-							<SearchInput />
-						</S.Form>
+						<SearchForm />
 
 						<S.CloseButton onClick={closeSearch}>
 							<SvgIcon name="escape" size={18} color="#fff" />

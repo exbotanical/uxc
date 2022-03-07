@@ -6,7 +6,8 @@ import type { Message as MessageType, ObjectID } from '@uxc/types';
 
 import { Message, PrivateThread } from '@/db';
 import { pubsub } from '@/redis';
-import { ERROR_MESSAGES, EVENTS } from '@/utils/constants';
+import { EVENTS } from '@/utils/constants';
+import { ERROR_MESSAGES } from '@uxc/types';
 
 export const createMessage: Resolver<
 	MessageType,

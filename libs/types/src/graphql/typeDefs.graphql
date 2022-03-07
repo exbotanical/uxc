@@ -1,5 +1,7 @@
 scalar Date
 
+union Result = User | PrivateThread | Message
+
 type PrivateThread {
   _id: ID
 	createdAt: Date
@@ -48,6 +50,7 @@ type Query {
   getMessages(threadId: ID): [Message]
   getCurrentUser: User
   getUser(userId: ID): User
+	search(query: String): [Result]
 }
 
 type Subscription {
@@ -63,6 +66,7 @@ type SeedReturnValue {
 
 type Mutation {
 	seed: SeedReturnValue
+	purge: Boolean
   createMessage(threadId: ID, body: String): Message
   updateMessage(messageId: ID, body: String): Message
 	createThread(receiverId: ID): PrivateThread

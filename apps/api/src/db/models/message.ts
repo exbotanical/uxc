@@ -20,7 +20,8 @@ const MessageSchema = new Schema(
 	{
 		body: {
 			required: true,
-			type: String
+			type: String,
+			index: true
 		},
 		sender: {
 			ref: 'User',
@@ -42,6 +43,8 @@ const MessageSchema = new Schema(
 		}
 	}
 );
+
+MessageSchema.index({ body: 'text' });
 
 MessageSchema.statics.build = (attrs: NewMessage) => {
 	return new Message(attrs);

@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client';
-import React, { ChangeEvent, FormEvent, useEffect , useState } from 'react';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useNavigate, Navigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -9,24 +9,35 @@ import type { User } from '@uxc/types';
 
 import { AdaptiveInput } from '@/components/Fields/AdaptiveInput';
 import { GET_CURRENT_USER, SIGNIN } from '@/services/api/queries';
-
-
+import { useValidation } from '@/hooks';
+import { validateEmail, validatePassword } from './validators';
 
 const AlignedLink = styled(Link)`
 	align-self: flex-end;
 `;
 
 export function Signin() {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-	const [error, setError] = useState('');
-	const [disabled, setDisabled] = useState(true);
-
 	const navigate = useNavigate();
 	const { data, loading } = useQuery<{
 		getCurrentUser: User;
 	}>(GET_CURRENT_USER);
 	const [signin] = useMutation(SIGNIN);
+
+	const {
+		setDirty: setEmailDirty,
+		input: email,
+		setInput: setEmail,
+		error: emailError
+	} = useValidation(validateEmail);
+
+	const {
+		setDirty: setPasswordDirty,
+		input: password,
+		setInput: setPassword,
+		error: passwordError
+	} = useValidation(validatePassword);
+
+	const formInvalid = !!emailError || !!passwordError;
 
 	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
@@ -43,7 +54,7 @@ export function Signin() {
 
 			navigate(`/`);
 		} catch (ex: any) {
-			setError(ex?.message || 'Something went wrong');
+			// setError(ex?.message || 'Something went wrong');
 		} finally {
 			setEmail('');
 			setPassword('');
@@ -51,20 +62,11 @@ export function Signin() {
 	}
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-		setError('');
 		const { value, name } = event.target;
 		const executor = name == 'email' ? setEmail : setPassword;
 
 		executor(value);
 	};
-
-	useEffect(() => {
-		if (email && password) {
-			setDisabled(false);
-		} else {
-			setDisabled(true);
-		}
-	}, [email, password]);
 
 	if (data) {
 		return <Navigate to="/" />;
@@ -73,16 +75,18 @@ export function Signin() {
 	return (
 		<S.InnerCard size="sm">
 			<S.Form onSubmit={handleSubmit}>
-				<S.AdjustedInput
+				<AdaptiveInput
 					autoComplete="email"
 					id="email-address"
 					label="Email address"
 					name="email"
 					onChange={handleChange}
-					placeholder="youremail@domain.com"
 					required
 					type="email"
 					value={email}
+					onBlur={setEmailDirty}
+					data-testid="email-input"
+					error={emailError}
 				/>
 				<AdaptiveInput
 					autoComplete="current-password"
@@ -90,18 +94,23 @@ export function Signin() {
 					label="Password"
 					name="password"
 					onChange={handleChange}
-					placeholder="************"
 					required
 					type="password"
 					value={password}
+					onBlur={setPasswordDirty}
+					data-testid="password-input"
+					error={passwordError}
 				/>
 				<AlignedLink to="/todo">
 					<S.FieldCaptionLink>Forgot your password?</S.FieldCaptionLink>
 				</AlignedLink>
 
-				<S.ErrorText>{error}</S.ErrorText>
-
-				<S.CTAButton disabled={disabled} loading={loading} type="submit">
+				<S.CTAButton
+					disabled={formInvalid}
+					loading={loading}
+					type="submit"
+					data-testid="signin-button"
+				>
 					Sign in
 				</S.CTAButton>
 			</S.Form>

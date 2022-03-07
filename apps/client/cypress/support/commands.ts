@@ -1,15 +1,4 @@
 /**
- * Visit a given path as an authorized user
- */
-// Cypress.Commands.add('authorizedVisit', (path?: string) => {
-// 	cy.intercept('', '', {
-// 		fixture: ''
-// 	});
-
-// 	cy.visit(path || '/');
-// });
-
-/**
  * Select a `data-testid` element by its exact key
  */
 Cypress.Commands.add('getByTestId', (selector: string) => {

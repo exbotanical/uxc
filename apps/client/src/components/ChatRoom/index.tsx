@@ -7,12 +7,11 @@ import { ChatMessageInput } from './ChatMessageInput';
 import { MessageList } from './MessageList';
 
 import type { PropsFromRedux } from '@/state';
-import type { Message, PrivateThread, User } from '@uxc/types';
+import type { Message, User } from '@uxc/types';
 
 import {
 	CREATE_MESSAGE,
 	GET_MESSAGES,
-	GET_THREAD,
 	GET_CURRENT_USER
 } from '@/services/api/queries';
 import { connector } from '@/state';

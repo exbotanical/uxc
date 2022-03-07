@@ -34,6 +34,7 @@ export const colors = {
 	},
 	error: {
 		norm: '#ff0040'
+		// norm: '#ff5e00'
 	},
 	background: {
 		norm: '#171926',

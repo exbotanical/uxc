@@ -45,16 +45,14 @@ export const Footer = styled(RowCenter)`
 	height: 20%;
 `;
 
-export const AdjustedInput = styled(AdaptiveInput)`
-	margin-bottom: 2.75rem;
-`;
-
 export const CTAButton = styled(Button)`
 	margin-top: auto;
 	background-color: ${({ theme }) => theme.colors.font.strong};
 `;
 
-export const SwapModeLink = styled(Link)`
+export const SwapModeLink = styled(Link).attrs({
+	'data-testid': 'swapmode-button'
+})`
 	${FontSizeXl}
 	font-weight: 700;
 	text-decoration-line: underline;

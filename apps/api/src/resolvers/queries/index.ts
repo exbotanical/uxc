@@ -7,3 +7,5 @@ export * from './getThread';
 export * from './getThreads';
 
 export * from './getUser';
+
+export * from './search';

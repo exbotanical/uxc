@@ -1,9 +1,16 @@
 import { JOIN_MUTATION } from '@@/fixtures';
 import request from 'supertest';
 
-
 import { app } from '@/app';
-import { ERROR_MESSAGES } from '@/utils/constants';
+import {
+	EMAIL_CHARS_MAX,
+	EMAIL_CHARS_MIN,
+	ERROR_MESSAGES,
+	PASSWORD_CHARS_MAX,
+	PASSWORD_CHARS_MIN,
+	USERNAME_CHARS_MAX,
+	USERNAME_CHARS_MIN
+} from '@uxc/types';
 
 describe('join workflow', () => {
 	it('sets a cookie when the user has been created', async () => {
@@ -97,7 +104,9 @@ describe('join workflow', () => {
 			})
 			.expect(200);
 
-		expect(body.errors[0].message).toStrictEqual(ERROR_MESSAGES.E_NO_PASSWORD);
+		expect(body.errors[0].message).toStrictEqual(
+			ERROR_MESSAGES.E_NO_NEW_PASSWORD
+		);
 	});
 
 	it('returns an error when provided no username', async () => {
@@ -156,6 +165,25 @@ describe('join workflow', () => {
 		);
 	});
 
+	it('returns an error when provided an email that is too long', async () => {
+		const { body } = await request(app)
+			.post(BASE_PATH)
+			.send({
+				query: JOIN_MUTATION,
+				variables: {
+					args: {
+						...user,
+						email: 'x@e.c'.repeat(EMAIL_CHARS_MAX - 4),
+						username: 'username',
+						password
+					}
+				}
+			})
+			.expect(200);
+
+		expect(body.errors[0].message).toStrictEqual(ERROR_MESSAGES.E_NO_EMAIL);
+	});
+
 	it('returns an error when provided a username that is too long', async () => {
 		const { body } = await request(app)
 			.post(BASE_PATH)
@@ -164,7 +192,7 @@ describe('join workflow', () => {
 				variables: {
 					args: {
 						...user,
-						username: 'x'.repeat(22),
+						username: 'x'.repeat(USERNAME_CHARS_MAX + 1),
 						password
 					}
 				}
@@ -184,7 +212,7 @@ describe('join workflow', () => {
 				variables: {
 					args: {
 						...user,
-						username: 'x'.repeat(3),
+						username: 'x'.repeat(USERNAME_CHARS_MIN - 1),
 						password
 					}
 				}
@@ -204,11 +232,13 @@ describe('join workflow', () => {
 				variables: {
 					args: {
 						...user,
-						password: 'x'.repeat(22)
+						password: 'x'.repeat(PASSWORD_CHARS_MAX + 1)
 					}
 				}
 			})
 			.expect(200);
+
+		console.log({ body: body.join });
 
 		expect(body.errors[0].message).toStrictEqual(
 			ERROR_MESSAGES.E_LONG_PASSWORD
@@ -223,7 +253,7 @@ describe('join workflow', () => {
 				variables: {
 					args: {
 						...user,
-						password: 'x'.repeat(6)
+						password: 'x'.repeat(PASSWORD_CHARS_MIN - 1)
 					}
 				}
 			})

@@ -2,8 +2,8 @@ import { CREATE_THREAD } from '@@/fixtures';
 import request from 'supertest';
 
 import { app } from '@/app';
-import { seed } from '@/resolvers/seed';
-import { ERROR_MESSAGES } from '@/utils/constants';
+import { seed } from '@/resolvers/mutations/computed/seed';
+import { ERROR_MESSAGES } from '@uxc/types';
 
 describe('createThread workflow', () => {
 	it('fails with an Unauthorized error if the request does not include a valid session cookie', async () => {
@@ -89,6 +89,7 @@ describe('createThread workflow', () => {
 
 		const { createThread } = body.data;
 
+		console.log(createThread.users);
 		expect(createThread.users).toStrictEqual(
 			expect.arrayContaining([
 				expect.objectContaining({ _id: user._id.toString() })

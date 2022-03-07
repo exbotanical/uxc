@@ -4,7 +4,7 @@ import { buildWrapResolver } from './wrapResolver';
 
 import type { Context } from '@uxc/types';
 
-import { ERROR_MESSAGES } from '@/utils/constants';
+import { ERROR_MESSAGES } from '@uxc/types';
 
 export function authMiddleware({ req }: Context) {
 	if (!req.session.meta) {

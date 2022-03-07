@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 
 import { SearchContext } from '@/components/Search/SearchContext';
-import * as S from '@/components/Search/styles';
 
 import type { ChangeEvent } from 'react';
-import SvgIcon from '../Icon';
+import SvgIcon from '../../Icon';
 
-export function SearchInput() {
+import * as S from '@/components/Search/SearchForm/styles';
+
+export function SearchForm() {
 	const { query, setQuery } = useContext(SearchContext);
 
 	function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -21,13 +22,16 @@ export function SearchInput() {
 	}
 
 	return (
-		<>
+		<S.Form>
+			<S.SearchLabel>
+				<SvgIcon name="search" size={18} />
+			</S.SearchLabel>
 			<S.SearchInput value={query} onChange={handleChange} />
 			<button onClick={handleClick}>
 				<SvgIcon name="close" size={42} />
 			</button>
-		</>
+		</S.Form>
 	);
 }
 
-SearchInput.displayName = 'SearchInput';
+SearchForm.displayName = 'SearchForm';

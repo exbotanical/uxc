@@ -10,7 +10,14 @@ import type {
 import { User } from '@/db';
 import { BadRequestError } from '@/middleware';
 import { createSession } from '@/utils';
-import { ERROR_MESSAGES } from '@/utils/constants';
+import {
+	EMAIL_CHARS_MAX,
+	ERROR_MESSAGES,
+	PASSWORD_CHARS_MAX,
+	PASSWORD_CHARS_MIN,
+	USERNAME_CHARS_MAX,
+	USERNAME_CHARS_MIN
+} from '@uxc/types';
 
 export const joinResolver: MutationResolvers['join'] = async (
 	_,
@@ -53,30 +60,34 @@ function validateInputs(args?: InputMaybe<JoinInput>) {
 	}
 
 	if (!password) {
-		throw new UserInputError(ERROR_MESSAGES.E_NO_PASSWORD);
+		throw new UserInputError(ERROR_MESSAGES.E_NO_NEW_PASSWORD);
 	}
 
 	if (!username) {
 		throw new UserInputError(ERROR_MESSAGES.E_NO_USERNAME);
 	}
 
+	if (email.length > EMAIL_CHARS_MAX) {
+		throw new UserInputError(ERROR_MESSAGES.E_NO_EMAIL);
+	}
+
 	if (!isEmail.validate(email, { minDomainAtoms: 2 })) {
 		throw new UserInputError(ERROR_MESSAGES.E_INVALID_EMAIL);
 	}
 
-	if (password.length <= 6) {
+	if (password.length < PASSWORD_CHARS_MIN) {
 		throw new UserInputError(ERROR_MESSAGES.E_SHORT_PASSWORD);
 	}
 
-	if (password.length >= 21) {
+	if (password.length > PASSWORD_CHARS_MAX) {
 		throw new UserInputError(ERROR_MESSAGES.E_LONG_PASSWORD);
 	}
 
-	if (username.length <= 4) {
+	if (username.length < USERNAME_CHARS_MIN) {
 		throw new UserInputError(ERROR_MESSAGES.E_SHORT_USERNAME);
 	}
 
-	if (username.length >= 21) {
+	if (username.length > USERNAME_CHARS_MAX) {
 		throw new UserInputError(ERROR_MESSAGES.E_LONG_USERNAME);
 	}
 

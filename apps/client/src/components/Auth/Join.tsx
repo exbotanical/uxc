@@ -1,31 +1,55 @@
-import type { ChangeEvent, FormEvent } from 'react';
+import { ChangeEvent, useEffect, useRef } from 'react';
 
 import { useMutation, useQuery } from '@apollo/client';
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
+
+import { GET_CURRENT_USER, JOIN } from '@/services/api';
+import { useValidation } from '@/hooks';
 
 import * as S from './styles';
 
+import type { FormEvent } from 'react';
 import type { User } from '@uxc/types';
-
-import { GET_CURRENT_USER, JOIN } from '@/services/api/queries';
+import {
+	validateEmail,
+	validatePassword,
+	validateUsername
+} from './validators';
+import { AdaptiveInput } from '../Fields/AdaptiveInput';
 
 export function Join() {
 	const { data, loading } = useQuery<{
 		getCurrentUser: User;
 	}>(GET_CURRENT_USER);
 
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-	const [username, setUsername] = useState('');
+	const firstInteractiveRef = useRef<HTMLInputElement>(null);
 
 	const [join] = useMutation(JOIN);
 	const navigate = useNavigate();
 
-	if (data) {
-		console.log({ data });
-		return <Navigate to="/thread" />;
-	}
+	const {
+		setDirty: setUsernameDirty,
+		input: username,
+		setInput: setUsername,
+		error: usernameError
+	} = useValidation(validateUsername);
+
+	const {
+		setDirty: setEmailDirty,
+		input: email,
+		setInput: setEmail,
+		error: emailError
+	} = useValidation(validateEmail);
+
+	const {
+		setDirty: setPasswordDirty,
+		input: password,
+		setInput: setPassword,
+		error: passwordError
+	} = useValidation(validatePassword);
+
+	const formInvalid = !!usernameError || !!emailError || !!passwordError;
 
 	function resetState() {
 		setEmail('');
@@ -33,26 +57,9 @@ export function Join() {
 		setUsername('');
 	}
 
-	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-		event.preventDefault();
+	function handleChange(e: ChangeEvent<HTMLInputElement>) {
+		const { name, value } = e.target;
 
-		await join({
-			variables: {
-				args: {
-					email,
-					password,
-					username
-				}
-			}
-		});
-
-		resetState();
-
-		navigate(`/`);
-	}
-
-	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = event.target;
 		function executor(name: string) {
 			switch (name) {
 				case 'username':
@@ -70,48 +77,86 @@ export function Join() {
 		}
 
 		executor(name);
-	};
+	}
+
+	async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+		e.preventDefault();
+
+		await join({
+			variables: {
+				args: {
+					email,
+					password,
+					username
+				}
+			}
+		});
+
+		resetState();
+
+		navigate(`/`);
+	}
+
+	useEffect(() => {
+		firstInteractiveRef.current?.focus();
+	}, []);
+
+	if (data) {
+		return <Navigate to="/thread" />;
+	}
 
 	return (
 		<S.InnerCard size="lg">
 			<S.Form onSubmit={handleSubmit}>
-				<S.AdjustedInput
+				<AdaptiveInput
 					autoComplete="username"
 					id="username"
 					label="Username"
 					name="username"
 					onChange={handleChange}
-					placeholder="yourusername"
 					required
 					type="text"
 					value={username}
+					data-testid="username-input"
+					ref={firstInteractiveRef}
+					onBlur={setUsernameDirty}
+					error={usernameError}
 				/>
 
-				<S.AdjustedInput
+				<AdaptiveInput
 					autoComplete="email"
 					id="email-address"
 					label="Email address"
 					name="email"
 					onChange={handleChange}
-					placeholder="youremail@domain.com"
 					required
 					type="email"
 					value={email}
+					data-testid="email-input"
+					onBlur={setEmailDirty}
+					error={emailError}
 				/>
 
-				<S.AdjustedInput
+				<AdaptiveInput
 					autoComplete="current-password"
 					id="password"
 					label="Password"
 					name="password"
 					onChange={handleChange}
-					placeholder="************"
 					required
 					type="password"
 					value={password}
+					data-testid="password-input"
+					onBlur={setPasswordDirty}
+					error={passwordError}
 				/>
 
-				<S.CTAButton loading={loading} type="submit">
+				<S.CTAButton
+					loading={loading}
+					type="submit"
+					disabled={formInvalid}
+					data-testid="join-button"
+				>
 					Join
 				</S.CTAButton>
 			</S.Form>

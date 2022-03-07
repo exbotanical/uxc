@@ -5,7 +5,7 @@ import type { Resolver } from '../types';
 import type { ObjectID, Message as MessageType } from '@uxc/types';
 
 import { Message } from '@/db';
-import { ERROR_MESSAGES } from '@/utils/constants';
+import { ERROR_MESSAGES } from '@uxc/types';
 
 // @todo disallow users to edit any message; restrict to sender/receiver
 export const updateMessage: Resolver<

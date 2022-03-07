@@ -9,7 +9,7 @@ import type {
 } from '@uxc/types';
 
 import { PrivateThread } from '@/db';
-import { ERROR_MESSAGES } from '@/utils/constants';
+import { ERROR_MESSAGES } from '@uxc/types';
 
 export const getThread: Resolver<
 	PrivateThreadType & { users: User[] },

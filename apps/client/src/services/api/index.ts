@@ -2,6 +2,8 @@ import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 import { link } from './links';
 
+export * from './queries';
+
 export const client = new ApolloClient({
 	cache: new InMemoryCache({
 		addTypename: false

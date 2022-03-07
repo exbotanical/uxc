@@ -10,7 +10,7 @@ import type {
 import { User } from '@/db';
 import { BadRequestError } from '@/middleware';
 import { compare, createSession } from '@/utils/auth';
-import { ERROR_MESSAGES } from '@/utils/constants';
+import { ERROR_MESSAGES } from '@uxc/types';
 
 export const signinResolver: MutationResolvers['signin'] = async (
 	_,

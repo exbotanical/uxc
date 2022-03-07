@@ -5,7 +5,7 @@ import type { Resolver } from '../types';
 import type { ObjectID, User as UserType } from '@uxc/types';
 
 import { User } from '@/db';
-import { ERROR_MESSAGES } from '@/utils/constants';
+import { ERROR_MESSAGES } from '@uxc/types';
 
 export const getUser: Resolver<UserType, { userId: ObjectID }> = async (
 	_,

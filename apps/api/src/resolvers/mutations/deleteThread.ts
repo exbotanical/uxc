@@ -5,7 +5,7 @@ import type { Resolver } from '../types';
 import type { ObjectID } from '@uxc/types';
 
 import { PrivateThread } from '@/db';
-import { ERROR_MESSAGES } from '@/utils/constants';
+import { ERROR_MESSAGES } from '@uxc/types';
 
 export const deleteThread: Resolver<ObjectID, { threadId: ObjectID }> = async (
 	_,

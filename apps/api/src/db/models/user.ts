@@ -1,6 +1,14 @@
 import { Schema, model } from 'mongoose';
 
-import type { User as UserType } from '@uxc/types';
+import {
+	User as UserType,
+	USERNAME_CHARS_MAX,
+	USERNAME_CHARS_MIN,
+	PASSWORD_CHARS_MAX,
+	PASSWORD_CHARS_MIN,
+	EMAIL_CHARS_MAX,
+	EMAIL_CHARS_MIN
+} from '@uxc/types';
 import type { Model, Document } from 'mongoose';
 
 import { toHash } from '@/utils';
@@ -18,11 +26,15 @@ const UserSchema = new Schema<UserWithPassword>(
 	{
 		email: {
 			required: true,
-			type: String
+			type: String,
+			min: EMAIL_CHARS_MIN,
+			max: EMAIL_CHARS_MAX
 		},
 		password: {
 			required: true,
-			type: String
+			type: String,
+			min: PASSWORD_CHARS_MIN,
+			max: PASSWORD_CHARS_MAX
 		},
 		userImage: {
 			default: null,
@@ -30,7 +42,9 @@ const UserSchema = new Schema<UserWithPassword>(
 		},
 		username: {
 			required: true,
-			type: String
+			type: String,
+			min: USERNAME_CHARS_MIN,
+			max: USERNAME_CHARS_MAX
 		}
 	},
 	{
@@ -47,6 +61,8 @@ const UserSchema = new Schema<UserWithPassword>(
 		}
 	}
 );
+
+UserSchema.index({ username: 'text' });
 
 UserSchema.pre('save', async function save(this: Document, done) {
 	if (this.isModified('password')) {

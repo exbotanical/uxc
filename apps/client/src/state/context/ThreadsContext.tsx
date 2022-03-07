@@ -34,7 +34,7 @@ export function ThreadsProvider({ children }: { children: JSX.Element }) {
 		getThreads: PrivateThread[];
 	}>(GET_THREADS, {
 		variables: {
-			userId: user?.getCurrentUser._id
+			userId: user?.getCurrentUser?._id
 		}
 	});
 
@@ -113,16 +113,3 @@ export function ThreadsProvider({ children }: { children: JSX.Element }) {
 		<ThreadsContext.Provider value={value}>{children}</ThreadsContext.Provider>
 	);
 }
-
-// function c(fn) {
-// 	fn(1, 2, 4);
-// }
-
-// function a(a) {
-// 	function b(...args) {
-// 		console.log({ args });
-// 	}
-
-// 	c(b);
-// 	return 1;
-// }

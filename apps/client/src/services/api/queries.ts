@@ -142,3 +142,26 @@ export const UPDATE_MESSAGE = gql`
 		}
 	}
 `;
+
+export const TEXT_SEARCH = gql`
+	query search($query: String) {
+		search(query: $query) {
+			... on User {
+				_id
+				# username
+			}
+
+			... on Message {
+				_id
+				# body
+				# threadId
+				# sender {
+				# 	_id
+				# 	email
+				# 	userImage
+				# 	username
+				# }
+			}
+		}
+	}
+`;

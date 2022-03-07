@@ -20,7 +20,7 @@ import {
 	sessionMiddleware
 } from './middleware';
 import { schema } from './schema';
-import { ERROR_MESSAGES } from './utils/constants';
+import { ERROR_MESSAGES } from '@uxc/types';
 
 import type { JWT, JWTPayload } from '@uxc/types';
 import type { Request } from 'express';

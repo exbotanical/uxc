@@ -5,7 +5,7 @@ import type { Resolver } from '../types';
 import type { ObjectID, PrivateThread as PrivateThreadType } from '@uxc/types';
 
 import { PrivateThread } from '@/db';
-import { ERROR_MESSAGES } from '@/utils/constants';
+import { ERROR_MESSAGES } from '@uxc/types';
 
 export const createThread: Resolver<
 	PrivateThreadType,
@@ -30,5 +30,5 @@ export const createThread: Resolver<
 		users: [userId, receiverId]
 	});
 
-	return thread;
+	return thread.populate('users');
 };

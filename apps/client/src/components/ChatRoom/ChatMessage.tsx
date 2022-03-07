@@ -87,11 +87,13 @@ const StyledTextArea = styled.textarea.attrs({
 	spellCheck: false
 })`
 	${FontSizeLg}
+	resize: vertical;
 	padding: 1rem;
 	color: ${({ theme }) => theme.colors.font.weak};
 	background-color: ${({ theme }) => theme.colors.background.dark};
 	width: 100%;
 	border-radius: 3px;
+	height: 100%;
 
 	// @todo reuse
 	&:focus {
@@ -108,7 +110,6 @@ export function ChatMessage({
 	isSender,
 	_id,
 	sender,
-	threadId,
 	sansMeta
 }: Omit<Message, 'sender'> & {
 	isSender: boolean;
@@ -117,7 +118,7 @@ export function ChatMessage({
 }) {
 	const [hover, setHover] = useState(false);
 	const [editMode, setEditMode] = useState(false);
-	const [messageBody, setMessageBody] = useState('');
+	const [messageBody, setMessageBody] = useState(body);
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
 	const [updateMessage] = useMutation<{
@@ -141,6 +142,7 @@ export function ChatMessage({
 	function handleKeydown(e: React.KeyboardEvent<HTMLDivElement>) {
 		// @todo refine keybindings e.g. do not close on shift+enter
 		// @todo rich text editor
+		// @todo disallow empty
 		if (e.key === 'Enter' || e.key === 'Escape') {
 			e.preventDefault();
 			e.stopPropagation();
@@ -156,14 +158,7 @@ export function ChatMessage({
 			}
 
 			// @todo remove delay of pre-edited body in render
-			setEditModeProxy(false);
-		}
-	}
-
-	function setEditModeProxy(nextState: boolean) {
-		setEditMode(nextState);
-		if (nextState) {
-			setMessageBody(body);
+			setEditMode(false);
 		}
 	}
 
@@ -186,7 +181,7 @@ export function ChatMessage({
 	const isSenderActions = isSender
 		? {
 				onDoubleClick: () => {
-					setEditModeProxy(true);
+					setEditMode(true);
 				},
 				onKeyDown: handleKeydown
 		  }
@@ -209,7 +204,7 @@ export function ChatMessage({
 					</Button>
 					<Button
 						onClick={() => {
-							setEditModeProxy(true);
+							setEditMode(true);
 						}}
 						type="button"
 					>

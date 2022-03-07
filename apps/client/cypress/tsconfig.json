@@ -3,7 +3,7 @@
     "target": "es5",
     "strict": true,
     "lib": ["DOM", "ESNEXT"],
-    "types": ["node", "cypress", "cypress-axe", "@testing-library/cypress"],
+    "types": ["node", "cypress", "cypress-axe", "@testing-library/cypress", "cypress-real-events"],
     "esModuleInterop": true
   },
   "include": ["./**/*.ts"]
