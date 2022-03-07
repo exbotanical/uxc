@@ -43,3 +43,4 @@
 
 - [ ] build two servers - one proxies the connection to the other
   - [ ] REST API behind a gql server
+- [ ] E1 - add error types to schema, only display these known errors in UI. Actual gql errors will be displayed via toast or banner

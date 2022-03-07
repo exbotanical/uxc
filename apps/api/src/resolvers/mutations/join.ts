@@ -44,7 +44,6 @@ export const joinResolver: MutationResolvers['join'] = async (
 	await newUser.save();
 
 	Object.assign(req.session, createSession(newUser._id));
-
 	return newUser;
 };
 

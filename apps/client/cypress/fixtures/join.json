@@ -1,0 +1,48 @@
+{
+	"ok": {
+    "data": {
+        "join": {
+            "_id": "6226559eb3e63a11ab8b4d00",
+            "email": "dd@me.com",
+            "userImage": null,
+            "username": "howdy_doody"
+        }
+    }
+	},
+	"in_use": {
+    "errors": [
+        {
+            "message": "Email or username in use.",
+            "locations": [
+                {
+                    "line": 2,
+                    "column": 3
+                }
+            ],
+            "path": [
+                "join"
+            ],
+            "extensions": {
+                "code": "INTERNAL_SERVER_ERROR",
+                "exception": {
+                    "statusCode": 400,
+                    "stacktrace": [
+                        "Error: Email or username in use.",
+                        "    at BadRequestError.BaseError [as constructor] (/root/uxc/apps/api/src/middleware/error/errors/Base.ts:5:3)",
+                        "    at new BadRequestError (/root/uxc/apps/api/src/middleware/error/errors/BadRequest.ts:9:3)",
+                        "    at /root/uxc/apps/api/src/resolvers/mutations/join.ts:34:9",
+                        "    at step (/root/uxc/apps/api/src/resolvers/mutations/join.ts:33:23)",
+                        "    at Object.next (/root/uxc/apps/api/src/resolvers/mutations/join.ts:14:53)",
+                        "    at fulfilled (/root/uxc/apps/api/src/resolvers/mutations/join.ts:5:58)",
+                        "    at processTicksAndRejections (node:internal/process/task_queues:96:5)"
+                    ]
+                }
+            }
+        }
+    ],
+    "data": {
+        "join": null
+    }
+}
+
+}

@@ -4,10 +4,9 @@ export class BadRequestError extends BaseError {
 	statusCode = 400;
 
 	constructor(
-		public message: string = 'Something went wrong during the request'
+		public message: string = 'Something went wrong during the request.'
 	) {
 		super(message);
-
 		Object.setPrototypeOf(this, BadRequestError.prototype);
 	}
 

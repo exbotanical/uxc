@@ -14,8 +14,9 @@ import { SubscriptionServer } from 'subscriptions-transport-ws';
 
 import { app } from './app';
 import {
+	apolloErrorHandler as formatError,
 	corsOptions,
-	errorhandler,
+	expressErrorHandler,
 	NotFoundError,
 	sessionMiddleware
 } from './middleware';
@@ -38,6 +39,8 @@ export async function initializeServer() {
 	const httpServer = createServer(app);
 
 	const server = new ApolloServer({
+		formatError,
+
 		context: ({ req }) => {
 			return { req };
 		},
@@ -103,7 +106,7 @@ export async function initializeServer() {
 		.all('*', () => {
 			throw new NotFoundError();
 		})
-		.use(errorhandler);
+		.use(expressErrorHandler);
 
 	return {
 		httpServer,

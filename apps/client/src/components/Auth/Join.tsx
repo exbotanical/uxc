@@ -24,7 +24,6 @@ export function Join() {
 	}>(GET_CURRENT_USER);
 
 	const firstInteractiveRef = useRef<HTMLInputElement>(null);
-	const buttonRef = useRef<HTMLButtonElement>(null);
 
 	const [join] = useMutation(JOIN);
 	const navigate = useNavigate();
@@ -92,21 +91,23 @@ export function Join() {
 			return;
 		}
 
-		const data = await join({
-			variables: {
-				args: {
-					email,
-					password,
-					username
+		try {
+			const data = await join({
+				variables: {
+					args: {
+						email,
+						password,
+						username
+					}
 				}
+			});
+			resetState();
+			navigate(`/`);
+		} catch (ex) {
+			if (ex instanceof Error) {
+				console.log({ M: ex.message });
 			}
-		});
-
-		console.log({ data });
-
-		resetState();
-
-		navigate(`/`);
+		}
 	}
 
 	useEffect(() => {
