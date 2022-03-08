@@ -1,4 +1,3 @@
-import { aliasQuery } from '../utils';
 import {
 	USERNAME_CHARS_MAX,
 	USERNAME_CHARS_MIN,
@@ -8,6 +7,8 @@ import {
 	EMAIL_CHARS_MAX,
 	EMAIL_CHARS_MIN
 } from '@uxc/types';
+
+import { aliasQuery } from '../utils';
 
 describe('join workflow', () => {
 	const goodUsername = 'cypress_user';
@@ -154,7 +155,7 @@ describe('join workflow', () => {
 
 		cy.get('@email').clear();
 
-		cy.get('@email').type('x@x.' + 'x'.repeat(EMAIL_CHARS_MAX + 1));
+		cy.get('@email').type(`x@x.${  'x'.repeat(EMAIL_CHARS_MAX + 1)}`);
 		cy.get('@email').blur();
 		cy.getByTestId('email-address-error').should(
 			'contain',

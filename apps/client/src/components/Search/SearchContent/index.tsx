@@ -1,14 +1,15 @@
 import React, { useContext } from 'react';
+
+import { SearchHit } from '@/components/Search/SearchContent/SearchHit';
+import { SearchQuery } from '@/components/Search/SearchContent/SearchQuery';
+import * as S from '@/components/Search/SearchContent/styles';
 import { SearchContext } from '@/components/Search/SearchContext';
 
-import * as S from '@/components/Search/SearchContent/styles';
-import { SearchQuery } from '@/components/Search/SearchContent/SearchQuery';
-import { SearchHit } from '@/components/Search/SearchContent/SearchHit';
 
 export function SearchContent() {
 	const { history, results, query } = useContext(SearchContext);
 
-	if (!!query) {
+	if (query) {
 		return results.length ? (
 			<S.SearchHitSection>
 				<S.SearchSource>Users</S.SearchSource>
@@ -22,7 +23,7 @@ export function SearchContent() {
 		) : (
 			<S.NoContent>No results for "{query}"</S.NoContent>
 		);
-	} else {
+	} 
 		return history.length ? (
 			<section>
 				<S.SearchSource>Recent</S.SearchSource>
@@ -36,7 +37,7 @@ export function SearchContent() {
 		) : (
 			<S.NoContent>No recent searches</S.NoContent>
 		);
-	}
+	
 }
 
 SearchContent.displayName = 'SearchContent';

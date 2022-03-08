@@ -1,16 +1,16 @@
 import { GraphQLDateTime } from 'graphql-iso-date';
 
-import { authGuard } from '@/middleware/auth';
-import { seedWrapper, purge } from '@/resolvers/mutations/computed';
-
 import type { Resolvers } from '@uxc/types/generated';
 import type { GraphQLScalarType } from 'graphql';
 
+import { User, Message } from '@/db';
+import { authGuard } from '@/middleware/auth';
 import {
 	joinResolver as join,
 	signinResolver as signin,
 	signoutResolver as signout
 } from '@/resolvers/mutations';
+import { seedWrapper, purge } from '@/resolvers/mutations/computed';
 import { createMessage } from '@/resolvers/mutations/createMessage';
 import { createThread } from '@/resolvers/mutations/createThread';
 import { deleteThread } from '@/resolvers/mutations/deleteThread';
@@ -27,7 +27,6 @@ import {
 	onThreadMessageCreated,
 	onAnyMessageCreated
 } from '@/resolvers/subscriptions';
-import { User, Message } from '@/db';
 
 export const resolvers: Resolvers = {
 	Date: GraphQLDateTime as unknown as GraphQLScalarType,
@@ -47,13 +46,13 @@ export const resolvers: Resolvers = {
 	},
 
 	User: {
-		__isTypeOf: (obj, context, info) => {
+		__isTypeOf: (obj) => {
 			return obj instanceof User;
 		}
 	},
 
 	Message: {
-		__isTypeOf: (obj, context, info) => {
+		__isTypeOf: (obj) => {
 			return obj instanceof Message;
 		}
 	},

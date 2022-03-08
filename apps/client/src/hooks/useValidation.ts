@@ -1,5 +1,6 @@
-import { nullNoop, once } from '@/utils/atomic';
 import { useEffect, useRef, useState } from 'react';
+
+import { nullNoop, once } from '@/utils/atomic';
 
 export interface Validator {
 	(input: string): string | null;

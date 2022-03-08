@@ -1,7 +1,4 @@
 import { JOIN_MUTATION } from '@@/fixtures';
-import request from 'supertest';
-
-import { app } from '@/app';
 import {
 	EMAIL_CHARS_MAX,
 	ERROR_MESSAGES,
@@ -10,6 +7,9 @@ import {
 	USERNAME_CHARS_MAX,
 	USERNAME_CHARS_MIN
 } from '@uxc/types/node';
+import request from 'supertest';
+
+import { app } from '@/app';
 
 describe('join workflow', () => {
 	it('sets a cookie when the user has been created', async () => {

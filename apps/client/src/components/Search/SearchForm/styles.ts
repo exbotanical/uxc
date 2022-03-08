@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
-import { FontSizeLg } from '@/styles/Typography/FontSize';
 import { inputLabel, labelLabel } from '../constants';
+
+import { FontSizeLg } from '@/styles/Typography/FontSize';
 
 export const Form = styled.form.attrs({
 	role: 'search',

@@ -1,4 +1,5 @@
 import React, { createContext, useState } from 'react';
+
 import { useSearch } from '@/components/Search/hooks';
 
 type SearchContext = ReturnType<typeof useSearch> & {

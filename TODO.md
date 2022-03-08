@@ -16,6 +16,7 @@
 - [ ] slash commands
 - [ ] resizable sidebar
 - [ ] progressive image load a la gatsby
+- [ ] i18n
 
 ### Testing
 

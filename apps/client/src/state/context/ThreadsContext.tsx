@@ -34,7 +34,7 @@ export function ThreadsProvider({ children }: { children: JSX.Element }) {
 		getThreads: PrivateThread[];
 	}>(GET_THREADS, {
 		variables: {
-			userId: user?.getCurrentUser?._id
+			userId: user?.getCurrentUser._id
 		}
 	});
 

@@ -9,9 +9,9 @@ export function sign({ id, isRefresh }: { id: ObjectID; isRefresh?: boolean }) {
 		];
 	const expiresIn = isRefresh ? '7d' : '1h';
 
-	const token = jwt.sign({ id }, secret!, {
+	const token = jwt.sign({ id }, secret, {
 		expiresIn,
-		issuer: process.env.JWT_AUTHORITY!
+		issuer: process.env.JWT_AUTHORITY
 	});
 
 	return token;
@@ -33,7 +33,7 @@ export function verify({
 		];
 
 	try {
-		const decoded = jwt.verify(token, secret!);
+		const decoded = jwt.verify(token, secret);
 		return {
 			expired: false,
 			payload: decoded as unknown as JWTPayload

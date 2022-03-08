@@ -1,11 +1,11 @@
 import React, { createRef } from 'react';
-import { Modal } from '@/components/Modal/Modal';
 
-import { SearchProvider } from '@/components/Search/SearchContext';
-import * as S from '@/components/Search/styles';
 import SvgIcon from '@/components/Icon';
-import { SearchForm } from '@/components/Search/SearchForm';
+import { Modal } from '@/components/Modal/Modal';
 import { SearchContent } from '@/components/Search/SearchContent';
+import { SearchProvider } from '@/components/Search/SearchContext';
+import { SearchForm } from '@/components/Search/SearchForm';
+import * as S from '@/components/Search/styles';
 
 export function SearchModal({
 	isOpen,
@@ -17,7 +17,7 @@ export function SearchModal({
 	const modalRef = createRef<HTMLDivElement>();
 
 	return isOpen ? (
-		<Modal onModalClose={closeSearch} modalRef={modalRef}>
+		<Modal modalRef={modalRef} onModalClose={closeSearch}>
 			<SearchProvider>
 				{/* <Search ref={modalRef} closeSearch={closeSearch} /> */}
 
@@ -26,7 +26,7 @@ export function SearchModal({
 						<SearchForm />
 
 						<S.CloseButton onClick={closeSearch}>
-							<SvgIcon name="escape" size={18} color="#fff" />
+							<SvgIcon color="#fff" name="escape" size={18} />
 						</S.CloseButton>
 					</S.Header>
 

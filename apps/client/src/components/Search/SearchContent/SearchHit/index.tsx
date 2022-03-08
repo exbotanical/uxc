@@ -1,12 +1,11 @@
-import { onEnterKeyPressed } from '@/utils';
 import React, { useContext } from 'react';
-
-import SvgIcon from '@/components/Icon';
-import { SearchContext } from '@/components/Search/SearchContext';
 
 import type { SearchRecord } from '@/components/Search/hooks';
 
+import SvgIcon from '@/components/Icon';
 import * as S from '@/components/Search/SearchContent/SearchHit/styles';
+import { SearchContext } from '@/components/Search/SearchContext';
+import { onEnterKeyPressed } from '@/utils';
 
 interface SearchHitProps {
 	record: SearchRecord;
@@ -23,9 +22,9 @@ export function SearchHit({ record }: SearchHitProps) {
 
 	return (
 		<S.SearchHit
+			isActiveRecord={isActiveRecord}
 			onClick={handleRecordClick}
 			onKeyPress={onEnterKeyPressed(handleRecordClick)}
-			isActiveRecord={isActiveRecord}
 		>
 			<S.SearchHitContainer>
 				<S.SearchHitIcon>
@@ -36,7 +35,7 @@ export function SearchHit({ record }: SearchHitProps) {
 				</S.SearchHitContent>
 
 				<S.SearchHitAction>
-					<SvgIcon name="arrow-right" size={23} color="#fff" />
+					<SvgIcon color="#fff" name="arrow-right" size={23} />
 				</S.SearchHitAction>
 			</S.SearchHitContainer>
 		</S.SearchHit>

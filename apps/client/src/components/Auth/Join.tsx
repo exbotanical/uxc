@@ -1,22 +1,23 @@
-import { ChangeEvent, useEffect, useRef } from 'react';
+import type { FormEvent } from 'react';
 
 import { useMutation, useQuery } from '@apollo/client';
-import React from 'react';
+import React, { ChangeEvent, useEffect, useRef } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 
-import { GET_CURRENT_USER, JOIN } from '@/services/api';
-import { useValidation } from '@/hooks';
 
 import * as S from './styles';
-
-import type { FormEvent } from 'react';
-import type { User } from '@uxc/types';
 import {
 	validateEmail,
 	validatePassword,
 	validateUsername
 } from './validators';
+
+import type { User } from '@uxc/types';
+
+
 import { AdaptiveInput } from '@/components/Fields/AdaptiveInput';
+import { useValidation } from '@/hooks';
+import { GET_CURRENT_USER, JOIN } from '@/services/api';
 
 export function Join() {
 	const { data, loading } = useQuery<{
@@ -123,53 +124,53 @@ export function Join() {
 			<S.Form onSubmit={handleSubmit}>
 				<AdaptiveInput
 					autoComplete="username"
+					data-testid="username-input"
+					error={usernameError}
 					id="username"
 					label="Username"
 					name="username"
+					onBlur={setUsernameDirty}
 					onChange={handleChange}
+					ref={firstInteractiveRef}
 					required
 					type="text"
 					value={username}
-					data-testid="username-input"
-					ref={firstInteractiveRef}
-					onBlur={setUsernameDirty}
-					error={usernameError}
 				/>
 
 				<AdaptiveInput
 					autoComplete="email"
+					data-testid="email-input"
+					error={emailError}
 					id="email-address"
 					label="Email address"
 					name="email"
+					onBlur={setEmailDirty}
 					onChange={handleChange}
 					required
 					type="email"
 					value={email}
-					data-testid="email-input"
-					onBlur={setEmailDirty}
-					error={emailError}
 				/>
 
 				<AdaptiveInput
 					autoComplete="current-password"
+					data-testid="password-input"
+					error={passwordError}
 					id="password"
 					label="Password"
 					name="password"
+					onBlur={setPasswordDirty}
 					onChange={handleChange}
 					required
 					type="password"
 					value={password}
-					data-testid="password-input"
-					onBlur={setPasswordDirty}
-					error={passwordError}
 				/>
 
 				<S.CTAButton
+					aria-describedby="disabledReason"
+					aria-disabled={formInvalid}
+					data-testid="join-button"
 					loading={loading}
 					type="submit"
-					data-testid="join-button"
-					aria-disabled={formInvalid}
-					aria-describedby="disabledReason"
 				>
 					Join
 				</S.CTAButton>

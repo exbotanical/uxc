@@ -3,6 +3,7 @@ import 'module-alias/register';
 import './dotenv';
 import { createServer } from 'http';
 
+import { ERROR_MESSAGES } from '@uxc/types/node';
 import {
 	ApolloServerPluginDrainHttpServer,
 	ApolloServerPluginLandingPageLocalDefault,
@@ -21,7 +22,6 @@ import {
 	sessionMiddleware
 } from './middleware';
 import { schema } from './schema';
-import { ERROR_MESSAGES } from '@uxc/types/node';
 
 import type { JWT, JWTPayload } from '@uxc/types/node';
 import type { Request } from 'express';

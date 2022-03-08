@@ -3,12 +3,12 @@ import React, { useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { UserAvatar } from '@/components/User/UserAvatar';
 
 import * as S from './styles';
 
 import type { ObjectID, User } from '@uxc/types';
 
+import { UserAvatar } from '@/components/User/UserAvatar';
 import { GET_CURRENT_USER } from '@/services/api/queries';
 import { ThreadsContext } from '@/state/context/ThreadsContext';
 import { RowCenter } from '@/styles/Layout';

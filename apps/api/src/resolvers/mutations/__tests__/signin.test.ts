@@ -1,8 +1,8 @@
 import { SIGNIN_MUTATION } from '@@/fixtures';
+import { ERROR_MESSAGES } from '@uxc/types/node';
 import request from 'supertest';
 
 import { app } from '@/app';
-import { ERROR_MESSAGES } from '@uxc/types/node';
 
 describe('signin workflow', () => {
 	it('responds with a cookie when signin is successful', async () => {

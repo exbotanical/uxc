@@ -35,8 +35,8 @@
   },
   "devDependencies": {
     "@cypress/vite-dev-server": "^2.2.2",
-    "@magister_zito/eslint-config-react": "^0.8.0",
-    "@magister_zito/stylelint-config": "0.0.1",
+    "@magister_zito/eslint-config-react": "^0.9.0",
+    "@magister_zito/stylelint-config": "0.1.0",
     "@testing-library/cypress": "^8.0.2",
     "@testing-library/dom": "^8.11.3",
     "@testing-library/jest-dom": "^5.16.1",

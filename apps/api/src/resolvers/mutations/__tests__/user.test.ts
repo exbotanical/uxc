@@ -1,8 +1,8 @@
 import { GET_CURRENT_USER } from '@@/fixtures';
+import { ERROR_MESSAGES } from '@uxc/types/node';
 import request from 'supertest';
 
 import { app } from '@/app';
-import { ERROR_MESSAGES } from '@uxc/types/node';
 
 describe('user context workflow', () => {
 	it('returns the current user data', async () => {

@@ -1,12 +1,11 @@
-import { onEnterKeyPressed } from '@/utils';
 import React, { useContext } from 'react';
-
-import SvgIcon from '@/components/Icon';
-import { SearchContext } from '@/components/Search/SearchContext';
 
 import type { SearchRecord } from '@/components/Search/hooks';
 
+import SvgIcon from '@/components/Icon';
 import * as S from '@/components/Search/SearchContent/SearchQuery/styles';
+import { SearchContext } from '@/components/Search/SearchContext';
+import { onEnterKeyPressed } from '@/utils';
 
 interface SearchQueryProps {
 	record: SearchRecord;
@@ -24,10 +23,10 @@ export function SearchQuery({ record }: SearchQueryProps) {
 	return (
 		<S.ListItem
 			isActiveRecord={isActiveRecord}
-			role="button"
-			tabIndex={0}
 			onClick={handleRecordClick}
 			onKeyPress={onEnterKeyPressed(handleRecordClick)}
+			role="button"
+			tabIndex={0}
 		>
 			<S.LinkBoundary>
 				<S.ListItemContent>

@@ -1,10 +1,10 @@
 import { UPDATE_MESSAGE, SIGNIN_MUTATION, CREATE_MESSAGE } from '@@/fixtures';
+import { ERROR_MESSAGES } from '@uxc/types/node';
 import { ObjectId } from 'mongodb';
 import request from 'supertest';
 
 import { app } from '@/app';
 import { seed } from '@/resolvers/mutations/computed/seed';
-import { ERROR_MESSAGES } from '@uxc/types/node';
 
 describe('updateMessage workflow', () => {
 	it('fails with an Unauthorized error if the request does not include a valid session cookie', async () => {

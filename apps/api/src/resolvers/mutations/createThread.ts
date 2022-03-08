@@ -1,3 +1,4 @@
+import { ERROR_MESSAGES } from '@uxc/types/node';
 import { AuthenticationError, UserInputError } from 'apollo-server-core';
 import { isValidObjectId } from 'mongoose';
 
@@ -8,7 +9,6 @@ import type {
 } from '@uxc/types/node';
 
 import { PrivateThread } from '@/db';
-import { ERROR_MESSAGES } from '@uxc/types/node';
 
 export const createThread: Resolver<
 	PrivateThreadType,

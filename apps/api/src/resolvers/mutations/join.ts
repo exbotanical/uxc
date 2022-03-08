@@ -1,3 +1,11 @@
+import {
+	EMAIL_CHARS_MAX,
+	ERROR_MESSAGES,
+	PASSWORD_CHARS_MAX,
+	PASSWORD_CHARS_MIN,
+	USERNAME_CHARS_MAX,
+	USERNAME_CHARS_MIN
+} from '@uxc/types/node';
 import { UserInputError } from 'apollo-server-core';
 import isEmail from 'isemail';
 
@@ -10,14 +18,6 @@ import type {
 import { User } from '@/db';
 import { BadRequestError } from '@/middleware';
 import { createSession } from '@/utils';
-import {
-	EMAIL_CHARS_MAX,
-	ERROR_MESSAGES,
-	PASSWORD_CHARS_MAX,
-	PASSWORD_CHARS_MIN,
-	USERNAME_CHARS_MAX,
-	USERNAME_CHARS_MIN
-} from '@uxc/types/node';
 
 export const joinResolver: MutationResolvers['join'] = async (
 	_,

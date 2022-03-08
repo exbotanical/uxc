@@ -1,5 +1,6 @@
-import { FontSizeBase, FontSizeXs } from '@/styles/Typography/FontSize';
 import styled from 'styled-components';
+
+import { FontSizeBase, FontSizeXs } from '@/styles/Typography/FontSize';
 
 export const ListItem = styled.li<{ isActiveRecord: boolean }>`
 	position: 'relative';

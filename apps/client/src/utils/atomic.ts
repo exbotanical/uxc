@@ -12,4 +12,4 @@ export const once = (fn: (...args: any) => any) => {
 	};
 };
 
-once(() => console.log('e'));
+once(() => { console.log('e'); });

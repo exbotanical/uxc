@@ -1,9 +1,10 @@
+import { useLazyQuery } from '@apollo/client';
+import { Message, User } from '@uxc/types';
 import { useEffect, useState } from 'react';
 
 import mockData from '@/components/Search/hooks/data.json';
-import { useLazyQuery } from '@apollo/client';
 import { TEXT_SEARCH } from '@/services/api/queries';
-import { Message, User } from '@uxc/types';
+
 
 export interface SearchRecord {
 	category: 'thread' | 'user';
@@ -18,7 +19,7 @@ export function useSearch() {
 	const [results, setResults] = useState<SearchRecord[]>([]);
 
 	const [search, { loading, error, data }] = useLazyQuery<{
-		search: (User | Message)[];
+		search: (Message | User)[];
 	}>(TEXT_SEARCH, {
 		fetchPolicy: 'network-only'
 	});

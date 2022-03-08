@@ -4,13 +4,13 @@ import { useNavigate, Navigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import * as S from './styles';
+import { validateEmail, validatePassword } from './validators';
 
 import type { User } from '@uxc/types';
 
 import { AdaptiveInput } from '@/components/Fields/AdaptiveInput';
-import { GET_CURRENT_USER, SIGNIN } from '@/services/api/queries';
 import { useValidation } from '@/hooks';
-import { validateEmail, validatePassword } from './validators';
+import { GET_CURRENT_USER, SIGNIN } from '@/services/api/queries';
 
 const AlignedLink = styled(Link)`
 	align-self: flex-end;
@@ -77,39 +77,39 @@ export function Signin() {
 			<S.Form onSubmit={handleSubmit}>
 				<AdaptiveInput
 					autoComplete="email"
+					data-testid="email-input"
+					error={emailError}
 					id="email-address"
 					label="Email address"
 					name="email"
+					onBlur={setEmailDirty}
 					onChange={handleChange}
 					required
 					type="email"
 					value={email}
-					onBlur={setEmailDirty}
-					data-testid="email-input"
-					error={emailError}
 				/>
 				<AdaptiveInput
 					autoComplete="current-password"
+					data-testid="password-input"
+					error={passwordError}
 					id="password"
 					label="Password"
 					name="password"
+					onBlur={setPasswordDirty}
 					onChange={handleChange}
 					required
 					type="password"
 					value={password}
-					onBlur={setPasswordDirty}
-					data-testid="password-input"
-					error={passwordError}
 				/>
 				<AlignedLink to="/todo">
 					<S.FieldCaptionLink>Forgot your password?</S.FieldCaptionLink>
 				</AlignedLink>
 
 				<S.CTAButton
+					data-testid="signin-button"
 					disabled={formInvalid}
 					loading={loading}
 					type="submit"
-					data-testid="signin-button"
 				>
 					Sign in
 				</S.CTAButton>

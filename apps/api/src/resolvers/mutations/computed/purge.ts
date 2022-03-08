@@ -1,14 +1,10 @@
 import mongoose from 'mongoose';
 
-import type { Context } from '@uxc/types/node';
-
-export async function purge(_: any, __: any, { req }: Context) {
+export async function purge() {
 	const collections = await mongoose.connection.db.collections();
+	const tasks = collections.map((collection) => collection.deleteMany({}));
 
-	console.log(collections);
-	for (let collection of collections) {
-		await collection.deleteMany({});
-	}
+	await Promise.all(tasks);
 
 	return true;
 }

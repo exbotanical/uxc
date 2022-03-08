@@ -1,5 +1,3 @@
-import { Schema, model } from 'mongoose';
-
 import {
 	USERNAME_CHARS_MAX,
 	USERNAME_CHARS_MIN,
@@ -8,6 +6,8 @@ import {
 	EMAIL_CHARS_MAX,
 	EMAIL_CHARS_MIN
 } from '@uxc/types/node';
+import { Schema, model } from 'mongoose';
+
 import type { User as UserType } from '@uxc/types/node';
 import type { Model, Document } from 'mongoose';
 

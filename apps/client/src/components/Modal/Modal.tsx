@@ -1,7 +1,7 @@
 import React, { createContext, createRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 
-import { createPortal } from 'react-dom';
 import { cycleRange } from '@/utils/computed';
 
 const ModalOverlay = styled.div.attrs({
@@ -56,7 +56,7 @@ export function Modal({ onModalClose, modalRef, children }: ModalProps) {
 		function listener(e: KeyboardEvent) {
 			const fn = keyListenersMap.get(e.key);
 
-			return fn && fn(e);
+			fn && fn(e);
 		}
 
 		document.addEventListener('keydown', listener);
@@ -75,7 +75,7 @@ export function Modal({ onModalClose, modalRef, children }: ModalProps) {
 	const handleTabKey = (e: KeyboardEvent) => {
 		// @todo hoist this up
 		const focusableModalElements = Array.from(
-			modalRef?.current?.querySelectorAll<HTMLElement>(
+			modalRef.current?.querySelectorAll<HTMLElement>(
 				'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], input[type="search"], select, li'
 			) || []
 		);
@@ -97,7 +97,7 @@ export function Modal({ onModalClose, modalRef, children }: ModalProps) {
 
 		const nextEl = focusableModalElements[next];
 
-		nextEl?.focus();
+		nextEl.focus();
 
 		e.preventDefault();
 	};
@@ -109,7 +109,7 @@ export function Modal({ onModalClose, modalRef, children }: ModalProps) {
 
 	useEffect(() => {
 		const focusableModalElements =
-			modalRef?.current?.querySelectorAll<HTMLElement>(
+			modalRef.current?.querySelectorAll<HTMLElement>(
 				'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], input[type="search"], select'
 			);
 
@@ -118,7 +118,7 @@ export function Modal({ onModalClose, modalRef, children }: ModalProps) {
 		}
 		const firstElement = focusableModalElements[0];
 
-		firstElement?.focus();
+		firstElement.focus();
 	}, []);
 
 	return createPortal(

@@ -1,5 +1,6 @@
-import { FontSizeBase } from '@/styles/Typography/FontSize';
 import styled from 'styled-components';
+
+import { FontSizeBase } from '@/styles/Typography/FontSize';
 
 export const SearchHit = styled.li.attrs<{ isActiveRecord: boolean }>(
 	({ isActiveRecord }) => ({

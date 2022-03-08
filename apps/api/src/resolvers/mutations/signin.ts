@@ -1,16 +1,16 @@
+import { ERROR_MESSAGES } from '@uxc/types/node';
 import { UserInputError } from 'apollo-server-core';
 
-import type { User as UserType } from '@uxc/types/node';
 import type {
 	InputMaybe,
 	SigninInput,
 	MutationResolvers
 } from '@uxc/types/generated';
+import type { User as UserType } from '@uxc/types/node';
 
 import { User } from '@/db';
 import { BadRequestError } from '@/middleware';
 import { compare, createSession } from '@/utils/auth';
-import { ERROR_MESSAGES } from '@uxc/types/node';
 
 export const signinResolver: MutationResolvers['signin'] = async (
 	_,

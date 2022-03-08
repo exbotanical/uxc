@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import { FontSizeLg } from '@/styles/Typography/FontSize';
 import { labelLabel } from '@/components/Search/constants';
+import { FontSizeLg } from '@/styles/Typography/FontSize';
 
 export const SearchHitSection = styled.section`
 	padding-bottom: 1.5rem;

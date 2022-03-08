@@ -1,10 +1,10 @@
 import { GET_THREAD, SIGNIN_MUTATION } from '@@/fixtures';
+import { ERROR_MESSAGES } from '@uxc/types/node';
 import { ObjectId } from 'mongodb';
 import request from 'supertest';
 
 import { app } from '@/app';
 import { seed } from '@/resolvers/mutations/computed/seed';
-import { ERROR_MESSAGES } from '@uxc/types/node';
 
 describe('getThread workflow', () => {
 	it('fails with an Unauthorized error if the request does not include a valid session cookie', async () => {

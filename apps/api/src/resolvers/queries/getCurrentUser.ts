@@ -1,10 +1,10 @@
+import { ERROR_MESSAGES } from '@uxc/types/node';
 import { AuthenticationError } from 'apollo-server-core';
 
 import type { Resolver } from '../types';
 import type { User as UserType } from '@uxc/types/node';
 
 import { User } from '@/db';
-import { ERROR_MESSAGES } from '@uxc/types/node';
 
 export const getCurrentUser: Resolver<UserType> = async (_, __, { req }) => {
 	const userId = req.session.meta?.id;

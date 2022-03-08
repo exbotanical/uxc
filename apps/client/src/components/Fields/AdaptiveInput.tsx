@@ -1,3 +1,5 @@
+import type { ComponentPropsWithoutRef } from 'react';
+
 import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 import { v4 } from 'uuid';
@@ -8,7 +10,6 @@ import {
 	FontSizeSm
 } from '@/styles/Typography/FontSize';
 
-import type { ComponentPropsWithoutRef } from 'react';
 
 interface InputProps extends ComponentPropsWithoutRef<'input'> {
 	label: string;
@@ -102,20 +103,20 @@ export const AdaptiveInput = forwardRef<HTMLInputElement, InputProps>(
 			<Container>
 				<InputWrapper className={className} hasValue={!!props.value}>
 					<Input
+						aria-autocomplete="list"
+						aria-labelledby={labelId}
+						autoCapitalize="off"
+						autoCorrect="off"
 						hasError={!!error}
 						id={id}
 						ref={ref}
-						aria-labelledby={labelId}
-						aria-autocomplete="list"
-						autoCorrect="off"
-						autoCapitalize="off"
 						{...props}
 					/>
 					<Label htmlFor={id} id={labelId}>
 						{label}
 					</Label>
 				</InputWrapper>
-				{!!error ? (
+				{error ? (
 					<InputError data-testid={`${id}-error`}>{error}</InputError>
 				) : null}
 			</Container>

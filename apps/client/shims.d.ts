@@ -16,19 +16,7 @@ interface ImportMeta {
 
 declare module 'styled-components' {
 	type Palettes =
-		| 'accent'
-		| 'background'
-		| 'background'
-		| 'blue'
-		| 'border'
-		| 'field'
-		| 'font'
-		| 'interactive'
-		| 'interactive'
-		| 'scrollbar'
-		| 'success'
-		| 'error'
-		| 'link';
+		'accent' | 'background' | 'background' | 'blue' | 'border' | 'error' | 'field' | 'font' | 'interactive' | 'interactive' | 'link' | 'scrollbar' | 'success';
 
 	export interface DefaultTheme {
 		colors: {
