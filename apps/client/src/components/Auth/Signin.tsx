@@ -76,6 +76,7 @@ export function Signin() {
 		<S.InnerCard size="sm">
 			<S.Form onSubmit={handleSubmit}>
 				<AdaptiveInput
+					aria-autocomplete="list"
 					autoComplete="email"
 					data-testid="email-input"
 					error={emailError}
@@ -89,6 +90,7 @@ export function Signin() {
 					value={email}
 				/>
 				<AdaptiveInput
+					aria-autocomplete="list"
 					autoComplete="current-password"
 					data-testid="password-input"
 					error={passwordError}

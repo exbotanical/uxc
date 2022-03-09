@@ -1,0 +1,23 @@
+
+
+type PrivateThread {
+  _id: ID
+	createdAt: Date
+	updatedAt: Date
+	users: [User]
+}
+
+type Query {
+	getThread(threadId: ID): PrivateThread
+	getThreads(userId: ID): [PrivateThread]
+}
+
+type Subscription {
+  onThreadMessageCreated(threadId: ID): [Message]
+	onThreadCreated: [PrivateThread]
+}
+
+type Mutation {
+	createThread(receiverId: ID): PrivateThread
+	deleteThread(threadId: ID): ID
+}

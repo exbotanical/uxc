@@ -40,7 +40,7 @@ export const SearchInput = styled.input.attrs({
 })`
 	${FontSizeLg}
 	appearance: none;
-	background: transparent;
+	background-color: transparent;
 	height: 3.5rem;
 	color: ${({ theme }) => theme.colors.font.weak};
 	margin-left: 0.75rem;

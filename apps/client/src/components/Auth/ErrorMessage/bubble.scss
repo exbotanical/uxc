@@ -1,0 +1,27 @@
+@use "sass:math";
+
+.bubble {
+  > *,
+  > * > .message  {
+    @for $i from 1 through 10 {
+      &:nth-child(#{$i}) {
+				opacity: 0;
+				animation: fade-in 1s ease-in-out;
+				animation-iteration-count: 1;
+				animation-fill-mode: forwards;
+				animation-delay: #{math.div($i, 1)}s;
+      }
+    }
+  }
+}
+
+@keyframes fade-in {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

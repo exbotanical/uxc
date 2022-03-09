@@ -1,9 +1,9 @@
-import type { FormEvent } from 'react';
-
 import { useMutation, useQuery } from '@apollo/client';
-import React, { ChangeEvent, useEffect, useRef } from 'react';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 
+import { GET_CURRENT_USER, JOIN } from '@/services/api';
+import { NormalizedError, normalizeError } from '@/services/error';
 
 import * as S from './styles';
 import {
@@ -12,21 +12,29 @@ import {
 	validateUsername
 } from './validators';
 
-import type { User } from '@uxc/types';
-
-
 import { AdaptiveInput } from '@/components/Fields/AdaptiveInput';
 import { useValidation } from '@/hooks';
-import { GET_CURRENT_USER, JOIN } from '@/services/api';
 
+import type { FormEvent } from 'react';
+import type { User } from '@uxc/types';
+
+import { ErrorMessage } from './ErrorMessage';
+import { isTestRuntime } from '@/utils';
+
+/**
+ * @todo Attempt pre-auth only once
+ */
 export function Join() {
+	const [errors, setErrors] = useState<NormalizedError[]>([]);
+	const firstInteractiveRef = useRef<HTMLInputElement>(null);
+
 	const { data, loading } = useQuery<{
 		getCurrentUser: User;
 	}>(GET_CURRENT_USER);
-
-	const firstInteractiveRef = useRef<HTMLInputElement>(null);
-
-	const [join] = useMutation(JOIN);
+	// @todo update GET_CURRENT_USER cache
+	const [join] = useMutation<{
+		join: User;
+	}>(JOIN);
 	const navigate = useNavigate();
 
 	const {
@@ -93,7 +101,7 @@ export function Join() {
 		}
 
 		try {
-			const data = await join({
+			const { data } = await join({
 				variables: {
 					args: {
 						email,
@@ -102,11 +110,26 @@ export function Join() {
 					}
 				}
 			});
+
+			if (!data?.join) {
+				setErrors([
+					{
+						code: 'UNKNOWN_ERROR',
+						field: null,
+						message:
+							'Something went wrong. Please try again or contact support.'
+					}
+				]);
+
+				return;
+			}
+
 			resetState();
 			navigate(`/`);
 		} catch (ex) {
+			console.log({ ex });
 			if (ex instanceof Error) {
-				console.log({ M: ex.message });
+				setErrors(normalizeError(ex));
 			}
 		}
 	}
@@ -115,73 +138,91 @@ export function Join() {
 		firstInteractiveRef.current?.focus();
 	}, []);
 
+	useEffect(() => {
+		const timer = setTimeout(
+			() => {
+				setErrors([]);
+			},
+			isTestRuntime ? 20000 : 5000
+		);
+
+		return () => {
+			clearTimeout(timer);
+		};
+	}, [errors, setErrors]);
+
 	if (data) {
 		return <Navigate to="/thread" />;
 	}
 
 	return (
-		<S.InnerCard size="lg">
-			<S.Form onSubmit={handleSubmit}>
-				<AdaptiveInput
-					autoComplete="username"
-					data-testid="username-input"
-					error={usernameError}
-					id="username"
-					label="Username"
-					name="username"
-					onBlur={setUsernameDirty}
-					onChange={handleChange}
-					ref={firstInteractiveRef}
-					required
-					type="text"
-					value={username}
-				/>
+		<>
+			<S.InnerCard size="lg">
+				{errors.map(({ message }, idx) => (
+					<ErrorMessage message={message} key={idx} />
+				))}
 
-				<AdaptiveInput
-					autoComplete="email"
-					data-testid="email-input"
-					error={emailError}
-					id="email-address"
-					label="Email address"
-					name="email"
-					onBlur={setEmailDirty}
-					onChange={handleChange}
-					required
-					type="email"
-					value={email}
-				/>
+				<S.Form onSubmit={handleSubmit} autoComplete="off">
+					<AdaptiveInput
+						data-testid="username-input"
+						error={usernameError}
+						id="username"
+						label="Username"
+						name="username"
+						onBlur={setUsernameDirty}
+						onChange={handleChange}
+						ref={firstInteractiveRef}
+						required
+						type="text"
+						value={username}
+					/>
 
-				<AdaptiveInput
-					autoComplete="current-password"
-					data-testid="password-input"
-					error={passwordError}
-					id="password"
-					label="Password"
-					name="password"
-					onBlur={setPasswordDirty}
-					onChange={handleChange}
-					required
-					type="password"
-					value={password}
-				/>
+					{/* Chrome browsers will not allow autocomplete to be disabled, so we add ARIA autocomplete anyway */}
+					<AdaptiveInput
+						aria-autocomplete="list"
+						data-testid="email-input"
+						error={emailError}
+						id="email-address"
+						label="Email address"
+						name="email"
+						onBlur={setEmailDirty}
+						onChange={handleChange}
+						required
+						type="email"
+						value={email}
+					/>
 
-				<S.CTAButton
-					aria-describedby="disabledReason"
-					aria-disabled={formInvalid}
-					data-testid="join-button"
-					loading={loading}
-					type="submit"
-				>
-					Join
-				</S.CTAButton>
-			</S.Form>
+					<AdaptiveInput
+						data-testid="password-input"
+						error={passwordError}
+						id="password"
+						label="Password"
+						name="password"
+						onBlur={setPasswordDirty}
+						onChange={handleChange}
+						required
+						type="password"
+						value={password}
+					/>
 
-			<S.Footer>
-				<S.SwapModeLink to="/signin">
-					<p>Already have an account?&nbsp;Sign in</p>
-				</S.SwapModeLink>
-			</S.Footer>
-		</S.InnerCard>
+					<S.CTAButton
+						aria-describedby="disabledReason"
+						aria-disabled={formInvalid}
+						data-testid="join-button"
+						loading={loading}
+						type="submit"
+					>
+						Join
+					</S.CTAButton>
+				</S.Form>
+
+				<S.Footer>
+					<S.SwapModeLink to="/signin">
+						<p>Already have an account?&nbsp;Sign in</p>
+					</S.SwapModeLink>
+				</S.Footer>
+			</S.InnerCard>
+		</>
 	);
 }
 

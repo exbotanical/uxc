@@ -15,12 +15,13 @@ export const Container = styled.div`
 `;
 
 export const InnerCard = styled.div<{ size: 'lg' | 'sm' }>`
+	${FlexCol}
+	position: relative;
 	width: 100%;
 	min-height: ${({ size }) => (size === 'sm' ? 32 : 36)}rem;
 	max-width: 32rem;
 	border-radius: 0.5rem;
-	background: ${({ theme }) => theme.colors.background.strong};
-	${FlexCol}
+	background-color: ${({ theme }) => theme.colors.background.strong};
 `;
 
 export const Form = styled.form`
@@ -41,8 +42,11 @@ export const FieldCaptionLink = styled.p`
 `;
 
 export const Footer = styled(RowCenter)`
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	border-top: 1px solid ${({ theme }) => theme.colors.border.norm};
-	height: 20%;
+	padding: 1rem 0;
 `;
 
 export const CTAButton = styled(Button)`
@@ -56,10 +60,4 @@ export const SwapModeLink = styled(Link).attrs({
 	${FontSizeXl}
 	font-weight: 700;
 	text-decoration-line: underline;
-`;
-
-export const ErrorText = styled.p`
-	padding: 1rem;
-	text-align: center;
-	color: ${({ theme }) => theme.colors.error.norm};
 `;

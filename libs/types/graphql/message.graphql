@@ -1,0 +1,22 @@
+type Message {
+  _id: ID
+	threadId: ID
+	sender: User
+	createdAt: Date
+	updatedAt: Date
+	body: String
+}
+
+type Query {
+  getMessages(threadId: ID): [Message]
+}
+
+type Subscription {
+	onAnyMessageCreated: Message
+}
+
+
+type Mutation {
+  createMessage(threadId: ID, body: String): Message
+  updateMessage(messageId: ID, body: String): Message
+}

@@ -1,0 +1,13 @@
+{
+	"errors": [
+		{
+			"message": "The email or username you chose are taken.",
+			"extensions": {
+					"code": "BadRequestError"
+			}
+		}
+	],
+	"data": {
+		"join": null
+	}
+}

@@ -97,7 +97,7 @@ export async function initializeServer() {
 			}
 		},
 		{
-			path: process.env.VITE_API_SUBSCRIPTIONS_PATH,
+			path: `/${process.env.VITE_API_SUBSCRIPTIONS_PATH}`,
 			server: httpServer
 		}
 	);

@@ -10,7 +10,6 @@ import {
 	FontSizeSm
 } from '@/styles/Typography/FontSize';
 
-
 interface InputProps extends ComponentPropsWithoutRef<'input'> {
 	label: string;
 	error?: string | null;
@@ -35,11 +34,11 @@ const Input = styled.input.attrs<{ hasError: boolean }>(({ hasError }) => ({
 	background-color: ${({ theme }) => theme.colors.field.norm};
 
 	&:disabled {
-		background: ${({ theme }) => theme.colors.field.disabled};
+		background-color: ${({ theme }) => theme.colors.field.disabled};
 	}
 
 	&:hover {
-		background: ${({ theme }) => theme.colors.field.hover};
+		background-color: ${({ theme }) => theme.colors.field.hover};
 	}
 
 	&:focus {
@@ -49,14 +48,15 @@ const Input = styled.input.attrs<{ hasError: boolean }>(({ hasError }) => ({
 	}
 
 	:-webkit-autofill {
-		-webkit-box-shadow: 0 0 0 30px ${({ theme }) => theme.colors.field.norm}
+		-webkit-box-shadow: 0 0 0 40px ${({ theme }) => theme.colors.field.norm}
 			inset;
 		-webkit-text-fill-color: ${({ theme }) => theme.colors.font.strong};
+		caret-color: ${({ theme }) => theme.colors.font.strong};
 	}
 
 	:-webkit-autofill:hover,
 	:-webkit-autofill:focus {
-		-webkit-box-shadow: 0 0 0 30px ${({ theme }) => theme.colors.field.hover}
+		-webkit-box-shadow: 0 0 0 40px ${({ theme }) => theme.colors.field.hover}
 			inset;
 	}
 `;
@@ -103,7 +103,6 @@ export const AdaptiveInput = forwardRef<HTMLInputElement, InputProps>(
 			<Container>
 				<InputWrapper className={className} hasValue={!!props.value}>
 					<Input
-						aria-autocomplete="list"
 						aria-labelledby={labelId}
 						autoCapitalize="off"
 						autoCorrect="off"

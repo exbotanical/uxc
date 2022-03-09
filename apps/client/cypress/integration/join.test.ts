@@ -4,20 +4,19 @@ import {
 	ERROR_MESSAGES,
 	PASSWORD_CHARS_MAX,
 	PASSWORD_CHARS_MIN,
-	EMAIL_CHARS_MAX,
-	EMAIL_CHARS_MIN
+	EMAIL_CHARS_MAX
 } from '@uxc/types';
 
-import { aliasQuery } from '../utils';
+import { aliasQuery, hasOperationName } from '../utils';
+import joinInUse from '../fixtures/join/in-use.json';
+import joinOk from '../fixtures/join/ok.json';
+import currentUserOk from '../fixtures/getCurrentUser/ok.json';
+import getThreadsEmptyOk from '../fixtures/getThreads/ok.empty.json';
 
 describe('join workflow', () => {
-	const goodUsername = 'cypress_user';
-	const goodEmail = 'cypress@cypress.com';
+	const goodUsername = 'cy_user';
+	const goodEmail = 'user@cypress.com';
 	const goodPassword = 'cypress_password';
-
-	const badUsername = 'cy';
-	const badEmail = 'cy';
-	const badPassword = 'cy';
 
 	function joinUser() {
 		cy.get('@username').type(goodUsername);
@@ -27,10 +26,7 @@ describe('join workflow', () => {
 	}
 
 	beforeEach(() => {
-		cy.intercept('POST', 'http://localhost:3000/api/graphql', (req) => {
-			aliasQuery(req, 'join');
-			aliasQuery(req, 'getCurrentUser');
-		});
+		Cypress.config('interceptions' as keyof Cypress.TestConfigOverrides, {});
 
 		cy.visit('/join');
 
@@ -155,7 +151,7 @@ describe('join workflow', () => {
 
 		cy.get('@email').clear();
 
-		cy.get('@email').type(`x@x.${  'x'.repeat(EMAIL_CHARS_MAX + 1)}`);
+		cy.get('@email').type(`x@x.${'x'.repeat(EMAIL_CHARS_MAX + 1)}`);
 		cy.get('@email').blur();
 		cy.getByTestId('email-address-error').should(
 			'contain',
@@ -206,25 +202,38 @@ describe('join workflow', () => {
 		);
 	});
 
-	it.skip('displays an error if the email address is taken', () => {
+	it.skip('displays an error if the email address or username is taken', () => {
+		cy.interceptGQL('http://localhost/api/graphql', 'join', joinInUse);
+
 		joinUser();
+
+		cy.getByTestId('error-message').contains(
+			ERROR_MESSAGES.E_CREDENTIALS_TAKEN_FRIENDLY
+		);
+
+		cy.url().should('eq', 'http://localhost:3000/join');
+	});
+
+	it('redirects the new user to the landing page once submitting', () => {
+		cy.interceptGQL('http://localhost/api/graphql', 'join', joinOk);
+		cy.interceptGQL(
+			'http://localhost/api/graphql',
+			'getCurrentUser',
+			currentUserOk
+		);
+
+		joinUser();
+
+		cy.interceptGQL(
+			'http://localhost/api/graphql',
+			'getThreads',
+			getThreadsEmptyOk
+		);
 
 		cy.url().should('eq', 'http://localhost:3000/');
 	});
 
-	it.skip('displays an error if the username is taken', () => {
-		joinUser();
-
-		cy.url().should('eq', 'http://localhost:3000/');
-	});
-
-	it.skip('redirects the new user to the landing page once submitting', () => {
-		joinUser();
-
-		cy.url().should('eq', 'http://localhost:3000/');
-	});
-
-	it.skip('redirects authenticated users to the landing page on load', () => {
+	it.skip('[AUTHENTICATED] redirects authenticated users to the landing page on load', () => {
 		cy.url().should('eq', 'http://localhost:3000/');
 	});
 });

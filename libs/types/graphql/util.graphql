@@ -1,0 +1,15 @@
+union Result = Message | User
+
+type Query {
+	search(query: String): [Result]
+}
+
+type SeedReturnValue {
+	user: User
+	threadIds: [ID]
+}
+
+type Mutation {
+	seed: SeedReturnValue
+	purge: Boolean
+}

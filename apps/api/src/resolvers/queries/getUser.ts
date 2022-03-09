@@ -20,6 +20,7 @@ export const getUser: Resolver<UserType, { userId: ObjectID }> = async (
 			`The provided userId ${userId} is not a valid ObjectID`
 		);
 	}
+
 	const user = await User.findById(userId);
 
 	return user;

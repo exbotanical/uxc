@@ -1,6 +1,4 @@
 import { ERROR_MESSAGES } from '@uxc/types/node';
-import { UserInputError } from 'apollo-server-core';
-
 import type {
 	InputMaybe,
 	SigninInput,
@@ -9,7 +7,7 @@ import type {
 import type { User as UserType } from '@uxc/types/node';
 
 import { User } from '@/db';
-import { BadRequestError } from '@/middleware';
+import { BadRequestError, UserInputError } from '@/middleware';
 import { compare, createSession } from '@/utils/auth';
 
 export const signinResolver: MutationResolvers['signin'] = async (
@@ -47,11 +45,11 @@ function validateInputs(args?: InputMaybe<SigninInput>) {
 	const { email, password } = args;
 
 	if (!email) {
-		throw new UserInputError(ERROR_MESSAGES.E_INVALID_EMAIL);
+		throw new UserInputError(ERROR_MESSAGES.E_INVALID_EMAIL, 'email');
 	}
 
 	if (!password) {
-		throw new UserInputError(ERROR_MESSAGES.E_NO_PASSWORD);
+		throw new UserInputError(ERROR_MESSAGES.E_NO_PASSWORD, 'password');
 	}
 
 	return {

@@ -6,7 +6,6 @@ import {
 	USERNAME_CHARS_MAX,
 	USERNAME_CHARS_MIN
 } from '@uxc/types/node';
-import { UserInputError } from 'apollo-server-core';
 import isEmail from 'isemail';
 
 import type {
@@ -16,7 +15,7 @@ import type {
 } from '@uxc/types/generated';
 
 import { User } from '@/db';
-import { BadRequestError } from '@/middleware';
+import { BadRequestError, UserInputError } from '@/middleware';
 import { createSession } from '@/utils';
 
 export const joinResolver: MutationResolvers['join'] = async (
@@ -31,7 +30,10 @@ export const joinResolver: MutationResolvers['join'] = async (
 	});
 
 	if (userExists) {
-		throw new BadRequestError(ERROR_MESSAGES.E_EMAIL_IN_USE);
+		throw new BadRequestError(
+			ERROR_MESSAGES.E_CREDENTIALS_TAKEN_FRIENDLY,
+			ERROR_MESSAGES.E_CREDENTIALS_TAKEN
+		);
 	}
 
 	const newUser = User.build({
@@ -49,49 +51,53 @@ export const joinResolver: MutationResolvers['join'] = async (
 
 function validateInputs(args?: InputMaybe<JoinInput>) {
 	if (!args) {
-		throw new UserInputError(ERROR_MESSAGES.E_NO_CREDENTIALS);
+		throw new UserInputError(ERROR_MESSAGES.E_NO_CREDENTIALS, '*');
 	}
 
 	const { email, password, username, userImage } = args;
 
 	if (!email) {
-		throw new UserInputError(ERROR_MESSAGES.E_INVALID_EMAIL);
+		throw new UserInputError(ERROR_MESSAGES.E_INVALID_EMAIL, 'email');
 	}
 
 	if (!password) {
-		throw new UserInputError(ERROR_MESSAGES.E_NO_NEW_PASSWORD);
+		throw new UserInputError(ERROR_MESSAGES.E_NO_NEW_PASSWORD, 'password');
 	}
 
 	if (!username) {
-		throw new UserInputError(ERROR_MESSAGES.E_NO_USERNAME);
+		throw new UserInputError(ERROR_MESSAGES.E_NO_USERNAME, 'username');
 	}
 
 	if (email.length > EMAIL_CHARS_MAX) {
-		throw new UserInputError(ERROR_MESSAGES.E_INVALID_EMAIL);
+		throw new UserInputError(ERROR_MESSAGES.E_INVALID_EMAIL, 'email');
 	}
 
 	if (!isEmail.validate(email, { minDomainAtoms: 2 })) {
-		throw new UserInputError(ERROR_MESSAGES.E_INVALID_EMAIL);
+		throw new UserInputError(ERROR_MESSAGES.E_INVALID_EMAIL, 'email');
 	}
 
 	if (password.length < PASSWORD_CHARS_MIN) {
-		throw new UserInputError(ERROR_MESSAGES.E_SHORT_PASSWORD);
+		throw new UserInputError(ERROR_MESSAGES.E_SHORT_PASSWORD, 'password');
 	}
 
 	if (password.length > PASSWORD_CHARS_MAX) {
-		throw new UserInputError(ERROR_MESSAGES.E_LONG_PASSWORD);
+		throw new UserInputError(ERROR_MESSAGES.E_LONG_PASSWORD, 'password');
 	}
 
 	if (username.length < USERNAME_CHARS_MIN) {
-		throw new UserInputError(ERROR_MESSAGES.E_SHORT_USERNAME);
+		throw new UserInputError(ERROR_MESSAGES.E_SHORT_USERNAME, 'username');
 	}
 
 	if (username.length > USERNAME_CHARS_MAX) {
-		throw new UserInputError(ERROR_MESSAGES.E_LONG_USERNAME);
+		throw new UserInputError(ERROR_MESSAGES.E_LONG_USERNAME, 'username');
 	}
 
+	// @todo @tmp
 	if (userImage != null && typeof userImage !== 'string') {
-		throw new UserInputError(ERROR_MESSAGES.E_INVALID_PROGRAMMATIC_INPUTS);
+		throw new UserInputError(
+			ERROR_MESSAGES.E_INVALID_PROGRAMMATIC_INPUTS,
+			'userImage'
+		);
 	}
 
 	return { email, password, userImage, username };

@@ -16,14 +16,6 @@ export type Scalars = {
   Date: any;
 };
 
-export type CommunityThread = {
-  __typename?: 'CommunityThread';
-  _id?: Maybe<Scalars['ID']>;
-  createdAt?: Maybe<Scalars['Date']>;
-  updatedAt?: Maybe<Scalars['Date']>;
-  users?: Maybe<Array<Maybe<User>>>;
-};
-
 export type JoinInput = {
   email?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
@@ -129,7 +121,7 @@ export type QuerySearchArgs = {
   query?: InputMaybe<Scalars['String']>;
 };
 
-export type Result = Message | PrivateThread | User;
+export type Result = Message | User;
 
 export type SeedReturnValue = {
   __typename?: 'SeedReturnValue';
@@ -144,7 +136,7 @@ export type SigninInput = {
 
 export type Subscription = {
   __typename?: 'Subscription';
-  onAnyMessageCreated?: Maybe<Array<Maybe<Message>>>;
+  onAnyMessageCreated?: Maybe<Message>;
   onThreadCreated?: Maybe<Array<Maybe<PrivateThread>>>;
   onThreadMessageCreated?: Maybe<Array<Maybe<Message>>>;
 };
@@ -232,7 +224,6 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
-  CommunityThread: ResolverTypeWrapper<Omit<CommunityThread, 'users'> & { users?: Maybe<Array<Maybe<ResolversTypes['User']>>> }>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   JoinInput: JoinInput;
@@ -240,7 +231,7 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
   PrivateThread: ResolverTypeWrapper<Omit<PrivateThread, 'users'> & { users?: Maybe<Array<Maybe<ResolversTypes['User']>>> }>;
   Query: ResolverTypeWrapper<{}>;
-  Result: ResolversTypes['Message'] | ResolversTypes['PrivateThread'] | ResolversTypes['User'];
+  Result: ResolversTypes['Message'] | ResolversTypes['User'];
   SeedReturnValue: ResolverTypeWrapper<Omit<SeedReturnValue, 'user'> & { user?: Maybe<ResolversTypes['User']> }>;
   SigninInput: SigninInput;
   String: ResolverTypeWrapper<Scalars['String']>;
@@ -251,7 +242,6 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
-  CommunityThread: Omit<CommunityThread, 'users'> & { users?: Maybe<Array<Maybe<ResolversParentTypes['User']>>> };
   Date: Scalars['Date'];
   ID: Scalars['ID'];
   JoinInput: JoinInput;
@@ -259,20 +249,12 @@ export type ResolversParentTypes = {
   Mutation: {};
   PrivateThread: Omit<PrivateThread, 'users'> & { users?: Maybe<Array<Maybe<ResolversParentTypes['User']>>> };
   Query: {};
-  Result: ResolversParentTypes['Message'] | ResolversParentTypes['PrivateThread'] | ResolversParentTypes['User'];
+  Result: ResolversParentTypes['Message'] | ResolversParentTypes['User'];
   SeedReturnValue: Omit<SeedReturnValue, 'user'> & { user?: Maybe<ResolversParentTypes['User']> };
   SigninInput: SigninInput;
   String: Scalars['String'];
   Subscription: {};
   User: UserModel;
-};
-
-export type CommunityThreadResolvers<ContextType = Context, ParentType extends ResolversParentTypes['CommunityThread'] = ResolversParentTypes['CommunityThread']> = {
-  _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
-  createdAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
-  updatedAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
-  users?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
@@ -319,7 +301,7 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
 };
 
 export type ResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Result'] = ResolversParentTypes['Result']> = {
-  __resolveType: TypeResolveFn<'Message' | 'PrivateThread' | 'User', ParentType, ContextType>;
+  __resolveType: TypeResolveFn<'Message' | 'User', ParentType, ContextType>;
 };
 
 export type SeedReturnValueResolvers<ContextType = Context, ParentType extends ResolversParentTypes['SeedReturnValue'] = ResolversParentTypes['SeedReturnValue']> = {
@@ -329,7 +311,7 @@ export type SeedReturnValueResolvers<ContextType = Context, ParentType extends R
 };
 
 export type SubscriptionResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
-  onAnyMessageCreated?: SubscriptionResolver<Maybe<Array<Maybe<ResolversTypes['Message']>>>, "onAnyMessageCreated", ParentType, ContextType>;
+  onAnyMessageCreated?: SubscriptionResolver<Maybe<ResolversTypes['Message']>, "onAnyMessageCreated", ParentType, ContextType>;
   onThreadCreated?: SubscriptionResolver<Maybe<Array<Maybe<ResolversTypes['PrivateThread']>>>, "onThreadCreated", ParentType, ContextType>;
   onThreadMessageCreated?: SubscriptionResolver<Maybe<Array<Maybe<ResolversTypes['Message']>>>, "onThreadMessageCreated", ParentType, ContextType, Partial<SubscriptionOnThreadMessageCreatedArgs>>;
 };
@@ -343,7 +325,6 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
 };
 
 export type Resolvers<ContextType = Context> = {
-  CommunityThread?: CommunityThreadResolvers<ContextType>;
   Date?: GraphQLScalarType;
   Message?: MessageResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
@@ -366,7 +347,6 @@ export type Resolvers<ContextType = Context> = {
   "possibleTypes": {
     "Result": [
       "Message",
-      "PrivateThread",
       "User"
     ]
   }

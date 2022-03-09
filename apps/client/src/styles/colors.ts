@@ -33,9 +33,10 @@ export const colors = {
 		norm: '#11ff8d'
 	},
 	error: {
-		norm: '#ff0040'
-		// norm: '#ff5e00'
+		norm: '#ff0040',
+		weak: '#ffd4df'
 	},
+
 	background: {
 		norm: '#171926',
 		weak: '#1e2130',

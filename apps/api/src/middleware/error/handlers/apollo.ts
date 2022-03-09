@@ -6,16 +6,18 @@ import type { GraphQLError } from 'graphql';
 
 export function apolloErrorHandler(err: GraphQLError) {
 	if (err.originalError instanceof BaseError) {
-		return new ApolloError(
-			err.originalError.message,
-			err.originalError.constructor.name
-		);
+		const { friendly, internal } = err.originalError.serialize();
+
+		console.info(internal);
+
+		return new ApolloError(friendly, err.originalError.constructor.name);
 	}
 
 	if (err.originalError instanceof ApolloError) {
 		return err;
 	}
 
+	console.info(err);
 	return new ApolloError(
 		'Something went wrong. Please try again or contact support.',
 		'GENERIC_ERROR'

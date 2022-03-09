@@ -8,14 +8,14 @@ import { EVENTS } from '@/utils/constants';
 
 export const onThreadMessageCreated: SubscriptionResolvers['onThreadMessageCreated'] =
 	{
-		// @ts-expect-error
+		// @ts-ignore
 		subscribe: withFilter(
 			() => pubsub.asyncIterator([EVENTS.MESSAGE_CREATED]),
 			(payload, { threadId }) => {
 				return payload.message.threadId === threadId;
 			}
 		),
-		// @ts-expect-error
+		// @ts-ignore
 		resolve: ({ message }: { message: Message }) => {
 			return [message];
 		}

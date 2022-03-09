@@ -41,7 +41,7 @@ export const Reset = createGlobalStyle<{
 	}
 
 	::selection {
-  background: ${({ theme }) => theme.colors.interactive.norm};
+  background-color: ${({ theme }) => theme.colors.interactive.norm};
 }
 
 	*,

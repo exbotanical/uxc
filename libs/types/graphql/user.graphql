@@ -1,0 +1,29 @@
+input SigninInput {
+	email: String
+	password: String
+}
+
+input JoinInput {
+	email: String
+	username: String
+	password: String
+	userImage: String
+}
+
+type User {
+	_id: ID
+	username: String
+	email: String
+	userImage: String
+}
+
+type Query {
+  getCurrentUser: User
+  getUser(userId: ID): User
+}
+
+type Mutation {
+  join(args: JoinInput): User
+  signin(args: SigninInput): User
+	signout: ID
+}

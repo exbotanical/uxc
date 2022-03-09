@@ -7,10 +7,7 @@ type MaybeGraphqlRequest = Request & {
  * @param req The request body.
  * @param operationName Target operationName.
  */
-export function hasOperationName(
-	req: MaybeGraphqlRequest,
-	operationName: string
-) {
+export function hasOperationName(req: any, operationName: string) {
 	const { body } = req;
 	if (!body) {
 		return false;

@@ -1,0 +1,10 @@
+{
+	"data": {
+			"getCurrentUser": {
+					"_id": "62286019001e6e232d9e0d69",
+					"username": "cy_user",
+					"email": "user@cyprsess.com",
+					"userImage": "none"
+			}
+	}
+}
