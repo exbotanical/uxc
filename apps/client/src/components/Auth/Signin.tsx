@@ -1,26 +1,38 @@
 import { useMutation, useQuery } from '@apollo/client';
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, Navigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
-
-import * as S from './styles';
-import { validateEmail, validatePassword } from './validators';
-
-import type { User } from '@uxc/types';
 
 import { AdaptiveInput } from '@/components/Fields/AdaptiveInput';
 import { useValidation } from '@/hooks';
 import { GET_CURRENT_USER, SIGNIN } from '@/services/api/queries';
+import { normalizeError } from '@/services/error';
+import { ErrorMessage, MESSAGE_TIMEOUT } from '@/components/Auth/ErrorMessage';
+
+import * as S from '@/components/Auth/styles';
+import {
+	validateEmail,
+	validateSigninPassword
+} from '@/components/Auth/validators';
+
+import type { User } from '@uxc/types';
+import type { NormalizedError } from '@/services/error';
+import type { ChangeEvent, FormEvent } from 'react';
 
 const AlignedLink = styled(Link)`
 	align-self: flex-end;
 `;
 
 export function Signin() {
+	const firstInteractiveRef = useRef<HTMLInputElement>(null);
+	const [errors, setErrors] = useState<NormalizedError[]>([]);
+
 	const navigate = useNavigate();
+
 	const { data, loading } = useQuery<{
 		getCurrentUser: User;
 	}>(GET_CURRENT_USER);
+
 	const [signin] = useMutation(SIGNIN);
 
 	const {
@@ -35,15 +47,45 @@ export function Signin() {
 		input: password,
 		setInput: setPassword,
 		error: passwordError
-	} = useValidation(validatePassword);
+	} = useValidation(validateSigninPassword);
 
-	const formInvalid = !!emailError || !!passwordError;
+	const formInvalid = !email || !password || !!emailError || !!passwordError;
+
+	function resetState() {
+		setEmail('');
+		setPassword('');
+	}
+
+	function handleChange(e: ChangeEvent<HTMLInputElement>) {
+		const { name, value } = e.target;
+
+		function executor(name: string) {
+			switch (name) {
+				case 'password':
+					setPassword(value);
+					break;
+
+				case 'email':
+					setEmail(value);
+					break;
+
+				default:
+					break;
+			}
+		}
+
+		executor(name);
+	}
 
 	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
+		if (formInvalid) {
+			return;
+		}
+
 		// @todo only try cold auth once
 		try {
-			await signin({
+			const { data } = await signin({
 				variables: {
 					args: {
 						email,
@@ -52,21 +94,41 @@ export function Signin() {
 				}
 			});
 
+			if (!data?.signin) {
+				setErrors([
+					{
+						code: 'UNKNOWN_ERROR',
+						field: null,
+						message:
+							'Something went wrong. Please try again or contact support.'
+					}
+				]);
+
+				return;
+			}
+
+			resetState();
 			navigate(`/`);
 		} catch (ex: any) {
-			// setError(ex?.message || 'Something went wrong');
-		} finally {
-			setEmail('');
-			setPassword('');
+			if (ex instanceof Error) {
+				setErrors(normalizeError(ex));
+			}
 		}
 	}
 
-	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-		const { value, name } = event.target;
-		const executor = name == 'email' ? setEmail : setPassword;
+	useEffect(() => {
+		firstInteractiveRef.current?.focus();
+	}, []);
 
-		executor(value);
-	};
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setErrors([]);
+		}, MESSAGE_TIMEOUT);
+
+		return () => {
+			clearTimeout(timer);
+		};
+	}, [errors, setErrors]);
 
 	if (data) {
 		return <Navigate to="/" />;
@@ -74,6 +136,10 @@ export function Signin() {
 
 	return (
 		<S.InnerCard size="sm">
+			{errors.map(({ message }, idx) => (
+				<ErrorMessage message={message} key={idx} />
+			))}
+
 			<S.Form onSubmit={handleSubmit}>
 				<AdaptiveInput
 					aria-autocomplete="list"
@@ -88,6 +154,7 @@ export function Signin() {
 					required
 					type="email"
 					value={email}
+					ref={firstInteractiveRef}
 				/>
 				<AdaptiveInput
 					aria-autocomplete="list"
@@ -103,13 +170,15 @@ export function Signin() {
 					type="password"
 					value={password}
 				/>
-				<AlignedLink to="/todo">
+
+				<AlignedLink to="/todo" data-testid="forgot-pw-button">
 					<S.FieldCaptionLink>Forgot your password?</S.FieldCaptionLink>
 				</AlignedLink>
 
 				<S.CTAButton
+					aria-describedby="disabledReason"
+					aria-disabled={formInvalid}
 					data-testid="signin-button"
-					disabled={formInvalid}
 					loading={loading}
 					type="submit"
 				>

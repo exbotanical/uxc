@@ -53,7 +53,6 @@ interface GQLResponse<T> {
 Cypress.Commands.add(
 	'interceptGQL',
 	<T>(url: string, operation: string, data: GQLResponse<T>, alias?: string) => {
-		// retrieve any previously registered interceptions
 		const previous = Cypress.config('interceptions');
 		const alreadyRegistered = url in previous;
 
@@ -62,15 +61,11 @@ Cypress.Commands.add(
 			[operation]: { alias, data }
 		};
 
-		// Merge in the new interception.
 		Cypress.config('interceptions' as keyof Cypress.TestConfigOverrides, {
 			...previous,
 			[url]: next
 		});
-		// @todo fix getThreads and other subsequent requests
-		console.log({ url, previous });
-		// No need to register handler more than once per URL. Operation data is
-		// dynamically chosen within the handler.
+
 		if (alreadyRegistered) {
 			return;
 		}

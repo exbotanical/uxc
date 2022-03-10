@@ -61,3 +61,11 @@ export function validatePassword(input: string) {
 
 	return null;
 }
+
+export function validateSigninPassword(input: string) {
+	if (!input) {
+		return ERROR_MESSAGES.E_NO_PASSWORD;
+	}
+
+	return null;
+}

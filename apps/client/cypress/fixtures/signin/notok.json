@@ -1,0 +1,13 @@
+{
+	"errors": [
+			{
+					"message": "The provided credentials are invalid.",
+					"extensions": {
+							"code": "BadRequestError"
+					}
+			}
+	],
+	"data": {
+			"signin": null
+	}
+}

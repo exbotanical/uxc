@@ -18,8 +18,7 @@ import { useValidation } from '@/hooks';
 import type { FormEvent } from 'react';
 import type { User } from '@uxc/types';
 
-import { ErrorMessage } from './ErrorMessage';
-import { isTestRuntime } from '@/utils';
+import { ErrorMessage, MESSAGE_TIMEOUT } from './ErrorMessage';
 
 /**
  * @todo Attempt pre-auth only once
@@ -127,7 +126,6 @@ export function Join() {
 			resetState();
 			navigate(`/`);
 		} catch (ex) {
-			console.log({ ex });
 			if (ex instanceof Error) {
 				setErrors(normalizeError(ex));
 			}
@@ -139,12 +137,9 @@ export function Join() {
 	}, []);
 
 	useEffect(() => {
-		const timer = setTimeout(
-			() => {
-				setErrors([]);
-			},
-			isTestRuntime ? 20000 : 5000
-		);
+		const timer = setTimeout(() => {
+			setErrors([]);
+		}, MESSAGE_TIMEOUT);
 
 		return () => {
 			clearTimeout(timer);
