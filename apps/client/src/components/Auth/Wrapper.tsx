@@ -10,7 +10,7 @@ export function Wrapper({ content }: { content: React.ReactNode }) {
 			style={{ backgroundImage: `url(${bg})`, position: 'relative' }}
 		>
 			<h1>uxc</h1>
-			<>{content}</>
+			{content}
 		</S.Container>
 	);
 }

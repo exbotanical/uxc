@@ -6,9 +6,9 @@ import type { Resolver } from '../types';
 import type { Message as MessageType, ObjectID } from '@uxc/types/node';
 
 import { Message, PrivateThread } from '@/db';
+import { UserInputError } from '@/middleware';
 import { pubsub } from '@/redis';
 import { EVENTS } from '@/utils/constants';
-import { UserInputError } from '@/middleware';
 
 export const createMessage: Resolver<
 	MessageType,

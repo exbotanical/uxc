@@ -2,12 +2,12 @@ import React, { createContext, useState } from 'react';
 
 import { useSearch } from '@/components/Search/hooks';
 
-type SearchContext = ReturnType<typeof useSearch> & {
+type SearchContextType = ReturnType<typeof useSearch> & {
 	activeItemId: number;
 	setActiveRecordId: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export const SearchContext = createContext({} as SearchContext);
+export const SearchContext = createContext({} as SearchContextType);
 
 export function SearchProvider({ children }: { children: JSX.Element }) {
 	const [activeItemId, setActiveRecordId] = useState(-1);

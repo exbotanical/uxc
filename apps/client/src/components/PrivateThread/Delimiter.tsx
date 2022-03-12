@@ -1,8 +1,9 @@
 import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 
-import { FontSizeSm } from '@/styles/Typography/FontSize';
 import SvgIcon from '../Icon';
+
+import { FontSizeSm } from '@/styles/Typography/FontSize';
 
 interface DelimiterProps {
 	title: string;
@@ -29,7 +30,7 @@ export const Delimiter = forwardRef<HTMLButtonElement, DelimiterProps>(
 		return (
 			<Container>
 				<Label>{title}</Label>
-				<button ref={ref} data-testid="dm-btn">
+				<button data-testid="dm-btn" ref={ref} type="button">
 					<SvgIcon name="plus" size={24} />
 				</button>
 			</Container>

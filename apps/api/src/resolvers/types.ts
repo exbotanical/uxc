@@ -1,23 +1,23 @@
 import type { AllNullableOrUndef, Context } from '@uxc/types/node';
 
-export type Problem = {
+export interface Problem {
 	message: string;
 	type: string;
-};
+}
 
-export type ProblemResponse = {
+export interface ProblemResponse {
 	ok: false;
 	problems: Problem[];
 	payload: null;
-};
+}
 
-export type OkResponse<T> = {
+export interface OkResponse<T> {
 	ok: true;
 	problems: null;
 	payload: T;
-};
+}
 
-export type MaybeResponse<T> = ProblemResponse | OkResponse<T>;
+export type MaybeResponse<T> = OkResponse<T> | ProblemResponse;
 
 export type Resolver<ReturnValue, Args = Record<string, unknown>> = (
 	parent: Record<string, unknown>,

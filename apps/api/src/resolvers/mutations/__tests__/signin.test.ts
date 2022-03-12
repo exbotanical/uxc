@@ -65,7 +65,7 @@ describe('signin workflow', () => {
 		expect(body.errors[0].message).toStrictEqual(
 			ERROR_MESSAGES.E_INVALID_EMAIL
 		);
-		expect(body.errors[0].extensions.exception.field).toStrictEqual('email');
+		expect(body.errors[0].extensions.exception.field).toBe('email');
 	});
 
 	it('returns an error when provided no password', async () => {
@@ -85,7 +85,7 @@ describe('signin workflow', () => {
 			.expect(200);
 
 		expect(body.errors[0].message).toStrictEqual(ERROR_MESSAGES.E_NO_PASSWORD);
-		expect(body.errors[0].extensions.exception.field).toStrictEqual('password');
+		expect(body.errors[0].extensions.exception.field).toBe('password');
 	});
 
 	it('returns a generic error when the given credentials do not match those of any known user', async () => {

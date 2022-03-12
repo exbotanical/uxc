@@ -5,7 +5,7 @@ import { link } from './links';
 
 const baseOptions = { errorPolicy: 'all' as const };
 
-export function ApolloProvider({ showError }: { showError: boolean }) {
+export function ApolloProvider() {
 	return useMemo(() => {
 		return new ApolloClient({
 			cache: new InMemoryCache(),
@@ -16,5 +16,5 @@ export function ApolloProvider({ showError }: { showError: boolean }) {
 			},
 			link
 		});
-	}, [showError]);
+	}, []);
 }

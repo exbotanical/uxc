@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { isTestRuntime } from '@/utils';
 import * as S from './styles';
+
+import { isTestRuntime } from '@/utils';
 
 import './bubble.scss';
 

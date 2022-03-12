@@ -2,6 +2,7 @@ import type { ChangeEvent } from 'react';
 
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { v4 } from 'uuid';
 
 import { Input } from '@/components/Fields/Input';
 import { FlexCol } from '@/styles/Layout';
@@ -95,29 +96,31 @@ export function Friends() {
 		return cleanFriendText.includes(cleanSearchText);
 	}
 
-	const filteredFriends = rawFriends.filter(naiveSearch);
+	const filteredFriends = rawFriends
+		.filter(naiveSearch)
+		.map((value) => ({ value, id: v4() }));
 
 	return (
 		<Container>
 			<Form>
 				<Input
 					autoComplete="off"
+					data-testid="search-friends"
 					label="Search friends"
 					maxLength={512}
 					onChange={handleChange}
 					options={searchOptions}
 					placeholder="Search friends"
 					value={searchText}
-					data-testid="search-friends"
 				/>
 			</Form>
 
 			<ListContainer>
-				{filteredFriends.map((i, idx) => {
+				{filteredFriends.map(({ value, id }) => {
 					return (
-						<ListItem key={idx}>
+						<ListItem key={id}>
 							<Avatar />
-							<Username>{i}</Username>
+							<Username>{value}</Username>
 							<UserStatus>user status</UserStatus>
 							<ActionsContainer>
 								<ActionBubble />

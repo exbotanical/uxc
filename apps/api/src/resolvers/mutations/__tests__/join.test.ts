@@ -89,7 +89,7 @@ describe('join workflow', () => {
 		expect(body.errors[0].message).toStrictEqual(
 			ERROR_MESSAGES.E_INVALID_EMAIL
 		);
-		expect(body.errors[0].extensions.exception.field).toStrictEqual('email');
+		expect(body.errors[0].extensions.exception.field).toBe('email');
 	});
 
 	it('returns an error when provided no password', async () => {
@@ -109,7 +109,7 @@ describe('join workflow', () => {
 		expect(body.errors[0].message).toStrictEqual(
 			ERROR_MESSAGES.E_NO_NEW_PASSWORD
 		);
-		expect(body.errors[0].extensions.exception.field).toStrictEqual('password');
+		expect(body.errors[0].extensions.exception.field).toBe('password');
 	});
 
 	it('returns an error when provided no username', async () => {
@@ -128,7 +128,7 @@ describe('join workflow', () => {
 			.expect(200);
 
 		expect(body.errors[0].message).toStrictEqual(ERROR_MESSAGES.E_NO_USERNAME);
-		expect(body.errors[0].extensions.exception.field).toStrictEqual('username');
+		expect(body.errors[0].extensions.exception.field).toBe('username');
 	});
 
 	it('returns an error when provided an invalid email address', async () => {
@@ -149,7 +149,7 @@ describe('join workflow', () => {
 		expect(body1.errors[0].message).toStrictEqual(
 			ERROR_MESSAGES.E_INVALID_EMAIL
 		);
-		expect(body1.errors[0].extensions.exception.field).toStrictEqual('email');
+		expect(body1.errors[0].extensions.exception.field).toBe('email');
 
 		const { body: body2 } = await request(app)
 			.post(BASE_PATH)
@@ -168,7 +168,7 @@ describe('join workflow', () => {
 		expect(body2.errors[0].message).toStrictEqual(
 			ERROR_MESSAGES.E_INVALID_EMAIL
 		);
-		expect(body2.errors[0].extensions.exception.field).toStrictEqual('email');
+		expect(body2.errors[0].extensions.exception.field).toBe('email');
 	});
 
 	it('returns an error when provided an email that is too long', async () => {
@@ -190,7 +190,7 @@ describe('join workflow', () => {
 		expect(body.errors[0].message).toStrictEqual(
 			ERROR_MESSAGES.E_INVALID_EMAIL
 		);
-		expect(body.errors[0].extensions.exception.field).toStrictEqual('email');
+		expect(body.errors[0].extensions.exception.field).toBe('email');
 	});
 
 	it('returns an error when provided a username that is too long', async () => {
@@ -211,7 +211,7 @@ describe('join workflow', () => {
 		expect(body.errors[0].message).toStrictEqual(
 			ERROR_MESSAGES.E_LONG_USERNAME
 		);
-		expect(body.errors[0].extensions.exception.field).toStrictEqual('username');
+		expect(body.errors[0].extensions.exception.field).toBe('username');
 	});
 
 	it('returns an error when provided a username that is too short', async () => {
@@ -232,7 +232,7 @@ describe('join workflow', () => {
 		expect(body.errors[0].message).toStrictEqual(
 			ERROR_MESSAGES.E_SHORT_USERNAME
 		);
-		expect(body.errors[0].extensions.exception.field).toStrictEqual('username');
+		expect(body.errors[0].extensions.exception.field).toBe('username');
 	});
 
 	it('returns an error when provided a password that is too long', async () => {
@@ -252,7 +252,7 @@ describe('join workflow', () => {
 		expect(body.errors[0].message).toStrictEqual(
 			ERROR_MESSAGES.E_LONG_PASSWORD
 		);
-		expect(body.errors[0].extensions.exception.field).toStrictEqual('password');
+		expect(body.errors[0].extensions.exception.field).toBe('password');
 	});
 
 	it('returns an error when provided a password that is too short', async () => {
@@ -272,7 +272,7 @@ describe('join workflow', () => {
 		expect(body.errors[0].message).toStrictEqual(
 			ERROR_MESSAGES.E_SHORT_PASSWORD
 		);
-		expect(body.errors[0].extensions.exception.field).toStrictEqual('password');
+		expect(body.errors[0].extensions.exception.field).toBe('password');
 	});
 
 	it('returns an error when provided an email that is taken', async () => {

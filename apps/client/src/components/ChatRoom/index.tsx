@@ -1,12 +1,11 @@
 import { useMutation, useQuery } from '@apollo/client';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { ChatMessageInput } from './ChatMessageInput';
 import { MessageList } from './MessageList';
 
-import type { PropsFromRedux } from '@/state';
 import type { Message, User } from '@uxc/types';
 
 import {
@@ -22,8 +21,6 @@ export interface SendMessage {
 	(message: string): void;
 }
 
-interface ChatRoomProps {}
-
 const Container = styled.div`
 	${FlexCol}
 	height: 100%;
@@ -37,12 +34,12 @@ const Footer = styled.footer`
 	border-top: 1px solid ${({ theme }) => theme.colors.border.weak};
 `;
 
-export function ChatRoom({ showNotification }: ChatRoomProps & PropsFromRedux) {
+export function ChatRoom() {
 	const { threadId } = useParams();
-	const { data: user, loading } = useQuery<{
+	const { data: user } = useQuery<{
 		getCurrentUser: User;
 	}>(GET_CURRENT_USER);
-	const { getThreadById, updateThread } = useContext(ThreadsContext);
+	const { getThreadById } = useContext(ThreadsContext);
 
 	const thread = getThreadById(threadId);
 
@@ -73,19 +70,12 @@ export function ChatRoom({ showNotification }: ChatRoomProps & PropsFromRedux) {
 		({ _id }) => _id !== user?.getCurrentUser._id
 	);
 
-	// useEffect(() => {
-	// 	if (!thread) return;
-
-	// 	thread.newMessages = 0;
-	// 	console.log('run effect');
-	// 	updateThread(thread);
-	// }, [thread]);
-
-	// if this happens, we've got a bigger problem...
+	// @todo fatal
 	if (!them) {
 		return null;
 	}
 
+	// @todo fatal
 	if (!threadId) {
 		return null;
 	}

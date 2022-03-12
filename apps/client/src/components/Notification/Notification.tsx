@@ -63,7 +63,7 @@ export function Notification({
 		return () => {
 			clearTimeout(timer);
 		};
-	}, [duration]);
+	}, [duration, onClose]);
 
 	return (
 		<Container type={type}>

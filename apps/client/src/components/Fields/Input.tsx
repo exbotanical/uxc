@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import type { ComponentPropsWithoutRef } from 'react';
 
 import React, { forwardRef } from 'react';
@@ -14,7 +15,6 @@ interface OptionConfig {
 
 interface InputProps extends ComponentPropsWithoutRef<'input'> {
 	label: string;
-	error?: string;
 	options?: OptionConfig[];
 }
 
@@ -59,7 +59,7 @@ const Button = styled.button`
 `;
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-	({ label, error, options, ...props }, ref) => {
+	({ label, options, ...props }, ref) => {
 		return (
 			<Container>
 				<StyledInput ref={ref} {...props} />

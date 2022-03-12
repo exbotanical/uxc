@@ -132,7 +132,7 @@ export function ChatMessage({
 		update(cache, { data }) {
 			cache.modify({
 				fields: {
-					getMessages: (previous) => {
+					getMessages: (previous: Message[]) => {
 						return [...previous, data!.updateMessage];
 					}
 				}
@@ -171,7 +171,7 @@ export function ChatMessage({
 		if (editMode) {
 			focusEndOfTextarea(body);
 		}
-	}, [editMode]);
+	}, [editMode, body]);
 
 	function focusEndOfTextarea(body: string) {
 		textareaRef.current?.focus();
@@ -235,16 +235,16 @@ export function ChatMessage({
 
 			{isSender ? (
 				<OptionsContainer>
-					<Button type="button" data-testid="message-emote-btn" tabIndex={0}>
+					<Button data-testid="message-emote-btn" tabIndex={0} type="button">
 						<SvgIcon name="smiley" size={21} />
 					</Button>
 					<Button
+						data-testid="message-edit-btn"
 						onClick={() => {
 							setEditMode(true);
 						}}
-						type="button"
-						data-testid="message-edit-btn"
 						tabIndex={0}
+						type="button"
 					>
 						<SvgIcon name="edit" size={21} />
 					</Button>

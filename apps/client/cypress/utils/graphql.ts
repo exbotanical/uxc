@@ -1,7 +1,3 @@
-type MaybeGraphqlRequest = Request & {
-	body: { operationName?: string };
-};
-
 /**
  * Does the request body contain an operationName?
  * @param req The request body.
@@ -14,6 +10,7 @@ export function hasOperationName(req: any, operationName: string) {
 	}
 
 	return (
+		// eslint-disable-next-line no-prototype-builtins
 		body.hasOwnProperty('operationName') && body.operationName === operationName
 	);
 }

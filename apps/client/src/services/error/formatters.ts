@@ -6,7 +6,9 @@ export interface NormalizedError {
 	field: string | null;
 }
 
-export function normalizeGraphQLErrors(errors: readonly GraphQLError[]) {
+type GQLErrors = readonly GraphQLError[];
+
+export function normalizeGraphQLErrors(errors: GQLErrors) {
 	return errors.map((error) => {
 		const { extensions, message } = error;
 
@@ -18,12 +20,12 @@ export function normalizeGraphQLErrors(errors: readonly GraphQLError[]) {
 	});
 }
 
-export function normalizeError(ex: unknown): NormalizedError[] {
+export function normalizeError(ex: {
+	graphQLErrors?: GQLErrors;
+}): NormalizedError[] {
 	if (ex instanceof Error) {
-		// @ts-ignore
-		if (ex?.graphQLErrors) {
-			// @ts-ignore
-			return normalizeGraphQLErrors(ex.graphQLErrors);
+		if (ex.graphQLErrors != undefined) {
+			normalizeGraphQLErrors(ex.graphQLErrors);
 		}
 
 		return [

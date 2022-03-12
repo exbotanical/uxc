@@ -4,7 +4,16 @@
     "@magister_zito/react",
     "prettier"
   ],
+  "overrides": [{
+    "files": ["cypress/**"],
+    "rules": {
+      "cypress/no-unnecessary-waiting": "off",
+      "@typescript-eslint/no-unnecessary-condition": "off"
+    }
+  }],
   "rules": {
-    "sort-keys": "off"
+    "sort-keys": "off",
+
+    "no-console": "off"
   }
 }

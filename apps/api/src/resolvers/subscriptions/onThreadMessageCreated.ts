@@ -1,22 +1,23 @@
-import { SubscriptionResolvers } from '@uxc/types/generated';
 import { withFilter } from 'graphql-subscriptions';
 
-import type { Message } from '@uxc/types/node';
+import type { WithMessage } from './types';
+import type { Message, ObjectID } from '@uxc/types/node';
 
 import { pubsub } from '@/redis';
 import { EVENTS } from '@/utils/constants';
 
-export const onThreadMessageCreated: SubscriptionResolvers['onThreadMessageCreated'] =
-	{
-		// @ts-ignore
-		subscribe: withFilter(
-			() => pubsub.asyncIterator([EVENTS.MESSAGE_CREATED]),
-			(payload, { threadId }) => {
-				return payload.message.threadId === threadId;
-			}
-		),
-		// @ts-ignore
-		resolve: ({ message }: { message: Message }) => {
-			return [message];
+interface SubscriberArgs {
+	threadId: ObjectID;
+}
+export const onThreadMessageCreated = {
+	subscribe: withFilter(
+		() => pubsub.asyncIterator([EVENTS.MESSAGE_CREATED]),
+		(payload: WithMessage, { threadId }: SubscriberArgs) => {
+			return payload.message.threadId === threadId;
 		}
-	};
+	),
+	resolve: ({ message }: { message: Message }) => {
+		console.log({ message });
+		return [message];
+	}
+};

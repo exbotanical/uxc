@@ -1,23 +1,24 @@
+/* eslint-disable react/no-array-index-key */
+import type { ChangeEvent, FormEvent } from 'react';
+
 import { useMutation, useQuery } from '@apollo/client';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, Navigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { AdaptiveInput } from '@/components/Fields/AdaptiveInput';
-import { useValidation } from '@/hooks';
-import { GET_CURRENT_USER, SIGNIN } from '@/services/api/queries';
-import { normalizeError } from '@/services/error';
-import { ErrorMessage, MESSAGE_TIMEOUT } from '@/components/Auth/ErrorMessage';
+import type { NormalizedError } from '@/services/error';
+import type { User } from '@uxc/types';
 
+import { ErrorMessage, MESSAGE_TIMEOUT } from '@/components/Auth/ErrorMessage';
 import * as S from '@/components/Auth/styles';
 import {
 	validateEmail,
 	validateSigninPassword
 } from '@/components/Auth/validators';
-
-import type { User } from '@uxc/types';
-import type { NormalizedError } from '@/services/error';
-import type { ChangeEvent, FormEvent } from 'react';
+import { AdaptiveInput } from '@/components/Fields/AdaptiveInput';
+import { useValidation } from '@/hooks';
+import { GET_CURRENT_USER, SIGNIN } from '@/services/api/queries';
+import { normalizeError } from '@/services/error';
 
 const AlignedLink = styled(Link)`
 	align-self: flex-end;
@@ -33,7 +34,7 @@ export function Signin() {
 		getCurrentUser: User;
 	}>(GET_CURRENT_USER);
 
-	const [signin] = useMutation(SIGNIN);
+	const [signin] = useMutation<{ signin: User }>(SIGNIN);
 
 	const {
 		setDirty: setEmailDirty,
@@ -137,7 +138,7 @@ export function Signin() {
 	return (
 		<S.InnerCard size="sm">
 			{errors.map(({ message }, idx) => (
-				<ErrorMessage message={message} key={idx} />
+				<ErrorMessage key={idx} message={message} />
 			))}
 
 			<S.Form onSubmit={handleSubmit}>
@@ -151,10 +152,10 @@ export function Signin() {
 					name="email"
 					onBlur={setEmailDirty}
 					onChange={handleChange}
+					ref={firstInteractiveRef}
 					required
 					type="email"
 					value={email}
-					ref={firstInteractiveRef}
 				/>
 				<AdaptiveInput
 					aria-autocomplete="list"
@@ -171,7 +172,7 @@ export function Signin() {
 					value={password}
 				/>
 
-				<AlignedLink to="/todo" data-testid="forgot-pw-button">
+				<AlignedLink data-testid="forgot-pw-button" to="/todo">
 					<S.FieldCaptionLink>Forgot your password?</S.FieldCaptionLink>
 				</AlignedLink>
 
@@ -188,7 +189,7 @@ export function Signin() {
 
 			<S.Footer>
 				<S.SwapModeLink to="/join">
-					<p>Don't have an account?&nbsp;Join now</p>
+					<p>Don&apos;t have an account?&nbsp;Join now</p>
 				</S.SwapModeLink>
 			</S.Footer>
 		</S.InnerCard>

@@ -3,7 +3,6 @@ import { GraphQLDateTime } from 'graphql-iso-date';
 import type { Resolvers } from '@uxc/types/generated';
 import type { GraphQLScalarType } from 'graphql';
 
-import { User, Message } from '@/db';
 import { authGuard } from '@/middleware/auth';
 import {
 	joinResolver as join,
@@ -45,17 +44,17 @@ export const resolvers: Resolvers = {
 		search: authGuard(search)
 	},
 
-	User: {
-		__isTypeOf: (obj) => {
-			return obj instanceof User;
-		}
-	},
+	// User: {
+	// 	__isTypeOf: (obj) => {
+	// 		return obj instanceof User;
+	// 	}
+	// },
 
-	Message: {
-		__isTypeOf: (obj) => {
-			return obj instanceof Message;
-		}
-	},
+	// Message: {
+	// 	__isTypeOf: (obj) => {
+	// 		return obj instanceof Message;
+	// 	}
+	// },
 
 	Mutation: {
 		seed: authGuard(seedWrapper),

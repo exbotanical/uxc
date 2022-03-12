@@ -36,7 +36,7 @@ export function useValidation(
 			validate.current = validateImpl;
 			setError(validate.current(input));
 		}
-	}, [isDirty, setIsDirty]);
+	}, [isDirty, setIsDirty, input, lazy, validate, validateImpl]);
 
 	return {
 		input,

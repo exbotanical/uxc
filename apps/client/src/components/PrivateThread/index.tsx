@@ -1,10 +1,4 @@
-import React, {
-	createRef,
-	useContext,
-	useEffect,
-	useRef,
-	useState
-} from 'react';
+import React, { useContext, useEffect, useRef, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -61,36 +55,41 @@ export function PrivateThreadsList() {
 	 * @todo default initial to selected, else first
 	 * @todo fix outline color
 	 */
-	function handleKeydown(e: KeyboardEvent) {
-		if (e.key === 'ArrowDown') {
-			if (document.activeElement === dmRef.current) {
-				threadRefs?.current[0]?.focus();
-				focusedThreadIdx.current = 0;
-			} else if (
-				document.activeElement === threadRefs.current[focusedThreadIdx.current]
-			) {
-				let nextIdx = ++focusedThreadIdx.current;
-				if (nextIdx > nThreads - 1) --nextIdx;
+	const handleKeydown = useCallback(
+		(e: KeyboardEvent) => {
+			if (e.key === 'ArrowDown') {
+				if (document.activeElement === dmRef.current) {
+					threadRefs.current[0]?.focus();
+					focusedThreadIdx.current = 0;
+				} else if (
+					document.activeElement ===
+					threadRefs.current[focusedThreadIdx.current]
+				) {
+					let nextIdx = ++focusedThreadIdx.current;
+					if (nextIdx > nThreads - 1) --nextIdx;
 
-				threadRefs.current[nextIdx]?.focus();
-				focusedThreadIdx.current = nextIdx;
-			}
-		} else if (e.key === 'ArrowUp') {
-			if (
-				document.activeElement === threadRefs.current[focusedThreadIdx.current]
-			) {
-				let nextIdx =
-					focusedThreadIdx.current === 0 ? 0 : --focusedThreadIdx.current;
+					threadRefs.current[nextIdx]?.focus();
+					focusedThreadIdx.current = nextIdx;
+				}
+			} else if (e.key === 'ArrowUp') {
+				if (
+					document.activeElement ===
+					threadRefs.current[focusedThreadIdx.current]
+				) {
+					const nextIdx =
+						focusedThreadIdx.current === 0 ? 0 : --focusedThreadIdx.current;
 
-				threadRefs.current[nextIdx]?.focus();
-				focusedThreadIdx.current = nextIdx;
+					threadRefs.current[nextIdx]?.focus();
+					focusedThreadIdx.current = nextIdx;
+				}
 			}
-		}
-	}
+		},
+		[nThreads]
+	);
 
 	useEffect(() => {
 		threadRefs.current = threadRefs.current.slice(0, nThreads);
-	}, [threads]);
+	}, [threads, nThreads]);
 
 	useEffect(() => {
 		document.addEventListener('keydown', handleKeydown);
@@ -98,26 +97,26 @@ export function PrivateThreadsList() {
 		return () => {
 			document.removeEventListener('keydown', handleKeydown);
 		};
-	}, [threads]);
+	}, [threads, handleKeydown]);
 
 	return (
 		<>
 			<ul>
 				<PaddedListItem
+					data-testid="friends-btn"
 					isActiveItem={isActiveItem}
 					onClick={() => {
 						handleClick();
 					}}
 					onKeyPress={onEnterKeyPressed(handleClick)}
 					tabIndex={0}
-					data-testid="friends-btn"
 				>
 					<SvgIcon name="people" size={21} />
 					<FriendsLabel>Friends</FriendsLabel>
 				</PaddedListItem>
 			</ul>
 
-			<Delimiter title="Direct Messages" ref={dmRef} />
+			<Delimiter ref={dmRef} title="Direct Messages" />
 
 			<ThreadsListContainer>
 				{threads.map(({ _id: id }, idx) => (

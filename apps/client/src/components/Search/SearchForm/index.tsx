@@ -27,11 +27,15 @@ export function SearchForm() {
 				<SvgIcon name="search" size={18} />
 			</S.SearchLabel>
 			<S.SearchInput
+				data-testid="uxc-search-input"
 				onChange={handleChange}
 				value={query}
-				data-testid="uxc-search-input"
 			/>
-			<button onClick={handleClick} data-testid="uxc-search-clear-input-btn">
+			<button
+				data-testid="uxc-search-clear-input-btn"
+				onClick={handleClick}
+				type="button"
+			>
 				<SvgIcon name="close" size={42} />
 			</button>
 		</S.Form>

@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { AdaptiveInput } from '../Fields/AdaptiveInput';
-
 import { Button } from '@/components/Buttons/Button';
 import { FlexCol, RowCenter } from '@/styles/Layout';
 import { FontSizeBase, FontSizeXl } from '@/styles/Typography/FontSize';

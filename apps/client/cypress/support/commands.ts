@@ -18,7 +18,7 @@ Cypress.Commands.add('getByTestIdLike', (selector: string) => {
 Cypress.Commands.add(
 	'containsClass',
 	(selector: string, expectedClass: string) => {
-		return cy.get(selector).should('satisfy', ($el) => {
+		return cy.get(selector).should('satisfy', ($el: Element[]) => {
 			const classList = Array.from<string>($el[0].classList);
 
 			return classList.includes(expectedClass);
@@ -32,7 +32,7 @@ Cypress.Commands.add(
 Cypress.Commands.add(
 	'omitsClass',
 	(selector: string, expectedClass: string) => {
-		return cy.get(selector).should('satisfy', ($el) => {
+		return cy.get(selector).should('satisfy', ($el: Element[]) => {
 			const classList = Array.from<string>($el[0].classList);
 
 			return !classList.includes(expectedClass);
@@ -76,7 +76,7 @@ Cypress.Commands.add(
 			// @see https://graphql.org/learn/serving-over-http/#post-request
 			// "operationName is only required if multiple operations are present in the query."
 			const match = req.body.operationName
-				? interceptions[url]?.[req.body.operationName]
+				? interceptions[url][req.body.operationName]
 				: interceptions[url][operation];
 
 			if (match) {

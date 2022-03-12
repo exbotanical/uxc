@@ -1,5 +1,7 @@
 import type { ObjectID } from './util';
 
+export type MessageWithSender = Omit<Message, 'sender'> & { sender: User };
+
 export interface Message {
 	_id: ObjectID;
 	threadId: ObjectID;

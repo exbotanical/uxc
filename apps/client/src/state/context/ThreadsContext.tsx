@@ -1,5 +1,11 @@
 import { useQuery, useSubscription } from '@apollo/client';
-import React, { createContext, useCallback, useEffect, useState } from 'react';
+import React, {
+	createContext,
+	useCallback,
+	useEffect,
+	useMemo,
+	useState
+} from 'react';
 
 import { showNotification } from '../notification/actions';
 
@@ -88,7 +94,7 @@ export function ThreadsProvider({ children }: { children: JSX.Element }) {
 				duration: 'sticky'
 			});
 		}
-	}, [newMessage]);
+	}, [threads, newMessage, updateThread]);
 
 	function updateThread(thread: StatefulThread) {
 		const idx = threads.findIndex(({ _id }) => _id === thread._id);
@@ -103,11 +109,14 @@ export function ThreadsProvider({ children }: { children: JSX.Element }) {
 		setThreads(copiedThreads);
 	}
 
-	const value = {
-		getThreadById,
-		threads,
-		updateThread
-	};
+	const value = useMemo(
+		() => ({
+			getThreadById,
+			threads,
+			updateThread
+		}),
+		[getThreadById, threads]
+	);
 
 	return (
 		<ThreadsContext.Provider value={value}>{children}</ThreadsContext.Provider>

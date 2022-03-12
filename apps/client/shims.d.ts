@@ -16,11 +16,24 @@ interface ImportMeta {
 
 declare module 'styled-components' {
 	type Palettes =
-		'accent' | 'background' | 'background' | 'blue' | 'border' | 'error' | 'field' | 'font' | 'interactive' | 'interactive' | 'link' | 'scrollbar' | 'success';
+		| 'accent'
+		| 'background'
+		| 'background'
+		| 'blue'
+		| 'border'
+		| 'error'
+		| 'field'
+		| 'font'
+		| 'interactive'
+		| 'interactive'
+		| 'link'
+		| 'scrollbar'
+		| 'success';
 
 	export interface DefaultTheme {
 		colors: {
 			[K in Palettes]: {
+				[k: string]: string;
 				norm: string;
 				weak: string;
 				strong: string;
@@ -28,7 +41,6 @@ declare module 'styled-components' {
 				hover: string;
 				active: string;
 				dark: string;
-				[k: string]: string;
 			};
 		};
 	}

@@ -24,7 +24,7 @@ import {
 import { schema } from './schema';
 
 import type { JWT, JWTPayload } from '@uxc/types/node';
-import type { Request } from 'express';
+import type { Request, Response } from 'express';
 
 declare module 'express-session' {
 	export interface SessionData {
@@ -80,7 +80,7 @@ export async function initializeServer() {
 				socket: { upgradeReq: Request }
 			) {
 				const { id } = await new Promise<JWTPayload>((resolve) => {
-					sessionMiddleware(socket.upgradeReq, {} as any, () => {
+					sessionMiddleware(socket.upgradeReq, _ as unknown as Response, () => {
 						if (socket.upgradeReq.session.meta) {
 							resolve(socket.upgradeReq.session.meta);
 						}

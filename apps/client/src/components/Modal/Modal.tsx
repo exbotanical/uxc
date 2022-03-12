@@ -1,4 +1,4 @@
-import React, { createContext, createRef, useEffect } from 'react';
+import React, { createContext, createRef, useEffect , useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 
@@ -39,11 +39,11 @@ interface ModalProps {
 	children: JSX.Element;
 }
 
-interface ModalContext {
+interface ModalContextType {
 	onModalClose: () => void;
 }
 
-export const ModalContext = createContext({} as ModalContext);
+export const ModalContext = createContext({} as ModalContextType);
 
 /**
  * @todo Disable parent content
@@ -56,7 +56,7 @@ export function Modal({ onModalClose, modalRef, children }: ModalProps) {
 		function listener(e: KeyboardEvent) {
 			const fn = keyListenersMap.get(e.key);
 
-			fn && fn(e);
+			fn?.(e);
 		}
 
 		document.addEventListener('keydown', listener);
@@ -80,7 +80,7 @@ export function Modal({ onModalClose, modalRef, children }: ModalProps) {
 			) || []
 		);
 
-		if (!focusableModalElements) {
+		if (!focusableModalElements.length) {
 			return;
 		}
 
@@ -119,17 +119,17 @@ export function Modal({ onModalClose, modalRef, children }: ModalProps) {
 		const firstElement = focusableModalElements[0];
 
 		firstElement.focus();
-	}, []);
+	}, [modalRef]);
+
+	const ctx = useMemo(() => ({ onModalClose }), [onModalClose]);
 
 	return createPortal(
 		<ModalOverlay
+			data-testid="modal-overlay"
 			onClick={handleClick}
 			ref={overlayRef}
-			data-testid="modal-overlay"
 		>
-			<ModalContext.Provider value={{ onModalClose }}>
-				{children}
-			</ModalContext.Provider>
+			<ModalContext.Provider value={ctx}>{children}</ModalContext.Provider>
 		</ModalOverlay>,
 		document.body
 	);

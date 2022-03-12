@@ -1,10 +1,11 @@
+/* eslint-disable react/no-array-index-key */
+import type { FormEvent } from 'react';
+
 import { useMutation, useQuery } from '@apollo/client';
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 
-import { GET_CURRENT_USER, JOIN } from '@/services/api';
-import { NormalizedError, normalizeError } from '@/services/error';
-
+import { ErrorMessage, MESSAGE_TIMEOUT } from './ErrorMessage';
 import * as S from './styles';
 import {
 	validateEmail,
@@ -12,13 +13,12 @@ import {
 	validateUsername
 } from './validators';
 
-import { AdaptiveInput } from '@/components/Fields/AdaptiveInput';
-import { useValidation } from '@/hooks';
-
-import type { FormEvent } from 'react';
 import type { User } from '@uxc/types';
 
-import { ErrorMessage, MESSAGE_TIMEOUT } from './ErrorMessage';
+import { AdaptiveInput } from '@/components/Fields/AdaptiveInput';
+import { useValidation } from '@/hooks';
+import { GET_CURRENT_USER, JOIN } from '@/services/api';
+import { NormalizedError, normalizeError } from '@/services/error';
 
 /**
  * @todo Attempt pre-auth only once
@@ -151,73 +151,71 @@ export function Join() {
 	}
 
 	return (
-		<>
-			<S.InnerCard size="lg">
-				{errors.map(({ message }, idx) => (
-					<ErrorMessage message={message} key={idx} />
-				))}
+		<S.InnerCard size="lg">
+			{errors.map(({ message }, idx) => (
+				<ErrorMessage key={idx} message={message} />
+			))}
 
-				<S.Form onSubmit={handleSubmit} autoComplete="off">
-					<AdaptiveInput
-						data-testid="username-input"
-						error={usernameError}
-						id="username"
-						label="Username"
-						name="username"
-						onBlur={setUsernameDirty}
-						onChange={handleChange}
-						ref={firstInteractiveRef}
-						required
-						type="text"
-						value={username}
-					/>
+			<S.Form autoComplete="off" onSubmit={handleSubmit}>
+				<AdaptiveInput
+					data-testid="username-input"
+					error={usernameError}
+					id="username"
+					label="Username"
+					name="username"
+					onBlur={setUsernameDirty}
+					onChange={handleChange}
+					ref={firstInteractiveRef}
+					required
+					type="text"
+					value={username}
+				/>
 
-					{/* Chrome browsers will not allow autocomplete to be disabled, so we add ARIA autocomplete anyway */}
-					<AdaptiveInput
-						aria-autocomplete="list"
-						data-testid="email-input"
-						error={emailError}
-						id="email-address"
-						label="Email address"
-						name="email"
-						onBlur={setEmailDirty}
-						onChange={handleChange}
-						required
-						type="email"
-						value={email}
-					/>
+				{/* Chrome browsers will not allow autocomplete to be disabled, so we add ARIA autocomplete anyway */}
+				<AdaptiveInput
+					aria-autocomplete="list"
+					data-testid="email-input"
+					error={emailError}
+					id="email-address"
+					label="Email address"
+					name="email"
+					onBlur={setEmailDirty}
+					onChange={handleChange}
+					required
+					type="email"
+					value={email}
+				/>
 
-					<AdaptiveInput
-						data-testid="password-input"
-						error={passwordError}
-						id="password"
-						label="Password"
-						name="password"
-						onBlur={setPasswordDirty}
-						onChange={handleChange}
-						required
-						type="password"
-						value={password}
-					/>
+				<AdaptiveInput
+					data-testid="password-input"
+					error={passwordError}
+					id="password"
+					label="Password"
+					name="password"
+					onBlur={setPasswordDirty}
+					onChange={handleChange}
+					required
+					type="password"
+					value={password}
+				/>
 
-					<S.CTAButton
-						aria-describedby="disabledReason"
-						aria-disabled={formInvalid}
-						data-testid="join-button"
-						loading={loading}
-						type="submit"
-					>
-						Join
-					</S.CTAButton>
-				</S.Form>
+				<S.CTAButton
+					aria-describedby="disabledReason"
+					aria-disabled={formInvalid}
+					data-testid="join-button"
+					loading={loading}
+					type="submit"
+				>
+					Join
+				</S.CTAButton>
+			</S.Form>
 
-				<S.Footer>
-					<S.SwapModeLink to="/signin">
-						<p>Already have an account?&nbsp;Sign in</p>
-					</S.SwapModeLink>
-				</S.Footer>
-			</S.InnerCard>
-		</>
+			<S.Footer>
+				<S.SwapModeLink to="/signin">
+					<p>Already have an account?&nbsp;Sign in</p>
+				</S.SwapModeLink>
+			</S.Footer>
+		</S.InnerCard>
 	);
 }
 

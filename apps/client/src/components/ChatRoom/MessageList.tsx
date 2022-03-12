@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import type { Message, ObjectID, User } from '@uxc/types';
+import type { MessageWithSender, ObjectID, User } from '@uxc/types';
 
 import { ChatMessage } from '@/components/ChatRoom/ChatMessage';
 import {
@@ -38,7 +38,7 @@ export function MessageList({ threadId }: MessageListProps) {
 	}>(GET_CURRENT_USER);
 
 	const { loading, data, error, subscribeToMore } = useQuery<{
-		getMessages: (Omit<Message, 'sender'> & { sender: User })[];
+		getMessages: MessageWithSender[];
 	}>(GET_MESSAGES, {
 		variables: {
 			threadId
@@ -46,26 +46,20 @@ export function MessageList({ threadId }: MessageListProps) {
 	});
 
 	useEffect(() => {
-		subscribeToMore({
+		subscribeToMore<{ onThreadMessageCreated: MessageWithSender[] }>({
 			document: ON_THREAD_MESSAGE_CREATED,
 			updateQuery: (prev, { subscriptionData }) => {
-				if (Object.keys(prev || {}).length === 0) {
+				if (Object.keys(prev).length === 0) {
 					return { getMessages: [] };
 				}
 
-				if (!subscriptionData.data) {
-					return prev;
-				}
-
-				/** @todo */
-				// @ts-expect-error
 				const newMessage = subscriptionData.data.onThreadMessageCreated[0];
 
 				const ret = {
 					...prev,
 					getMessages: [
 						...prev.getMessages,
-						{ ...newMessage, sender: user?.getCurrentUser }
+						{ ...newMessage, sender: user?.getCurrentUser || newMessage.sender }
 					]
 				};
 
@@ -75,17 +69,12 @@ export function MessageList({ threadId }: MessageListProps) {
 		});
 	}, []);
 
+	// @todo
 	if (loading) {
 		return null;
 	}
-
+	// @todo
 	if (error) {
-		// showNotification({
-		// 	message:
-		// 		'Something went wrong while grabbing info for this channel. Please try again later.',
-		// 	type: 'error'
-		// });
-
 		return null;
 	}
 

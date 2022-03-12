@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import currentUserOk from '../fixtures/getCurrentUser/ok.json';
 import getThreadsOk from '../fixtures/getThreads/ok.json';
 

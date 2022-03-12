@@ -1,5 +1,7 @@
-export const noop = (...args: any) => {};
-export const nullNoop = (...args: any) => null;
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+export const noop = (..._: any) => {};
+export const nullNoop = (..._: any) => null;
 
 export const once = (fn: (...args: any) => any) => {
 	let invoked = false;
@@ -11,5 +13,3 @@ export const once = (fn: (...args: any) => any) => {
 		}
 	};
 };
-
-once(() => { console.log('e'); });

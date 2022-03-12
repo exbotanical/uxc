@@ -7,10 +7,10 @@ import {
 	EMAIL_CHARS_MAX
 } from '@uxc/types';
 
-import joinInUse from '../fixtures/join/in-use.json';
-import joinOk from '../fixtures/join/ok.json';
 import currentUserOk from '../fixtures/getCurrentUser/ok.json';
 import getThreadsEmptyOk from '../fixtures/getThreads/ok.empty.json';
+import joinInUse from '../fixtures/join/in-use.json';
+import joinOk from '../fixtures/join/ok.json';
 
 const goodUsername = 'cy_user';
 const goodEmail = 'user@cypress.com';

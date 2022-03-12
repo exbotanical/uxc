@@ -65,8 +65,8 @@ export const PrivateThread = forwardRef<HTMLLIElement, PrivateThreadProps>(
 				onKeyPress={(e) => {
 					onEnterKeyPressed(handleClick)<HTMLLIElement>(e);
 				}}
-				role="button"
 				ref={ref}
+				role="button"
 				tabIndex={-1}
 			>
 				{isActiveItem ? <S.ActiveItemIndicator /> : null}

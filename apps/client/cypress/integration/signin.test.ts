@@ -1,13 +1,12 @@
 import { ERROR_MESSAGES } from '@uxc/types';
-import signinOk from '../fixtures/signin/ok.json';
-import signinNotOk from '../fixtures/signin/notok.json';
-import currentUserOk from '../fixtures/getCurrentUser/ok.json';
 
-const goodUsername = 'cy_user';
+import currentUserOk from '../fixtures/getCurrentUser/ok.json';
+import signinNotOk from '../fixtures/signin/notok.json';
+import signinOk from '../fixtures/signin/ok.json';
+
 const goodEmail = 'user@cypress.com';
 const goodPassword = 'cypress_password';
 const badEmail = 'user';
-const badPassword = 'user';
 
 function signinUser() {
 	cy.get('@email').type(goodEmail);
