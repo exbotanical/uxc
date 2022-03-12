@@ -25,7 +25,10 @@ export function SearchModal({
 					<S.Header>
 						<SearchForm />
 
-						<S.CloseButton onClick={closeSearch}>
+						<S.CloseButton
+							onClick={closeSearch}
+							data-testid="uxc-search-esc-btn"
+						>
 							<SvgIcon color="#fff" name="escape" size={18} />
 						</S.CloseButton>
 					</S.Header>

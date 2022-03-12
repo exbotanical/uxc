@@ -1,35 +1,31 @@
+import currentUserOk from '../../fixtures/getCurrentUser/ok.json';
+import getMessagesOk from '../../fixtures/getMessages/ok1.json';
+import getThreadsOk from '../../fixtures/getThreads/ok.json';
+
 import type { Rule } from 'axe-core';
 
 const unauthenticatedTestUrls = ['/signin', '/join'];
-const authenticatedTestUrls = ['/', '/friends', '/thread/123345'];
+const authenticatedTestUrls = ['/', '/friends', '/622a1412cbc9a5e523cd0a7b'];
+
+const disabledRules: Rule[] = [
+	/*
+	 * see discussion https://github.com/dequelabs/axe-core/issues/795
+	 * my personal take is that this rule is in some cases contradictory
+	 * and such a case is applicable here, hence disabling it
+	 */
+	{ id: 'landmark-complementary-is-top-level', enabled: false },
+	{ id: 'color-contrast', enabled: false }
+];
+
+const axeFalsePositives: Rule[] = [];
+
+const bypassedRules = [{ id: 'page-has-heading-one', enabled: false }];
+
+// false positives during dev only (via `test:cy:dev` script)
+const devFalsePositives: Rule[] = [];
 
 const assertAll = () => {
-	const disabledRules: Rule[] = [
-		/*
-		 * see discussion https://github.com/dequelabs/axe-core/issues/795
-		 * my personal take is that this rule is in some cases contradictory
-		 * and such a case is applicable here, hence disabling it
-		 */
-		{ id: 'landmark-complementary-is-top-level', enabled: false }
-	];
-
-	const axeFalsePositives: Rule[] = [
-		// { id: 'duplicate-id', enabled: false },
-		// { id: 'document-title', enabled: false },
-		// { id: 'html-has-lang', enabled: false }
-	];
-
-	const bypassedRules = [
-		// { id: 'page-has-heading-one', enabled: false }
-	];
-
 	disabledRules.push(...axeFalsePositives, ...bypassedRules);
-
-	// false positives during dev only (via `test:cy:dev` script)
-	const devFalsePositives = [
-		// { id: 'landmark-no-duplicate-contentinfo', enabled: false },
-		// { id: 'landmark-unique', enabled: false }
-	];
 
 	if (Cypress.env('STAGE') === 'dev') {
 		disabledRules.push(...devFalsePositives);
@@ -49,9 +45,9 @@ const runTest = (url: string) => {
 };
 
 describe('accessibility', () => {
-	// beforeEach(() => {
-	// 	cy.authorizedVisit();
-	// });
+	beforeEach(() => {
+		Cypress.config('interceptions' as keyof Cypress.TestConfigOverrides, {});
+	});
 
 	unauthenticatedTestUrls.forEach((url) => {
 		it(`Page ${url} has no detectable accessibility violations on load [dark mode]`, () => {
@@ -59,8 +55,28 @@ describe('accessibility', () => {
 		});
 	});
 
-	authenticatedTestUrls.forEach((url) => {
+	authenticatedTestUrls.forEach((url, idx) => {
 		it(`Page ${url} has no detectable accessibility violations on load [dark mode]`, () => {
+			if (idx === 0) {
+				cy.interceptGQL(
+					'http://localhost/api/graphql',
+					'getCurrentUser',
+					currentUserOk
+				);
+
+				cy.interceptGQL(
+					'http://localhost/api/graphql',
+					'getThreads',
+					getThreadsOk
+				);
+
+				cy.interceptGQL(
+					'http://localhost/api/graphql',
+					'getMessages',
+					getMessagesOk
+				);
+			}
+
 			runTest(url);
 		});
 	});
