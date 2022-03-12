@@ -125,7 +125,7 @@ export function MessageList({ threadId }: MessageListProps) {
 		}) || [];
 
 	return (
-		<Container>
+		<Container data-testid="messages-container">
 			{messages.map((message) => (
 				<ChatMessage key={message._id} {...message} />
 			))}

@@ -39,10 +39,6 @@ const StyledInput = styled.input`
 	background-color: ${({ theme }) => theme.colors.background.dark};
 	color: ${({ theme }) => theme.colors.font.strong};
 
-	&:focus {
-		outline: none !important;
-	}
-
 	&::placeholder {
 		color: ${({ theme }) => theme.colors.font.weak};
 		opacity: 0.8;

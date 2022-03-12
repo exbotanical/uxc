@@ -108,6 +108,7 @@ export function Friends() {
 					options={searchOptions}
 					placeholder="Search friends"
 					value={searchText}
+					data-testid="search-friends"
 				/>
 			</Form>
 

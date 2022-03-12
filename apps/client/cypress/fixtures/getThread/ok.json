@@ -1,0 +1,22 @@
+{
+	"data": {
+			"getThread": {
+					"createdAt": "2022-03-10T15:06:58.968Z",
+					"updatedAt": "2022-03-10T15:06:58.968Z",
+					"users": [
+							{
+									"_id": "622662dc548eabd4bda2ad9a",
+									"username": "the_user",
+									"userImage": "none",
+									"email": "thing@thing.com"
+							},
+							{
+									"_id": "622a1412cbc9a5e523cd0a67",
+									"username": "Gay.Bednar",
+									"userImage": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1018.jpg",
+									"email": "Trace_Rosenbaum38@gmail.com"
+							}
+					]
+			}
+	}
+}

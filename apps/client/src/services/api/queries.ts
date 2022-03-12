@@ -72,7 +72,6 @@ export const GET_MESSAGES = gql`
 			body
 			createdAt
 			updatedAt
-			threadId
 			sender {
 				_id
 				username

@@ -122,7 +122,11 @@ export function Modal({ onModalClose, modalRef, children }: ModalProps) {
 	}, []);
 
 	return createPortal(
-		<ModalOverlay onClick={handleClick} ref={overlayRef}>
+		<ModalOverlay
+			onClick={handleClick}
+			ref={overlayRef}
+			data-testid="modal-overlay"
+		>
 			<ModalContext.Provider value={{ onModalClose }}>
 				{children}
 			</ModalContext.Provider>

@@ -5,7 +5,8 @@
     "lib": ["DOM", "ESNEXT"],
     "types": ["node", "cypress", "cypress-axe", "@testing-library/cypress", "cypress-real-events"],
     "esModuleInterop": true,
-		"resolveJsonModule": true
+		"resolveJsonModule": true,
+		"downlevelIteration": true
   },
   "include": ["./**/*.ts"]
 }

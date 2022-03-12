@@ -12,12 +12,14 @@ import { FlexCol } from '@/styles/Layout';
 import { FontSizeLg, FontSizeSm } from '@/styles/Typography/FontSize';
 import { toReadable } from '@/utils';
 
-const Container = styled.div<{ hover: boolean }>`
+const Container = styled.div`
 	${FlexCol}
 	${FontSizeLg}
-	background-color:${({ theme, hover }) =>
-		hover && theme.colors.background.hover};
 	position: relative;
+
+	&:hover {
+		background-color: ${({ theme }) => theme.colors.background.hover};
+	}
 `;
 
 const OptionsContainer = styled.div`
@@ -35,6 +37,10 @@ const OptionsContainer = styled.div`
 	background-color: ${({ theme }) => theme.colors.background.strong};
 	color: ${({ theme }) => theme.colors.font.strong};
 	box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+	${Container}:not(:hover, :focus, :active, :focus-visible, :focus-within) & {
+		visibility: hidden;
+	}
 `;
 
 const BodyContainerSansMeta = styled.div`
@@ -116,7 +122,6 @@ export function ChatMessage({
 	sender: User;
 	sansMeta: boolean;
 }) {
-	const [hover, setHover] = useState(false);
 	const [editMode, setEditMode] = useState(false);
 	const [messageBody, setMessageBody] = useState(body);
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -188,31 +193,7 @@ export function ChatMessage({
 		: {};
 
 	return (
-		<Container
-			hover={hover}
-			onMouseEnter={() => {
-				setHover(true);
-			}}
-			onMouseLeave={() => {
-				setHover(false);
-			}}
-		>
-			{hover && isSender ? (
-				<OptionsContainer>
-					<Button tabIndex={-1} type="button">
-						<SvgIcon name="smiley" size={21} />
-					</Button>
-					<Button
-						onClick={() => {
-							setEditMode(true);
-						}}
-						type="button"
-					>
-						<SvgIcon name="edit" size={21} />
-					</Button>
-				</OptionsContainer>
-			) : null}
-
+		<Container>
 			{sansMeta ? (
 				<BodyContainerSansMeta {...isSenderActions}>
 					{editMode ? (
@@ -222,7 +203,7 @@ export function ChatMessage({
 							value={messageBody}
 						/>
 					) : (
-						<p>{body}</p>
+						<p data-testid="message-body">{body}</p>
 					)}
 				</BodyContainerSansMeta>
 			) : (
@@ -233,8 +214,10 @@ export function ChatMessage({
 
 					<MetaContainer {...isSenderActions}>
 						<MetaLabelContainer>
-							<UsernameBody>{sender.username}</UsernameBody>
-							<SentDateBody>{toReadable(createdAt)}</SentDateBody>
+							<UsernameBody tabIndex={0}>{sender.username}</UsernameBody>
+							<SentDateBody data-testid="message-datetime">
+								{toReadable(createdAt)}
+							</SentDateBody>
 						</MetaLabelContainer>
 
 						{editMode ? (
@@ -244,11 +227,29 @@ export function ChatMessage({
 								value={messageBody}
 							/>
 						) : (
-							<p>{body}</p>
+							<p data-testid="message-body">{body}</p>
 						)}
 					</MetaContainer>
 				</BodyContainer>
 			)}
+
+			{isSender ? (
+				<OptionsContainer>
+					<Button type="button" data-testid="message-emote-btn" tabIndex={0}>
+						<SvgIcon name="smiley" size={21} />
+					</Button>
+					<Button
+						onClick={() => {
+							setEditMode(true);
+						}}
+						type="button"
+						data-testid="message-edit-btn"
+						tabIndex={0}
+					>
+						<SvgIcon name="edit" size={21} />
+					</Button>
+				</OptionsContainer>
+			) : null}
 		</Container>
 	);
 }

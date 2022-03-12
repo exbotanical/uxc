@@ -40,6 +40,7 @@ export function Search() {
 	return (
 		<SearchContainer>
 			<Button
+				data-testid="uxc-search-btn"
 				onClick={() => {
 					setIsOpen(true);
 				}}

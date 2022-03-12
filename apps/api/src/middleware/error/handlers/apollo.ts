@@ -8,7 +8,10 @@ export function apolloErrorHandler(err: GraphQLError) {
 	if (err.originalError instanceof BaseError) {
 		const { friendly, internal } = err.originalError.serialize();
 
-		console.info(internal);
+		console.info({
+			friendly,
+			internal
+		});
 
 		return new ApolloError(friendly, err.originalError.constructor.name);
 	}

@@ -1,4 +1,10 @@
-import React, { useContext } from 'react';
+import React, {
+	createRef,
+	useContext,
+	useEffect,
+	useRef,
+	useState
+} from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -10,6 +16,7 @@ import { PrivateThread } from '@/components/PrivateThread/PrivateThread';
 import { ThreadsContext } from '@/state/context/ThreadsContext';
 import { FlexCol } from '@/styles/Layout';
 import { FontSizeLg } from '@/styles/Typography/FontSize';
+import { onEnterKeyPressed } from '@/utils';
 
 const PaddedListItem = styled(ListItem)`
 	padding: 1rem;
@@ -33,26 +40,65 @@ const ThreadsListContainer = styled.ul`
  * @todo scrollto selected item
  */
 export function PrivateThreadsList() {
+	const threadRefs = useRef<(HTMLLIElement | null)[]>([]);
+	const dmRef = useRef<HTMLButtonElement>(null);
+
 	const { threads } = useContext(ThreadsContext);
 	const navigate = useNavigate();
 	const location = useLocation();
+	const focusedThreadIdx = useRef(0);
 
 	const paths = location.pathname.split('/');
 	const isActiveItem = paths[paths.length - 1] == '';
+	const nThreads = threads.length;
 
-	const handleClick = (path: string) => {
+	function handleClick(path = '') {
 		navigate(`/${path}`);
-	};
+	}
 
-	const onEnterKeyPressed = (
-		event: React.KeyboardEvent<HTMLLIElement>,
-		path: string
-	) => {
-		if (event.key == 'Enter') {
-			event.preventDefault();
-			handleClick(path);
+	/**
+	 * @todo cleanup
+	 * @todo default initial to selected, else first
+	 * @todo fix outline color
+	 */
+	function handleKeydown(e: KeyboardEvent) {
+		if (e.key === 'ArrowDown') {
+			if (document.activeElement === dmRef.current) {
+				threadRefs?.current[0]?.focus();
+				focusedThreadIdx.current = 0;
+			} else if (
+				document.activeElement === threadRefs.current[focusedThreadIdx.current]
+			) {
+				let nextIdx = ++focusedThreadIdx.current;
+				if (nextIdx > nThreads - 1) --nextIdx;
+
+				threadRefs.current[nextIdx]?.focus();
+				focusedThreadIdx.current = nextIdx;
+			}
+		} else if (e.key === 'ArrowUp') {
+			if (
+				document.activeElement === threadRefs.current[focusedThreadIdx.current]
+			) {
+				let nextIdx =
+					focusedThreadIdx.current === 0 ? 0 : --focusedThreadIdx.current;
+
+				threadRefs.current[nextIdx]?.focus();
+				focusedThreadIdx.current = nextIdx;
+			}
 		}
-	};
+	}
+
+	useEffect(() => {
+		threadRefs.current = threadRefs.current.slice(0, nThreads);
+	}, [threads]);
+
+	useEffect(() => {
+		document.addEventListener('keydown', handleKeydown);
+
+		return () => {
+			document.removeEventListener('keydown', handleKeydown);
+		};
+	}, [threads]);
 
 	return (
 		<>
@@ -60,22 +106,26 @@ export function PrivateThreadsList() {
 				<PaddedListItem
 					isActiveItem={isActiveItem}
 					onClick={() => {
-						handleClick('');
+						handleClick();
 					}}
-					onKeyPress={(e) => {
-						onEnterKeyPressed(e, '/');
-					}}
+					onKeyPress={onEnterKeyPressed(handleClick)}
+					tabIndex={0}
+					data-testid="friends-btn"
 				>
 					<SvgIcon name="people" size={21} />
 					<FriendsLabel>Friends</FriendsLabel>
 				</PaddedListItem>
 			</ul>
 
-			<Delimiter title="Direct Messages" />
+			<Delimiter title="Direct Messages" ref={dmRef} />
 
 			<ThreadsListContainer>
-				{threads.map(({ _id: id }) => (
-					<PrivateThread id={id} key={id} />
+				{threads.map(({ _id: id }, idx) => (
+					<PrivateThread
+						id={id}
+						key={id}
+						ref={(el) => (threadRefs.current[idx] = el)}
+					/>
 				))}
 			</ThreadsListContainer>
 		</>

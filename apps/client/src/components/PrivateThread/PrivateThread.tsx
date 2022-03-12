@@ -1,8 +1,7 @@
 import { useQuery } from '@apollo/client';
-import React, { useContext } from 'react';
+import React, { forwardRef, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-
 
 import * as S from './styles';
 
@@ -31,50 +30,58 @@ const UsernameLabel = styled.p`
 	margin-left: 0.75rem;
 `;
 
-export function PrivateThread({ id }: PrivateThreadProps) {
-	const { getThreadById } = useContext(ThreadsContext);
-	const thread = getThreadById(id);
+export const PrivateThread = forwardRef<HTMLLIElement, PrivateThreadProps>(
+	({ id }, ref) => {
+		const { getThreadById } = useContext(ThreadsContext);
+		const thread = getThreadById(id);
 
-	const { data: user } = useQuery<{
-		getCurrentUser: User;
-	}>(GET_CURRENT_USER);
+		const { data: user } = useQuery<{
+			getCurrentUser: User;
+		}>(GET_CURRENT_USER);
 
-	const navigate = useNavigate();
-	const location = useLocation();
-	const paths = location.pathname.split('/');
-	const isActiveItem = paths[paths.length - 1] == id;
+		const navigate = useNavigate();
+		const location = useLocation();
+		const paths = location.pathname.split('/');
+		const isActiveItem = paths[paths.length - 1] == id;
 
-	const them = thread?.users.find(
-		({ _id }) => _id !== user?.getCurrentUser._id
-	);
+		const them = thread?.users.find(
+			({ _id }) => _id !== user?.getCurrentUser._id
+		);
 
-	const handleClick = () => {
-		navigate(`/${id}`);
-	};
+		const handleClick = () => {
+			navigate(`/${id}`);
+		};
 
-	/** @todo handler erroneous state */
-	if (!them || !thread) {
-		return null;
+		/** @todo handler erroneous state */
+		if (!them || !thread) {
+			return null;
+		}
+
+		return (
+			<PaddedListItem
+				data-testid={`thread-${id}`}
+				isActiveItem={isActiveItem}
+				onClick={handleClick}
+				onKeyPress={(e) => {
+					onEnterKeyPressed(handleClick)<HTMLLIElement>(e);
+				}}
+				role="button"
+				ref={ref}
+				tabIndex={-1}
+			>
+				{isActiveItem ? <S.ActiveItemIndicator /> : null}
+				<RowCenter>
+					<UserAvatar
+						newMessagesCount={thread.newMessages}
+						size="md"
+						u={them}
+					/>
+
+					<UsernameLabel>{them.username}</UsernameLabel>
+				</RowCenter>
+			</PaddedListItem>
+		);
 	}
-
-	return (
-		<PaddedListItem
-			isActiveItem={isActiveItem}
-			onClick={handleClick}
-			onKeyPress={(e) => {
-				onEnterKeyPressed(handleClick)<HTMLLIElement>(e);
-			}}
-			role="button"
-			tabIndex={0}
-		>
-			{isActiveItem ? <S.ActiveItemIndicator /> : null}
-			<RowCenter>
-				<UserAvatar newMessagesCount={thread.newMessages} size="md" u={them} />
-
-				<UsernameLabel>{them.username}</UsernameLabel>
-			</RowCenter>
-		</PaddedListItem>
-	);
-}
+);
 
 PrivateThread.displayName = 'PrivateThread';

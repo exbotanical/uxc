@@ -4,7 +4,7 @@ export class NotFoundError extends BaseError {
 	statusCode = 404;
 
 	constructor(
-		public message: string = 'The requested resource could not be found,',
+		public message: string = 'The requested resource could not be found.',
 		public internal?: string
 	) {
 		super(message, internal);
