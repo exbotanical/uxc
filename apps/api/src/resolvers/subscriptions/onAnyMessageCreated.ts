@@ -5,6 +5,7 @@ import type { MessageWithSender, JWTPayload } from '@uxc/types/node';
 
 import { pubsub } from '@/redis';
 import { EVENTS } from '@/utils/constants';
+import { SubscriptionResolvers } from '@uxc/types/generated';
 
 export const onAnyMessageCreated = {
 	subscribe: withFilter(
@@ -16,4 +17,5 @@ export const onAnyMessageCreated = {
 	resolve: ({ message }: { message: MessageWithSender }) => {
 		return [message];
 	}
-};
+	// @see https://github.com/apollographql/apollo-server/issues/4556
+} as unknown as SubscriptionResolvers['onAnyMessageCreated'];

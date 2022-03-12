@@ -5,6 +5,7 @@ import type { Message, ObjectID } from '@uxc/types/node';
 
 import { pubsub } from '@/redis';
 import { EVENTS } from '@/utils/constants';
+import { SubscriptionResolvers } from '@uxc/types/generated';
 
 interface SubscriberArgs {
 	threadId: ObjectID;
@@ -20,4 +21,5 @@ export const onThreadMessageCreated = {
 		console.log({ message });
 		return [message];
 	}
-};
+	// @see https://github.com/apollographql/apollo-server/issues/4556
+} as unknown as SubscriptionResolvers['onThreadMessageCreated'];
