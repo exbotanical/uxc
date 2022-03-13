@@ -19,9 +19,9 @@ export const SearchLabel = styled.label.attrs({
 	htmlFor: inputLabel,
 	id: labelLabel
 })`
-	height: 1.5rem;
-	width: 1.5rem;
 	display: flex;
+	width: 1.5rem;
+	height: 1.5rem;
 	align-items: center;
 `;
 
@@ -39,22 +39,22 @@ export const SearchInput = styled.input.attrs({
 	'name': 'Search'
 })`
 	${FontSizeLg}
+	min-width: 0;
+	height: 3.5rem;
+	flex: auto;
+	padding: 0;
+	margin-right: 1rem;
+	margin-left: 0.75rem;
 	appearance: none;
 	background-color: transparent;
-	height: 3.5rem;
 	color: ${({ theme }) => theme.colors.font.weak};
-	margin-left: 0.75rem;
-	margin-right: 1rem;
-	flex: auto;
-	min-width: 0;
-	padding: 0;
 
 	&:focus {
 		outline: none !important;
 	}
 
 	::-webkit-search-cancel-button {
-		-webkit-appearance: none;
+		appearance: none;
 		appearance: none;
 	}
 `;

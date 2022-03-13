@@ -19,9 +19,9 @@ interface PrivateThreadProps {
 }
 
 const PaddedListItem = styled(S.ListItem)`
+	position: relative;
 	padding: 0.5rem;
 	cursor: pointer;
-	position: relative;
 `;
 
 const UsernameLabel = styled.p`

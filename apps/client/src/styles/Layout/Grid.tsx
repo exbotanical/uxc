@@ -7,8 +7,8 @@ export const FlexCol = `
 
 export const RowCenter = styled.div`
 	display: flex;
-	justify-content: center;
 	align-items: center;
+	justify-content: center;
 `;
 
 export const ScreenReaderOnly = `

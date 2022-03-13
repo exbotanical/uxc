@@ -11,16 +11,16 @@ type NotificationControllerProps = PropsFromRedux;
 
 const Container = styled.div`
 	${FlexCol}
-	justify-content: center;
 	position: absolute;
-	width: 100%;
+	z-index: 1001;
+	right: 0px;
 	bottom: 0px;
 	left: 0px;
-	right: 0px;
-	margin-left: auto;
+	width: 100%;
+	justify-content: center;
 	margin-right: auto;
 	margin-bottom: 0.75rem;
-	z-index: 1001;
+	margin-left: auto;
 `;
 
 function NotificationControllerBase({

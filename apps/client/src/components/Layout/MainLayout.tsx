@@ -12,8 +12,8 @@ import { ThreadsProvider } from '@/state/context/ThreadsContext';
 
 const Container = styled.div`
 	display: flex;
-	flex: 1 1 0%;
 	height: 100vh;
+	flex: 1 1 0%;
 	border: 1px solid ${({ theme }) => theme.colors.border.norm};
 `;
 

@@ -29,5 +29,3 @@ export function withProtectedRoute<P extends Record<string, unknown>>(
 
 	return ProtectedRoute;
 }
-
-withProtectedRoute.displayName = 'ProtectedRoute';

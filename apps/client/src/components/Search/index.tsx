@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React, { useRef } from 'react';
 
 import SvgIcon from '@/components/Icon';
 import { Modal } from '@/components/Modal/Modal';
@@ -14,13 +14,11 @@ export function SearchModal({
 	isOpen: boolean;
 	closeSearch: () => void;
 }) {
-	const modalRef = createRef<HTMLDivElement>();
+	const modalRef = useRef<HTMLDivElement>(null);
 
 	return isOpen ? (
 		<Modal modalRef={modalRef} onModalClose={closeSearch}>
 			<SearchProvider>
-				{/* <Search ref={modalRef} closeSearch={closeSearch} /> */}
-
 				<S.Container ref={modalRef}>
 					<S.Header>
 						<SearchForm />

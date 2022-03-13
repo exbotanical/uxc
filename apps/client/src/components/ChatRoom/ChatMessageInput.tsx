@@ -28,19 +28,19 @@ export function ChatMessageInput({ sendMessage, name }: ChatMessageInputProps) {
 		}
 	];
 
-	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+	function handleSubmit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 		if (!message) return;
 
 		sendMessage(message);
 		setMessage('');
-	};
+	}
 
-	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+	function handleChange(event: ChangeEvent<HTMLInputElement>) {
 		const { value } = event.target;
 
 		setMessage(value);
-	};
+	}
 
 	return (
 		<Form onSubmit={handleSubmit}>

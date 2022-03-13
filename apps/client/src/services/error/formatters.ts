@@ -8,6 +8,10 @@ export interface NormalizedError {
 
 type GQLErrors = readonly GraphQLError[];
 
+export interface MaybeGQLError {
+	graphQLErrors?: GQLErrors;
+}
+
 export function normalizeGraphQLErrors(errors: GQLErrors) {
 	return errors.map((error) => {
 		const { extensions, message } = error;
@@ -20,9 +24,7 @@ export function normalizeGraphQLErrors(errors: GQLErrors) {
 	});
 }
 
-export function normalizeError(ex: {
-	graphQLErrors?: GQLErrors;
-}): NormalizedError[] {
+export function normalizeError(ex: MaybeGQLError): NormalizedError[] {
 	if (ex instanceof Error) {
 		if (ex.graphQLErrors != undefined) {
 			normalizeGraphQLErrors(ex.graphQLErrors);

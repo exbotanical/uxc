@@ -1,4 +1,4 @@
-import React, { createContext, createRef, useEffect , useMemo } from 'react';
+import React, { createContext, createRef, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 
@@ -9,16 +9,16 @@ const ModalOverlay = styled.div.attrs({
 	ariaModal: true
 })`
 	position: fixed;
+	z-index: 9999;
 	top: 0;
 	left: 0;
-	z-index: 9999;
 	display: flex;
-	height: 100vh;
 	width: 100vw;
+	height: 100vh;
 	flex-direction: column;
+	backdrop-filter: blur(4px);
 
 	background-color: rgba(0, 0, 0, 0.8);
-	backdrop-filter: blur(4px);
 
 	@media (min-width: 640px) {
 		padding: 1.5rem;
@@ -72,7 +72,7 @@ export function Modal({ onModalClose, modalRef, children }: ModalProps) {
 		}
 	}
 
-	const handleTabKey = (e: KeyboardEvent) => {
+	function handleTabKey(e: KeyboardEvent) {
 		// @todo hoist this up
 		const focusableModalElements = Array.from(
 			modalRef.current?.querySelectorAll<HTMLElement>(
@@ -100,7 +100,7 @@ export function Modal({ onModalClose, modalRef, children }: ModalProps) {
 		nextEl.focus();
 
 		e.preventDefault();
-	};
+	}
 
 	const keyListenersMap = new Map([
 		['Escape', onModalClose],
@@ -121,6 +121,7 @@ export function Modal({ onModalClose, modalRef, children }: ModalProps) {
 		firstElement.focus();
 	}, [modalRef]);
 
+	// @todo wrap parent prop in useCallback
 	const ctx = useMemo(() => ({ onModalClose }), [onModalClose]);
 
 	return createPortal(

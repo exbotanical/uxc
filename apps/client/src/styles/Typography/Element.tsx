@@ -90,8 +90,8 @@ export const MobileCode = css`
 export const MobileLink = css`
 	${FontFamilyCode}
 	${FontSizeBase}
-	letter-spacing: 0.5px;
 	color: ${({ theme }) => theme.colors.font.strong};
+	letter-spacing: 0.5px;
 
 	&:hover {
 		text-decoration-line: underline;
@@ -101,9 +101,9 @@ export const MobileLink = css`
 export const DesktopH1 = css`
 	${FontFamilyBase}
 	${FontSize7Xl}
-	font-weight: 700;
-	color: ${({ theme }) => theme.colors.font.strong};
 	margin-bottom: 1rem;
+	color: ${({ theme }) => theme.colors.font.strong};
+	font-weight: 700;
 `;
 
 export const DesktopH2 = `
@@ -175,8 +175,8 @@ export const DesktopCode = css`
 export const DesktopLink = css`
 	${FontFamilyCode}
 	${FontSizeLg}
-	font-weight: normal;
 	color: ${({ theme }) => theme.colors.font.strong};
+	font-weight: normal;
 
 	&:hover {
 		text-decoration-line: underline;

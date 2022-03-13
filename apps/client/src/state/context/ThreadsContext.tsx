@@ -44,14 +44,11 @@ export function ThreadsProvider({ children }: { children: JSX.Element }) {
 		}
 	});
 
-	useEffect(() => {
-		setThreads(
-			threadsPayload?.getThreads.map((thread) => ({
-				...thread,
-				newMessages: 0
-			})) || []
-		);
-	}, [threadsPayload]);
+	const { data: newMessageAdded } = useSubscription<{
+		onAnyMessageCreated: Message[];
+	}>(ON_ANY_MESSAGE_CREATED);
+
+	const newMessage = newMessageAdded?.onAnyMessageCreated;
 
 	const getThreadById = useCallback(
 		(threadId?: ObjectID) => {
@@ -66,11 +63,39 @@ export function ThreadsProvider({ children }: { children: JSX.Element }) {
 		[threads]
 	);
 
-	const { data: newMessageAdded } = useSubscription<{
-		onAnyMessageCreated: Message[];
-	}>(ON_ANY_MESSAGE_CREATED);
+	const updateThread = useCallback(
+		(thread: StatefulThread) => {
+			const idx = threads.findIndex(({ _id }) => _id === thread._id);
 
-	const newMessage = newMessageAdded?.onAnyMessageCreated;
+			if (!idx) {
+				return;
+			}
+
+			const copiedThreads = [...threads];
+			copiedThreads.splice(idx, 1, thread);
+
+			setThreads(copiedThreads);
+		},
+		[threads]
+	);
+
+	const value = useMemo(
+		() => ({
+			getThreadById,
+			threads,
+			updateThread
+		}),
+		[getThreadById, threads, updateThread]
+	);
+
+	useEffect(() => {
+		setThreads(
+			threadsPayload?.getThreads.map((thread) => ({
+				...thread,
+				newMessages: 0
+			})) || []
+		);
+	}, [threadsPayload?.getThreads]);
 
 	useEffect(() => {
 		if (newMessage?.length) {
@@ -94,29 +119,7 @@ export function ThreadsProvider({ children }: { children: JSX.Element }) {
 				duration: 'sticky'
 			});
 		}
-	}, [threads, newMessage, updateThread]);
-
-	function updateThread(thread: StatefulThread) {
-		const idx = threads.findIndex(({ _id }) => _id === thread._id);
-
-		if (!idx) {
-			return;
-		}
-
-		const copiedThreads = [...threads];
-		copiedThreads.splice(idx, 1, thread);
-
-		setThreads(copiedThreads);
-	}
-
-	const value = useMemo(
-		() => ({
-			getThreadById,
-			threads,
-			updateThread
-		}),
-		[getThreadById, threads]
-	);
+	}, [threads, newMessage]);
 
 	return (
 		<ThreadsContext.Provider value={value}>{children}</ThreadsContext.Provider>

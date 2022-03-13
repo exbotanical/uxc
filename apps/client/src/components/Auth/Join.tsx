@@ -13,6 +13,7 @@ import {
 	validateUsername
 } from './validators';
 
+import type { MaybeGQLError } from '@/services/error';
 import type { User } from '@uxc/types';
 
 import { AdaptiveInput } from '@/components/Fields/AdaptiveInput';
@@ -126,15 +127,13 @@ export function Join() {
 			resetState();
 			navigate(`/`);
 		} catch (ex) {
-			if (ex instanceof Error) {
-				setErrors(normalizeError(ex));
-			}
+			setErrors(normalizeError(ex as MaybeGQLError));
 		}
 	}
 
 	useEffect(() => {
 		firstInteractiveRef.current?.focus();
-	}, []);
+	}, [firstInteractiveRef]);
 
 	useEffect(() => {
 		const timer = setTimeout(() => {

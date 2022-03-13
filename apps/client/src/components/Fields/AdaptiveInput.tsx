@@ -25,13 +25,13 @@ const Input = styled.input.attrs<{ hasError: boolean }>(({ hasError }) => ({
 }))<{ hasError: boolean }>`
 	${FontSizeXl}
 	${({ theme, hasError }) =>
-		hasError && `border-bottom: solid 4px ${theme.colors.error.norm}`};
+		hasError && `border-bottom: solid 4px ${theme.colors.error.norm}`}
+	width: 100%;
 	height: 65px;
 	padding: 1rem 1.25rem 0;
-	border-radius: 0.25rem;
-	width: 100%;
-	color: ${({ theme }) => theme.colors.font.strong};
 	background-color: ${({ theme }) => theme.colors.field.norm};
+	border-radius: 0.25rem;
+	color: ${({ theme }) => theme.colors.font.strong};
 
 	&:disabled {
 		background-color: ${({ theme }) => theme.colors.field.disabled};
@@ -42,22 +42,20 @@ const Input = styled.input.attrs<{ hasError: boolean }>(({ hasError }) => ({
 	}
 
 	&:focus {
+		box-shadow: 0 0 3px ${({ theme }) => theme.colors.font.strong};
 		/* @todo */
 		outline: none;
-		box-shadow: 0 0 3px ${({ theme }) => theme.colors.font.strong};
 	}
 
 	:-webkit-autofill {
-		-webkit-box-shadow: 0 0 0 40px ${({ theme }) => theme.colors.field.norm}
-			inset;
-		-webkit-text-fill-color: ${({ theme }) => theme.colors.font.strong};
+		box-shadow: 0 0 0 40px ${({ theme }) => theme.colors.field.norm} inset;
 		caret-color: ${({ theme }) => theme.colors.font.strong};
+		-webkit-text-fill-color: ${({ theme }) => theme.colors.font.strong};
 	}
 
 	:-webkit-autofill:hover,
 	:-webkit-autofill:focus {
-		-webkit-box-shadow: 0 0 0 40px ${({ theme }) => theme.colors.field.hover}
-			inset;
+		box-shadow: 0 0 0 40px ${({ theme }) => theme.colors.field.hover} inset;
 	}
 `;
 
@@ -66,11 +64,11 @@ const Label = styled.label`
 	position: absolute;
 	top: 50%;
 	left: 20px;
+	color: ${({ theme }) => theme.colors.blue['300']};
+	transform: translateY(-50%);
 	transition: font 0.1s ease, top 0.1s ease, transform 0.1s ease,
 		-webkit-transform 0.1s ease, -moz-transform 0.1s ease,
 		-o-transform 0.1s ease;
-	transform: translateY(-50%);
-	color: ${({ theme }) => theme.colors.blue['300']};
 `;
 
 const InputWrapper = styled.div<{ hasValue: boolean }>`
@@ -83,16 +81,16 @@ const InputWrapper = styled.div<{ hasValue: boolean }>`
 	}
 
 	${Input} + ${Label} {
-		${({ hasValue }) => hasValue && `top: 9px;${FontSizeXs}`};
+		${({ hasValue }) => hasValue && `top: 9px;${FontSizeXs}`}
 	}
 `;
 
 const InputError = styled.p`
 	${FontSizeSm}
-	white-space: nowrap;
 	position: absolute;
-	color: ${({ theme }) => theme.colors.error.norm};
 	padding: 0.25rem;
+	color: ${({ theme }) => theme.colors.error.norm};
+	white-space: nowrap;
 `;
 
 export const AdaptiveInput = forwardRef<HTMLInputElement, InputProps>(

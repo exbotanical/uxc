@@ -6,7 +6,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, Navigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import type { NormalizedError } from '@/services/error';
+import type { NormalizedError , MaybeGQLError } from '@/services/error';
 import type { User } from '@uxc/types';
 
 import { ErrorMessage, MESSAGE_TIMEOUT } from '@/components/Auth/ErrorMessage';
@@ -110,16 +110,14 @@ export function Signin() {
 
 			resetState();
 			navigate(`/`);
-		} catch (ex: any) {
-			if (ex instanceof Error) {
-				setErrors(normalizeError(ex));
-			}
+		} catch (ex) {
+			setErrors(normalizeError(ex as MaybeGQLError));
 		}
 	}
 
 	useEffect(() => {
 		firstInteractiveRef.current?.focus();
-	}, []);
+	}, [firstInteractiveRef]);
 
 	useEffect(() => {
 		const timer = setTimeout(() => {
@@ -157,6 +155,7 @@ export function Signin() {
 					type="email"
 					value={email}
 				/>
+
 				<AdaptiveInput
 					aria-autocomplete="list"
 					autoComplete="current-password"

@@ -23,15 +23,15 @@ export interface SendMessage {
 
 const Container = styled.div`
 	${FlexCol}
-	height: 100%;
 	width: 100%;
+	height: 100%;
 	background-color: ${({ theme }) => theme.colors.background.norm};
 `;
 
 const Footer = styled.footer`
-	margin-top: auto;
 	padding: 0.5rem;
 	border-top: 1px solid ${({ theme }) => theme.colors.border.weak};
+	margin-top: auto;
 `;
 
 export function ChatRoom() {
@@ -66,6 +66,16 @@ export function ChatRoom() {
 		}
 	});
 
+	const sendMessage: SendMessage = async (message) => {
+		/** @todo update cache instead of sending back via subscription */
+		await createMessage({
+			variables: {
+				body: message,
+				threadId
+			}
+		});
+	};
+
 	const them = thread?.users.find(
 		({ _id }) => _id !== user?.getCurrentUser._id
 	);
@@ -79,16 +89,6 @@ export function ChatRoom() {
 	if (!threadId) {
 		return null;
 	}
-
-	const sendMessage: SendMessage = async (message) => {
-		/** @todo update cache instead of sending back via subscription */
-		await createMessage({
-			variables: {
-				body: message,
-				threadId
-			}
-		});
-	};
 
 	return (
 		<Container>

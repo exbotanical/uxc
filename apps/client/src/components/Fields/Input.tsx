@@ -22,12 +22,12 @@ const Container = styled.div`
 	display: flex;
 	flex: 1 1 0%;
 	align-items: center;
-	border-radius: 0.5rem;
 	background-color: ${({ theme }) => theme.colors.background.dark};
+	border-radius: 0.5rem;
 
 	&:hover {
-		outline: none !important;
 		box-shadow: 0 0 3px ${({ theme }) => theme.colors.font.weak};
+		outline: none !important;
 	}
 `;
 
@@ -35,8 +35,8 @@ const StyledInput = styled.input`
 	${FontSizeXl}
 	width: 100%;
 	padding: 0.75rem;
-	border-radius: 0.5rem;
 	background-color: ${({ theme }) => theme.colors.background.dark};
+	border-radius: 0.5rem;
 	color: ${({ theme }) => theme.colors.font.strong};
 
 	&::placeholder {

@@ -27,20 +27,20 @@ const StyledButton = styled(RowCenter).attrs({
 })`
 	${FontSizeLg}
 	width: 100%;
-	outline-offset: 2px;
-	font-weight: 700;
 	padding: 0.75rem 1.5rem;
+	background-color: ${({ theme }) => theme.colors.interactive.norm} !important;
 	border-radius: 4px;
+	color: ${({ theme }) => theme.colors.font.strong};
+	font-weight: 700;
+	outline-offset: 2px;
+	transition-duration: 700ms;
 	transition-property: color, background-color;
 	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-	transition-duration: 700ms;
-	color: ${({ theme }) => theme.colors.font.strong};
-	background-color: ${({ theme }) => theme.colors.interactive.norm} !important;
 
 	&:active {
-		transform: translateY(0.1px);
 		background-color: ${({ theme }) =>
 			theme.colors.interactive.active} !important;
+		transform: translateY(0.1px);
 	}
 
 	&[aria-disabled='true'] {

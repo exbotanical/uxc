@@ -1,5 +1,11 @@
 import { useMutation } from '@apollo/client';
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
+import React, {
+	ChangeEvent,
+	useEffect,
+	useRef,
+	useState,
+	useCallback
+} from 'react';
 import styled from 'styled-components';
 
 import SvgIcon from '../Icon';
@@ -23,20 +29,20 @@ const Container = styled.div`
 `;
 
 const OptionsContainer = styled.div`
-	display: flex;
-	justify-content: space-evenly;
 	position: absolute;
-	right: 0px;
 	top: -0.5rem;
+	right: 0px;
+	display: flex;
 	width: 7rem;
+	justify-content: space-evenly;
 	padding: 0.75rem;
-	gap: 12px;
-	border-radius: 0.25rem;
-	border-top-width: 1px;
 	border-color: ${({ theme }) => theme.colors.blue['500']};
+	border-top-width: 1px;
 	background-color: ${({ theme }) => theme.colors.background.strong};
-	color: ${({ theme }) => theme.colors.font.strong};
+	border-radius: 0.25rem;
 	box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+	color: ${({ theme }) => theme.colors.font.strong};
+	gap: 12px;
 
 	${Container}:not(:hover, :focus, :active, :focus-visible, :focus-within) & {
 		visibility: hidden;
@@ -46,8 +52,8 @@ const OptionsContainer = styled.div`
 const BodyContainerSansMeta = styled.div`
 	display: flex;
 	padding-bottom: 0.25rem;
-	margin-left: 6rem;
 	margin-right: 0.75rem;
+	margin-left: 6rem;
 `;
 
 const BodyContainer = styled.div`
@@ -60,14 +66,14 @@ const BodyContainer = styled.div`
 const AvatarContainer = styled.div`
 	display: flex;
 	justify-content: center;
-	margin-left: 0.75rem;
 	margin-right: 0.75rem;
+	margin-left: 0.75rem;
 `;
 
 const MetaContainer = styled.div`
 	${FlexCol}
-	align-items: flex-start;
 	width: 100%;
+	align-items: flex-start;
 `;
 
 const MetaLabelContainer = styled.div`
@@ -76,8 +82,8 @@ const MetaLabelContainer = styled.div`
 `;
 
 const UsernameBody = styled.p`
-	font-weight: 700;
 	margin-right: 0.5rem;
+	font-weight: 700;
 `;
 
 const SentDateBody = styled.p`
@@ -93,19 +99,19 @@ const StyledTextArea = styled.textarea.attrs({
 	spellCheck: false
 })`
 	${FontSizeLg}
-	resize: vertical;
-	padding: 1rem;
-	color: ${({ theme }) => theme.colors.font.weak};
-	background-color: ${({ theme }) => theme.colors.background.dark};
 	width: 100%;
-	border-radius: 3px;
 	height: 100%;
+	padding: 1rem;
+	background-color: ${({ theme }) => theme.colors.background.dark};
+	border-radius: 3px;
+	color: ${({ theme }) => theme.colors.font.weak};
+	resize: vertical;
 
 	// @todo reuse
 	&:focus {
-		outline: none !important;
 		border: 1px solid ${({ theme }) => theme.colors.background.dark};
 		box-shadow: 0 0 3px ${({ theme }) => theme.colors.font.weak};
+		outline: none !important;
 	}
 `;
 
@@ -167,21 +173,18 @@ export function ChatMessage({
 		}
 	}
 
-	useEffect(() => {
-		if (editMode) {
-			focusEndOfTextarea(body);
-		}
-	}, [editMode, body]);
+	const focusEndOfTextarea = useCallback(
+		(body: string) => {
+			textareaRef.current?.focus();
 
-	function focusEndOfTextarea(body: string) {
-		textareaRef.current?.focus();
+			textareaRef.current?.setSelectionRange(body.length, body.length);
 
-		textareaRef.current?.setSelectionRange(body.length, body.length);
-
-		if (textareaRef.current?.scrollTop != null) {
-			textareaRef.current.scrollTop = textareaRef.current.scrollHeight;
-		}
-	}
+			if (textareaRef.current?.scrollTop != null) {
+				textareaRef.current.scrollTop = textareaRef.current.scrollHeight;
+			}
+		},
+		[textareaRef]
+	);
 
 	const isSenderActions = isSender
 		? {
@@ -191,6 +194,12 @@ export function ChatMessage({
 				onKeyDown: handleKeydown
 		  }
 		: {};
+
+	useEffect(() => {
+		if (editMode) {
+			focusEndOfTextarea(body);
+		}
+	}, [editMode, body, focusEndOfTextarea]);
 
 	return (
 		<Container>

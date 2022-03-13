@@ -15,21 +15,21 @@ import { FontSizeXl } from '@/styles/Typography/FontSize';
 
 const Container = styled.div`
 	${FlexCol}
-	align-items: center;
 	width: 100%;
-	color: ${({ theme }) => theme.colors.font.strong};
+	align-items: center;
 	background-color: ${({ theme }) => theme.colors.background.weak};
+	color: ${({ theme }) => theme.colors.font.strong};
 `;
 
 const Header = styled.header`
 	display: flex;
-	align-items: center;
-	gap: 0.5rem;
 	width: 100%;
 	height: 65px;
 	min-height: 65px;
-	border-left: 1px solid ${({ theme }) => theme.colors.border.norm};
+	align-items: center;
 	border-bottom: 1px solid ${({ theme }) => theme.colors.border.norm};
+	border-left: 1px solid ${({ theme }) => theme.colors.border.norm};
+	gap: 0.5rem;
 `;
 
 const HeaderLabel = styled.p`
@@ -39,22 +39,22 @@ const HeaderLabel = styled.p`
 
 const ContentContainer = styled.div`
 	display: flex;
-	justify-content: center;
 	overflow: hidden;
-	height: 100%;
 	width: 100%;
-	background-color: ${({ theme }) => theme.colors.background.norm};
+	height: 100%;
+	justify-content: center;
 	border-left: 1px solid ${({ theme }) => theme.colors.border.norm};
+	background-color: ${({ theme }) => theme.colors.background.norm};
 	border-radius: 4px;
 `;
 
 const ItemPadding = `1rem`;
 const Item = styled.div`
-	padding: ${ItemPadding};
 	display: flex;
-	align-items: center;
-	border-right: 1px solid ${({ theme }) => theme.colors.border.norm};
 	height: 100%;
+	align-items: center;
+	padding: ${ItemPadding};
+	border-right: 1px solid ${({ theme }) => theme.colors.border.norm};
 
 	& > svg {
 		margin-right: ${ItemPadding};

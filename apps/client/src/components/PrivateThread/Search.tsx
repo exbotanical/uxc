@@ -7,28 +7,28 @@ import { FontSizeBase } from '@/styles/Typography/FontSize';
 
 const SearchContainer = styled.div`
 	${FlexCol}
-	justify-content: center;
-	align-items: center;
 	width: 100%;
 	height: 65px;
 	min-height: 65px;
+	align-items: center;
+	justify-content: center;
 	padding: 0.75rem;
-	background-color: ${({ theme }) => theme.colors.background.dark};
 	border-bottom: 1px solid ${({ theme }) => theme.colors.border.weak};
+	background-color: ${({ theme }) => theme.colors.background.dark};
 `;
 
 const Button = styled.button`
 	${FontSizeBase}
 	display: flex;
-	align-items: center;
-	height: 2.25rem;
 	width: 100%;
-	border-radius: 3px;
+	height: 2.25rem;
+	align-items: center;
 	padding: 0.5rem 1rem;
-	color: ${({ theme }) => theme.colors.font.weak};
 	background-color: ${({ theme }) => theme.colors.background.hover} !important;
-	text-transform: none;
+	border-radius: 3px;
+	color: ${({ theme }) => theme.colors.font.weak};
 	letter-spacing: normal;
+	text-transform: none;
 `;
 
 export function Search() {

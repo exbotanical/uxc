@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useCallback } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -19,15 +19,15 @@ const PaddedListItem = styled(ListItem)`
 
 const FriendsLabel = styled.p`
 	${FontSizeLg}
-	font-weight: 600;
 	margin-left: 1rem;
+	font-weight: 600;
 `;
 
 const ThreadsListContainer = styled.ul`
 	${FlexCol}
-	overflow-y: auto;
 	height: 100%;
 	padding: 0.5rem;
+	overflow-y: auto;
 `;
 
 /**
@@ -50,13 +50,17 @@ export function PrivateThreadsList() {
 		navigate(`/${path}`);
 	}
 
-	/**
-	 * @todo cleanup
-	 * @todo default initial to selected, else first
-	 * @todo fix outline color
-	 */
-	const handleKeydown = useCallback(
-		(e: KeyboardEvent) => {
+	useEffect(() => {
+		threadRefs.current = threadRefs.current.slice(0, nThreads);
+	}, [threads, nThreads, threadRefs]);
+
+	useEffect(() => {
+		/**
+		 * @todo cleanup
+		 * @todo default initial to selected, else first
+		 * @todo fix outline color
+		 */
+		function handleKeydown(e: KeyboardEvent) {
 			if (e.key === 'ArrowDown') {
 				if (document.activeElement === dmRef.current) {
 					threadRefs.current[0]?.focus();
@@ -83,21 +87,14 @@ export function PrivateThreadsList() {
 					focusedThreadIdx.current = nextIdx;
 				}
 			}
-		},
-		[nThreads]
-	);
+		}
 
-	useEffect(() => {
-		threadRefs.current = threadRefs.current.slice(0, nThreads);
-	}, [threads, nThreads]);
-
-	useEffect(() => {
 		document.addEventListener('keydown', handleKeydown);
 
 		return () => {
 			document.removeEventListener('keydown', handleKeydown);
 		};
-	}, [threads, handleKeydown]);
+	}, [threads, nThreads]);
 
 	return (
 		<>

@@ -16,10 +16,10 @@ function randomIntFromInterval(min: number, max: number) {
 const randomIdx = randomIntFromInterval(0, mockImgs.length - 1);
 
 const ListItem = styled(RowCenter).attrs({ as: 'li' })`
-	border-radius: 0.75rem;
-	border-radius: 0.75rem;
-	margin: 0.25rem;
 	padding: 0.125rem;
+	margin: 0.25rem;
+	border-radius: 0.75rem;
+	border-radius: 0.75rem;
 	cursor: pointer;
 	transition-duration: 300ms;
 
@@ -29,9 +29,9 @@ const ListItem = styled(RowCenter).attrs({ as: 'li' })`
 `;
 
 const ChannelImg = styled.img`
-	border-radius: 0.375rem;
 	width: 100%;
 	height: 4rem;
+	border-radius: 0.375rem;
 `;
 
 export function Channel() {

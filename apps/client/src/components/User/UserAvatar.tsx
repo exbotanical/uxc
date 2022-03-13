@@ -26,9 +26,9 @@ const defaultAvatar = new URL('../../assets/gravatar.png', import.meta.url)
 
 const Container = styled.div<{ size: Size }>`
 	position: relative;
-	margin-bottom: 0.25rem;
-	height: ${({ size }) => SizeMap[size]};
 	width: ${({ size }) => SizeMap[size]};
+	height: ${({ size }) => SizeMap[size]};
+	margin-bottom: 0.25rem;
 `;
 
 const RoundedImg = styled.img`

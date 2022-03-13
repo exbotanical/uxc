@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
 type Size = 'lg' | 'md' | 'sm';
+
 interface StatusIndicatorProps {
 	size?: Size;
 	sansBorder?: boolean;
@@ -32,17 +33,17 @@ const Container = styled.div`
 `;
 
 const ping = keyframes`
-  75%, 100% {
-    transform: scale(2);
-    opacity: 0;
-  }
+	75%, 100% {
+		opacity: 0;
+		transform: scale(2);
+	}
 `;
 
 const IndicatorBase = styled.div<{ size: Size }>`
 	position: absolute;
 	bottom: 0px;
-	border-radius: 9999px;
 	background-color: ${({ theme }) => theme.colors.success.norm};
+	border-radius: 9999px;
 	${({ size }) => SizeMap[size]}
 `;
 
@@ -53,7 +54,7 @@ const AnimatedIndicatorOverlay = styled(IndicatorBase)`
 const Indicator = styled(IndicatorBase)<{
 	sansBorder: boolean;
 }>`
-	${({ sansBorder }) => (sansBorder ? {} : Border)};
+	${({ sansBorder }) => (sansBorder ? {} : Border)}
 `;
 
 const Border = css`

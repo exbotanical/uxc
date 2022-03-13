@@ -14,9 +14,9 @@ const Container = styled.div`
 
 const UsernameLabel = styled.p`
 	${FontSizeBase}
-	font-weight: 600;
 	margin-left: 0.5rem;
 	color: ${({ theme }) => theme.colors.font.strong};
+	font-weight: 600;
 `;
 
 export function UserStatus({ user }: { user: User }) {

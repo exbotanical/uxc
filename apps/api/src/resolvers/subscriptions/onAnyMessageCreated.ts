@@ -1,3 +1,4 @@
+import { SubscriptionResolvers } from '@uxc/types/generated';
 import { withFilter } from 'graphql-subscriptions';
 
 import type { WithMessage } from './types';
@@ -5,7 +6,6 @@ import type { MessageWithSender, JWTPayload } from '@uxc/types/node';
 
 import { pubsub } from '@/redis';
 import { EVENTS } from '@/utils/constants';
-import { SubscriptionResolvers } from '@uxc/types/generated';
 
 export const onAnyMessageCreated = {
 	subscribe: withFilter(

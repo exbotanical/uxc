@@ -7,12 +7,11 @@ const Container = styled.div`
 	display: flex;
 	width: 7rem;
 	height: 100%;
-	color: white;
-	background-color: ${({ theme }) => theme.colors.background.dark};
 	border-right: 1px solid ${({ theme }) => theme.colors.border.norm};
+	background-color: ${({ theme }) => theme.colors.background.dark};
+	color: white;
 `;
 
-/** @todo rerenders when changing chat */
 export function ChannelsList() {
 	return (
 		<Container>

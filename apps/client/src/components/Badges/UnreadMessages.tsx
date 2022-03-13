@@ -11,18 +11,18 @@ const THRESHOLD = 10;
 
 const Container = styled.span<{ size: 'lg' | 'sm' }>`
 	${FontSizeXs}
-	font-weight: 700;
 	position: relative;
-	left: 1.75rem;
 	bottom: 1.25rem;
+	left: 1.75rem;
 	display: inline-flex;
-	justify-content: center;
-	align-items: center;
-	line-height: 1;
-	border-radius: 9999px;
 	width: ${({ size }) => (size === 'sm' ? 1.25 : 1.75)}rem;
 	height: 1.25rem;
+	align-items: center;
+	justify-content: center;
 	background-color: ${({ theme }) => theme.colors.accent['100']};
+	border-radius: 9999px;
+	font-weight: 700;
+	line-height: 1;
 `;
 
 export function UnreadMessagesBadge({ newMessages }: UnreadMessagesBadgeProps) {

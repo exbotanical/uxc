@@ -1,69 +1,11 @@
 import type { ChangeEvent } from 'react';
 
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { v4 } from 'uuid';
 
+import * as S from './styles';
+
 import { Input } from '@/components/Fields/Input';
-import { FlexCol } from '@/styles/Layout';
-import { FontSizeBase, FontSizeXs } from '@/styles/Typography/FontSize';
-
-const Container = styled.div`
-	${FlexCol}
-	flex-shrink: 1;
-`;
-
-const Form = styled.form`
-	align-self: center;
-	margin-top: 3rem;
-	margin-bottom: 3rem;
-`;
-
-const ListContainer = styled.ul`
-	display: grid;
-	grid-template-columns: repeat(4, minmax(0, 1fr));
-`;
-
-const ListItem = styled.li`
-	${FlexCol}
-	justify-content: center;
-	align-items: center;
-	margin: 2rem;
-`;
-
-const Avatar = styled.div`
-	background-color: ${({ theme }) => theme.colors.blue['100']};
-	border-radius: 9999px;
-	height: 5rem;
-	width: 5rem;
-	margin-bottom: 0.5rem;
-`;
-
-const Username = styled.h4`
-	${FontSizeBase}
-	font-weight: 700;
-`;
-
-const UserStatus = styled.h5`
-	${FontSizeXs}
-	font-weight: 700;
-	color: ${({ theme }) => theme.colors.font.weak};
-`;
-
-const ActionsContainer = styled.div`
-	display: flex;
-	justify-content: space-evenly;
-	margin-top: 0.5rem;
-	margin-bottom: 0.5rem;
-	gap: 0.25rem;
-`;
-
-const ActionBubble = styled.div`
-	border-radius: 9999px;
-	height: 2rem;
-	width: 2rem;
-	background-color: ${({ theme }) => theme.colors.accent.norm};
-`;
 
 export function Friends() {
 	const [searchText, setSearchText] = useState('');
@@ -101,8 +43,8 @@ export function Friends() {
 		.map((value) => ({ value, id: v4() }));
 
 	return (
-		<Container>
-			<Form>
+		<S.Container>
+			<S.Form>
 				<Input
 					autoComplete="off"
 					data-testid="search-friends"
@@ -113,23 +55,23 @@ export function Friends() {
 					placeholder="Search friends"
 					value={searchText}
 				/>
-			</Form>
+			</S.Form>
 
-			<ListContainer>
+			<S.ListContainer>
 				{filteredFriends.map(({ value, id }) => {
 					return (
-						<ListItem key={id}>
-							<Avatar />
-							<Username>{value}</Username>
-							<UserStatus>user status</UserStatus>
-							<ActionsContainer>
-								<ActionBubble />
-								<ActionBubble />
-							</ActionsContainer>
-						</ListItem>
+						<S.ListItem key={id}>
+							<S.Avatar />
+							<S.Username>{value}</S.Username>
+							<S.UserStatus>user status</S.UserStatus>
+							<S.ActionsContainer>
+								<S.ActionBubble />
+								<S.ActionBubble />
+							</S.ActionsContainer>
+						</S.ListItem>
 					);
 				})}
-			</ListContainer>
-		</Container>
+			</S.ListContainer>
+		</S.Container>
 	);
 }

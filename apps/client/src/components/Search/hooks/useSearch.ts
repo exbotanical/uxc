@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import mockData from '@/components/Search/hooks/data.json';
 
@@ -41,8 +41,8 @@ export function useSearch() {
 
 	return {
 		history,
-		appendToHistory,
-		removeFromHistory,
+		appendToHistory: useCallback(appendToHistory, [setHistory]),
+		removeFromHistory: useCallback(removeFromHistory, [setHistory]),
 		results,
 		setResults,
 		query,

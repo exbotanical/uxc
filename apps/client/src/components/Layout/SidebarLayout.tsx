@@ -13,20 +13,19 @@ import { FlexCol } from '@/styles/Layout';
 
 const Container = styled.aside`
 	${FlexCol}
-	height: 100vh;
 	width: 22rem;
 	min-width: 22rem;
+	height: 100vh;
 	background-color: ${({ theme }) => theme.colors.background.dark};
 `;
 
 const Footer = styled.footer`
+	height: 71px;
+	max-height: 71px;
+	border-top: 1px solid ${({ theme }) => theme.colors.border.norm};
 	margin-top: auto;
 	background-color: ${({ theme }) => theme.colors.background.dark};
 	border-radius: 4px;
-	border-top: 1px solid ${({ theme }) => theme.colors.border.norm};
-
-	height: 71px;
-	max-height: 71px;
 `;
 
 const FooterContainer = styled.div`
@@ -40,6 +39,7 @@ export function SidebarLayout({ body }: { body: React.ReactNode }) {
 		getCurrentUser: User;
 	}>(GET_CURRENT_USER);
 
+	// @todo
 	if (loading) {
 		return <>Loading...</>;
 	}

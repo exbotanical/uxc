@@ -11,8 +11,8 @@ interface DelimiterProps {
 
 const Container = styled.div`
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
+	justify-content: space-between;
 	padding: 1rem;
 	color: ${({ theme }) => theme.colors.font.strong};
 `;
@@ -20,9 +20,9 @@ const Container = styled.div`
 const Label = styled.p`
 	${FontSizeSm}
 	font-weight: 700;
+	opacity: 0.75;
 	text-transform: uppercase;
 	white-space: nowrap;
-	opacity: 0.75;
 `;
 
 export const Delimiter = forwardRef<HTMLButtonElement, DelimiterProps>(

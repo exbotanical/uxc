@@ -2,6 +2,8 @@ import { useQuery } from '@apollo/client';
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
+import { filterMessagesToSender } from './utils';
+
 import type { MessageWithSender, ObjectID, User } from '@uxc/types';
 
 import { ChatMessage } from '@/components/ChatRoom/ChatMessage';
@@ -16,22 +18,13 @@ interface MessageListProps {
 }
 
 const Container = styled.div`
-	overflow-y: auto;
 	height: 100%;
+	overflow-y: auto;
 `;
 
 export function MessageList({ threadId }: MessageListProps) {
 	const bottomRef = useRef<HTMLDivElement | null>(null);
 	const [isScrolledToTop] = useState(false);
-
-	// @todo prevent scroll on update
-	useEffect(() => {
-		isScrolledToTop ||
-			bottomRef.current?.scrollIntoView({
-				block: 'nearest',
-				inline: 'start'
-			});
-	});
 
 	const { data: user } = useQuery<{
 		getCurrentUser: User;
@@ -42,11 +35,21 @@ export function MessageList({ threadId }: MessageListProps) {
 	}>(GET_MESSAGES, {
 		variables: {
 			threadId
-		}
+		},
+		fetchPolicy: 'network-only'
 	});
 
+	// @todo prevent scroll on edit
 	useEffect(() => {
-		subscribeToMore<{ onThreadMessageCreated: MessageWithSender[] }>({
+		isScrolledToTop ||
+			bottomRef.current?.scrollIntoView({
+				block: 'nearest',
+				inline: 'start'
+			});
+	}, [bottomRef, threadId, data?.getMessages, isScrolledToTop]);
+
+	useEffect(() => {
+		return subscribeToMore<{ onThreadMessageCreated: MessageWithSender[] }>({
 			document: ON_THREAD_MESSAGE_CREATED,
 			updateQuery: (prev, { subscriptionData }) => {
 				if (Object.keys(prev).length === 0) {
@@ -67,7 +70,7 @@ export function MessageList({ threadId }: MessageListProps) {
 			},
 			variables: { threadId }
 		});
-	}, []);
+	}, [threadId, subscribeToMore, user?.getCurrentUser]);
 
 	// @todo
 	if (loading) {
@@ -78,40 +81,10 @@ export function MessageList({ threadId }: MessageListProps) {
 		return null;
 	}
 
-	/**
-	 * Tracks the last message sender
-	 */
-	let userId: string | null = null;
-
-	const messages =
-		data?.getMessages.map((message) => {
-			/**
-			 * Is this message mine?
-			 */
-			let isSender = false;
-			/**
-			 * Skip metadata (e.g. username, avatar) in display?
-			 */
-			let sansMeta = false;
-
-			if (userId === message.sender._id) {
-				sansMeta = true;
-			}
-
-			if (message.sender._id === user?.getCurrentUser._id) {
-				isSender = true;
-			} else {
-				isSender = false;
-			}
-
-			userId = message.sender._id;
-
-			return {
-				...message,
-				isSender,
-				sansMeta
-			};
-		}) || [];
+	const messages = filterMessagesToSender(
+		data?.getMessages,
+		user?.getCurrentUser
+	);
 
 	return (
 		<Container data-testid="messages-container">

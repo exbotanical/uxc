@@ -9,17 +9,17 @@ export const SearchHit = styled.li.attrs<{ isActiveRecord: boolean }>(
 		'aria-selected': !!isActiveRecord // @todo on hover, too
 	})
 )<{ isActiveRecord: boolean }>`
-	border-radius: 0.5rem;
-	padding: 0.75rem 1rem;
-	margin-left: 1.5rem;
-	margin-right: 1.5rem;
-	display: block;
 	position: relative;
+	display: block;
+	padding: 0.75rem 1rem;
 	border: none;
+	margin-right: 1.5rem;
+	margin-left: 1.5rem;
+	background-color: ${({ theme }) => theme.colors.background.norm};
+	border-radius: 0.5rem;
+	color: ${({ theme }) => theme.colors.font.strong};
 	cursor: pointer;
 	transition: color 0.3s, background-color 0.4s;
-	background-color: ${({ theme }) => theme.colors.background.norm};
-	color: ${({ theme }) => theme.colors.font.strong};
 
 	&:hover,
 	&[aria-selected='true'] {
@@ -29,23 +29,22 @@ export const SearchHit = styled.li.attrs<{ isActiveRecord: boolean }>(
 
 export const SearchHitIcon = styled.div`
 	display: flex;
-	justify-content: center;
 	align-items: center;
-	margin-right: 1rem;
+	justify-content: center;
 	padding: 0.5rem;
-	background-color: ${({ theme }) => theme.colors.background.hover};
 	border: 1px solid ${({ theme }) => theme.colors.background.norm};
-
+	margin-right: 1rem;
+	background-color: ${({ theme }) => theme.colors.background.hover};
 	border-radius: 0.375rem;
 
 	${SearchHit}:hover & {
-		background-color: ${({ theme }) => theme.colors.link.norm};
 		border: 0.125px solid rgba(255, 255, 255, 0.25);
+		background-color: ${({ theme }) => theme.colors.link.norm};
 	}
 
 	${SearchHit}[aria-selected=true] & {
-		background-color: ${({ theme }) => theme.colors.link.norm};
 		border: 0.125px solid rgba(255, 255, 255, 0.25);
+		background-color: ${({ theme }) => theme.colors.link.norm};
 	}
 `;
 
@@ -55,11 +54,11 @@ export const SearchHitContainer = styled.div`
 `;
 
 export const SearchHitContent = styled.div`
-	flex: auto;
-	display: flex;
-	flex-direction: column-reverse;
-	min-width: 0;
 	z-index: 1;
+	display: flex;
+	min-width: 0;
+	flex: auto;
+	flex-direction: column-reverse;
 `;
 
 export const SearchHitTitle = styled.span`
@@ -70,8 +69,8 @@ export const SearchHitTitle = styled.span`
 `;
 
 export const SearchHitAction = styled.div`
-	height: 1.5rem;
 	width: 1.5rem;
-	margin-left: 0.875rem;
+	height: 1.5rem;
 	flex: none;
+	margin-left: 0.875rem;
 `;

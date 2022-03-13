@@ -14,31 +14,31 @@ export type NotificationProps = Partial<NotifType> & {
 };
 
 const Container = styled.div<{ type: NotifType['type'] }>`
-	align-self: center;
 	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	border-radius: 0.375rem;
 	width: 24rem;
-	margin-bottom: 0.5rem;
+	align-items: center;
+	align-self: center;
+	justify-content: space-between;
 	padding: 0.75rem;
-	transition-property: transform;
-	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-	transition-duration: 150ms;
-	transition-duration: 300ms;
+	margin-bottom: 0.5rem;
 
 	background-color: ${({ theme, type }) => {
 		switch (type) {
-			case 'error':
-				return theme.colors.accent['100'];
+		case 'error':
+		return theme.colors.accent['100'];
 
-			case 'success':
-				return theme.colors.accent['600'];
+		case 'success':
+		return theme.colors.accent['600'];
 
-			default:
-				return theme.colors.accent['500'];
+		default:
+		return theme.colors.accent['500'];
 		}
-	}};
+		}};
+	border-radius: 0.375rem;
+	transition-duration: 150ms;
+	transition-duration: 300ms;
+	transition-property: transform;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 `;
 
 const AlignedButton = styled.button`
@@ -56,9 +56,7 @@ export function Notification({
 			return;
 		}
 
-		const timer = setTimeout(() => {
-			onClose();
-		}, 5000);
+		const timer = setTimeout(onClose, 5000);
 
 		return () => {
 			clearTimeout(timer);
