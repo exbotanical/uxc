@@ -3,12 +3,13 @@ import { ApolloError } from 'apollo-server-core';
 import { BaseError } from '..';
 
 import type { GraphQLError } from 'graphql';
+import { logger } from '@/services/logger';
 
 export function apolloErrorHandler(err: GraphQLError) {
 	if (err.originalError instanceof BaseError) {
 		const { friendly, internal } = err.originalError.serialize();
 
-		console.info({
+		logger.error({
 			friendly,
 			internal
 		});
@@ -20,7 +21,8 @@ export function apolloErrorHandler(err: GraphQLError) {
 		return err;
 	}
 
-	console.info(err);
+	logger.error(err);
+
 	return new ApolloError(
 		'Something went wrong. Please try again or contact support.',
 		'GENERIC_ERROR'

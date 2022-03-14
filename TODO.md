@@ -24,6 +24,7 @@
   - [ ] friends
 - [ ] electron!!!
 - [ ] logger
+  - [ ] refresh persistent
 
 ### Testing
 

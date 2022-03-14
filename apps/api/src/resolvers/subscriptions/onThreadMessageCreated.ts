@@ -14,7 +14,6 @@ export const onThreadMessageCreated = {
 	subscribe: withFilter(
 		() => pubsub.asyncIterator([EVENTS.MESSAGE_CREATED]),
 		(payload: WithMessage, { threadId }: SubscriberArgs) => {
-			console.log({ threadId });
 			return payload.message.threadId === threadId;
 		}
 	),

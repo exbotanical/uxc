@@ -1,4 +1,5 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { logger } from '@/services/logger';
 
 import { link } from './links';
 
@@ -13,6 +14,6 @@ export const client = new ApolloClient({
 
 client.onResetStore(async () => {
 	return Promise.resolve(() => {
-		console.log('store reset');
+		logger.info('store reset');
 	});
 });

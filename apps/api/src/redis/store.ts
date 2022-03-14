@@ -4,12 +4,12 @@ import Redis from 'ioredis';
 import { options } from '.';
 
 import { SessionMiddleware } from '@/middleware';
-
+import { logger } from '@/services/logger';
 
 export const client = new Redis(options)
-	.on('error', console.error)
+	.on('error', logger.error)
 	.on('connect', () => {
-		console.info('redis connect');
+		logger.info('redis connect');
 	});
 
 export function buildStore(session: SessionMiddleware) {
