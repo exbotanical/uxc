@@ -25,13 +25,13 @@ const Container = styled.div<{ type: NotifType['type'] }>`
 	background-color: ${({ theme, type }) => {
 		switch (type) {
 		case 'error':
-		return theme.colors.accent['100'];
+		return theme.colors.error.norm;
 
 		case 'success':
-		return theme.colors.accent['600'];
+		return theme.colors.accent.norm;
 
 		default:
-		return theme.colors.accent['500'];
+		return theme.colors.accent.norm;
 		}
 		}};
 	border-radius: 0.375rem;

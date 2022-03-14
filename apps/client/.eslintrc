@@ -4,16 +4,23 @@
     "@magister_zito/react",
     "prettier"
   ],
-  "overrides": [{
-    "files": ["cypress/**"],
-    "rules": {
-      "cypress/no-unnecessary-waiting": "off",
-      "@typescript-eslint/no-unnecessary-condition": "off"
-    }
-  }],
+  "overrides": [
+    {
+			"files": ["**/*.ts"],
+			"parserOptions": {
+				"project": [
+          "./tsconfig.json",
+          "./cypress/tsconfig.json"
+        ]
+			},
+      "rules": {
+        "cypress/no-unnecessary-waiting": "off",
+        "@typescript-eslint/no-unnecessary-condition": "off"
+      }
+		}
+  ],
   "rules": {
     "sort-keys": "off",
-
     "no-console": "off"
   }
 }

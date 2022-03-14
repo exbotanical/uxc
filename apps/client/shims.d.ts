@@ -13,35 +13,3 @@ interface ImportMeta {
 		VITE_API_SUBSCRIPTIONS_HOSTNAME_SECURE: string;
 	};
 }
-
-declare module 'styled-components' {
-	type Palettes =
-		| 'accent'
-		| 'background'
-		| 'background'
-		| 'blue'
-		| 'border'
-		| 'error'
-		| 'field'
-		| 'font'
-		| 'interactive'
-		| 'interactive'
-		| 'link'
-		| 'scrollbar'
-		| 'success';
-
-	export interface DefaultTheme {
-		colors: {
-			[K in Palettes]: {
-				[k: string]: string;
-				norm: string;
-				weak: string;
-				strong: string;
-				disabled: string;
-				hover: string;
-				active: string;
-				dark: string;
-			};
-		};
-	}
-}

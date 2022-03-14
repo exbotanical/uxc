@@ -19,7 +19,7 @@ const Container = styled.span<{ size: 'lg' | 'sm' }>`
 	height: 1.25rem;
 	align-items: center;
 	justify-content: center;
-	background-color: ${({ theme }) => theme.colors.accent['100']};
+	background-color: ${({ theme }) => theme.colors.accent.norm};
 	border-radius: 9999px;
 	font-weight: 700;
 	line-height: 1;

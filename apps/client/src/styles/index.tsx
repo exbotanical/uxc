@@ -8,6 +8,12 @@ import { colors } from './colors';
 import { Reset } from './Reset';
 import { Typography } from './Typography';
 
+declare module 'styled-components' {
+	export interface DefaultTheme {
+		colors: typeof colors;
+	}
+}
+
 interface ThemeProps {
 	children: React.ReactNode;
 }
