@@ -5,6 +5,7 @@ import { sign } from './jwt';
 
 import type { ObjectID } from '@uxc/types/node';
 import type { Request } from 'express';
+
 import { logger } from '@/services/logger';
 
 const scryptAsync = promisify(scrypt);

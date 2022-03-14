@@ -5,10 +5,12 @@
   "license": "MIT",
   "author": "Matthew Zito <matthewtzito@gmail.com> (goldmund)",
   "scripts": {
+    "check": "pnpm  --parallel --filter .... run check",
     "dev": "./scripts/dev.bash",
-    "format": "pnpm -r --parallel --filter {apps} --filter {libs} run format",
-    "lint": "pnpm -r --parallel --filter {apps} --filter {libs} run lint",
-    "lint:css": "pnpm -r --parallel --filter {apps,libs} run lint:css"
+    "format": "pnpm -r --parallel --filter .... run format",
+    "lint": "pnpm -r --parallel --filter .... run lint",
+    "test": "pnpm --filter {apps/api} run test && pnpm --filter {apps/client} run test:unit",
+    "test:cy": "pnpm --filter {apps/client} run test:cy:ci"
   },
   "lint-staged": {
     "{apps,libs}/**/*.{ts,tsx,js,jsx}": [
@@ -30,6 +32,7 @@
     "@magister_zito/eslint-config": "^0.9.0",
     "@magister_zito/eslint-config-react": "^0.9.0",
     "@magister_zito/stylelint-config": "0.1.0",
+    "concurrently": "^7.0.0",
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.3.0",
     "husky": "7.0.2",

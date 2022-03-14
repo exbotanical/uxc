@@ -14,7 +14,7 @@ export const sessionMiddleware = session({
 	name: 'sid',
 	resave: false,
 	saveUninitialized: false,
-	secret: process.env.COOKIE_SECRET,
+	secret: process.env.COOKIE_SECRET || 'secret',
 	store: buildStore(session)
 });
 

@@ -1,0 +1,66 @@
+version: 2
+updates:
+
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 1
+    assignees:
+      - "MatthewZito"
+    pull-request-branch-name:
+      separator: "-"
+    commit-message:
+      prefix: "chore: "
+      include: "scope"
+    labels:
+      - "npm dependencies"
+      - "monorepo"
+
+  - package-ecosystem: "npm"
+    directory: "/apps/api"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 1
+    assignees:
+      - "MatthewZito"
+    pull-request-branch-name:
+      separator: "-"
+    commit-message:
+      prefix: "chore(api): "
+      include: "scope"
+    labels:
+      - "npm dependencies"
+      - "api"
+
+  - package-ecosystem: "npm"
+    directory: "/apps/client"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 1
+    assignees:
+      - "MatthewZito"
+    pull-request-branch-name:
+      separator: "-"
+    commit-message:
+      prefix: "chore(client): "
+      include: "scope"
+    labels:
+      - "npm dependencies"
+      - "client"
+
+  - package-ecosystem: "npm"
+    directory: "/libs/types"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 1
+    assignees:
+      - "MatthewZito"
+    pull-request-branch-name:
+      separator: "-"
+    commit-message:
+      prefix: "chore(types): "
+      include: "scope"
+    labels:
+      - "npm dependencies"
+      - "libs/types"

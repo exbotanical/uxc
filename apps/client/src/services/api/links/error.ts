@@ -1,5 +1,6 @@
-import { logger } from '@/services/logger';
 import { onError } from '@apollo/client/link/error';
+
+import { logger } from '@/services/logger';
 
 /**
  * @todo see TODO.md E1

@@ -1,5 +1,6 @@
 {
   "baseUrl": "http://localhost:3000",
+	"projectId": "hehf8m",
   "integrationFolder": "cypress/integration",
   "fixturesFolder": "cypress/fixtures",
 	"pluginsFile": "cypress/plugins",

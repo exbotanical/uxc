@@ -1,5 +1,5 @@
 /* eslint-disable jest/require-top-level-describe,vars-on-top,no-var */
-import '../src/dotenv';
+import '@/dotenv';
 
 import { JOIN_MUTATION } from '@@/fixtures';
 import { MongoMemoryServer } from 'mongodb-memory-server';
@@ -11,6 +11,7 @@ import type { User } from '@uxc/types/node';
 import { app } from '@/app';
 import { pubsub, client } from '@/redis';
 import { initializeServer } from '@/server';
+import { validateConfig } from '@/utils';
 
 declare global {
 	var join: () => Promise<string[]>;
@@ -25,6 +26,7 @@ jest.setTimeout(20000);
 
 let mongo: MongoMemoryServer;
 beforeAll(async () => {
+	validateConfig();
 	await initializeServer();
 
 	process.env.JWT_SIGNING_KEY = 'test';
