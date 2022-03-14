@@ -22,18 +22,18 @@ export class Logger {
 	}
 
 	info(...args: any[]) {
-		this.#log('info', '#326fab', ...args);
+		this.#log('info', '#5f57a5', ...args);
 	}
 
 	success(...args: any[]) {
-		this.#log('info', '#8ac24a', ...args);
+		this.#log('info', '#abd67a', ...args);
 	}
 
 	warn(...args: any[]) {
-		this.#log('info', '#ffb143', ...args);
+		this.#log('info', '#ffbd5b', ...args);
 	}
 
 	error(...args: any[]) {
-		this.#log('error', '#e61e50', ...args);
+		this.#log('error', '#fc3a6b', ...args);
 	}
 }

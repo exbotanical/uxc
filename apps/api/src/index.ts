@@ -1,8 +1,10 @@
 import 'module-alias/register';
-import { connectToDatabase } from './db';
-import { DatabaseConnectionError } from './middleware';
-import { initializeServer } from './server';
-import { validateConfig } from './utils';
+
+import { connectToDatabase } from '@/db';
+import { DatabaseConnectionError } from '@/middleware';
+import { initializeServer } from '@/server';
+import { logger } from '@/services/logger';
+import { validateConfig } from '@/utils';
 
 const PORT = process.env.API_PORT || 5000;
 
@@ -19,21 +21,20 @@ const PORT = process.env.API_PORT || 5000;
 	}
 
 	httpServer.listen(PORT, () => {
-		console.info(
+		logger.info(
 			`\n🚀 Query endpoint listening at http://localhost:${PORT}${server.graphqlPath}`
 		);
 
-		console.info(
+		logger.info(
 			`🚀 Subscription endpoint listening at ws://localhost:${PORT}${server.graphqlPath}`
 		);
 
-		console.info(
+		logger.info(
 			`🚀 GraphQL Explorer listening at http://localhost:${PORT}${server.graphqlPath}\n`
 		);
 	});
 })();
 
 process.on('unhandledRejection', (reason) => {
-	console.log('Unhandled', { reason });
-	// throw reason;
+	logger.error('Unhandled Promise Rejection', { reason });
 });

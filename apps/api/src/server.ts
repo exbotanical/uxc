@@ -13,18 +13,19 @@ import { ApolloServer } from 'apollo-server-express';
 import { execute, subscribe } from 'graphql';
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 
-import { app } from './app';
+import { app } from '@/app';
 import {
 	apolloErrorHandler as formatError,
 	corsOptions,
 	expressErrorHandler,
 	NotFoundError,
 	sessionMiddleware
-} from './middleware';
-import { schema } from './schema';
+} from '@/middleware';
+import { schema } from '@/schema';
 
 import type { JWT, JWTPayload } from '@uxc/types/node';
 import type { Request, Response } from 'express';
+import { logger } from '@/services/logger';
 
 declare module 'express-session' {
 	export interface SessionData {
@@ -50,7 +51,7 @@ export async function initializeServer() {
 				async serverWillStart() {
 					return {
 						async drainServer() {
-							console.info('subscription server closing...');
+							logger.info('subscription server closing...');
 							subscriptionServer.close();
 						}
 					};

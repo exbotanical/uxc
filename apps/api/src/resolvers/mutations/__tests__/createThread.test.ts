@@ -89,7 +89,6 @@ describe('createThread workflow', () => {
 
 		const { createThread } = body.data;
 
-		console.log(createThread.users);
 		expect(createThread.users).toStrictEqual(
 			expect.arrayContaining([
 				expect.objectContaining({ _id: user._id.toString() })

@@ -5,6 +5,7 @@ import { sign } from './jwt';
 
 import type { ObjectID } from '@uxc/types/node';
 import type { Request } from 'express';
+import { logger } from '@/services/logger';
 
 const scryptAsync = promisify(scrypt);
 
@@ -35,7 +36,7 @@ export function createSession(id: ObjectID) {
 export function invalidateSession(req: Request) {
 	req.session.destroy((ex) => {
 		if (ex) {
-			console.error('An error occurred in `invalidateSession`. see: ', ex);
+			logger.error('An error occurred in `invalidateSession`. see: ', ex);
 		}
 	});
 }

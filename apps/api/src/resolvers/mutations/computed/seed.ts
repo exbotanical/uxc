@@ -5,6 +5,7 @@ import { Document } from 'mongoose';
 import type { Context, ObjectID, User as UserType } from '@uxc/types/node';
 
 import { User, Message, PrivateThread } from '@/db';
+import { logger } from '@/services/logger';
 
 interface Taskable {
 	save: () => Promise<any>;
@@ -87,7 +88,7 @@ export async function seed(req?: Request) {
 		userId = _id;
 		testUser = { password };
 
-		console.info('New puppet account created', {
+		logger.info('New puppet account created', {
 			email,
 			password
 		});
