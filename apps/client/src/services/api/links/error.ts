@@ -1,3 +1,4 @@
+import { logger } from '@/services/logger';
 import { onError } from '@apollo/client/link/error';
 
 /**
@@ -6,7 +7,7 @@ import { onError } from '@apollo/client/link/error';
 export const errorLink = onError(({ graphQLErrors, networkError }) => {
 	if (graphQLErrors) {
 		graphQLErrors.forEach(({ message, locations, path }) => {
-			console.error(
+			logger.error(
 				`[GraphQL error]: Message: ${message}, Location: ${locations?.map(
 					({ column, line }) => `Col: ${column} / Line: ${line}`
 				)}, Path: ${path}`
@@ -16,6 +17,6 @@ export const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 	if (networkError) {
 		// @todo safe stringify (circular refs)
-		console.error(`[Network error]: ${JSON.stringify(networkError)}`);
+		logger.error(`[Network error]: ${JSON.stringify(networkError)}`);
 	}
 });
