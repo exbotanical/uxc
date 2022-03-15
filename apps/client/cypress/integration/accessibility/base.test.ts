@@ -46,17 +46,17 @@ const runTest = (url: string) => {
 
 describe('accessibility', () => {
 	beforeEach(() => {
-		Cypress.config('interceptions' as keyof Cypress.TestConfigOverrides, {});
+		Cypress.config('interceptions', {});
 	});
 
 	unauthenticatedTestUrls.forEach((url) => {
-		it(`Page ${url} has no detectable accessibility violations on load [dark mode]`, () => {
+		it(`Page ${url} has no detectable accessibility violations on load`, () => {
 			runTest(url);
 		});
 	});
 
 	authenticatedTestUrls.forEach((url, idx) => {
-		it(`Page ${url} has no detectable accessibility violations on load [dark mode]`, () => {
+		it(`Page ${url} has no detectable accessibility violations on load`, () => {
 			if (idx === 0) {
 				cy.interceptGQL(
 					'http://localhost/api/graphql',

@@ -1,7 +1,7 @@
 {
 	"errors": [
 		{
-			"message": "The email or username you chose are taken.",
+			"message": "The email or username you chose is taken.",
 			"extensions": {
 					"code": "BadRequestError"
 			}

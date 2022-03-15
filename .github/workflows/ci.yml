@@ -1,0 +1,23 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+
+  check:
+    uses: MatthewZito/.github/.github/workflows/pnpm_script_run.yml@master
+    with:
+      script_name: check
+
+  test:
+    uses: MatthewZito/.github/.github/workflows/pnpm_script_run.yml@master
+    with:
+      script_name: test
+
+  # cy-test:
+  #   uses: MatthewZito/.github/.github/workflows/pnpm_script_run.yml@master
+  #   with:
+  #     script_name: test:cy

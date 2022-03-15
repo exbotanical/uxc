@@ -1,7 +1,9 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
-import { logger } from '@/services/logger';
 
 import { link } from './links';
+
+import { logger } from '@/services/logger';
+
 
 export * from './queries';
 

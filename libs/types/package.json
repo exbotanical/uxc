@@ -16,6 +16,7 @@
   },
   "main": "src/index.ts",
   "scripts": {
+		"check": "pnpm lint",
     "format": "prettier --write \"src/**/*.{ts,tsx,md}\"",
     "lint": "eslint --ext .ts,.js,.tsx,.jsx,.json . --fix",
     "schema": "graphql-codegen --config codegen.yml"

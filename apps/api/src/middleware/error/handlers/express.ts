@@ -1,6 +1,7 @@
 import { BaseError } from '..';
 
 import type { Request, Response, NextFunction } from 'express';
+
 import { logger } from '@/services/logger';
 
 /**

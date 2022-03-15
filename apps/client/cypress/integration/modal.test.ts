@@ -5,7 +5,7 @@ const overlayTestId = 'modal-overlay';
 
 describe('modal accessibility and functionality', () => {
 	beforeEach(() => {
-		Cypress.config('interceptions' as keyof Cypress.TestConfigOverrides, {});
+		Cypress.config('interceptions', {});
 
 		cy.interceptGQL(
 			'http://localhost/api/graphql',
@@ -16,20 +16,6 @@ describe('modal accessibility and functionality', () => {
 		cy.interceptGQL('http://localhost/api/graphql', 'getThreads', getThreadsOk);
 
 		cy.visit('/');
-	});
-
-	it('mounts a modal in a portal element', () => {
-		cy.getByTestId(overlayTestId).should('not.exist');
-		cy.getByTestId('uxc-search-btn').click();
-
-		cy.getByTestId(overlayTestId).should('exist');
-
-		cy.get('#root')
-			// skip script tag
-			.next()
-			.next()
-			.should('have.attr', 'data-testid', overlayTestId)
-			.should('have.attr', 'role', 'dialog');
 	});
 
 	it('traps focus inside the modal, cycling all tab-able elements', () => {

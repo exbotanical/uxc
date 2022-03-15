@@ -9,7 +9,7 @@ export const PASSWORD_CHARS_MAX = 64;
 export const ERROR_MESSAGES = {
 	E_AUTHORIZATION_REQUIRED: 'Authorization is required.',
 	E_CREDENTIALS_TAKEN: 'Email or username in use.',
-	E_CREDENTIALS_TAKEN_FRIENDLY: 'The email or username you chose are taken.',
+	E_CREDENTIALS_TAKEN_FRIENDLY: 'The email or username you chose is taken.',
 	E_DISALLOWED_CHAR_USERNAME:
 		'Your username contains a disallowed special character.',
 	E_INVALID_CREDENTIALS: 'The provided credentials are invalid.',

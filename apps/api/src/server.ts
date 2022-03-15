@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/require-await */
 import 'module-alias/register';
 import './dotenv';
+
 import { createServer } from 'http';
 
 import { ERROR_MESSAGES } from '@uxc/types/node';
@@ -13,6 +14,9 @@ import { ApolloServer } from 'apollo-server-express';
 import { execute, subscribe } from 'graphql';
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 
+import type { JWT, JWTPayload } from '@uxc/types/node';
+import type { Request, Response } from 'express';
+
 import { app } from '@/app';
 import {
 	apolloErrorHandler as formatError,
@@ -22,9 +26,6 @@ import {
 	sessionMiddleware
 } from '@/middleware';
 import { schema } from '@/schema';
-
-import type { JWT, JWTPayload } from '@uxc/types/node';
-import type { Request, Response } from 'express';
 import { logger } from '@/services/logger';
 
 declare module 'express-session' {
