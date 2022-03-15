@@ -5,7 +5,7 @@ const overlayTestId = 'modal-overlay';
 
 describe('modal accessibility and functionality', () => {
 	beforeEach(() => {
-		Cypress.config('interceptions' as keyof Cypress.TestConfigOverrides, {});
+		Cypress.config('interceptions', {});
 
 		cy.interceptGQL(
 			'http://localhost/api/graphql',

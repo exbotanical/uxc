@@ -9,7 +9,5 @@
 	"video": false,
 	"screenshotOnRunFailure": false,
 	"retries": 2,
-	"defaultCommandTimeout": 10000,
-  "viewportWidth": 1000,
-  "viewportHeight": 1050
+	"defaultCommandTimeout": 10000
 }

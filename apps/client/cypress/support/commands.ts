@@ -61,7 +61,7 @@ Cypress.Commands.add(
 			[operation]: { alias, data }
 		};
 
-		Cypress.config('interceptions' as keyof Cypress.TestConfigOverrides, {
+		Cypress.config('interceptions', {
 			...previous,
 			[url]: next
 		});

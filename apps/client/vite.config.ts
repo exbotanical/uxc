@@ -41,14 +41,14 @@ export default defineConfig({
 		alias: {
 			'@': r('./src')
 		}
-	},
-	server: {
-		// see https://github.com/vitejs/vite/issues/3002
-		hmr: {
-			host: 'localhost',
-			protocol: 'ws'
-		},
-		host: '0.0.0.0',
-		open: false
 	}
+	// server: {
+	// 	// see https://github.com/vitejs/vite/issues/3002
+	// 	hmr: {
+	// 		host: 'localhost',
+	// 		protocol: 'ws'
+	// 	},
+	// 	host: '0.0.0.0',
+	// 	open: false
+	// }
 });

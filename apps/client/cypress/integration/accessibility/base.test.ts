@@ -46,7 +46,7 @@ const runTest = (url: string) => {
 
 describe('accessibility', () => {
 	beforeEach(() => {
-		Cypress.config('interceptions' as keyof Cypress.TestConfigOverrides, {});
+		Cypress.config('interceptions', {});
 	});
 
 	unauthenticatedTestUrls.forEach((url) => {

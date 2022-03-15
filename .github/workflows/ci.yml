@@ -21,35 +21,3 @@ jobs:
   #   uses: MatthewZito/.github/.github/workflows/pnpm_script_run.yml@master
   #   with:
   #     script_name: test:cy
-  #     record: true
-  #   env:
-  #     CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-  #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  # ugh https://github.com/cypress-io/github-action/issues/145
-  integration_test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Git Checkout
-        uses: actions/checkout@v2
-      - name: Setup pnpm
-        uses: pnpm/action-setup@646cdf48217256a3d0b80361c5a50727664284f2
-        with:
-          version: 6.14.7
-          run_install: true
-      - name: Run Integration tests
-        uses: cypress-io/github-action@v2
-        with:
-          install: false
-          build: pnpm build
-          start: pnpm serve
-          wait-on: 'http://localhost:3000'
-          browser: chrome
-          record: true
-          working-directory: apps/client
-        env:
-          CYPRESS_SUPPORT: "y"
-          VITE_CY_TEST: true
-          CY_CI: true
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

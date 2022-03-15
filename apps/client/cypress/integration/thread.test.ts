@@ -4,7 +4,7 @@ import getThreadsOk from '../fixtures/getThreads/ok.json';
 
 describe('thread chatroom functionality', () => {
 	beforeEach(() => {
-		Cypress.config('interceptions' as keyof Cypress.TestConfigOverrides, {});
+		Cypress.config('interceptions', {});
 
 		cy.interceptGQL(
 			'http://localhost/api/graphql',

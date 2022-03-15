@@ -38,7 +38,7 @@ function init() {
 
 describe('join workflow', () => {
 	beforeEach(() => {
-		Cypress.config('interceptions' as keyof Cypress.TestConfigOverrides, {});
+		Cypress.config('interceptions', {});
 	});
 
 	it('focuses the first input on load', () => {

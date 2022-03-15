@@ -9,8 +9,7 @@
     "dev": "./scripts/dev.bash",
     "format": "pnpm -r --parallel --filter .... run format",
     "lint": "pnpm -r --parallel --filter .... run lint",
-    "test": "pnpm --filter {apps/api} run test && pnpm --filter {apps/client} run test:unit",
-    "test:cy": "pnpm --filter {apps/client} run test:cy:ci"
+    "test": "pnpm --filter {apps/api} run test && pnpm --filter {apps/client} run test:unit"
   },
   "lint-staged": {
     "{apps,libs}/**/*.{ts,tsx,js,jsx}": [
