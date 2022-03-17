@@ -2,21 +2,21 @@ import { ERROR_MESSAGES } from '@uxc/types/node';
 import { AuthenticationError } from 'apollo-server-core';
 
 import type { Resolver } from '../types';
-import type { FriendRequest } from '@uxc/types/node';
+import type { PopulatedFriendRequest } from '@uxc/types/node';
+import { FriendRequest, User } from '@/db';
 
-import { User } from '@/db';
-
-export const getFriendRequests: Resolver<FriendRequest[]> = async (
-	_,
-	__,
-	{ req }
-) => {
+export const getFriendRequests: Resolver<
+	PopulatedFriendRequest[],
+	{ type: 'SENT' | 'RECV' }
+> = async (_, { type }, { req }) => {
 	const userId = req.session.meta?.id;
 	if (!userId) {
 		throw new AuthenticationError(ERROR_MESSAGES.E_NO_USER_SESSION);
 	}
 
-	const friendRequests = await User.findFriendRequestsSent(userId);
+	if (type === 'SENT') {
+		return await FriendRequest.findFriendRequestsSent(userId);
+	}
 
-	return friendRequests;
+	return await FriendRequest.findFriendRequestsRecv(userId);
 };

@@ -4,11 +4,15 @@ enum FriendRequestStatus {
   ACCEPTED
 }
 
+enum FriendRequestType {
+  SENT
+  RECV
+}
 
 type Friend {
   _id: ID
-  partnerA: User
-  partnerB: User
+  friendNodeX: User
+  friendNodeY: User
 }
 
 type FriendRequest {
@@ -19,7 +23,8 @@ type FriendRequest {
 }
 
 type Query {
-  getFriendRequests: [FriendRequest]
+  getFriends: [Friend]
+  getFriendRequests(type: FriendRequestType): [FriendRequest]
 }
 
 type Subscription {
@@ -27,6 +32,7 @@ type Subscription {
 }
 
 type Mutation {
+  removeFriend(friendId: ID): ID
   createFriendRequest(recipientId: ID): ID
   updateFriendRequest(requestId: ID, status: FriendRequestStatus): ID
 }

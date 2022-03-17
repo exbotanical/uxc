@@ -107,10 +107,10 @@ export async function seed(req?: Request) {
 	await Promise.all(userTasks);
 
 	// befriend ea new user - test user
-	const friendTasks = userIds.map((partnerB) =>
+	const friendTasks = userIds.map((friendNodeY) =>
 		Friend.build({
-			partnerA: user._id,
-			partnerB
+			friendNodeX: user._id,
+			friendNodeY
 		})
 	);
 

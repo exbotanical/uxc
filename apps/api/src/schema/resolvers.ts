@@ -36,7 +36,9 @@ export const resolvers: Resolvers = {
 		getMessages: authGuard(queries.getMessages),
 		getUser: authGuard(queries.getUser),
 		getCurrentUser: authGuard(queries.getCurrentUser),
-		search: authGuard(queries.search)
+		search: authGuard(queries.search),
+		getFriendRequests: authGuard(queries.getFriendRequests),
+		getFriends: authGuard(queries.getFriends)
 	},
 
 	// User: {
@@ -62,6 +64,7 @@ export const resolvers: Resolvers = {
 		createThread: authGuard(mutations.createThread),
 		deleteThread: authGuard(mutations.deleteThread),
 		createFriendRequest: authGuard(mutations.createFriendRequest),
-		updateFriendRequest: authGuard(mutations.updateFriendRequest)
+		updateFriendRequest: authGuard(mutations.updateFriendRequest),
+		removeFriend: authGuard(mutations.removeFriend)
 	}
 };

@@ -10,16 +10,17 @@ type NewFriendArgs = AsBuildArgs<FriendType>;
 
 interface FriendModel extends Model<RawDocument> {
 	build(attrs: NewFriendArgs): ReturnDocument;
+	findFriends(id: ObjectID): Promise<FriendType[]>;
 }
 
 const FriendSchema = new Schema<FriendType>(
 	{
-		partnerA: {
+		friendNodeX: {
 			ref: 'User',
 			required: true,
 			type: Schema.Types.ObjectId
 		},
-		partnerB: {
+		friendNodeY: {
 			ref: 'User',
 			required: true,
 			type: Schema.Types.ObjectId
@@ -37,16 +38,12 @@ const FriendSchema = new Schema<FriendType>(
 
 FriendSchema.statics.findFriends = function (id: ObjectID) {
 	return this.find({
-		$and: [
+		$or: [
 			{
-				$or: [
-					{
-						partnerA: id
-					},
-					{
-						partnerB: id
-					}
-				]
+				friendNodeX: id
+			},
+			{
+				friendNodeY: id
 			}
 		]
 	});

@@ -31,13 +31,19 @@ export interface User extends BaseModel {
 }
 
 export interface Friend extends BaseModel {
-	partnerA: PopulatedDoc<User>;
-	partnerB: PopulatedDoc<User>;
+	friendNodeX: PopulatedDoc<User>;
+	friendNodeY: PopulatedDoc<User>;
 }
 
 export interface FriendRequest extends BaseModel {
 	requester: PopulatedDoc<User>;
 	recipient: PopulatedDoc<User>;
+	status: FriendRequestStatus;
+}
+
+export interface PopulatedFriendRequest extends BaseModel {
+	requester: User;
+	recipient: User;
 	status: FriendRequestStatus;
 }
 

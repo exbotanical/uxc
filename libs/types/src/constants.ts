@@ -45,6 +45,7 @@ export const ERROR_MESSAGES = {
 		'A status is required in order to update a friend request.',
 	E_NO_SELF_REQUEST: 'You cannot send a friend request to yourself.',
 	E_NO_SELF_REQUEST_EDIT: "You cannot edit another user's friend request.",
+	E_NO_FRIEND_ID: "friendId is required but was not supplied.',",
 	E_GENERIC_FRIENDLY:
 		'Something went wrong. Please try again or contact support.'
 };

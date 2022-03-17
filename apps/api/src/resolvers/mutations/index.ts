@@ -10,6 +10,8 @@ export * from './updateFriendRequest';
 
 export * from './join';
 
+export * from './removeFriend';
+
 export * from './signout';
 
 export * from './signin';

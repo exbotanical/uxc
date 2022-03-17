@@ -1,7 +1,7 @@
 import { ERROR_MESSAGES } from '@uxc/types/node';
-import type { ObjectID, Context } from '@uxc/types/node';
+import type { ObjectID, Context, User as UserType } from '@uxc/types/node';
 
-import { FriendRequest, User } from '@/db';
+import { Friend, FriendRequest, User } from '@/db';
 import { AuthenticationError } from 'apollo-server-core';
 import { logger } from '@/services/logger';
 import { pubsub } from '@/redis';
@@ -47,30 +47,42 @@ export const updateFriendRequest = async (
 		);
 	}
 
-	const friendRequest = await FriendRequest.findOne({ _id: requestId });
+	const populatedFriendRequest = await FriendRequest.findOne({
+		_id: requestId
+	}).populate('requester');
+
+	if (!populatedFriendRequest) {
+		return null;
+	}
+
+	const { requester } = populatedFriendRequest as { requester: UserType };
 
 	// only the recipient may edit friend requests
-	if (maybeRecipient?.toString() === friendRequest?.requester?.toString()) {
+	if (maybeRecipient.toString() === requester._id.toString()) {
 		throw new UserInputError(ERROR_MESSAGES.E_NO_SELF_REQUEST_EDIT);
 	}
 
 	// if the status is not to be changed (for whatever reason), quietly return without executing an update op
-	if (friendRequest?.status === status) {
-		return friendRequest._id || null;
+	if (populatedFriendRequest.status === status) {
+		return populatedFriendRequest._id || null;
 	}
 
-	// unfortunately, mongoose gives us few options here; we must use `findOneAndUpdate` lest we lose the return document.
-	// furthermore, we cannot implement any validation on the found doc prior to saving, hence the use of a preceding `findOne`.
-	const populatedFriendRequest = await FriendRequest?.findOneAndUpdate(
-		{ _id: requestId },
-		{
-			status
-		}
-	).populate('requester');
+	if (status === 'REJECTED') {
+		populatedFriendRequest?.deleteOne();
+	}
+
+	if (status === 'ACCEPTED') {
+		populatedFriendRequest?.deleteOne();
+
+		Friend.create({
+			friendNodeX: maybeRecipient,
+			friendNodeY: requester
+		});
+	}
 
 	pubsub.publish(EVENTS.FRIEND_REQUEST_SAVED, {
-		friendRequest: [populatedFriendRequest]
+		friendRequest: [Object.assign(populatedFriendRequest, status)]
 	});
 
-	return friendRequest?._id || null;
+	return populatedFriendRequest._id;
 };

@@ -8,11 +8,7 @@ import {
 } from '@uxc/types/node';
 import { Schema, model } from 'mongoose';
 
-import type {
-	ObjectID,
-	User as UserType,
-	FriendRequest
-} from '@uxc/types/node';
+import type { User as UserType } from '@uxc/types/node';
 import type { Model } from 'mongoose';
 
 import { toHash } from '@/utils';
@@ -30,8 +26,6 @@ export type ReturnDocument = AsReturnDocument<UserWithPassword>;
 
 interface UserModel extends Model<RawDocument> {
 	build(attrs: NewUserArgs): ReturnDocument;
-	findFriendRequestsSent(userId: ObjectID): FriendRequest[];
-	findFriendRequestsReceived(userId: ObjectID): FriendRequest[];
 }
 
 const UserSchema = new Schema<UserWithPassword>(
@@ -75,18 +69,6 @@ const UserSchema = new Schema<UserWithPassword>(
 );
 
 UserSchema.index({ username: 'text' });
-
-UserSchema.statics.findFriendRequestsSent = async function (requester) {
-	return await User.find({ requester, status: 'PENDING' }).populate(
-		'recipient'
-	);
-};
-
-UserSchema.statics.findFriendRequestsReceived = async function (recipient) {
-	return await User.find({ recipient, status: 'PENDING' }).populate(
-		'requester'
-	);
-};
 
 UserSchema.statics.build = (attrs) => {
 	return new User(attrs);

@@ -1,5 +1,7 @@
 import {
 	CREATE_FRIEND_REQUEST,
+	GET_FRIENDS,
+	GET_FRIEND_REQUESTS,
 	JOIN_MUTATION,
 	UPDATE_FRIEND_REQUEST
 } from '@@/fixtures';
@@ -9,10 +11,9 @@ import request from 'supertest';
 import { app } from '@/app';
 import { seed } from '@/resolvers/mutations/computed/seed';
 
-const testSubject = 'updateFriendRequest';
-
 const status = 'ACCEPTED';
 
+const testSubject = 'updateFriendRequest';
 describe(`${testSubject} workflow`, () => {
 	it('fails with an Unauthorized error if the request does not include a valid session cookie', async () => {
 		const { userIds } = await seed();
@@ -192,5 +193,109 @@ describe(`${testSubject} workflow`, () => {
 			.expect(200);
 
 		expect(body2.data.updateFriendRequest).toEqual(expect.any(String));
+	});
+
+	it('deletes the friend request once its status is updated to REJECTED', async () => {
+		const { cookie, cookie2, id2 } = await taleOfTwoUsers();
+
+		const { body } = await request(app)
+			.post(BASE_PATH)
+			.set('Cookie', cookie)
+			.send({
+				query: CREATE_FRIEND_REQUEST,
+				variables: {
+					recipientId: id2
+				}
+			})
+			.expect(200);
+
+		const { body: body2 } = await request(app)
+			.post(BASE_PATH)
+			.set('Cookie', cookie2)
+			.send({
+				query: UPDATE_FRIEND_REQUEST,
+				variables: {
+					requestId: body.data.createFriendRequest,
+					status: 'REJECTED'
+				}
+			})
+			.expect(200);
+
+		expect(body2.data.updateFriendRequest).toEqual(expect.any(String));
+
+		const { body: body3 } = await request(app)
+			.post(BASE_PATH)
+			.set('Cookie', cookie)
+			.send({
+				query: GET_FRIEND_REQUESTS,
+				variables: {
+					type: 'SENT'
+				}
+			})
+			.expect(200);
+
+		expect(body3.data.getFriendRequests).toHaveLength(0);
+	});
+
+	it('deletes the friend request once its status is updated to ACCEPTED and creates a new Friend relationship', async () => {
+		const { cookie, cookie2, id2 } = await taleOfTwoUsers();
+
+		const { body } = await request(app)
+			.post(BASE_PATH)
+			.set('Cookie', cookie)
+			.send({
+				query: CREATE_FRIEND_REQUEST,
+				variables: {
+					recipientId: id2
+				}
+			})
+			.expect(200);
+
+		const { body: body2 } = await request(app)
+			.post(BASE_PATH)
+			.set('Cookie', cookie)
+			.send({
+				query: GET_FRIENDS
+			})
+			.expect(200);
+
+		expect(body2.data.getFriends).toHaveLength(0);
+
+		const { body: body3 } = await request(app)
+			.post(BASE_PATH)
+			.set('Cookie', cookie2)
+			.send({
+				query: UPDATE_FRIEND_REQUEST,
+				variables: {
+					requestId: body.data.createFriendRequest,
+					status: 'ACCEPTED'
+				}
+			})
+			.expect(200);
+
+		expect(body3.data.updateFriendRequest).toEqual(expect.any(String));
+
+		const { body: body4 } = await request(app)
+			.post(BASE_PATH)
+			.set('Cookie', cookie)
+			.send({
+				query: GET_FRIEND_REQUESTS,
+				variables: {
+					type: 'SENT'
+				}
+			})
+			.expect(200);
+
+		expect(body4.data.getFriendRequests).toHaveLength(0);
+
+		const { body: body5 } = await request(app)
+			.post(BASE_PATH)
+			.set('Cookie', cookie)
+			.send({
+				query: GET_FRIENDS
+			})
+			.expect(200);
+
+		expect(body5.data.getFriends).toHaveLength(1);
 	});
 });
