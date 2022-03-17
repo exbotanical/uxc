@@ -29,7 +29,7 @@ describe('createThread workflow', () => {
 	);
 
 	it('fails when not provided a receiverId', async () => {
-		const cookie = await join();
+		const { cookie } = await join();
 
 		const { body } = await request(app)
 			.post(BASE_PATH)
@@ -49,7 +49,7 @@ describe('createThread workflow', () => {
 	});
 
 	it('fails when provided a receiverId that is not a valid ObjectID', async () => {
-		const cookie = await join();
+		const { cookie } = await join();
 		const receiverId = '123';
 
 		const { body } = await request(app)
@@ -65,7 +65,7 @@ describe('createThread workflow', () => {
 
 		expect(body.errors).toHaveLength(1);
 		expect(body.errors[0].message).toStrictEqual(
-			`The provided receiverId ${receiverId} is not a valid ObjectID`
+			`The provided receiverId ${receiverId} is not a valid ObjectID.`
 		);
 
 		expect(body.errors[0].path[0]).toBe('createThread');
@@ -74,7 +74,7 @@ describe('createThread workflow', () => {
 	it('creates a new thread', async () => {
 		const { user } = await seed();
 
-		const cookie = await join();
+		const { cookie } = await join();
 
 		const { body } = await request(app)
 			.post(BASE_PATH)

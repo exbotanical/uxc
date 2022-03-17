@@ -15,7 +15,6 @@ type Subscription {
 	onAnyMessageCreated: Message
 }
 
-
 type Mutation {
   createMessage(threadId: ID, body: String): Message
   updateMessage(messageId: ID, body: String): Message

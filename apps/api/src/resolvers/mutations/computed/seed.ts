@@ -4,7 +4,7 @@ import { Document } from 'mongoose';
 
 import type { Context, ObjectID, User as UserType } from '@uxc/types/node';
 
-import { User, Message, PrivateThread } from '@/db';
+import { User, Message, PrivateThread, Friend } from '@/db';
 import { logger } from '@/services/logger';
 
 interface Taskable {
@@ -67,14 +67,14 @@ function partition(grp: Taskable[]) {
 }
 
 export async function seedWrapper(_: any, __: any, { req }: Context) {
-	const { user, threadIds } = await seed(req);
+	const { user, ...rest } = await seed(req);
 
 	if (user.password) {
 		delete user.password;
 	}
 
 	return {
-		threadIds,
+		...rest,
 		user
 	};
 }
@@ -106,6 +106,16 @@ export async function seed(req?: Request) {
 	const [userTasks, userIds] = partition(users) as unknown as PartitionedTasks;
 	await Promise.all(userTasks);
 
+	// befriend ea new user - test user
+	const friendTasks = userIds.map((partnerB) =>
+		Friend.build({
+			partnerA: user._id,
+			partnerB
+		})
+	);
+
+	await Promise.all(friendTasks);
+
 	// for each new user, create a private thread with my user
 	const [threadTasks, threadIds] = partition(
 		users.map((user2) =>
@@ -136,6 +146,7 @@ export async function seed(req?: Request) {
 
 	return {
 		threadIds,
+		userIds,
 		user: Object.assign(user, testUser) as MaybePassword & UserType
 	};
 }

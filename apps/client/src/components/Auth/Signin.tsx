@@ -6,8 +6,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, Navigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import type { NormalizedError , MaybeGQLError } from '@/services/error';
-import type { User } from '@uxc/types';
+import type { NormalizedError, MaybeGQLError } from '@/services/error';
+import { ERROR_MESSAGES, User } from '@uxc/types';
 
 import { ErrorMessage, MESSAGE_TIMEOUT } from '@/components/Auth/ErrorMessage';
 import * as S from '@/components/Auth/styles';
@@ -100,8 +100,7 @@ export function Signin() {
 					{
 						code: 'UNKNOWN_ERROR',
 						field: null,
-						message:
-							'Something went wrong. Please try again or contact support.'
+						message: ERROR_MESSAGES.E_GENERIC_FRIENDLY
 					}
 				]);
 

@@ -1,8 +1,12 @@
+export * from './createFriendRequest';
+
 export * from './createMessage';
 
 export * from './createThread';
 
 export * from './deleteThread';
+
+export * from './updateFriendRequest';
 
 export * from './join';
 

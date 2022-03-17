@@ -22,7 +22,7 @@ describe('getUser workflow', () => {
 	});
 
 	it('fails when not provided a userId', async () => {
-		const cookie = await join();
+		const { cookie } = await join();
 
 		const { body } = await request(app)
 			.post(BASE_PATH)
@@ -40,7 +40,7 @@ describe('getUser workflow', () => {
 	});
 
 	it('fails when provided a userId that is not a valid ObjectID', async () => {
-		const cookie = await join();
+		const { cookie } = await join();
 		const userId = '123';
 
 		const { body } = await request(app)
@@ -56,14 +56,14 @@ describe('getUser workflow', () => {
 
 		expect(body.errors).toHaveLength(1);
 		expect(body.errors[0].message).toStrictEqual(
-			`The provided userId ${userId} is not a valid ObjectID`
+			`The provided userId ${userId} is not a valid ObjectID.`
 		);
 
 		expect(body.errors[0].path[0]).toBe('getUser');
 	});
 
 	it('returns the requested user', async () => {
-		const cookie = await join();
+		const { cookie } = await join();
 		const { user } = await seed();
 
 		const { body } = await request(app)

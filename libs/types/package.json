@@ -7,7 +7,7 @@
   "files": [
     "src",
     "generated",
-		"node"
+    "node"
   ],
   "exports": {
     ".": "./src/index.ts",
@@ -16,7 +16,7 @@
   },
   "main": "src/index.ts",
   "scripts": {
-		"check": "pnpm lint",
+    "check": "pnpm lint",
     "format": "prettier --write \"src/**/*.{ts,tsx,md}\"",
     "lint": "eslint --ext .ts,.js,.tsx,.jsx,.json . --fix",
     "schema": "graphql-codegen --config codegen.yml"
@@ -36,6 +36,7 @@
     "@magister_zito/eslint-config": "^0.8.0",
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.5.0",
+    "mongoose": "^6.1.8",
     "prettier": "2.4.1"
   }
 }

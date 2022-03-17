@@ -6,7 +6,7 @@ import { app } from '@/app';
 
 describe('user context workflow', () => {
 	it('returns the current user data', async () => {
-		const cookie = await join();
+		const { cookie } = await join();
 
 		const { body } = await request(app)
 			.post(globalThis.BASE_PATH)

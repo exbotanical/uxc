@@ -1,5 +1,5 @@
 import { ERROR_MESSAGES } from '@uxc/types/node';
-import { UserInputError } from 'apollo-server-core';
+import { UserInputError } from '@/services/error';
 import { isValidObjectId } from 'mongoose';
 
 import type { Resolver } from '../types';
@@ -17,7 +17,7 @@ export const deleteThread: Resolver<ObjectID, { threadId: ObjectID }> = async (
 
 	if (!isValidObjectId(threadId)) {
 		throw new UserInputError(
-			`The provided threadId ${threadId} is not a valid ObjectID`
+			`The provided threadId ${threadId} is not a valid ObjectID.`
 		);
 	}
 

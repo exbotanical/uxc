@@ -9,7 +9,7 @@ import type {
 } from '@uxc/types/node';
 
 import { PrivateThread } from '@/db';
-import { UserInputError } from '@/middleware';
+import { UserInputError } from '@/services/error';
 
 export const createThread: Resolver<
 	PrivateThreadType,
@@ -26,7 +26,7 @@ export const createThread: Resolver<
 
 	if (!isValidObjectId(receiverId)) {
 		throw new UserInputError(
-			`The provided receiverId ${receiverId} is not a valid ObjectID`
+			`The provided receiverId ${receiverId} is not a valid ObjectID.`
 		);
 	}
 

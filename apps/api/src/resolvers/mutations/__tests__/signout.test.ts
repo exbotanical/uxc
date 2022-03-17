@@ -5,7 +5,7 @@ import { app } from '@/app';
 
 describe('signout workflow', () => {
 	it('clears the cookie after logging out', async () => {
-		const cookie = await join();
+		const { cookie } = await join();
 
 		const response = await request(app)
 			.post(globalThis.BASE_PATH)

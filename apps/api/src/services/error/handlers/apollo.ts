@@ -5,6 +5,7 @@ import { BaseError } from '..';
 import type { GraphQLError } from 'graphql';
 
 import { logger } from '@/services/logger';
+import { ERROR_MESSAGES } from '@uxc/types';
 
 export function apolloErrorHandler(err: GraphQLError) {
 	if (err.originalError instanceof BaseError) {
@@ -24,8 +25,5 @@ export function apolloErrorHandler(err: GraphQLError) {
 
 	logger.error(err);
 
-	return new ApolloError(
-		'Something went wrong. Please try again or contact support.',
-		'GENERIC_ERROR'
-	);
+	return new ApolloError(ERROR_MESSAGES.E_GENERIC_FRIENDLY, 'GENERIC_ERROR');
 }

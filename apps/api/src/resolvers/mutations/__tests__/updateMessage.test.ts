@@ -27,7 +27,7 @@ describe('updateMessage workflow', () => {
 	});
 
 	it('fails when not provided a messageId', async () => {
-		const cookie = await join();
+		const { cookie } = await join();
 
 		const { body } = await request(app)
 			.post(BASE_PATH)
@@ -49,7 +49,7 @@ describe('updateMessage workflow', () => {
 	});
 
 	it('fails when provided a messageId that is not a valid ObjectID', async () => {
-		const cookie = await join();
+		const { cookie } = await join();
 
 		const messageId = '123';
 
@@ -67,14 +67,14 @@ describe('updateMessage workflow', () => {
 
 		expect(body.errors).toHaveLength(1);
 		expect(body.errors[0].message).toStrictEqual(
-			`The provided messageId ${messageId} is not a valid ObjectID`
+			`The provided messageId ${messageId} is not a valid ObjectID.`
 		);
 
 		expect(body.errors[0].path[0]).toBe('updateMessage');
 	});
 
 	it('fails when provided a messageId that does not exist in the database', async () => {
-		const cookie = await join();
+		const { cookie } = await join();
 
 		const messageId = new ObjectId();
 
@@ -92,7 +92,7 @@ describe('updateMessage workflow', () => {
 
 		expect(body.errors).toHaveLength(1);
 		expect(body.errors[0].message).toStrictEqual(
-			`The provided messageId ${messageId} does not represent a resource in the database`
+			`The provided messageId ${messageId} does not represent a resource in the database.`
 		);
 		expect(body.errors[0].path[0]).toBe('updateMessage');
 	});

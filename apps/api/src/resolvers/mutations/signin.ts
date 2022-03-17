@@ -8,7 +8,7 @@ import type {
 import type { User as UserType } from '@uxc/types/node';
 
 import { User } from '@/db';
-import { BadRequestError, UserInputError } from '@/middleware';
+import { BadRequestError, UserInputError } from '@/services/error';
 import { compare, createSession } from '@/utils/auth';
 
 export const signinResolver: MutationResolvers['signin'] = async (

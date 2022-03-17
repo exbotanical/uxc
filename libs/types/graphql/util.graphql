@@ -7,6 +7,7 @@ type Query {
 type SeedReturnValue {
 	user: User
 	threadIds: [ID]
+	userIds: [ID]
 }
 
 type Mutation {

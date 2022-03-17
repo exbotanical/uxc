@@ -23,6 +23,7 @@ export const ERROR_MESSAGES = {
 		USERNAME_CHARS_MAX + 1
 	} characters.`,
 	E_NO_CREDENTIALS: 'Credentials must be provided.',
+	E_NO_ARGS: 'Arguments must be provided.',
 	E_NO_MESSAGE_ID: 'messageId is required but was not supplied.',
 	E_NO_NEW_PASSWORD: 'A valid password is required.',
 	E_NO_PASSWORD: 'A password must be provided.',
@@ -36,5 +37,14 @@ export const ERROR_MESSAGES = {
 	} characters.`,
 	E_SHORT_USERNAME: `Your username must contain more than ${
 		USERNAME_CHARS_MIN - 1
-	} characters.`
+	} characters.`,
+	E_NO_RECIPIENTID: 'The required argument `recipientId` was not provided.',
+	E_NO_RECIPIENT: 'A recipientId is required.',
+	E_NO_REQUESTID: 'A requestId is required.',
+	E_NO_REQUEST_STATUS:
+		'A status is required in order to update a friend request.',
+	E_NO_SELF_REQUEST: 'You cannot send a friend request to yourself.',
+	E_NO_SELF_REQUEST_EDIT: "You cannot edit another user's friend request.",
+	E_GENERIC_FRIENDLY:
+		'Something went wrong. Please try again or contact support.'
 };

@@ -1,5 +1,5 @@
 import { ERROR_MESSAGES } from '@uxc/types/node';
-import { UserInputError } from 'apollo-server-core';
+import { UserInputError } from '@/services/error';
 import { isValidObjectId } from 'mongoose';
 
 import type { Resolver } from '../types';
@@ -18,7 +18,7 @@ export const updateMessage: Resolver<
 
 	if (!isValidObjectId(messageId)) {
 		throw new UserInputError(
-			`The provided messageId ${messageId} is not a valid ObjectID`
+			`The provided messageId ${messageId} is not a valid ObjectID.`
 		);
 	}
 
@@ -26,7 +26,7 @@ export const updateMessage: Resolver<
 
 	if (!messageExists) {
 		throw new UserInputError(
-			`The provided messageId ${messageId} does not represent a resource in the database`
+			`The provided messageId ${messageId} does not represent a resource in the database.`
 		);
 	}
 

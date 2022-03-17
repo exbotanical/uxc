@@ -104,3 +104,15 @@ export const GET_THREAD = `
 		}
 	}
 `;
+
+export const CREATE_FRIEND_REQUEST = `
+	mutation ($recipientId: ID) {
+		createFriendRequest(recipientId: $recipientId)
+	}
+`;
+
+export const UPDATE_FRIEND_REQUEST = `
+	mutation ($requestId: ID, $status: FriendRequestStatus) {
+		updateFriendRequest(requestId: $requestId, status: $status)
+	}
+`;

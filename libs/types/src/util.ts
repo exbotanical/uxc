@@ -1,3 +1,6 @@
+import mongoose from 'mongoose';
+import type { RefType } from 'mongoose';
+
 export type AllNullable<T> = { [K in keyof T]: T[K] | null };
 export type AllNullableOrUndef<T> = { [K in keyof T]?: T[K] | null };
 
@@ -13,3 +16,10 @@ export interface JWTPayload {
 	exp: UnixTimestamp;
 	iss: string;
 }
+
+export type PopulatedDoc<
+	PopulatedType,
+	RawId extends RefType = PopulatedType extends { _id?: RefType }
+		? NonNullable<PopulatedType['_id']>
+		: mongoose.Types.ObjectId
+> = PopulatedType | RawId;

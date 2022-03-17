@@ -1,33 +1,44 @@
-import type { ObjectID } from './util';
+import type { ObjectID, PopulatedDoc } from './util';
 
-export type MessageWithSender = Omit<Message, 'sender'> & { sender: User };
-
-export interface Message {
-	_id: ObjectID;
-	threadId: ObjectID;
-	sender: ObjectID;
+export interface Timestamps {
 	createdAt: Date;
 	updatedAt: Date;
+}
+
+export interface BaseModel extends Timestamps {
+	_id: ObjectID;
+}
+
+export interface Message extends BaseModel {
+	threadId: PopulatedDoc<PrivateThread>;
+	sender: PopulatedDoc<User>;
 	body: string;
 }
 
-export interface PrivateThread {
-	_id: ObjectID;
-	createdAt: Date;
-	updatedAt: Date;
+export type MessageWithSender = Message & {
+	sender: User;
+};
+
+// @todo PopulatedDoc
+export interface PrivateThread extends BaseModel {
 	users: [User, User];
 }
 
-export interface CommunityThread {
-	_id: ObjectID;
-	createdAt: Date;
-	updatedAt: Date;
-	users: User[];
-}
-
-export interface User {
-	_id: ObjectID;
+export interface User extends BaseModel {
 	username: string;
 	email: string;
 	userImage: string | null;
 }
+
+export interface Friend extends BaseModel {
+	partnerA: PopulatedDoc<User>;
+	partnerB: PopulatedDoc<User>;
+}
+
+export interface FriendRequest extends BaseModel {
+	requester: PopulatedDoc<User>;
+	recipient: PopulatedDoc<User>;
+	status: FriendRequestStatus;
+}
+
+export type FriendRequestStatus = 'PENDING' | 'REJECTED' | 'ACCEPTED';

@@ -15,7 +15,7 @@ import type {
 } from '@uxc/types/generated';
 
 import { User } from '@/db';
-import { BadRequestError, UserInputError } from '@/middleware';
+import { BadRequestError, UserInputError } from '@/services/error';
 import { createSession } from '@/utils';
 
 export const joinResolver: MutationResolvers['join'] = async (

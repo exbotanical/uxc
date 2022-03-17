@@ -21,7 +21,7 @@ export const getThread: Resolver<
 
 	if (!isValidObjectId(threadId)) {
 		throw new UserInputError(
-			`The provided threadId ${threadId} is not a valid ObjectID`
+			`The provided threadId ${threadId} is not a valid ObjectID.`
 		);
 	}
 

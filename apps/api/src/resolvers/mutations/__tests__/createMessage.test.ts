@@ -31,7 +31,7 @@ describe('createMessage workflow', () => {
 	);
 
 	it('fails when not provided a threadId', async () => {
-		const cookie = await join();
+		const { cookie } = await join();
 
 		const { body } = await request(app)
 			.post(BASE_PATH)
@@ -51,7 +51,7 @@ describe('createMessage workflow', () => {
 	});
 
 	it('fails when provided a threadId that is not a valid ObjectID', async () => {
-		const cookie = await join();
+		const { cookie } = await join();
 
 		const threadId = '123';
 
@@ -69,14 +69,14 @@ describe('createMessage workflow', () => {
 
 		expect(body.errors).toHaveLength(1);
 		expect(body.errors[0].message).toStrictEqual(
-			`The provided threadId ${threadId} is not a valid ObjectID`
+			`The provided threadId ${threadId} is not a valid ObjectID.`
 		);
 
 		expect(body.errors[0].path[0]).toBe('createMessage');
 	});
 
 	it('fails when provided a threadId that does not exist in the database', async () => {
-		const cookie = await join();
+		const { cookie } = await join();
 
 		const threadId = new ObjectId();
 
@@ -94,7 +94,7 @@ describe('createMessage workflow', () => {
 
 		expect(body.errors).toHaveLength(1);
 		expect(body.errors[0].message).toStrictEqual(
-			`The provided threadId ${threadId} does not represent a resource in the database`
+			`The provided threadId ${threadId} does not represent a resource in the database.`
 		);
 		expect(body.errors[0].path[0]).toBe('createMessage');
 	});

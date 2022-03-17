@@ -17,7 +17,7 @@ export const getUser: Resolver<UserType, { userId: ObjectID }> = async (
 
 	if (!isValidObjectId(userId)) {
 		throw new UserInputError(
-			`The provided userId ${userId} is not a valid ObjectID`
+			`The provided userId ${userId} is not a valid ObjectID.`
 		);
 	}
 

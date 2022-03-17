@@ -6,7 +6,7 @@ import type { Resolver } from '../types';
 import type { Message as MessageType, ObjectID } from '@uxc/types/node';
 
 import { Message, PrivateThread } from '@/db';
-import { UserInputError } from '@/middleware';
+import { UserInputError } from '@/services/error';
 import { pubsub } from '@/redis';
 import { EVENTS } from '@/utils/constants';
 
@@ -25,7 +25,7 @@ export const createMessage: Resolver<
 
 	if (!isValidObjectId(threadId)) {
 		throw new UserInputError(
-			`The provided threadId ${threadId} is not a valid ObjectID`
+			`The provided threadId ${threadId} is not a valid ObjectID.`
 		);
 	}
 
@@ -33,7 +33,7 @@ export const createMessage: Resolver<
 
 	if (!threadExists) {
 		throw new UserInputError(
-			`The provided threadId ${threadId} does not represent a resource in the database`
+			`The provided threadId ${threadId} does not represent a resource in the database.`
 		);
 	}
 
