@@ -1,11 +1,11 @@
 import { ERROR_MESSAGES } from '@uxc/types/node';
-import { UserInputError } from '@/services/error';
 import { isValidObjectId } from 'mongoose';
 
 import type { Resolver } from '../types';
 import type { ObjectID, Message as MessageType } from '@uxc/types/node';
 
 import { Message } from '@/db';
+import { UserInputError } from '@/services/error';
 
 // @todo disallow users to edit any message; restrict to sender/receiver
 export const updateMessage: Resolver<

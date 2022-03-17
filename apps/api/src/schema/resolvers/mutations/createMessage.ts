@@ -6,8 +6,8 @@ import type { Resolver } from '../types';
 import type { Message as MessageType, ObjectID } from '@uxc/types/node';
 
 import { Message, PrivateThread } from '@/db';
-import { UserInputError } from '@/services/error';
 import { pubsub } from '@/redis';
+import { UserInputError } from '@/services/error';
 import { EVENTS } from '@/utils/constants';
 
 export const createMessage: Resolver<

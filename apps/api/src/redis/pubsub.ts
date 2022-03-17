@@ -1,12 +1,12 @@
-import redisMock from 'redis-mock';
 
 import { RedisPubSub } from 'graphql-redis-subscriptions';
 import Redis from 'ioredis';
+import redisMock from 'redis-mock';
 
 import { options, dateReviver } from '.';
 
-import { isTestRuntime } from '@/utils';
 import { logger } from '@/services/logger';
+import { isTestRuntime } from '@/utils';
 
 const publisher = (
 	isTestRuntime ? redisMock.createClient() : new Redis(options)

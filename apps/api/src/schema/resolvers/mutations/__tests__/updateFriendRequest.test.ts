@@ -2,14 +2,13 @@ import {
 	CREATE_FRIEND_REQUEST,
 	GET_FRIENDS,
 	GET_FRIEND_REQUESTS,
-	JOIN_MUTATION,
 	UPDATE_FRIEND_REQUEST
 } from '@@/fixtures';
 import { ERROR_MESSAGES } from '@uxc/types/node';
 import request from 'supertest';
 
 import { app } from '@/app';
-import { seed } from '@/resolvers/mutations/computed/seed';
+import { seed } from '@/schema/resolvers/mutations/computed/seed';
 
 const status = 'ACCEPTED';
 
@@ -49,7 +48,9 @@ describe(`${testSubject} workflow`, () => {
 			.expect(200);
 
 		expect(body.errors).toHaveLength(1);
-		expect(body.errors[0].message).toStrictEqual(ERROR_MESSAGES.E_NO_REQUESTID);
+		expect(body.errors[0].message).toStrictEqual(
+			ERROR_MESSAGES.E_NO_REQUEST_ID
+		);
 		expect(body.errors[0].path[0]).toBe(testSubject);
 	});
 
@@ -192,7 +193,7 @@ describe(`${testSubject} workflow`, () => {
 			})
 			.expect(200);
 
-		expect(body2.data.updateFriendRequest).toEqual(expect.any(String));
+		expect(body2.data.updateFriendRequest).toStrictEqual(expect.any(String));
 	});
 
 	it('deletes the friend request once its status is updated to REJECTED', async () => {
@@ -221,7 +222,7 @@ describe(`${testSubject} workflow`, () => {
 			})
 			.expect(200);
 
-		expect(body2.data.updateFriendRequest).toEqual(expect.any(String));
+		expect(body2.data.updateFriendRequest).toStrictEqual(expect.any(String));
 
 		const { body: body3 } = await request(app)
 			.post(BASE_PATH)
@@ -273,7 +274,7 @@ describe(`${testSubject} workflow`, () => {
 			})
 			.expect(200);
 
-		expect(body3.data.updateFriendRequest).toEqual(expect.any(String));
+		expect(body3.data.updateFriendRequest).toStrictEqual(expect.any(String));
 
 		const { body: body4 } = await request(app)
 			.post(BASE_PATH)

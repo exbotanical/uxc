@@ -1,13 +1,13 @@
 import { ERROR_MESSAGES } from '@uxc/types/node';
+import { AuthenticationError } from 'apollo-server-core';
+import { isValidObjectId, Error as MongooseError } from 'mongoose';
+
 import type { ObjectID, Context } from '@uxc/types/node';
 
 import { FriendRequest, User } from '@/db';
-import { AuthenticationError } from 'apollo-server-core';
-import { logger } from '@/services/logger';
 import { pubsub } from '@/redis';
-import { EVENTS } from '@/utils/constants';
 import { BadRequestError, UserInputError } from '@/services/error';
-import { isValidObjectId, Error as MongooseError } from 'mongoose';
+import { EVENTS } from '@/utils/constants';
 
 interface CreateFriendRequestArgs {
 	recipientId?: ObjectID | null;

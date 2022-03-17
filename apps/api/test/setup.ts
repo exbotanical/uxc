@@ -34,6 +34,14 @@ declare global {
 	var BASE_PATH: string;
 }
 
+interface JoinPayload {
+	data: {
+		join: {
+			_id: ObjectID;
+		};
+	};
+}
+
 globalThis.BASE_PATH = '/graphql';
 
 jest.setTimeout(20000);
@@ -96,7 +104,7 @@ globalThis.join = async (overrideUser?: UserWithPassword) => {
 
 	return {
 		cookie: response.get('Set-Cookie'),
-		id: response.body.data.join._id
+		id: (response.body as JoinPayload).data.join._id
 	};
 };
 

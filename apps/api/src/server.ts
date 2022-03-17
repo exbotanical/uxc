@@ -18,14 +18,13 @@ import type { JWT, JWTPayload } from '@uxc/types/node';
 import type { Request, Response } from 'express';
 
 import { app } from '@/app';
-
 import { corsOptions, sessionMiddleware } from '@/middleware';
+import { schema } from '@/schema';
 import {
 	apolloErrorHandler as formatError,
 	expressErrorHandler,
 	NotFoundError
 } from '@/services/error';
-import { schema } from '@/schema';
 import { logger } from '@/services/logger';
 
 declare module 'express-session' {

@@ -1,8 +1,8 @@
 import { PrivateThread as PrivateThreadType } from '@uxc/types/node';
 import { Schema, model } from 'mongoose';
 
-import type { Model, Document } from 'mongoose';
 import type { AsRawDocument, AsBuildArgs, AsReturnDocument } from '../types';
+import type { Model } from 'mongoose';
 
 type RawDocument = AsRawDocument<PrivateThreadType>;
 type ReturnDocument = AsReturnDocument<PrivateThreadType>;

@@ -1,14 +1,13 @@
 import { ERROR_MESSAGES } from '@uxc/types/node';
+import { AuthenticationError } from 'apollo-server-core';
+import { isValidObjectId } from 'mongoose';
+
 import type { ObjectID, Context, User as UserType } from '@uxc/types/node';
 
-import { Friend, FriendRequest, User } from '@/db';
-import { AuthenticationError } from 'apollo-server-core';
-import { logger } from '@/services/logger';
+import { Friend, FriendRequest } from '@/db';
 import { pubsub } from '@/redis';
-import { EVENTS } from '@/utils/constants';
 import { UserInputError } from '@/services/error';
-import { isValidObjectId } from 'mongoose';
-import { ObjectId } from 'mongodb';
+import { EVENTS } from '@/utils/constants';
 
 interface UpdateFriendRequestArgs {
 	requestId?: ObjectID | null;
@@ -26,7 +25,7 @@ export const updateFriendRequest = async (
 	}
 
 	if (!requestId) {
-		throw new UserInputError(ERROR_MESSAGES.E_NO_REQUESTID);
+		throw new UserInputError(ERROR_MESSAGES.E_NO_REQUEST_ID);
 	}
 
 	if (!status) {
@@ -68,11 +67,11 @@ export const updateFriendRequest = async (
 	}
 
 	if (status === 'REJECTED') {
-		populatedFriendRequest?.deleteOne();
+		populatedFriendRequest.deleteOne();
 	}
 
 	if (status === 'ACCEPTED') {
-		populatedFriendRequest?.deleteOne();
+		populatedFriendRequest.deleteOne();
 
 		Friend.create({
 			friendNodeX: maybeRecipient,

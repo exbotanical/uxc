@@ -41,10 +41,3 @@ export function invalidateSession(req: Request) {
 		}
 	});
 }
-
-export function createTokens(id: ObjectID) {
-	return {
-		accessToken: sign({ id }),
-		refreshToken: sign({ id, isRefresh: true })
-	};
-}

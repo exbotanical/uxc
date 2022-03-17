@@ -3,7 +3,7 @@ import { ERROR_MESSAGES } from '@uxc/types/node';
 import request from 'supertest';
 
 import { app } from '@/app';
-import { seed } from '@/resolvers/mutations/computed/seed';
+import { seed } from '@/schema/resolvers/mutations/computed/seed';
 
 const testSubject = 'createFriendRequest';
 describe(`${testSubject} workflow`, () => {
@@ -130,6 +130,6 @@ describe(`${testSubject} workflow`, () => {
 			})
 			.expect(200);
 
-		expect(body.data.createFriendRequest).toEqual(expect.any(String));
+		expect(body.data.createFriendRequest).toStrictEqual(expect.any(String));
 	});
 });

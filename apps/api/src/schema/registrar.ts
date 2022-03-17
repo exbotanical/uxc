@@ -4,22 +4,19 @@ import type { Resolvers } from '@uxc/types/generated';
 import type { GraphQLScalarType } from 'graphql';
 
 import { authGuard } from '@/middleware/auth';
-
-import * as queries from '@/resolvers/queries';
-import {
-	onThreadMessageCreated,
-	onAnyMessageCreated,
-	onFriendRequestSaved
-} from '@/resolvers/subscriptions';
-
 import {
 	joinResolver as join,
 	signinResolver as signin,
 	signoutResolver as signout
-} from '@/resolvers/mutations';
-import * as mutations from '@/resolvers/mutations';
-
-import { seedWrapper, purge } from '@/resolvers/mutations/computed';
+} from '@/schema/resolvers/mutations';
+import * as mutations from '@/schema/resolvers/mutations';
+import { seedWrapper, purge } from '@/schema/resolvers/mutations/computed';
+import * as queries from '@/schema/resolvers/queries';
+import {
+	onThreadMessageCreated,
+	onAnyMessageCreated,
+	onFriendRequestSaved
+} from '@/schema/resolvers/subscriptions';
 
 export const resolvers: Resolvers = {
 	Date: GraphQLDateTime as unknown as GraphQLScalarType,

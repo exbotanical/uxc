@@ -11,7 +11,7 @@ import styled from 'styled-components';
 import SvgIcon from '../Icon';
 import { UserAvatar } from '../User/UserAvatar';
 
-import type { MessageWithSender, Message, User } from '@uxc/types';
+import type { MessageWithSender, Message } from '@uxc/types';
 
 import { UPDATE_MESSAGE } from '@/services/api/queries';
 import { FlexCol } from '@/styles/Layout';

@@ -2,12 +2,12 @@
 import type { ChangeEvent, FormEvent } from 'react';
 
 import { useMutation, useQuery } from '@apollo/client';
+import { ERROR_MESSAGES, User } from '@uxc/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, Navigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import type { NormalizedError, MaybeGQLError } from '@/services/error';
-import { ERROR_MESSAGES, User } from '@uxc/types';
 
 import { ErrorMessage, MESSAGE_TIMEOUT } from '@/components/Auth/ErrorMessage';
 import * as S from '@/components/Auth/styles';

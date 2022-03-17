@@ -1,5 +1,5 @@
-import type { Document } from 'mongoose';
 import type { BaseModel } from '@uxc/types';
+import type { Document } from 'mongoose';
 
 export type AsBuildArgs<T extends BaseModel> = Omit<
 	T,
@@ -8,8 +8,8 @@ export type AsBuildArgs<T extends BaseModel> = Omit<
 
 export type AsRawDocument<T> = T & { __v?: string };
 
-export type AsReturnDocument<T> = T & DocumentSansId;
+export type AsReturnDocument<T> = DocumentSansId & T;
 
 export type DocumentSansId = Omit<Document, '_id'>;
 
-export type UserPassword = { password?: string };
+export interface UserPassword { password?: string }

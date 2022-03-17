@@ -8,7 +8,7 @@ import { ERROR_MESSAGES } from '@uxc/types/node';
 import request from 'supertest';
 
 import { app } from '@/app';
-import { seed } from '@/resolvers/mutations/computed/seed';
+import { seed } from '@/schema/resolvers/mutations/computed/seed';
 
 const testSubject = 'removeFriend';
 describe(`${testSubject} workflow`, () => {
@@ -120,6 +120,6 @@ describe(`${testSubject} workflow`, () => {
 			})
 			.expect(200);
 
-		expect(body3.data.removeFriend).toEqual(friend._id);
+		expect(body3.data.removeFriend).toStrictEqual(friend._id);
 	});
 });

@@ -1,11 +1,13 @@
 import { ERROR_MESSAGES } from '@uxc/types/node';
-import { UserInputError } from '@/services/error';
+import { AuthenticationError } from 'apollo-server-core';
 import { isValidObjectId } from 'mongoose';
 
 import type { Resolver } from '../types';
 import type { ObjectID } from '@uxc/types/node';
+
 import { Friend } from '@/db';
-import { AuthenticationError } from 'apollo-server-core';
+import { UserInputError } from '@/services/error';
+
 
 export const removeFriend: Resolver<ObjectID, { friendId: ObjectID }> = async (
 	_,

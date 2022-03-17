@@ -1,11 +1,11 @@
 import { ERROR_MESSAGES } from '@uxc/types/node';
-import { UserInputError } from '@/services/error';
 import { isValidObjectId } from 'mongoose';
 
 import type { Resolver } from '../types';
 import type { ObjectID } from '@uxc/types/node';
 
 import { PrivateThread } from '@/db';
+import { UserInputError } from '@/services/error';
 
 export const deleteThread: Resolver<ObjectID, { threadId: ObjectID }> = async (
 	_,

@@ -1,7 +1,8 @@
-import redisMock from 'redis-mock';
 
 import connectRedis from 'connect-redis';
 import Redis from 'ioredis';
+import redisMock from 'redis-mock';
+
 import { options } from '.';
 
 import { SessionMiddleware } from '@/middleware';

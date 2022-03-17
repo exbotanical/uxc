@@ -7,8 +7,6 @@ import { app } from '@/app';
 const testSubject = 'getFriendRequests';
 describe(`${testSubject} workflow`, () => {
 	it('fails with an Unauthorized error if the request does not include a valid session cookie', async () => {
-		const { cookie } = await join();
-
 		const { body } = await request(app)
 			.post(BASE_PATH)
 			.send({
@@ -54,9 +52,9 @@ describe(`${testSubject} workflow`, () => {
 		const friendRequest = body.data.getFriendRequests[0];
 
 		expect(body.data.getFriendRequests).toHaveLength(1);
-		expect(friendRequest.recipient._id).toEqual(id);
-		expect(friendRequest.requester._id).toEqual(id2);
-		expect(friendRequest.status).toEqual('PENDING');
+		expect(friendRequest.recipient._id).toStrictEqual(id);
+		expect(friendRequest.requester._id).toStrictEqual(id2);
+		expect(friendRequest.status).toBe('PENDING');
 	});
 
 	it('retrieves all sent friend requests', async () => {
@@ -87,8 +85,8 @@ describe(`${testSubject} workflow`, () => {
 		const friendRequest = body.data.getFriendRequests[0];
 
 		expect(body.data.getFriendRequests).toHaveLength(1);
-		expect(friendRequest.recipient._id).toEqual(id2);
-		expect(friendRequest.requester._id).toEqual(id);
-		expect(friendRequest.status).toEqual('PENDING');
+		expect(friendRequest.recipient._id).toStrictEqual(id2);
+		expect(friendRequest.requester._id).toStrictEqual(id);
+		expect(friendRequest.status).toBe('PENDING');
 	});
 });

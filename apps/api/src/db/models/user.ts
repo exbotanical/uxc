@@ -8,18 +8,18 @@ import {
 } from '@uxc/types/node';
 import { Schema, model } from 'mongoose';
 
-import type { User as UserType } from '@uxc/types/node';
-import type { Model } from 'mongoose';
-
-import { toHash } from '@/utils';
 import type {
 	AsBuildArgs,
 	AsRawDocument,
 	AsReturnDocument,
 	UserPassword
 } from '../types';
+import type { User as UserType } from '@uxc/types/node';
+import type { Model } from 'mongoose';
 
-type UserWithPassword = UserType & UserPassword;
+import { toHash } from '@/utils';
+
+type UserWithPassword = UserPassword & UserType;
 type NewUserArgs = AsBuildArgs<UserType> & UserPassword;
 type RawDocument = AsRawDocument<UserWithPassword>;
 export type ReturnDocument = AsReturnDocument<UserWithPassword>;

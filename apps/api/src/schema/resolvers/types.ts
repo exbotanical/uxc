@@ -1,5 +1,9 @@
 import type { AllNullableOrUndef, Context } from '@uxc/types/node';
 
+export type Maybe<T> = T | null;
+
+export type MaybePromise<T> = Promise<Maybe<T>> | T;
+
 export interface Problem {
 	message: string;
 	type: string;
@@ -23,7 +27,7 @@ export type Resolver<ReturnValue, Args = Record<string, unknown>> = (
 	parent: Record<string, unknown>,
 	args: Args extends undefined ? undefined : AllNullableOrUndef<Args>,
 	context: Context
-) => Promise<ReturnValue | null>;
+) => MaybePromise<ReturnValue>;
 
 export type MaybeErrorResolver<
 	ReturnValue,

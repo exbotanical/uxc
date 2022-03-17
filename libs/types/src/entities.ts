@@ -47,4 +47,4 @@ export interface PopulatedFriendRequest extends BaseModel {
 	status: FriendRequestStatus;
 }
 
-export type FriendRequestStatus = 'PENDING' | 'REJECTED' | 'ACCEPTED';
+export type FriendRequestStatus = 'ACCEPTED' | 'PENDING' | 'REJECTED';

@@ -1,8 +1,8 @@
 import 'module-alias/register';
 
 import { connectToDatabase } from '@/db';
-import { DatabaseConnectionError } from '@/middleware';
 import { initializeServer } from '@/server';
+import { DatabaseConnectionError } from '@/services/error';
 import { logger } from '@/services/logger';
 import { validateConfig } from '@/utils';
 

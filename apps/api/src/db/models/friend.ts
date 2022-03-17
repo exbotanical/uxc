@@ -1,8 +1,8 @@
 import { Schema, model } from 'mongoose';
 
-import type { Model } from 'mongoose';
-import type { ObjectID, Friend as FriendType } from '@uxc/types/node';
 import type { AsBuildArgs, AsRawDocument, AsReturnDocument } from '../types';
+import type { ObjectID, Friend as FriendType } from '@uxc/types/node';
+import type { Model } from 'mongoose';
 
 type RawDocument = AsRawDocument<FriendType>;
 type ReturnDocument = AsReturnDocument<FriendType>;
@@ -36,7 +36,7 @@ const FriendSchema = new Schema<FriendType>(
 	}
 );
 
-FriendSchema.statics.findFriends = function (id: ObjectID) {
+FriendSchema.statics.findFriends = function findFriends(id: ObjectID) {
 	return this.find({
 		$or: [
 			{

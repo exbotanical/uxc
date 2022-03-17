@@ -16,6 +16,11 @@ export function refreshMiddleware(
 
 	const { payload, expired } = verify({ token: accessToken });
 
+	// invalid token e.g. wrong secret or authority
+	if (!payload && !expired) {
+		req.session.meta = undefined;
+	}
+
 	if (payload) {
 		req.session.meta = payload;
 		next();
@@ -38,9 +43,7 @@ export function refreshMiddleware(
 	const session = createSession(refresh.id);
 	const decoded = decode(session.accessToken);
 
-	const { payload: meta } = decoded!;
-
-	Object.assign(req.session, session, { meta });
+	Object.assign(req.session, session, { meta: decoded });
 
 	next();
 }

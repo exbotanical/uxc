@@ -1,3 +1,4 @@
+import { ERROR_MESSAGES } from '@uxc/types';
 import { ApolloError } from 'apollo-server-core';
 
 import { BaseError } from '..';
@@ -5,7 +6,6 @@ import { BaseError } from '..';
 import type { GraphQLError } from 'graphql';
 
 import { logger } from '@/services/logger';
-import { ERROR_MESSAGES } from '@uxc/types';
 
 export function apolloErrorHandler(err: GraphQLError) {
 	if (err.originalError instanceof BaseError) {

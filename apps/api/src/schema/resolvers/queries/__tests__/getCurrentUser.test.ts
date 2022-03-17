@@ -3,7 +3,7 @@ import { ERROR_MESSAGES } from '@uxc/types/node';
 import request from 'supertest';
 
 import { app } from '@/app';
-import { seed } from '@/resolvers/mutations/computed/seed';
+import { seed } from '@/schema/resolvers/mutations/computed/seed';
 
 describe('getCurrentUser workflow', () => {
 	it('fails with an Unauthorized error if the request does not include a valid session cookie', async () => {

@@ -1,22 +1,23 @@
-import { Schema, model } from 'mongoose';
 import { ERROR_MESSAGES } from '@uxc/types/node';
+import { Schema, model } from 'mongoose';
 
+import type { AsBuildArgs, AsRawDocument, AsReturnDocument } from '../types';
 import type {
 	ObjectID,
 	FriendRequest as FriendRequestType,
 	PopulatedFriendRequest
 } from '@uxc/types/node';
-import type { Model } from 'mongoose';
-import type { AsBuildArgs, AsRawDocument, AsReturnDocument } from '../types';
+import type { Model, Query } from 'mongoose';
 
 type RawDocument = AsRawDocument<FriendRequestType>;
 type ReturnDocument = AsReturnDocument<FriendRequestType>;
 type NewFriendRequestArgs = AsBuildArgs<FriendRequestType>;
+type FriendRequestQuery = Query<FriendRequestType, any>;
 
 interface FriendRequestModel extends Model<RawDocument> {
 	build(attrs: NewFriendRequestArgs): ReturnDocument;
-	findFriendRequestsSent(userId: ObjectID): Promise<PopulatedFriendRequest[]>;
-	findFriendRequestsRecv(userId: ObjectID): Promise<PopulatedFriendRequest[]>;
+	findFriendRequestsSent(userId: ObjectID): PopulatedFriendRequest[];
+	findFriendRequestsRecv(userId: ObjectID): PopulatedFriendRequest[];
 }
 
 const FriendRequestSchema = new Schema<FriendRequestType>(
@@ -47,29 +48,30 @@ const FriendRequestSchema = new Schema<FriendRequestType>(
 	}
 );
 
-FriendRequestSchema.path('recipient').validate(function (
+FriendRequestSchema.path('recipient').validate(function validate(
 	this: NewFriendRequestArgs & { _id: string }
 ) {
 	// cannot send or amend friend request to self
-	return this.recipient.toString() !== this.requester.toString();
+	return (
+		(this.recipient as ObjectID).toString() !==
+		(this.requester as ObjectID).toString()
+	);
 },
 ERROR_MESSAGES.E_NO_SELF_REQUEST);
 
-FriendRequestSchema.statics.findFriendRequestsSent = async function (
-	requester
-) {
-	return await this.find({ requester, status: 'PENDING' }).populate(
-		'recipient'
-	);
-};
+FriendRequestSchema.statics.findFriendRequestsSent =
+	function findFriendRequestsSent(requester: ObjectID) {
+		return (
+			this.find({ requester, status: 'PENDING' }) as FriendRequestQuery
+		).populate('recipient');
+	};
 
-FriendRequestSchema.statics.findFriendRequestsRecv = async function (
-	recipient
-) {
-	return await this.find({ recipient, status: 'PENDING' }).populate(
-		'requester'
-	);
-};
+FriendRequestSchema.statics.findFriendRequestsRecv =
+	function findFriendRequestsRecv(recipient: ObjectID) {
+		return (
+			this.find({ recipient, status: 'PENDING' }) as FriendRequestQuery
+		).populate('requester');
+	};
 
 FriendRequestSchema.statics.build = (attrs: NewFriendRequestArgs) => {
 	return new FriendRequest(attrs);

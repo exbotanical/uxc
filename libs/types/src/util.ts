@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+
 import type { RefType } from 'mongoose';
 
 export type AllNullable<T> = { [K in keyof T]: T[K] | null };

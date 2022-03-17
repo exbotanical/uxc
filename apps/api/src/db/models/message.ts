@@ -1,8 +1,8 @@
 import { Message as MessageType } from '@uxc/types/node';
 import { Schema, model } from 'mongoose';
 
-import type { Model } from 'mongoose';
 import type { AsBuildArgs, AsRawDocument, AsReturnDocument } from '../types';
+import type { Model } from 'mongoose';
 
 type RawDocument = AsRawDocument<MessageType>;
 type ReturnDocument = AsReturnDocument<MessageType>;
