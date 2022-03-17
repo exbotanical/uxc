@@ -2,6 +2,7 @@
 import type { FormEvent } from 'react';
 
 import { useMutation, useQuery } from '@apollo/client';
+import { ERROR_MESSAGES, User } from '@uxc/types';
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 
@@ -14,7 +15,6 @@ import {
 } from './validators';
 
 import type { MaybeGQLError } from '@/services/error';
-import type { User } from '@uxc/types';
 
 import { AdaptiveInput } from '@/components/Fields/AdaptiveInput';
 import { useValidation } from '@/hooks';
@@ -116,8 +116,7 @@ export function Join() {
 					{
 						code: 'UNKNOWN_ERROR',
 						field: null,
-						message:
-							'Something went wrong. Please try again or contact support.'
+						message: ERROR_MESSAGES.E_GENERIC_FRIENDLY
 					}
 				]);
 

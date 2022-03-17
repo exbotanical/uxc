@@ -104,3 +104,56 @@ export const GET_THREAD = `
 		}
 	}
 `;
+
+export const CREATE_FRIEND_REQUEST = `
+	mutation ($recipientId: ID) {
+		createFriendRequest(recipientId: $recipientId)
+	}
+`;
+
+export const UPDATE_FRIEND_REQUEST = `
+	mutation ($requestId: ID, $status: FriendRequestStatus) {
+		updateFriendRequest(requestId: $requestId, status: $status)
+	}
+`;
+
+export const GET_FRIEND_REQUESTS = `
+		query getFriendRequests($type: FriendRequestType) {
+		getFriendRequests(type: $type) {
+			_id
+			requester {
+				_id
+				username
+				email
+				userImage
+			}
+			recipient {
+				_id
+				username
+				email
+				userImage
+			}
+			status
+		}
+	}
+`;
+
+export const GET_FRIENDS = `
+	query {
+		getFriends {
+			_id
+			friendNodeX {
+				_id
+			}
+			friendNodeY {
+				_id
+			}
+		}
+	}
+`;
+
+export const REMOVE_FRIEND = `
+	mutation ($friendId: ID) {
+		removeFriend(friendId: $friendId)
+	}
+`;

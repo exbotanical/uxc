@@ -1,21 +1,15 @@
 import { PrivateThread as PrivateThreadType } from '@uxc/types/node';
 import { Schema, model } from 'mongoose';
 
-import type { Model, Document } from 'mongoose';
+import type { AsRawDocument, AsBuildArgs, AsReturnDocument } from '../types';
+import type { Model } from 'mongoose';
 
-interface ReturnDocument {
-	_id?: PrivateThreadType['_id'];
-	__v?: string;
-}
-
-type NewPrivateThreadAttrs = Pick<PrivateThreadType, 'users'>;
-
-interface PrivateThreadDocument
-	extends PrivateThreadType,
-		Omit<Document, '_id'> {}
+type RawDocument = AsRawDocument<PrivateThreadType>;
+type ReturnDocument = AsReturnDocument<PrivateThreadType>;
+type NewPrivateThreadArgs = AsBuildArgs<PrivateThreadType>;
 
 interface PrivateThreadModel extends Model<PrivateThreadType> {
-	build(attrs: NewPrivateThreadAttrs): PrivateThreadDocument;
+	build(attrs: NewPrivateThreadArgs): ReturnDocument;
 }
 
 const PrivateThreadSchema = new Schema(
@@ -31,14 +25,14 @@ const PrivateThreadSchema = new Schema(
 	{
 		timestamps: true,
 		toJSON: {
-			transform(_, ret: ReturnDocument) {
+			transform(_, ret: RawDocument) {
 				delete ret.__v;
 			}
 		}
 	}
 );
 
-PrivateThreadSchema.statics.build = (attrs: NewPrivateThreadAttrs) => {
+PrivateThreadSchema.statics.build = (attrs) => {
 	return new PrivateThread(attrs);
 };
 

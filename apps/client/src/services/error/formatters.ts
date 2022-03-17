@@ -1,3 +1,4 @@
+import { ERROR_MESSAGES } from '@uxc/types';
 import { GraphQLError } from 'graphql';
 
 export interface NormalizedError {
@@ -42,7 +43,7 @@ export function normalizeError(ex: MaybeGQLError): NormalizedError[] {
 	return [
 		{
 			code: 'UNKNOWN_ERROR',
-			message: 'Something went wrong. Please try again or contact support.',
+			message: ERROR_MESSAGES.E_GENERIC_FRIENDLY,
 			field: null
 		}
 	];

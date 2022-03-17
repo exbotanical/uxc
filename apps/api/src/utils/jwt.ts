@@ -50,5 +50,5 @@ export function verify({
 }
 
 export function decode(token: JWT) {
-	return jwt.decode(token, { complete: true });
+	return jwt.decode(token, { json: true });
 }

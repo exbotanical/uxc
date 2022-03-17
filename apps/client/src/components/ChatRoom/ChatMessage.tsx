@@ -11,7 +11,7 @@ import styled from 'styled-components';
 import SvgIcon from '../Icon';
 import { UserAvatar } from '../User/UserAvatar';
 
-import type { Message, User } from '@uxc/types';
+import type { MessageWithSender, Message } from '@uxc/types';
 
 import { UPDATE_MESSAGE } from '@/services/api/queries';
 import { FlexCol } from '@/styles/Layout';
@@ -123,9 +123,8 @@ export function ChatMessage({
 	_id,
 	sender,
 	sansMeta
-}: Omit<Message, 'sender'> & {
+}: MessageWithSender & {
 	isSender: boolean;
-	sender: User;
 	sansMeta: boolean;
 }) {
 	const [editMode, setEditMode] = useState(false);

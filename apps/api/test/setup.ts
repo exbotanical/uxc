@@ -6,18 +6,40 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import request from 'supertest';
 
-import type { User } from '@uxc/types/node';
+import type { ObjectID, User } from '@uxc/types/node';
 
 import { app } from '@/app';
 import { pubsub, client } from '@/redis';
 import { initializeServer } from '@/server';
 import { validateConfig } from '@/utils';
 
+type UserWithPassword = Omit<User, '_id' | 'createdAt' | 'updatedAt'>;
+
 declare global {
-	var join: () => Promise<string[]>;
-	var user: Omit<User, '_id'>;
+	var join: (overrideUser?: UserWithPassword) => Promise<{
+		cookie: string[];
+		id: ObjectID;
+	}>;
+
+	var taleOfTwoUsers: () => Promise<{
+		cookie: string[];
+		cookie2: string[];
+		id: ObjectID;
+		id2: ObjectID;
+		testUser: UserWithPassword;
+	}>;
+
+	var user: UserWithPassword;
 	var password: string;
 	var BASE_PATH: string;
+}
+
+interface JoinPayload {
+	data: {
+		join: {
+			_id: ObjectID;
+		};
+	};
 }
 
 globalThis.BASE_PATH = '/graphql';
@@ -64,19 +86,44 @@ globalThis.user = {
 	username: 'username'
 };
 
-globalThis.join = async () => {
+globalThis.join = async (overrideUser?: UserWithPassword) => {
 	const response = await request(app)
 		.post(BASE_PATH)
 		.send({
 			query: JOIN_MUTATION,
 			variables: {
-				args: {
-					...user,
-					password
-				}
+				args: overrideUser
+					? { ...overrideUser }
+					: {
+							...user,
+							password
+					  }
 			}
 		})
 		.expect(200);
 
-	return response.get('Set-Cookie');
+	return {
+		cookie: response.get('Set-Cookie'),
+		id: (response.body as JoinPayload).data.join._id
+	};
+};
+
+globalThis.taleOfTwoUsers = async () => {
+	const testUser = {
+		username: 'username1',
+		password: 'password123',
+		email: 'useremail@mail.com',
+		userImage: 'url'
+	};
+
+	const { cookie, id } = await join();
+	const { cookie: cookie2, id: id2 } = await join(testUser);
+
+	return {
+		cookie,
+		cookie2,
+		id,
+		id2,
+		testUser
+	};
 };

@@ -8,6 +8,8 @@ generates:
       mappers:
           User: ../node/index#User
           Message: ../node/index#Message
+          FriendRequestStatus: ../node/index#FriendRequestStatus
+          Friend: ../node/index#Friend
     plugins:
       - "typescript"
       - "typescript-operations"

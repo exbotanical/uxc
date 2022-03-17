@@ -1,0 +1,38 @@
+enum FriendRequestStatus {
+  PENDING
+  REJECTED
+  ACCEPTED
+}
+
+enum FriendRequestType {
+  SENT
+  RECV
+}
+
+type Friend {
+  _id: ID
+  friendNodeX: User
+  friendNodeY: User
+}
+
+type FriendRequest {
+  _id: ID
+  requester: User
+	recipient: User
+	status: FriendRequestStatus
+}
+
+type Query {
+  getFriends: [Friend]
+  getFriendRequests(type: FriendRequestType): [FriendRequest]
+}
+
+type Subscription {
+	onFriendRequestSaved: [FriendRequest]
+}
+
+type Mutation {
+  removeFriend(friendId: ID): ID
+  createFriendRequest(recipientId: ID): ID
+  updateFriendRequest(requestId: ID, status: FriendRequestStatus): ID
+}

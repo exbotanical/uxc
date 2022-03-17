@@ -1,19 +1,15 @@
 import { Message as MessageType } from '@uxc/types/node';
 import { Schema, model } from 'mongoose';
 
-import type { Model, Document } from 'mongoose';
+import type { AsBuildArgs, AsRawDocument, AsReturnDocument } from '../types';
+import type { Model } from 'mongoose';
 
-interface ReturnDocument {
-	_id?: MessageType['_id'];
-	__v?: string;
-}
-
-type NewMessage = Omit<MessageType, '_id' | 'createdAt' | 'updatedAt'>;
-
-interface MessageDocument extends MessageType, Omit<Document, '_id'> {}
+type RawDocument = AsRawDocument<MessageType>;
+type ReturnDocument = AsReturnDocument<MessageType>;
+type NewMessageArgs = AsBuildArgs<MessageType>;
 
 interface MessageModel extends Model<MessageType> {
-	build(attrs: NewMessage): MessageDocument;
+	build(attrs: NewMessageArgs): ReturnDocument;
 }
 
 const MessageSchema = new Schema(
@@ -37,7 +33,7 @@ const MessageSchema = new Schema(
 	{
 		timestamps: true,
 		toJSON: {
-			transform(_, ret: ReturnDocument) {
+			transform(_, ret: RawDocument) {
 				delete ret.__v;
 			}
 		}
@@ -46,7 +42,7 @@ const MessageSchema = new Schema(
 
 MessageSchema.index({ body: 'text' });
 
-MessageSchema.statics.build = (attrs: NewMessage) => {
+MessageSchema.statics.build = (attrs) => {
 	return new Message(attrs);
 };
 

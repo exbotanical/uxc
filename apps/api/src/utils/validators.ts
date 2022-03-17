@@ -1,4 +1,4 @@
-import { SystemError } from '../middleware';
+import { SystemError } from '@/services/error';
 
 export function validateConfig() {
 	const requiredEnvVars = [

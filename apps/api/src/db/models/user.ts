@@ -8,18 +8,24 @@ import {
 } from '@uxc/types/node';
 import { Schema, model } from 'mongoose';
 
+import type {
+	AsBuildArgs,
+	AsRawDocument,
+	AsReturnDocument,
+	UserPassword
+} from '../types';
 import type { User as UserType } from '@uxc/types/node';
-import type { Model, Document } from 'mongoose';
+import type { Model } from 'mongoose';
 
 import { toHash } from '@/utils';
 
-type UserWithPassword = UserType & { password?: string };
-type ReturnDocument = UserWithPassword & { __v?: string };
+type UserWithPassword = UserPassword & UserType;
+type NewUserArgs = AsBuildArgs<UserType> & UserPassword;
+type RawDocument = AsRawDocument<UserWithPassword>;
+export type ReturnDocument = AsReturnDocument<UserWithPassword>;
 
-interface UserDocument extends UserType, Omit<Document, '_id'> {}
-
-interface UserModel extends Model<ReturnDocument> {
-	build(attrs: Omit<UserWithPassword, '_id'>): UserDocument;
+interface UserModel extends Model<RawDocument> {
+	build(attrs: NewUserArgs): ReturnDocument;
 }
 
 const UserSchema = new Schema<UserWithPassword>(
@@ -54,7 +60,7 @@ const UserSchema = new Schema<UserWithPassword>(
 		// convert mongo-specific `_id` to a db-agnostic format
 		toJSON: {
 			// mongoose types are terrible here
-			transform(_, ret: ReturnDocument) {
+			transform(_, ret: RawDocument) {
 				delete ret.password;
 				delete ret.__v;
 			}
@@ -64,7 +70,11 @@ const UserSchema = new Schema<UserWithPassword>(
 
 UserSchema.index({ username: 'text' });
 
-UserSchema.pre('save', async function save(this: Document, done) {
+UserSchema.statics.build = (attrs) => {
+	return new User(attrs);
+};
+
+UserSchema.pre('save', async function save(this: ReturnDocument, done) {
 	if (this.isModified('password')) {
 		const hashed = await toHash(this.get('password') as string);
 
@@ -74,8 +84,4 @@ UserSchema.pre('save', async function save(this: Document, done) {
 	done();
 });
 
-UserSchema.statics.build = (attrs: Omit<ReturnDocument, '_id'>) => {
-	return new User(attrs);
-};
-
-export const User = model<ReturnDocument, UserModel>('User', UserSchema);
+export const User = model<RawDocument, UserModel>('User', UserSchema);

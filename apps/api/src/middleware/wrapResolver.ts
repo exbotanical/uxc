@@ -8,7 +8,7 @@ export function buildWrapResolver(
 			parent: Record<string, unknown>,
 			args: T,
 			context: Context
-		) => Promise<R>
+		) => Promise<R> | R
 	) {
 		return async function resolverWrapper(
 			parent: Record<string, unknown>,
