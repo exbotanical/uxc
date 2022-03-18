@@ -9,15 +9,15 @@
     "dev": "./scripts/dev.bash",
     "format": "pnpm -r --parallel --filter .... format",
     "lint": "pnpm -r --parallel --filter .... lint",
-		"schema":"pnpm -r --filter {libs/types} schema",
-    "test": "pnpm --filter {apps/api} test && pnpm --filter {apps/client} test:unit"
+		"schema":"pnpm -r --filter {packages/common} schema",
+    "test": "pnpm --filter {packages/api} test && pnpm --filter {packages/client} test:unit"
   },
   "lint-staged": {
-    "{apps,libs}/**/*.{ts,tsx,js,jsx}": [
+    "packages/**/*.{ts,tsx,js,jsx}": [
       "pnpm format",
       "pnpm lint"
     ],
-    "{apps,libs}/**/*.{css,scss}": [
+    "packages/**/*.{css,scss}": [
       "pnpm format",
       "pnpm lint:css"
     ]
