@@ -25,7 +25,7 @@ const Input = styled.input.attrs<{ hasError: boolean }>(({ hasError }) => ({
 }))<{ hasError: boolean }>`
 	${FontSizeXl}
 	${({ theme, hasError }) =>
-		hasError && `border-bottom: solid 4px ${theme.colors.error.norm}`}
+		hasError && `border-bottom: solid 4px ${theme.colors.error.norm}`};
 	width: 100%;
 	height: 65px;
 	padding: 1rem 1.25rem 0;
@@ -66,9 +66,9 @@ const Label = styled.label`
 	left: 20px;
 	color: ${({ theme }) => theme.colors.blue['300']};
 	transform: translateY(-50%);
-	transition: font 0.1s ease, top 0.1s ease, transform 0.1s ease,
-		-webkit-transform 0.1s ease, -moz-transform 0.1s ease,
-		-o-transform 0.1s ease;
+	transition: font 0.3s ease, top 0.3s ease, transform 0.3s ease,
+		-webkit-transform 0.3s ease, -moz-transform 0.3s ease,
+		-o-transform 0.3s ease;
 `;
 
 const InputWrapper = styled.div<{ hasValue: boolean }>`
