@@ -18,13 +18,13 @@ services:
     restart: always
     build:
       context: .
-      dockerfile: apps/api/Dockerfile
+      dockerfile: packages/api/Dockerfile
     command: pnpm dev
     env_file:
       - .env
     volumes:
-      - ./apps/api:/root/uxc/apps/api
-      - api_node_modules:/root/uxc/apps/api/node_modules
+      - ./packages/api:/root/uxc/packages/api
+      - api_node_modules:/root/uxc/packages/api/node_modules
     networks:
       - uxc-network
     depends_on:
@@ -34,13 +34,13 @@ services:
     container_name: client
     build:
       context: .
-      dockerfile: apps/client/Dockerfile
+      dockerfile: packages/client/Dockerfile
     command: pnpm dev
     env_file:
       - .env
     volumes:
-      - ./apps/client:/root/uxc/apps/client
-      - client_node_modules:/root/uxc/apps/client/node_modules
+      - ./packages/client:/root/uxc/packages/client
+      - client_node_modules:/root/uxc/packages/client/node_modules
     networks:
       - uxc-network
     depends_on:
@@ -69,7 +69,7 @@ services:
   nginx:
     restart: always
     build:
-      context: apps/server
+      context: packages/server
       dockerfile: Dockerfile
     volumes:
       - ./logs/nginx:/var/log/nginx:cached
