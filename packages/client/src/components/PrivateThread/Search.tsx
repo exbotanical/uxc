@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 
 import { SearchModal } from '@/components/Search';
 import { FlexCol } from '@/styles/Layout';
 import { FontSizeBase } from '@/styles/Typography/FontSize';
+import { SearchContext } from '../Search/SearchContext';
 
 const SearchContainer = styled.div`
 	${FlexCol}
@@ -32,10 +33,7 @@ const Button = styled.button`
 `;
 
 export function Search() {
-	const [isOpen, setIsOpen] = useState(false);
-	const close = () => {
-		setIsOpen(false);
-	};
+	const { setIsOpen } = useContext(SearchContext);
 
 	return (
 		<SearchContainer>
@@ -49,7 +47,7 @@ export function Search() {
 				Find or start a conversation
 			</Button>
 
-			<SearchModal closeSearch={close} isOpen={isOpen} />
+			<SearchModal />
 		</SearchContainer>
 	);
 }

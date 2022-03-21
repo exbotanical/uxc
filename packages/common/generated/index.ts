@@ -174,7 +174,7 @@ export type QuerySearchArgs = {
   query?: InputMaybe<Scalars['String']>;
 };
 
-export type Result = Message | User;
+export type Result = Message | PrivateThread;
 
 export type SeedReturnValue = {
   __typename?: 'SeedReturnValue';
@@ -290,7 +290,7 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
   PrivateThread: ResolverTypeWrapper<Omit<PrivateThread, 'users'> & { users?: Maybe<Array<Maybe<ResolversTypes['User']>>> }>;
   Query: ResolverTypeWrapper<{}>;
-  Result: ResolversTypes['Message'] | ResolversTypes['User'];
+  Result: ResolversTypes['Message'] | ResolversTypes['PrivateThread'];
   SeedReturnValue: ResolverTypeWrapper<Omit<SeedReturnValue, 'user'> & { user?: Maybe<ResolversTypes['User']> }>;
   SigninInput: SigninInput;
   String: ResolverTypeWrapper<Scalars['String']>;
@@ -310,7 +310,7 @@ export type ResolversParentTypes = {
   Mutation: {};
   PrivateThread: Omit<PrivateThread, 'users'> & { users?: Maybe<Array<Maybe<ResolversParentTypes['User']>>> };
   Query: {};
-  Result: ResolversParentTypes['Message'] | ResolversParentTypes['User'];
+  Result: ResolversParentTypes['Message'] | ResolversParentTypes['PrivateThread'];
   SeedReturnValue: Omit<SeedReturnValue, 'user'> & { user?: Maybe<ResolversParentTypes['User']> };
   SigninInput: SigninInput;
   String: Scalars['String'];
@@ -384,7 +384,7 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
 };
 
 export type ResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Result'] = ResolversParentTypes['Result']> = {
-  __resolveType: TypeResolveFn<'Message' | 'User', ParentType, ContextType>;
+  __resolveType: TypeResolveFn<'Message' | 'PrivateThread', ParentType, ContextType>;
 };
 
 export type SeedReturnValueResolvers<ContextType = Context, ParentType extends ResolversParentTypes['SeedReturnValue'] = ResolversParentTypes['SeedReturnValue']> = {
@@ -435,7 +435,7 @@ export type Resolvers<ContextType = Context> = {
   "possibleTypes": {
     "Result": [
       "Message",
-      "User"
+      "PrivateThread"
     ]
   }
 };

@@ -117,10 +117,10 @@ const StyledTextArea = styled.textarea.attrs({
 
 // @todo opts for all (e.g. emoji)
 export function ChatMessage({
+	_id,
 	body,
 	createdAt,
 	isSender,
-	_id,
 	sender,
 	sansMeta
 }: MessageWithSender & {
@@ -201,7 +201,7 @@ export function ChatMessage({
 	}, [editMode, body, focusEndOfTextarea]);
 
 	return (
-		<Container>
+		<Container id={`message-${_id}`}>
 			{sansMeta ? (
 				<BodyContainerSansMeta {...isSenderActions}>
 					{editMode ? (

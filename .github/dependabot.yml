@@ -59,7 +59,7 @@ updates:
     pull-request-branch-name:
       separator: "-"
     commit-message:
-      prefix: "chore(types): "
+      prefix: "chore(common): "
       include: "scope"
     labels:
       - "npm dependencies"

@@ -145,21 +145,28 @@ export const UPDATE_MESSAGE = gql`
 export const TEXT_SEARCH = gql`
 	query search($query: String) {
 		search(query: $query) {
-			... on User {
+			... on PrivateThread {
 				_id
-				# username
+				users {
+					_id
+					username
+					userImage
+					email
+				}
 			}
 
 			... on Message {
+				__typename
+
 				_id
-				# body
-				# threadId
-				# sender {
-				# 	_id
-				# 	email
-				# 	userImage
-				# 	username
-				# }
+				body
+				threadId
+				sender {
+					_id
+					email
+					userImage
+					username
+				}
 			}
 		}
 	}

@@ -24,3 +24,7 @@ export type PopulatedDoc<
 		? NonNullable<PopulatedType['_id']>
 		: mongoose.Types.ObjectId
 > = PopulatedType | RawId;
+
+export type WithTypeName<T> = T & {
+	__typename: string;
+};

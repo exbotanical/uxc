@@ -12,6 +12,7 @@ import {
 	GET_CURRENT_USER,
 	ON_THREAD_MESSAGE_CREATED
 } from '@/services/api/queries';
+import { useLocation } from 'react-router-dom';
 
 interface MessageListProps {
 	threadId: ObjectID;
@@ -23,6 +24,8 @@ const Container = styled.div`
 `;
 
 export function MessageList({ threadId }: MessageListProps) {
+	const location = useLocation();
+
 	const bottomRef = useRef<HTMLDivElement | null>(null);
 	const [isScrolledToTop] = useState(false);
 
@@ -41,12 +44,19 @@ export function MessageList({ threadId }: MessageListProps) {
 
 	// @todo prevent scroll on edit
 	useEffect(() => {
+		// if there's a hash, the user was redirected from a search; we don't want the
+		// scroll effect to be invoked here
+		if (!!location.hash) {
+			window.history.replaceState('', location.hash, location.pathname);
+			return;
+		}
+
 		isScrolledToTop ||
 			bottomRef.current?.scrollIntoView({
 				block: 'nearest',
 				inline: 'start'
 			});
-	}, [bottomRef, threadId, data?.getMessages, isScrolledToTop]);
+	}, [bottomRef, threadId, data?.getMessages, isScrolledToTop, location.hash]);
 
 	useEffect(() => {
 		return subscribeToMore<{ onThreadMessageCreated: MessageWithSender[] }>({
@@ -76,6 +86,7 @@ export function MessageList({ threadId }: MessageListProps) {
 	if (loading) {
 		return null;
 	}
+
 	// @todo
 	if (error) {
 		return null;

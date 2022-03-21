@@ -4,7 +4,6 @@ import { link } from './links';
 
 import { logger } from '@/services/logger';
 
-
 export * from './queries';
 
 export const client = new ApolloClient({

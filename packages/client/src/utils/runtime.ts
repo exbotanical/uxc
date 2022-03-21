@@ -3,3 +3,5 @@ export const isTestRuntime =
 
 export const isLocalRuntime =
 	isTestRuntime || process.env.NODE_ENV !== 'production';
+
+export const isBrowserRuntime = typeof window !== 'undefined';

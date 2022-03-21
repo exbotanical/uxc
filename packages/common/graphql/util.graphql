@@ -1,4 +1,4 @@
-union Result = Message | User
+union Result = Message | PrivateThread
 
 type Query {
 	search(query: String): [Result]

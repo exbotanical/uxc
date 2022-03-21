@@ -1,6 +1,7 @@
 import { GraphQLDateTime } from 'graphql-iso-date';
 
 import type { Resolvers } from '@uxc/common/generated';
+import { User, Message, PrivateThread } from '@/db';
 import type { GraphQLScalarType } from 'graphql';
 
 import { authGuard } from '@/middleware/auth';
@@ -38,17 +39,23 @@ export const resolvers: Resolvers = {
 		getFriends: authGuard(queries.getFriends)
 	},
 
-	// User: {
-	// 	__isTypeOf: (obj) => {
-	// 		return obj instanceof User;
-	// 	}
-	// },
+	User: {
+		__isTypeOf: (obj) => {
+			return obj instanceof User;
+		}
+	},
 
-	// Message: {
-	// 	__isTypeOf: (obj) => {
-	// 		return obj instanceof Message;
-	// 	}
-	// },
+	Message: {
+		__isTypeOf: (obj) => {
+			return obj instanceof Message;
+		}
+	},
+
+	PrivateThread: {
+		__isTypeOf: (obj) => {
+			return obj instanceof PrivateThread;
+		}
+	},
 
 	Mutation: {
 		seed: authGuard(seedWrapper),

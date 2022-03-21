@@ -25,6 +25,9 @@
 - [ ] electron!!!
 - [ ] logger
   - [ ] refresh persistent
+- [ ] Allow thread removal (cannot delete on backend)
+- [ ] Add thread (if not extant) on message
+- [ ] Add chat thread timestamp delimiters
 
 ### Testing
 

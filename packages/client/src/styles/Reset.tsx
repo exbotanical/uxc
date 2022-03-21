@@ -87,4 +87,10 @@ textarea {
 ul, ol {
 	list-style: none;
 }
+
+mark {
+	background-color: inherit;
+	color: ${({ theme }) => theme.colors.interactive.norm};
+	font-weight: 700;
+}
 `;

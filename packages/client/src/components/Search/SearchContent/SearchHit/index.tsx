@@ -5,39 +5,51 @@ import type { SearchRecord } from '@/components/Search/hooks';
 import SvgIcon from '@/components/Icon';
 import * as S from '@/components/Search/SearchContent/SearchHit/styles';
 import { SearchContext } from '@/components/Search/SearchContext';
-import { onEnterKeyPressed } from '@/utils';
 
 interface SearchHitProps {
 	record: SearchRecord;
 }
 
 export function SearchHit({ record }: SearchHitProps) {
-	const { activeItemId, setActiveRecordId } = useContext(SearchContext);
+	const { activeRecordId, setIsOpen, appendToHistory } =
+		useContext(SearchContext);
 
-	function handleRecordClick() {
-		setActiveRecordId(record.id);
+	function handleClick() {
+		appendToHistory(record);
+		setIsOpen(false);
 	}
 
-	const isActiveRecord = activeItemId === record.id;
+	const id = `search-hit-${record.id}`;
+	const isActiveRecord = activeRecordId === id;
 
 	return (
 		<S.SearchHit
 			isActiveRecord={isActiveRecord}
-			onClick={handleRecordClick}
-			onKeyPress={onEnterKeyPressed(handleRecordClick)}
+			onClick={handleClick}
+			id={id}
+			data-testid={id}
 		>
-			<S.SearchHitContainer>
-				<S.SearchHitIcon>
-					<SvgIcon name="hash" size={12} />
-				</S.SearchHitIcon>
-				<S.SearchHitContent>
-					<S.SearchHitTitle>{record.label}</S.SearchHitTitle>
-				</S.SearchHitContent>
+			<S.StyledHashLink smooth to={record.link}>
+				<S.SearchHitContainer>
+					<S.SearchHitIcon>
+						<SvgIcon name="hash" size={12} />
+					</S.SearchHitIcon>
 
-				<S.SearchHitAction>
-					<SvgIcon color="#fff" name="arrow-right" size={23} />
-				</S.SearchHitAction>
-			</S.SearchHitContainer>
+					<S.SearchHitContent>
+						{record.category === 'message' ? (
+							<S.SearchHitTitle
+								dangerouslySetInnerHTML={{ __html: record.label }}
+							/>
+						) : (
+							<S.SearchHitTitle>{record.label}</S.SearchHitTitle>
+						)}
+					</S.SearchHitContent>
+
+					<S.SearchHitAction>
+						<SvgIcon color="#fff" name="arrow-right" size={23} />
+					</S.SearchHitAction>
+				</S.SearchHitContainer>
+			</S.StyledHashLink>
 		</S.SearchHit>
 	);
 }

@@ -30,6 +30,7 @@ export const CloseButton = styled.button`
 export const ModalContent = styled.div`
 	overflow: auto;
 	flex: 1 1 auto;
+	padding-bottom: 1.5rem;
 `;
 
 export const Footer = styled.footer`

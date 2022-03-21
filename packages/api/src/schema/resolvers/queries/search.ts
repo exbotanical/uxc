@@ -1,36 +1,76 @@
 import { ERROR_MESSAGES } from '@uxc/common/node';
-import { UserInputError } from 'apollo-server-core';
+import { AuthenticationError, UserInputError } from 'apollo-server-core';
 
 import type { Resolver } from '../types';
 import type {
-	User as UserType,
+	PrivateThread as PrivateThreadType,
 	Message as MessageType
 } from '@uxc/common/node';
 
-import { Message, User } from '@/db';
+import { Message, PrivateThread } from '@/db';
 
-export const search: Resolver<(MessageType | UserType)[], { query: string }> =
-	async (_, { query }) => {
-		if (!query) {
-			throw new UserInputError(ERROR_MESSAGES.E_NO_THREAD_ID);
+/**
+ * @todo Test.
+ * @todo Filter: ensure messages from friends of current user.
+ * @todo Replace thread filter; use filtered query via mongo server.
+ * @todo Escape query input.
+ */
+export const search: Resolver<
+	(MessageType | PrivateThreadType)[],
+	{ query: string }
+> = async (_, { query }, { req }) => {
+	const userId = req.session.meta?.id;
+	if (!userId) {
+		throw new AuthenticationError(ERROR_MESSAGES.E_NO_USER_SESSION);
+	}
+
+	if (!query) {
+		throw new UserInputError(ERROR_MESSAGES.E_NO_QUERY);
+	}
+
+	const textQuery = {
+		$text: {
+			$search: query,
+			$caseSensitive: false,
+			$diacriticSensitive: false
 		}
-
-		const textQuery = {
-			$text: {
-				$search: query,
-				$caseSensitive: false,
-				$diacriticSensitive: false
-			}
-		};
-
-		const filter = { score: { $meta: 'textScore' } };
-		const tasks = [];
-
-		tasks.push(User.find(textQuery, filter));
-
-		tasks.push(Message.find(textQuery, filter).populate('sender'));
-
-		const ret = await Promise.all<(MessageType | UserType)[]>(tasks);
-
-		return ret.flat();
 	};
+
+	const filter = {
+		score: { $meta: 'textScore' }
+	};
+
+	const tasks = [
+		Message.find(
+			{
+				...textQuery,
+				users: { $in: [{ _id: userId }] }
+			},
+			filter
+		)
+			.populate('sender')
+			.limit(10),
+		PrivateThread.find({
+			users: { $in: [{ _id: userId }] }
+		})
+			.populate('users')
+			.limit(10)
+			.then((records) =>
+				records.filter((record) => {
+					return record.users.filter((user) =>
+						user.username.toLowerCase().includes(query.toLowerCase())
+					).length;
+				})
+			)
+	];
+
+	const resolved = await Promise.all<(MessageType | PrivateThreadType)[]>(
+		tasks
+	);
+
+	const results = resolved
+		.filter((result) => !!Object.keys(result).length)
+		.flat();
+
+	return results;
+};

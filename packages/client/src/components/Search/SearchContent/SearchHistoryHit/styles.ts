@@ -1,8 +1,14 @@
 import styled from 'styled-components';
 
 import { FontSizeBase, FontSizeXs } from '@/styles/Typography/FontSize';
+import { HashLink } from 'react-router-hash-link';
 
-export const ListItem = styled.li<{ isActiveRecord: boolean }>`
+export const ListItem = styled.li.attrs<{ isActiveRecord: boolean }>(
+	({ isActiveRecord }) => ({
+		'role': 'option',
+		'aria-selected': isActiveRecord
+	})
+)<{ isActiveRecord: boolean }>`
 	position: 'relative';
 	background-color: ${({ theme, isActiveRecord }) =>
 		isActiveRecord && theme.colors.background.hover};
@@ -17,12 +23,16 @@ export const ListItem = styled.li<{ isActiveRecord: boolean }>`
 	}
 `;
 
-export const LinkBoundary = styled.a`
-	display: block;
+export const StyledHashLink = styled(HashLink)`
 	display: flex;
 	align-items: center;
-	padding: 1rem 1.5rem;
+	padding: 1.25rem;
 	border-color: ${({ theme }) => theme.colors.border.weak};
+	text-decoration: none !important;
+
+	&:focus-visible {
+		outline: 1px solid white;
+	}
 `;
 
 export const ListItemContent = styled.div`
@@ -58,7 +68,7 @@ export const Badge = styled.span`
 	${FontSizeXs}
 	align-self: flex-start;
 	padding: 0.15rem 0.375rem;
-	margin-bottom: 0.25rem;
+	margin-bottom: 0.5rem;
 	background-color: ${({ theme }) => theme.colors.background.strong};
 	border-radius: 999px;
 	color: ${({ theme }) => theme.colors.font.weak};
@@ -66,8 +76,8 @@ export const Badge = styled.span`
 
 export const IconButton = styled.button`
 	display: flex;
-	width: 1.5rem;
-	height: 1.5rem;
+	width: 1.75rem;
+	height: 1.75rem;
 	align-items: center;
 	justify-content: center;
 `;

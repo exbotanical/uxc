@@ -1,14 +1,16 @@
 import styled from 'styled-components';
 
 import { FontSizeBase } from '@/styles/Typography/FontSize';
+import { HashLink } from 'react-router-hash-link';
 
 export const SearchHit = styled.li.attrs<{ isActiveRecord: boolean }>(
 	({ isActiveRecord }) => ({
 		'role': 'option',
-		'tabIndex': 0,
-		'aria-selected': !!isActiveRecord // @todo on hover, too
+		'aria-selected': isActiveRecord ? 'true' : 'false'
 	})
-)<{ isActiveRecord: boolean }>`
+)<{ isActiveRecord: boolean }>``;
+
+export const StyledHashLink = styled(HashLink)`
 	position: relative;
 	display: block;
 	padding: 0.75rem 1rem;
@@ -20,9 +22,14 @@ export const SearchHit = styled.li.attrs<{ isActiveRecord: boolean }>(
 	color: ${({ theme }) => theme.colors.font.strong};
 	cursor: pointer;
 	transition: color 0.3s, background-color 0.4s;
+	text-decoration: none !important;
 
-	&:hover,
-	&[aria-selected='true'] {
+	&:focus-visible {
+		outline: 1px solid white;
+	}
+
+	${SearchHit}:hover &,
+	${SearchHit}[aria-selected='true'] & {
 		background-color: ${({ theme }) => theme.colors.link.norm};
 	}
 `;

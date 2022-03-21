@@ -68,7 +68,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 				<ButtonContainer>
 					{options?.map(({ iconName, handleClick }, idx) => {
 						return handleClick ? (
-							<Button key={idx} onClick={handleClick} type="button">
+							<Button key={idx} onClick={handleClick}>
 								<SvgIcon name={iconName} size={22} />
 							</Button>
 						) : (

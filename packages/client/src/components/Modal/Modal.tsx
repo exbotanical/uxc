@@ -76,7 +76,7 @@ export function Modal({ onModalClose, modalRef, children }: ModalProps) {
 		// @todo hoist this up
 		const focusableModalElements = Array.from(
 			modalRef.current?.querySelectorAll<HTMLElement>(
-				'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], input[type="search"], select, li'
+				'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], input[type="search"], select'
 			) || []
 		);
 

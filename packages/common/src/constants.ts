@@ -47,5 +47,6 @@ export const ERROR_MESSAGES = {
 	} characters.`,
 	E_SHORT_USERNAME: `Your username must contain more than ${
 		USERNAME_CHARS_MIN - 1
-	} characters.`
+	} characters.`,
+	E_NO_QUERY: 'A search query is required but was not supplied.'
 };

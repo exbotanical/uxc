@@ -10,6 +10,7 @@ import { Search } from '@/components/PrivateThread/Search';
 import { UserStatus } from '@/components/User/UserStatus';
 import { GET_CURRENT_USER } from '@/services/api/queries';
 import { FlexCol } from '@/styles/Layout';
+import { SearchProvider } from '@/components/Search/SearchContext';
 
 const Container = styled.aside`
 	${FlexCol}
@@ -51,7 +52,9 @@ export function SidebarLayout({ body }: { body: React.ReactNode }) {
 
 	return (
 		<Container>
-			<Search />
+			<SearchProvider>
+				<Search />
+			</SearchProvider>
 
 			{body}
 			<Footer>

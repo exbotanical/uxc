@@ -12,7 +12,7 @@ interface MessageModel extends Model<MessageType> {
 	build(attrs: NewMessageArgs): ReturnDocument;
 }
 
-const MessageSchema = new Schema(
+const MessageSchema = new Schema<MessageType>(
 	{
 		body: {
 			required: true,
@@ -46,7 +46,7 @@ MessageSchema.statics.build = (attrs) => {
 	return new Message(attrs);
 };
 
-export const Message = model<MessageType, MessageModel>(
+export const Message = model<RawDocument, MessageModel>(
 	'Message',
 	MessageSchema
 );

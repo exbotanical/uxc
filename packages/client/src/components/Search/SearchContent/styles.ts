@@ -35,7 +35,7 @@ export const SearchHitList = styled.ul.attrs({
 	}
 `;
 
-export const ResultsList = styled.ul.attrs({
+export const SearchHistoryHitList = styled.ul.attrs({
 	'role': 'listbox',
 	'aria-labelledby': labelLabel
 })`

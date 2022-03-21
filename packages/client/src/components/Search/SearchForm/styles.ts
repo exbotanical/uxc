@@ -49,10 +49,6 @@ export const SearchInput = styled.input.attrs({
 	background-color: transparent;
 	color: ${({ theme }) => theme.colors.font.weak};
 
-	&:focus {
-		outline: none !important;
-	}
-
 	::-webkit-search-cancel-button {
 		appearance: none;
 		appearance: none;

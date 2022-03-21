@@ -35,6 +35,7 @@ export function SearchForm() {
 				data-testid="uxc-search-clear-input-btn"
 				onClick={handleClick}
 				type="button"
+				title="Clear search text"
 			>
 				<SvgIcon name="close" size={42} />
 			</button>

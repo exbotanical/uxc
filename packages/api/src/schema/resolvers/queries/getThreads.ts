@@ -5,15 +5,18 @@ import type {
 } from '@uxc/common/node';
 
 import { PrivateThread } from '@/db';
+import { UserInputError } from 'apollo-server-core';
 
 /**
- * @todo paginate
+ * @todo Paginate.
  */
 export const getThreads: Resolver<PrivateThreadType[], { userId: ObjectID }> =
 	async (_, { userId }) => {
-		const privateThreads = await PrivateThread.find({
-			users: { $in: [{ _id: userId }] }
-		}).populate('users');
+		if (!userId) {
+			throw new UserInputError('todo');
+		}
+
+		const privateThreads = PrivateThread.findUserThreads(userId);
 
 		return privateThreads;
 	};
