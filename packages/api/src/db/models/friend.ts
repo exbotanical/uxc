@@ -10,7 +10,11 @@ type NewFriendArgs = AsBuildArgs<FriendType>;
 
 interface FriendModel extends Model<RawDocument> {
 	build(attrs: NewFriendArgs): ReturnDocument;
-	findFriends(id: ObjectID): Promise<FriendType[]>;
+	findFriends(
+		currentUserId: ObjectID,
+		otherFilters?: Record<string, any>[],
+		options?: Record<string, any>
+	): Promise<FriendType[]>;
 }
 
 const FriendSchema = new Schema<FriendType>(
@@ -36,17 +40,25 @@ const FriendSchema = new Schema<FriendType>(
 	}
 );
 
-FriendSchema.statics.findFriends = function findFriends(id: ObjectID) {
-	return this.find({
-		$or: [
-			{
-				friendNodeX: id
-			},
-			{
-				friendNodeY: id
-			}
-		]
-	});
+FriendSchema.statics.findFriends = function findFriends(
+	currentUserId: ObjectID,
+	otherFilters?: Record<string, any>[],
+	options?: Record<string, any>
+) {
+	return this.find(
+		{
+			$or: [
+				{
+					friendNodeX: currentUserId
+				},
+				{
+					friendNodeY: currentUserId
+				}
+			],
+			...(otherFilters ? otherFilters : [])
+		},
+		options || {}
+	).populate('friendNodeX', 'friendNodeY');
 };
 
 FriendSchema.statics.build = (attrs) => {

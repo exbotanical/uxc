@@ -1,4 +1,8 @@
-import { CREATE_FRIEND_REQUEST, GET_FRIEND_REQUESTS } from '@@/fixtures';
+import {
+	CREATE_FRIEND_REQUEST,
+	GET_FRIEND_REQUESTS_RECV,
+	GET_FRIEND_REQUESTS_SENT
+} from '@@/fixtures';
 import { ERROR_MESSAGES } from '@uxc/common/node';
 import request from 'supertest';
 
@@ -10,7 +14,7 @@ describe(`${testSubject} workflow`, () => {
 		const { body } = await request(app)
 			.post(BASE_PATH)
 			.send({
-				query: GET_FRIEND_REQUESTS,
+				query: GET_FRIEND_REQUESTS_RECV,
 				variables: {
 					type: 'RECV'
 				}
@@ -42,7 +46,7 @@ describe(`${testSubject} workflow`, () => {
 			.post(BASE_PATH)
 			.set('Cookie', cookie)
 			.send({
-				query: GET_FRIEND_REQUESTS,
+				query: GET_FRIEND_REQUESTS_RECV,
 				variables: {
 					type: 'RECV'
 				}
@@ -52,7 +56,7 @@ describe(`${testSubject} workflow`, () => {
 		const friendRequest = body.data.getFriendRequests[0];
 
 		expect(body.data.getFriendRequests).toHaveLength(1);
-		expect(friendRequest.recipient._id).toStrictEqual(id);
+		expect(friendRequest.recipient).toStrictEqual(id);
 		expect(friendRequest.requester._id).toStrictEqual(id2);
 		expect(friendRequest.status).toBe('PENDING');
 	});
@@ -75,7 +79,7 @@ describe(`${testSubject} workflow`, () => {
 			.post(BASE_PATH)
 			.set('Cookie', cookie)
 			.send({
-				query: GET_FRIEND_REQUESTS,
+				query: GET_FRIEND_REQUESTS_SENT,
 				variables: {
 					type: 'SENT'
 				}
@@ -86,7 +90,7 @@ describe(`${testSubject} workflow`, () => {
 
 		expect(body.data.getFriendRequests).toHaveLength(1);
 		expect(friendRequest.recipient._id).toStrictEqual(id2);
-		expect(friendRequest.requester._id).toStrictEqual(id);
+		expect(friendRequest.requester).toStrictEqual(id);
 		expect(friendRequest.status).toBe('PENDING');
 	});
 });

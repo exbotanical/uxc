@@ -5,7 +5,8 @@ import type { AsBuildArgs, AsRawDocument, AsReturnDocument } from '../types';
 import type {
 	ObjectID,
 	FriendRequest as FriendRequestType,
-	PopulatedFriendRequest
+	ReceivedFriendRequest,
+	SentFriendRequest
 } from '@uxc/common/node';
 import type { Model, Query } from 'mongoose';
 
@@ -16,8 +17,8 @@ type FriendRequestQuery = Query<FriendRequestType, any>;
 
 interface FriendRequestModel extends Model<RawDocument> {
 	build(attrs: NewFriendRequestArgs): ReturnDocument;
-	findFriendRequestsSent(userId: ObjectID): PopulatedFriendRequest[];
-	findFriendRequestsRecv(userId: ObjectID): PopulatedFriendRequest[];
+	findFriendRequestsSent(userId: ObjectID): SentFriendRequest[];
+	findFriendRequestsRecv(userId: ObjectID): ReceivedFriendRequest[];
 }
 
 const FriendRequestSchema = new Schema<FriendRequestType>(

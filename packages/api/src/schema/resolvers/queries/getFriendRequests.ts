@@ -2,12 +2,15 @@ import { ERROR_MESSAGES } from '@uxc/common/node';
 import { AuthenticationError } from 'apollo-server-core';
 
 import type { Resolver } from '../types';
-import type { PopulatedFriendRequest } from '@uxc/common/node';
+import type {
+	ReceivedFriendRequest,
+	SentFriendRequest
+} from '@uxc/common/node';
 
 import { FriendRequest } from '@/db';
 
 export const getFriendRequests: Resolver<
-	PopulatedFriendRequest[],
+	(ReceivedFriendRequest | SentFriendRequest)[],
 	{ type: 'RECV' | 'SENT' }
 > = (_, { type }, { req }) => {
 	const userId = req.session.meta?.id;

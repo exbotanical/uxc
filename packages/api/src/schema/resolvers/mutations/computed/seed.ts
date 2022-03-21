@@ -67,7 +67,7 @@ function partition(grp: Taskable[]) {
 }
 
 export async function seedWrapper(_: any, __: any, { req }: Context) {
-	const { user, ...rest } = await seed(req);
+	const { user, ...rest } = await seed({ req });
 
 	if (user.password) {
 		delete user.password;
@@ -79,7 +79,13 @@ export async function seedWrapper(_: any, __: any, { req }: Context) {
 	};
 }
 
-export async function seed(req?: Request) {
+export async function seed({
+	req,
+	sansFriends
+}: {
+	req?: Request;
+	sansFriends?: boolean;
+} = {}) {
 	let userId: ObjectID | null = req?.session.meta?.id ?? null;
 
 	let testUser: MaybePassword | null = null;
@@ -107,14 +113,19 @@ export async function seed(req?: Request) {
 	await Promise.all(userTasks);
 
 	// befriend ea new user - test user
-	const friendTasks = userIds.map((friendNodeY) =>
-		Friend.build({
-			friendNodeX: user._id,
-			friendNodeY
-		})
-	);
 
-	await Promise.all(friendTasks);
+	if (!sansFriends) {
+		const [friendTasks, friendIds] = partition(
+			userIds.map((friendNodeY) =>
+				Friend.build({
+					friendNodeX: user._id,
+					friendNodeY
+				})
+			)
+		) as unknown as PartitionedTasks;
+
+		await Promise.all(friendTasks);
+	}
 
 	// for each new user, create a private thread with my user
 	const [threadTasks, threadIds] = partition(

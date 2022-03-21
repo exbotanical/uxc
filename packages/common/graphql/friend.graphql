@@ -9,26 +9,36 @@ enum FriendRequestType {
   RECV
 }
 
+union FriendRequestResult = ReceivedFriendRequest | SentFriendRequest
+
 type Friend {
   _id: ID
   friendNodeX: User
   friendNodeY: User
 }
 
-type FriendRequest {
+type ReceivedFriendRequest {
   _id: ID
   requester: User
+	recipient: ID
+	status: FriendRequestStatus
+}
+
+type SentFriendRequest {
+  _id: ID
+  requester: ID
 	recipient: User
 	status: FriendRequestStatus
 }
 
 type Query {
+  searchFriends(query: String): [Friend]
   getFriends: [Friend]
-  getFriendRequests(type: FriendRequestType): [FriendRequest]
+  getFriendRequests(type: FriendRequestType): [FriendRequestResult]
 }
 
 type Subscription {
-	onFriendRequestSaved: [FriendRequest]
+	onFriendRequestSaved: [FriendRequestResult]
 }
 
 type Mutation {

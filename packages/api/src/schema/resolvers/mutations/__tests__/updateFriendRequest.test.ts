@@ -1,8 +1,8 @@
 import {
 	CREATE_FRIEND_REQUEST,
 	GET_FRIENDS,
-	GET_FRIEND_REQUESTS,
-	UPDATE_FRIEND_REQUEST
+	UPDATE_FRIEND_REQUEST,
+	GET_FRIEND_REQUESTS_SENT
 } from '@@/fixtures';
 import { ERROR_MESSAGES } from '@uxc/common/node';
 import request from 'supertest';
@@ -15,7 +15,7 @@ const status = 'ACCEPTED';
 const testSubject = 'updateFriendRequest';
 describe(`${testSubject} workflow`, () => {
 	it('fails with an Unauthorized error if the request does not include a valid session cookie', async () => {
-		const { userIds } = await seed();
+		const { userIds } = await seed({ sansFriends: true });
 
 		const { body } = await request(app)
 			.post(BASE_PATH)
@@ -55,7 +55,7 @@ describe(`${testSubject} workflow`, () => {
 	});
 
 	it('fails when not provided a status', async () => {
-		const { userIds } = await seed();
+		const { userIds } = await seed({ sansFriends: true });
 		const { cookie } = await join();
 
 		const { body } = await request(app)
@@ -112,7 +112,7 @@ describe(`${testSubject} workflow`, () => {
 	});
 
 	it('fails when provided a requestId that does not exist in the database', async () => {
-		const { threadIds } = await seed();
+		const { threadIds } = await seed({ sansFriends: true });
 
 		const { cookie } = await join();
 		const threadId = threadIds[0];
@@ -228,7 +228,7 @@ describe(`${testSubject} workflow`, () => {
 			.post(BASE_PATH)
 			.set('Cookie', cookie)
 			.send({
-				query: GET_FRIEND_REQUESTS,
+				query: GET_FRIEND_REQUESTS_SENT,
 				variables: {
 					type: 'SENT'
 				}
@@ -280,7 +280,7 @@ describe(`${testSubject} workflow`, () => {
 			.post(BASE_PATH)
 			.set('Cookie', cookie)
 			.send({
-				query: GET_FRIEND_REQUESTS,
+				query: GET_FRIEND_REQUESTS_SENT,
 				variables: {
 					type: 'SENT'
 				}

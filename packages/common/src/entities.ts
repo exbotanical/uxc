@@ -41,8 +41,14 @@ export interface FriendRequest extends BaseModel {
 	status: FriendRequestStatus;
 }
 
-export interface PopulatedFriendRequest extends BaseModel {
+export interface ReceivedFriendRequest extends BaseModel {
 	requester: User;
+	recipient: ObjectID;
+	status: FriendRequestStatus;
+}
+
+export interface SentFriendRequest extends BaseModel {
+	requester: ObjectID;
 	recipient: User;
 	status: FriendRequestStatus;
 }

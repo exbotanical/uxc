@@ -117,23 +117,41 @@ export const UPDATE_FRIEND_REQUEST = `
 	}
 `;
 
-export const GET_FRIEND_REQUESTS = `
-		query getFriendRequests($type: FriendRequestType) {
+export const GET_FRIEND_REQUESTS_SENT = `
+	query getFriendRequests($type: FriendRequestType) {
 		getFriendRequests(type: $type) {
-			_id
-			requester {
+
+			...on SentFriendRequest {
 				_id
-				username
-				email
-				userImage
+				requester
+				recipient {
+					_id
+					username
+					email
+					userImage
+				}
+				status
 			}
-			recipient {
+		}
+	}
+`;
+
+export const GET_FRIEND_REQUESTS_RECV = `
+	query getFriendRequests($type: FriendRequestType) {
+		getFriendRequests(type: $type) {
+			__typename
+
+			...on ReceivedFriendRequest {
 				_id
-				username
-				email
-				userImage
+				requester {
+					_id
+					username
+					email
+					userImage
+				}
+				recipient
+				status
 			}
-			status
 		}
 	}
 `;

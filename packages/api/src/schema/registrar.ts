@@ -1,8 +1,9 @@
 import { GraphQLDateTime } from 'graphql-iso-date';
 
 import type { Resolvers } from '@uxc/common/generated';
-import { User, Message, PrivateThread } from '@/db';
+import { User, Message, PrivateThread, FriendRequest } from '@/db';
 import type { GraphQLScalarType } from 'graphql';
+import { isValidObjectId } from 'mongoose';
 
 import { authGuard } from '@/middleware/auth';
 import {
@@ -35,6 +36,7 @@ export const resolvers: Resolvers = {
 		getUser: authGuard(queries.getUser),
 		getCurrentUser: authGuard(queries.getCurrentUser),
 		search: authGuard(queries.search),
+		searchFriends: authGuard(queries.searchFriends),
 		getFriendRequests: authGuard(queries.getFriendRequests),
 		getFriends: authGuard(queries.getFriends)
 	},
@@ -54,6 +56,38 @@ export const resolvers: Resolvers = {
 	PrivateThread: {
 		__isTypeOf: (obj) => {
 			return obj instanceof PrivateThread;
+		}
+	},
+
+	SentFriendRequest: {
+		__isTypeOf: (obj) => {
+			return obj instanceof FriendRequest;
+		}
+	},
+
+	ReceivedFriendRequest: {
+		__isTypeOf: (obj) => {
+			return obj instanceof FriendRequest;
+		}
+	},
+
+	FriendRequestResult: {
+		__resolveType: (friendRequest, context, info) => {
+			if (
+				typeof friendRequest.recipient === 'object' &&
+				typeof friendRequest.recipient?.username === 'string' &&
+				isValidObjectId(friendRequest.requester)
+			) {
+				return 'SentFriendRequest';
+			} else if (
+				typeof friendRequest.requester === 'object' &&
+				typeof friendRequest.requester?.username === 'string' &&
+				isValidObjectId(friendRequest.recipient)
+			) {
+				return 'ReceivedFriendRequest';
+			}
+
+			return null;
 		}
 	},
 

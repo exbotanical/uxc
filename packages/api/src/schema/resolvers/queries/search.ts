@@ -9,6 +9,10 @@ import type {
 
 import { Message, PrivateThread } from '@/db';
 
+const filter = {
+	score: { $meta: 'textScore' }
+};
+
 /**
  * @todo Test.
  * @todo Filter: ensure messages from friends of current user.
@@ -34,10 +38,6 @@ export const search: Resolver<
 			$caseSensitive: false,
 			$diacriticSensitive: false
 		}
-	};
-
-	const filter = {
-		score: { $meta: 'textScore' }
 	};
 
 	const tasks = [
