@@ -11950,7 +11950,7 @@ packages:
     hasBin: true
     dependencies:
       esbuild: 0.12.29
-      postcss: 8.3.9
+      postcss: 8.4.12
       resolve: 1.22.0
       rollup: 2.70.1
     optionalDependencies:

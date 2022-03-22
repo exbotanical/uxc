@@ -54,6 +54,16 @@ export type Message = {
   updatedAt?: Maybe<Scalars['Date']>;
 };
 
+export type MessageResult = {
+  __typename?: 'MessageResult';
+  _id?: Maybe<Scalars['ID']>;
+  body?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['Date']>;
+  sender?: Maybe<User>;
+  threadId?: Maybe<PrivateThread>;
+  updatedAt?: Maybe<Scalars['Date']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createFriendRequest?: Maybe<Scalars['ID']>;
@@ -182,7 +192,7 @@ export type ReceivedFriendRequest = {
   status?: Maybe<FriendRequestStatus>;
 };
 
-export type Result = Message | PrivateThread;
+export type Result = MessageResult | PrivateThread;
 
 export type SeedReturnValue = {
   __typename?: 'SeedReturnValue';
@@ -303,11 +313,12 @@ export type ResolversTypes = {
   ID: ResolverTypeWrapper<Scalars['ID']>;
   JoinInput: JoinInput;
   Message: ResolverTypeWrapper<MessageModel>;
+  MessageResult: ResolverTypeWrapper<Omit<MessageResult, 'sender' | 'threadId'> & { sender?: Maybe<ResolversTypes['User']>, threadId?: Maybe<ResolversTypes['PrivateThread']> }>;
   Mutation: ResolverTypeWrapper<{}>;
   PrivateThread: ResolverTypeWrapper<Omit<PrivateThread, 'users'> & { users?: Maybe<Array<Maybe<ResolversTypes['User']>>> }>;
   Query: ResolverTypeWrapper<{}>;
   ReceivedFriendRequest: ResolverTypeWrapper<Omit<ReceivedFriendRequest, 'requester' | 'status'> & { requester?: Maybe<ResolversTypes['User']>, status?: Maybe<ResolversTypes['FriendRequestStatus']> }>;
-  Result: ResolversTypes['Message'] | ResolversTypes['PrivateThread'];
+  Result: ResolversTypes['MessageResult'] | ResolversTypes['PrivateThread'];
   SeedReturnValue: ResolverTypeWrapper<Omit<SeedReturnValue, 'user'> & { user?: Maybe<ResolversTypes['User']> }>;
   SentFriendRequest: ResolverTypeWrapper<Omit<SentFriendRequest, 'recipient' | 'status'> & { recipient?: Maybe<ResolversTypes['User']>, status?: Maybe<ResolversTypes['FriendRequestStatus']> }>;
   SigninInput: SigninInput;
@@ -325,11 +336,12 @@ export type ResolversParentTypes = {
   ID: Scalars['ID'];
   JoinInput: JoinInput;
   Message: MessageModel;
+  MessageResult: Omit<MessageResult, 'sender' | 'threadId'> & { sender?: Maybe<ResolversParentTypes['User']>, threadId?: Maybe<ResolversParentTypes['PrivateThread']> };
   Mutation: {};
   PrivateThread: Omit<PrivateThread, 'users'> & { users?: Maybe<Array<Maybe<ResolversParentTypes['User']>>> };
   Query: {};
   ReceivedFriendRequest: Omit<ReceivedFriendRequest, 'requester'> & { requester?: Maybe<ResolversParentTypes['User']> };
-  Result: ResolversParentTypes['Message'] | ResolversParentTypes['PrivateThread'];
+  Result: ResolversParentTypes['MessageResult'] | ResolversParentTypes['PrivateThread'];
   SeedReturnValue: Omit<SeedReturnValue, 'user'> & { user?: Maybe<ResolversParentTypes['User']> };
   SentFriendRequest: Omit<SentFriendRequest, 'recipient'> & { recipient?: Maybe<ResolversParentTypes['User']> };
   SigninInput: SigninInput;
@@ -361,6 +373,16 @@ export type MessageResolvers<ContextType = Context, ParentType extends Resolvers
   createdAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   sender?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   threadId?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type MessageResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['MessageResult'] = ResolversParentTypes['MessageResult']> = {
+  _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
+  body?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  sender?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  threadId?: Resolver<Maybe<ResolversTypes['PrivateThread']>, ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -409,7 +431,7 @@ export type ReceivedFriendRequestResolvers<ContextType = Context, ParentType ext
 };
 
 export type ResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Result'] = ResolversParentTypes['Result']> = {
-  __resolveType: TypeResolveFn<'Message' | 'PrivateThread', ParentType, ContextType>;
+  __resolveType: TypeResolveFn<'MessageResult' | 'PrivateThread', ParentType, ContextType>;
 };
 
 export type SeedReturnValueResolvers<ContextType = Context, ParentType extends ResolversParentTypes['SeedReturnValue'] = ResolversParentTypes['SeedReturnValue']> = {
@@ -448,6 +470,7 @@ export type Resolvers<ContextType = Context> = {
   FriendRequestResult?: FriendRequestResultResolvers<ContextType>;
   FriendRequestStatus?: FriendRequestStatusResolvers;
   Message?: MessageResolvers<ContextType>;
+  MessageResult?: MessageResultResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   PrivateThread?: PrivateThreadResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
@@ -473,7 +496,7 @@ export type Resolvers<ContextType = Context> = {
       "SentFriendRequest"
     ],
     "Result": [
-      "Message",
+      "MessageResult",
       "PrivateThread"
     ]
   }

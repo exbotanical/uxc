@@ -7,15 +7,31 @@ import type { Context, ObjectID, User as UserType } from '@uxc/common/node';
 import { User, Message, PrivateThread, Friend } from '@/db';
 import { logger } from '@/services/logger';
 
+import testMessages from '../../../../../test/fixtures/messages.json';
+
+enum SeedModes {
+	TEST
+}
+
+type PartitionedTasks = [Promise<any>[], ObjectID[]];
+
 interface Taskable {
 	save: () => Promise<any>;
 	_id: ObjectID;
 }
 
-type PartitionedTasks = [Promise<any>[], ObjectID[]];
-
 interface MaybePassword {
 	password?: string;
+}
+
+async function createTestMessages(threadId: ObjectID, userId: ObjectID) {
+	return testMessages.map((body) => {
+		Message.build({
+			body,
+			sender: userId,
+			threadId
+		}).save();
+	});
 }
 
 function createMessage(threadId: ObjectID, userId: ObjectID) {
@@ -81,10 +97,10 @@ export async function seedWrapper(_: any, __: any, { req }: Context) {
 
 export async function seed({
 	req,
-	sansFriends
+	mode
 }: {
 	req?: Request;
-	sansFriends?: boolean;
+	mode?: SeedModes;
 } = {}) {
 	let userId: ObjectID | null = req?.session.meta?.id ?? null;
 
@@ -106,26 +122,21 @@ export async function seed({
 		throw new Error('[Seed script] unable to find puppet user');
 	}
 
-	const users = Array.from({ length: 10 }, createUser);
+	const testUser2 = {
+		email: faker.internet.email(),
+		password: faker.internet.password(10),
+		userImage: faker.internet.avatar(),
+		username: faker.internet.userName()
+	};
+
+	const users = [
+		User.build(testUser2),
+		...Array.from({ length: 10 }, createUser)
+	];
 
 	// create users
 	const [userTasks, userIds] = partition(users) as unknown as PartitionedTasks;
 	await Promise.all(userTasks);
-
-	// befriend ea new user - test user
-
-	if (!sansFriends) {
-		const [friendTasks, friendIds] = partition(
-			userIds.map((friendNodeY) =>
-				Friend.build({
-					friendNodeX: user._id,
-					friendNodeY
-				})
-			)
-		) as unknown as PartitionedTasks;
-
-		await Promise.all(friendTasks);
-	}
 
 	// for each new user, create a private thread with my user
 	const [threadTasks, threadIds] = partition(
@@ -135,7 +146,6 @@ export async function seed({
 			})
 		)
 	) as unknown as PartitionedTasks;
-
 	await Promise.all(threadTasks);
 
 	// correlate sender to its thread
@@ -152,10 +162,25 @@ export async function seed({
 			);
 		}
 	});
-
 	await Promise.all(messageTasks);
 
+	if (mode === SeedModes.TEST) {
+		const testMessageTasks = await createTestMessages(threadIds[0], userId);
+		// befriend ea new user - test user
+		const [friendTasks, _] = partition(
+			userIds.map((friendNodeY) =>
+				Friend.build({
+					friendNodeX: user._id,
+					friendNodeY
+				})
+			)
+		) as unknown as PartitionedTasks;
+
+		await Promise.all([...testMessageTasks, ...friendTasks]);
+	}
+
 	return {
+		testUser2,
 		threadIds,
 		userIds,
 		user: Object.assign(user, testUser) as MaybePassword & UserType

@@ -1,0 +1,14 @@
+union Result = MessageResult | PrivateThread
+
+type MessageResult {
+  _id: ID
+  threadId: PrivateThread
+  sender: User
+  createdAt: Date
+  updatedAt: Date
+  body: String
+}
+
+type Query {
+	search(query: String): [Result]
+}

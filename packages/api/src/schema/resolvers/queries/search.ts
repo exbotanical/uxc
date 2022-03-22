@@ -6,8 +6,9 @@ import type {
 	PrivateThread as PrivateThreadType,
 	Message as MessageType
 } from '@uxc/common/node';
-
 import { Message, PrivateThread } from '@/db';
+
+type PopulatedMessage = MessageType & { threadId: PrivateThreadType };
 
 const filter = {
 	score: { $meta: 'textScore' }
@@ -16,11 +17,12 @@ const filter = {
 /**
  * @todo Test.
  * @todo Filter: ensure messages from friends of current user.
+ * @todo Filter: ensure threads from friends of current user.
  * @todo Replace thread filter; use filtered query via mongo server.
  * @todo Escape query input.
  */
 export const search: Resolver<
-	(MessageType | PrivateThreadType)[],
+	(PopulatedMessage | PrivateThreadType)[],
 	{ query: string }
 > = async (_, { query }, { req }) => {
 	const userId = req.session.meta?.id;
@@ -40,31 +42,50 @@ export const search: Resolver<
 		}
 	};
 
-	const tasks = [
-		Message.find(
-			{
-				...textQuery,
-				users: { $in: [{ _id: userId }] }
-			},
-			filter
-		)
-			.populate('sender')
-			.limit(10),
-		PrivateThread.find({
-			users: { $in: [{ _id: userId }] }
-		})
-			.populate('users')
-			.limit(10)
-			.then((records) =>
-				records.filter((record) => {
-					return record.users.filter((user) =>
-						user.username.toLowerCase().includes(query.toLowerCase())
-					).length;
-				})
-			)
-	];
+	const messageTask = Message.find(
+		{
+			...textQuery
+		},
+		filter
+	)
+		.populate({
+			path: 'threadId',
 
-	const resolved = await Promise.all<(MessageType | PrivateThreadType)[]>(
+			populate: {
+				path: 'users',
+				match: {
+					_id: userId
+				}
+			}
+		})
+		.populate('sender')
+		.limit(10)
+		.then((records) => {
+			return records.filter(
+				(record) =>
+					!!(record.threadId as PrivateThreadType).users.filter(
+						(user) => !!user
+					).length
+			) as PopulatedMessage[];
+		});
+
+	const threadTask = PrivateThread.find({
+		users: { $in: [{ _id: userId }] }
+	})
+		.populate('users')
+		.limit(10)
+		.then((records) =>
+			records.filter(
+				(record) =>
+					record.users.filter((user) =>
+						user.username.toLowerCase().includes(query.toLowerCase())
+					).length
+			)
+		);
+
+	const tasks = [messageTask, threadTask];
+
+	const resolved = await Promise.all<(PopulatedMessage | PrivateThreadType)[]>(
 		tasks
 	);
 

@@ -6,10 +6,12 @@ import { useQuery } from '@apollo/client';
 import type { PrivateThread, Message, User } from '@uxc/common';
 import { useLocalStorage } from '@/hooks';
 
+type PopulatedMessage = Message & { threadId: PrivateThread };
+
 type DeterminedResult =
 	| ({
 			__typename: 'Message';
-	  } & Message)
+	  } & PopulatedMessage)
 	| ({
 			__typename: 'PrivateThread';
 	  } & PrivateThread);
@@ -97,7 +99,7 @@ export function useSearch() {
 							(match) => `<mark>${match}</mark>`
 						),
 						id: record._id,
-						link: `${record.threadId}#message-${record._id}`
+						link: `${record.threadId._id}#message-${record._id}`
 					});
 				} else {
 					acc.threads.push({

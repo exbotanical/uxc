@@ -1,9 +1,3 @@
-union Result = Message | PrivateThread
-
-type Query {
-	search(query: String): [Result]
-}
-
 type SeedReturnValue {
 	user: User
 	threadIds: [ID]

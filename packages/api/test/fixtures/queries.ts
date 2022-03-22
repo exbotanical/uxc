@@ -175,3 +175,33 @@ export const REMOVE_FRIEND = `
 		removeFriend(friendId: $friendId)
 	}
 `;
+
+export const TEXT_SEARCH = `
+	query search($query: String) {
+		search(query: $query) {
+			... on PrivateThread {
+				_id
+				users {
+					_id
+					username
+					userImage
+					email
+				}
+			}
+
+			... on MessageResult {
+				_id
+				body
+				threadId {
+					_id
+				}
+				sender {
+					_id
+					email
+					userImage
+					username
+				}
+			}
+		}
+	}
+`;

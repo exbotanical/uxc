@@ -7,7 +7,7 @@ import type { ObjectID, Message as MessageType } from '@uxc/common/node';
 import { Message } from '@/db';
 import { UserInputError } from '@/services/error';
 
-// @todo disallow users to edit any message; restrict to sender/receiver
+// @todo disallow users to edit any message; restrict to sender/receiver; test
 export const updateMessage: Resolver<
 	MessageType | null,
 	{ messageId: ObjectID; body: string }

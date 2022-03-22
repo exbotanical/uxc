@@ -1,6 +1,7 @@
 import { GraphQLDateTime } from 'graphql-iso-date';
 
 import type { Resolvers } from '@uxc/common/generated';
+import type { User as UserType } from '@uxc/common/node';
 import { User, Message, PrivateThread, FriendRequest } from '@/db';
 import type { GraphQLScalarType } from 'graphql';
 import { isValidObjectId } from 'mongoose';
@@ -56,6 +57,18 @@ export const resolvers: Resolvers = {
 	PrivateThread: {
 		__isTypeOf: (obj) => {
 			return obj instanceof PrivateThread;
+		}
+	},
+
+	Result: {
+		__resolveType: (result, context, info) => {
+			if ('body' in result) {
+				return 'MessageResult';
+			} else if ('users' in result) {
+				return 'PrivateThread';
+			}
+
+			return null;
 		}
 	},
 
