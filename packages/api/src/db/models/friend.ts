@@ -61,7 +61,9 @@ FriendSchema.statics.findFriends = function findFriends(
 			},
 			options || {}
 		) as FriendQuery
-	).populate('friendNodeX', 'friendNodeY');
+	)
+		.populate('friendNodeX')
+		.populate('friendNodeY');
 };
 
 FriendSchema.statics.build = (attrs) => {
