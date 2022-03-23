@@ -2,15 +2,15 @@ import { faker } from '@faker-js/faker';
 import { Request } from 'express';
 import { Document } from 'mongoose';
 
+import testMessages from '../../../../../test/fixtures/messages.json';
+
 import type { Context, ObjectID, User as UserType } from '@uxc/common/node';
 
 import { User, Message, PrivateThread, Friend } from '@/db';
 import { logger } from '@/services/logger';
 
-import testMessages from '../../../../../test/fixtures/messages.json';
-
 enum SeedModes {
-	TEST
+	TEST = 0
 }
 
 type PartitionedTasks = [Promise<any>[], ObjectID[]];
@@ -24,14 +24,14 @@ interface MaybePassword {
 	password?: string;
 }
 
-async function createTestMessages(threadId: ObjectID, userId: ObjectID) {
-	return testMessages.map((body) => {
+function createTestMessages(threadId: ObjectID, userId: ObjectID) {
+	return testMessages.map(async (body) =>
 		Message.build({
 			body,
 			sender: userId,
 			threadId
-		}).save();
-	});
+		}).save()
+	);
 }
 
 function createMessage(threadId: ObjectID, userId: ObjectID) {
@@ -165,9 +165,9 @@ export async function seed({
 	await Promise.all(messageTasks);
 
 	if (mode === SeedModes.TEST) {
-		const testMessageTasks = await createTestMessages(threadIds[0], userId);
+		const testMessageTasks = createTestMessages(threadIds[0], userId);
 		// befriend ea new user - test user
-		const [friendTasks, _] = partition(
+		const [friendTasks] = partition(
 			userIds.map((friendNodeY) =>
 				Friend.build({
 					friendNodeX: user._id,

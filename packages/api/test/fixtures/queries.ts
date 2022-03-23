@@ -205,3 +205,23 @@ export const TEXT_SEARCH = `
 		}
 	}
 `;
+
+export const FRIEND_SEARCH = `
+	query searchFriends($query: String) {
+		searchFriends(query: $query) {
+			_id
+			friendNodeX {
+				_id
+				email
+				userImage
+				username
+			}
+			friendNodeY {
+				_id
+				email
+				userImage
+				username
+			}
+		}
+	}
+`;

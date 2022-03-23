@@ -1,5 +1,6 @@
 import { ERROR_MESSAGES } from '@uxc/common/node';
 import { AuthenticationError } from 'apollo-server-core';
+import { MongoServerError } from 'mongodb';
 import { isValidObjectId, Error as MongooseError } from 'mongoose';
 
 import type { ObjectID, Context } from '@uxc/common/node';
@@ -13,6 +14,9 @@ interface CreateFriendRequestArgs {
 	recipientId?: ObjectID | null;
 }
 
+/**
+ * @todo Remove friend model. Just use accepted friend request documents as "friends".
+ */
 export const createFriendRequest = async (
 	_: Record<string, unknown>,
 	{ recipientId: recipient }: CreateFriendRequestArgs,
@@ -56,12 +60,29 @@ export const createFriendRequest = async (
 
 		return populatedFriendRequest._id;
 	} catch (ex) {
-		if (ex instanceof MongooseError.ValidationError) {
-			if ('recipient' in ex.errors) {
+		let message;
+
+		if (ex instanceof Error) {
+			if (
+				ex instanceof MongooseError.ValidationError &&
+				'recipient' in ex.errors
+			) {
 				throw new UserInputError(ex.errors.recipient.message);
 			}
+
+			if (
+				ex.name === 'MongoServerError' &&
+				(ex as MongoServerError).code === 11000
+			) {
+				throw new UserInputError(ERROR_MESSAGES.E_DUPE_FRIEND_RQ, ex.message);
+			}
+
+			message = ex.message;
 		}
 
-		throw new BadRequestError(ERROR_MESSAGES.E_GENERIC_FRIENDLY);
+		throw new BadRequestError(
+			ERROR_MESSAGES.E_GENERIC_FRIENDLY,
+			(message || ex) as string
+		);
 	}
 };

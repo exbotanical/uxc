@@ -48,5 +48,6 @@ export const ERROR_MESSAGES = {
 	E_SHORT_USERNAME: `Your username must contain more than ${
 		USERNAME_CHARS_MIN - 1
 	} characters.`,
-	E_NO_QUERY: 'A search query is required but was not supplied.'
+	E_NO_QUERY: 'A search query is required but was not supplied.',
+	E_DUPE_FRIEND_RQ: 'A friend request between these two users already exists.'
 };

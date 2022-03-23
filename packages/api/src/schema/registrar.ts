@@ -1,11 +1,10 @@
 import { GraphQLDateTime } from 'graphql-iso-date';
-
-import type { Resolvers } from '@uxc/common/generated';
-import type { User as UserType } from '@uxc/common/node';
-import { User, Message, PrivateThread, FriendRequest } from '@/db';
-import type { GraphQLScalarType } from 'graphql';
 import { isValidObjectId } from 'mongoose';
 
+import type { Resolvers } from '@uxc/common/generated';
+import type { GraphQLScalarType } from 'graphql';
+
+import { User, Message, PrivateThread, FriendRequest } from '@/db';
 import { authGuard } from '@/middleware/auth';
 import {
 	joinResolver as join,
@@ -61,7 +60,7 @@ export const resolvers: Resolvers = {
 	},
 
 	Result: {
-		__resolveType: (result, context, info) => {
+		__resolveType: (result) => {
 			if ('body' in result) {
 				return 'MessageResult';
 			} else if ('users' in result) {
@@ -85,7 +84,7 @@ export const resolvers: Resolvers = {
 	},
 
 	FriendRequestResult: {
-		__resolveType: (friendRequest, context, info) => {
+		__resolveType: (friendRequest) => {
 			if (
 				typeof friendRequest.recipient === 'object' &&
 				typeof friendRequest.recipient?.username === 'string' &&

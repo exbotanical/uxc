@@ -6,9 +6,26 @@ import { v4 } from 'uuid';
 import * as S from './styles';
 
 import { Input } from '@/components/Fields/Input';
+import { FRIEND_SEARCH, GET_CURRENT_USER } from '@/services/api';
+import { useQuery } from '@apollo/client';
+import type { Friend, User } from '@uxc/common';
 
 export function Friends() {
+	const { data: currentUser } = useQuery<{
+		getCurrentUser: User;
+	}>(GET_CURRENT_USER);
+
+	const { data } = useQuery<{ searchFriends: Friend[] }>(FRIEND_SEARCH, {
+		variables: {
+			query: 'redis'
+		},
+		// @todo make robust. naive impl for now
+		// skip: query.length < 2,
+		fetchPolicy: 'no-cache'
+	});
+
 	const [searchText, setSearchText] = useState('');
+	console.log({ data });
 
 	const searchOptions = [
 		{

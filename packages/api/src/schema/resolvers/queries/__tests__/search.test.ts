@@ -1,11 +1,13 @@
 import { SIGNIN_MUTATION, TEXT_SEARCH } from '@@/fixtures';
 import { ERROR_MESSAGES } from '@uxc/common/node';
-import type { Message, PrivateThread } from '@uxc/common/node';
 import request from 'supertest';
+
+import testMessages from '../../../../../test/fixtures/messages.json';
+
+import type { Message, PrivateThread } from '@uxc/common/node';
 
 import { app } from '@/app';
 import { seed } from '@/schema/resolvers/mutations/computed/seed';
-import testMessages from '../../../../../test/fixtures/messages.json';
 
 const testSubject = 'search';
 
@@ -75,11 +77,11 @@ describe(`${testSubject} workflow`, () => {
 
 		const data: Message[] = body.data.search;
 
-		data.forEach((result, idx) => {
+		data.forEach((result) => {
 			expect(result.body.toLowerCase()).toContain(query);
 		});
 
-		expect(data.map((result) => result.body)).toEqual(
+		expect(data.map((result) => result.body)).toStrictEqual(
 			expect.arrayContaining(testMessages.slice(0, expectedMatches))
 		);
 	});

@@ -15,7 +15,7 @@ const status = 'ACCEPTED';
 const testSubject = 'updateFriendRequest';
 describe(`${testSubject} workflow`, () => {
 	it('fails with an Unauthorized error if the request does not include a valid session cookie', async () => {
-		const { userIds } = await seed({ mode: 0 });
+		const { userIds } = await seed();
 
 		const { body } = await request(app)
 			.post(BASE_PATH)
@@ -55,7 +55,7 @@ describe(`${testSubject} workflow`, () => {
 	});
 
 	it('fails when not provided a status', async () => {
-		const { userIds } = await seed({ mode: 0 });
+		const { userIds } = await seed();
 		const { cookie } = await join();
 
 		const { body } = await request(app)
@@ -112,7 +112,7 @@ describe(`${testSubject} workflow`, () => {
 	});
 
 	it('fails when provided a requestId that does not exist in the database', async () => {
-		const { threadIds } = await seed({ mode: 0 });
+		const { threadIds } = await seed();
 
 		const { cookie } = await join();
 		const threadId = threadIds[0];

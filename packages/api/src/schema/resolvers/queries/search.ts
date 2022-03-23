@@ -6,6 +6,7 @@ import type {
 	PrivateThread as PrivateThreadType,
 	Message as MessageType
 } from '@uxc/common/node';
+
 import { Message, PrivateThread } from '@/db';
 
 type PopulatedMessage = MessageType & { threadId: PrivateThreadType };
@@ -64,7 +65,7 @@ export const search: Resolver<
 			return records.filter(
 				(record) =>
 					!!(record.threadId as PrivateThreadType).users.filter(
-						(user) => !!user
+						(user) => !!user // eslint-disable-line @typescript-eslint/no-unnecessary-condition
 					).length
 			) as PopulatedMessage[];
 		});

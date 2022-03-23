@@ -49,6 +49,8 @@ const FriendRequestSchema = new Schema<FriendRequestType>(
 	}
 );
 
+FriendRequestSchema.index({ requester: 1, recipient: 1 }, { unique: true });
+
 FriendRequestSchema.path('recipient').validate(function validate(
 	this: NewFriendRequestArgs & { _id: string }
 ) {

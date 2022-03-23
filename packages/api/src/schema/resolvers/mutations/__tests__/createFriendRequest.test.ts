@@ -1,4 +1,4 @@
-import { CREATE_FRIEND_REQUEST } from '@@/fixtures';
+import { CREATE_FRIEND_REQUEST, SIGNIN_MUTATION } from '@@/fixtures';
 import { ERROR_MESSAGES } from '@uxc/common/node';
 import request from 'supertest';
 
@@ -8,7 +8,7 @@ import { seed } from '@/schema/resolvers/mutations/computed/seed';
 const testSubject = 'createFriendRequest';
 describe(`${testSubject} workflow`, () => {
 	it('fails with an Unauthorized error if the request does not include a valid session cookie', async () => {
-		const { userIds } = await seed({ mode: 0 });
+		const { userIds } = await seed();
 
 		const { body } = await request(app)
 			.post(BASE_PATH)
@@ -91,7 +91,7 @@ describe(`${testSubject} workflow`, () => {
 	});
 
 	it('fails when provided a recipientId that does not exist in the database', async () => {
-		const { threadIds } = await seed({ mode: 0 });
+		const { threadIds } = await seed();
 
 		const { cookie } = await join();
 		const threadId = threadIds[0];
@@ -115,10 +115,70 @@ describe(`${testSubject} workflow`, () => {
 		expect(body.errors[0].path[0]).toBe(testSubject);
 	});
 
-	it.skip('fails when creating a friend request between two users that are already friends', () => {});
+	it.skip('fails when creating a friend request between two users that are already friends', async () => {
+		const { user, testUser2 } = await seed({ mode: 0 });
+
+		const response = await request(app)
+			.post(BASE_PATH)
+			.send({
+				query: SIGNIN_MUTATION,
+				variables: {
+					args: {
+						email: testUser2.email,
+						password: testUser2.password
+					}
+				}
+			})
+			.expect(200);
+
+		const { body } = await request(app)
+			.post(BASE_PATH)
+			.set('Cookie', response.get('Set-Cookie'))
+			.send({
+				query: CREATE_FRIEND_REQUEST,
+				variables: {
+					recipientId: user._id
+				}
+			})
+			.expect(200);
+	});
+
+	it('fails when creating a duplicate friend request', async () => {
+		const { userIds } = await seed();
+		const { cookie } = await join();
+
+		await request(app)
+			.post(BASE_PATH)
+			.set('Cookie', cookie)
+			.send({
+				query: CREATE_FRIEND_REQUEST,
+				variables: {
+					recipientId: userIds[0]
+				}
+			})
+			.expect(200);
+
+		const { body } = await request(app)
+			.post(BASE_PATH)
+			.set('Cookie', cookie)
+			.send({
+				query: CREATE_FRIEND_REQUEST,
+				variables: {
+					recipientId: userIds[0]
+				}
+			})
+			.expect(200);
+
+		expect(body.errors).toHaveLength(1);
+		expect(body.errors[0].message).toStrictEqual(
+			ERROR_MESSAGES.E_DUPE_FRIEND_RQ
+		);
+
+		expect(body.errors[0].path[0]).toBe(testSubject);
+	});
 
 	it('creates a friend request', async () => {
-		const { userIds } = await seed({ mode: 0 });
+		const { userIds } = await seed();
 		const { cookie } = await join();
 
 		const { body } = await request(app)

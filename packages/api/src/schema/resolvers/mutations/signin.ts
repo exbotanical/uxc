@@ -5,7 +5,6 @@ import type {
 	SigninInput,
 	MutationResolvers
 } from '@uxc/common/generated';
-import type { User as UserType } from '@uxc/common/node';
 
 import { User } from '@/db';
 import { BadRequestError, UserInputError } from '@/services/error';
@@ -18,17 +17,13 @@ export const signinResolver: MutationResolvers['signin'] = async (
 ) => {
 	const { email, password } = validateInputs(args);
 
-	const user = (await User.findOne({ email })) as
-		| (UserType & {
-				password: string;
-		  })
-		| null;
+	const user = await User.findOne({ email });
 
 	if (!user) {
 		throw new BadRequestError(ERROR_MESSAGES.E_INVALID_CREDENTIALS);
 	}
 
-	const isCorrectPassword = await compare(user.password, password);
+	const isCorrectPassword = await compare(user.password!, password);
 	if (!isCorrectPassword) {
 		throw new BadRequestError(ERROR_MESSAGES.E_INVALID_CREDENTIALS);
 	}
