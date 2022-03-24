@@ -160,12 +160,9 @@ export const GET_FRIENDS = `
 	query {
 		getFriends {
 			_id
-			friendNodeX {
-				_id
-			}
-			friendNodeY {
-				_id
-			}
+			username
+			email
+			userImage
 		}
 	}
 `;
@@ -210,18 +207,9 @@ export const FRIEND_SEARCH = `
 	query searchFriends($query: String) {
 		searchFriends(query: $query) {
 			_id
-			friendNodeX {
-				_id
-				email
-				userImage
-				username
-			}
-			friendNodeY {
-				_id
-				email
-				userImage
-				username
-			}
+			email
+			username
+			userImage
 		}
 	}
 `;

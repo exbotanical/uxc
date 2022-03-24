@@ -11,11 +11,6 @@ enum FriendRequestType {
 
 union FriendRequestResult = ReceivedFriendRequest | SentFriendRequest
 
-type Friend {
-  _id: ID
-  friendNodeX: User
-  friendNodeY: User
-}
 
 type ReceivedFriendRequest {
   _id: ID
@@ -32,8 +27,8 @@ type SentFriendRequest {
 }
 
 type Query {
-  searchFriends(query: String): [Friend]
-  getFriends: [Friend]
+  searchFriends(query: String): [User]
+  getFriends: [User]
   getFriendRequests(type: FriendRequestType): [FriendRequestResult]
 }
 
@@ -42,7 +37,7 @@ type Subscription {
 }
 
 type Mutation {
-  removeFriend(friendId: ID): ID
+  removeFriend(friendId: ID): Boolean
   createFriendRequest(recipientId: ID): ID
   updateFriendRequest(requestId: ID, status: FriendRequestStatus): ID
 }

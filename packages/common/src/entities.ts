@@ -35,6 +35,16 @@ export interface Friend extends BaseModel {
 	friendNodeY: PopulatedDoc<User>;
 }
 
+export type FriendX = {
+	friendNodeX: User;
+	friendNodeY: ObjectID;
+};
+
+export type FriendY = {
+	friendNodeX: ObjectID;
+	friendNodeY: User;
+};
+
 export interface FriendRequest extends BaseModel {
 	requester: PopulatedDoc<User>;
 	recipient: PopulatedDoc<User>;

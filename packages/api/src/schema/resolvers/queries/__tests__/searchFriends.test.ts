@@ -41,7 +41,7 @@ describe(`${testSubject} workflow`, () => {
 		expect(body.errors[0].path[0]).toBe(testSubject);
 	});
 
-	it.skip('returns friend search results', async () => {
+	it('returns friend search results', async () => {
 		const { user, testUser2 } = await seed({ mode: 0 });
 
 		const response = await request(app)
@@ -68,8 +68,29 @@ describe(`${testSubject} workflow`, () => {
 			})
 			.expect(200);
 
-		console.log(body.data.searchFriends);
+		const friends = body.data.searchFriends;
+
+		expect(friends).toHaveLength(1);
+		expect(testUser2.username).toStrictEqual(friends[0].username);
 	});
 
-	it.todo('searches only friends of the current user');
+	it('searches only friends of the current user', async () => {
+		const { cookie } = await join();
+		const { testUser2 } = await seed({ mode: 0 });
+
+		const { body } = await request(app)
+			.post(BASE_PATH)
+			.set('Cookie', cookie)
+			.send({
+				query: FRIEND_SEARCH,
+				variables: {
+					query: testUser2.username
+				}
+			})
+			.expect(200);
+
+		const friends = body.data.searchFriends;
+
+		expect(friends).toHaveLength(0);
+	});
 });

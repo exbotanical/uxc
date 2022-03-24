@@ -8,7 +8,7 @@ import type { ObjectID } from '@uxc/common/node';
 import { Friend } from '@/db';
 import { UserInputError } from '@/services/error';
 
-export const removeFriend: Resolver<ObjectID, { friendId: ObjectID }> = async (
+export const removeFriend: Resolver<boolean, { friendId: ObjectID }> = async (
 	_,
 	{ friendId },
 	{ req }
@@ -29,14 +29,21 @@ export const removeFriend: Resolver<ObjectID, { friendId: ObjectID }> = async (
 	}
 
 	const deletedFriend = await Friend.findOneAndDelete({
-		$and: [
+		$or: [
 			{
-				id: friendId
-			},
-			{
-				$or: [
+				$and: [
 					{
 						friendNodeX: userId
+					},
+					{
+						friendNodeY: friendId
+					}
+				]
+			},
+			{
+				$and: [
+					{
+						friendNodeX: friendId
 					},
 					{
 						friendNodeY: userId
@@ -46,5 +53,5 @@ export const removeFriend: Resolver<ObjectID, { friendId: ObjectID }> = async (
 		]
 	});
 
-	return deletedFriend?._id || null;
+	return !!deletedFriend?._id;
 };

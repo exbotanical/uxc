@@ -1,7 +1,13 @@
 import { Schema, model } from 'mongoose';
 
 import type { AsBuildArgs, AsRawDocument, AsReturnDocument } from '../types';
-import type { ObjectID, Friend as FriendType } from '@uxc/common/node';
+import type {
+	User,
+	ObjectID,
+	Friend as FriendType,
+	FriendY,
+	FriendX
+} from '@uxc/common/node';
 import type { Model, Query } from 'mongoose';
 
 type RawDocument = AsRawDocument<FriendType>;
@@ -11,11 +17,7 @@ type FriendQuery = Query<FriendType, any>;
 
 interface FriendModel extends Model<RawDocument> {
 	build(attrs: NewFriendArgs): ReturnDocument;
-	findFriends(
-		currentUserId: ObjectID,
-		otherFilters?: Record<string, any>[],
-		options?: Record<string, any>
-	): Promise<FriendType[]>;
+	findFriends(currentUserId: ObjectID): Promise<User[]>;
 }
 
 const FriendSchema = new Schema<FriendType>(
@@ -41,29 +43,27 @@ const FriendSchema = new Schema<FriendType>(
 	}
 );
 
-FriendSchema.statics.findFriends = function findFriends(
-	currentUserId: ObjectID,
-	otherFilters?: Record<string, any>[],
-	options?: Record<string, any>
+FriendSchema.index({ '$**': 'text' });
+
+FriendSchema.index({ friendNodeX: 1, friendNodeY: 1 }, { unique: true });
+
+FriendSchema.statics.findFriends = async function searchFriends(
+	currentUserId: ObjectID
 ) {
-	return (
-		this.find(
-			{
-				$or: [
-					{
-						friendNodeX: currentUserId
-					},
-					{
-						friendNodeY: currentUserId
-					}
-				],
-				...(otherFilters ? otherFilters : [])
-			},
-			options || {}
-		) as FriendQuery
-	)
-		.populate('friendNodeX')
-		.populate('friendNodeY');
+	const friendsX = this.find({
+		friendNodeY: currentUserId
+	}).populate('friendNodeX') as FriendX[];
+
+	const friendsY = this.find({
+		friendNodeX: currentUserId
+	}).populate('friendNodeY') as FriendY[];
+
+	const [x, y] = await Promise.all([friendsX, friendsY]);
+
+	return [
+		...x.map((friend) => friend.friendNodeX),
+		...y.map((friend) => friend.friendNodeY)
+	];
 };
 
 FriendSchema.statics.build = (attrs) => {

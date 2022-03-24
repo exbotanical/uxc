@@ -31,53 +31,6 @@
         "possibleTypes": null
       },
       {
-        "kind": "OBJECT",
-        "name": "Friend",
-        "description": null,
-        "fields": [
-          {
-            "name": "_id",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "ID",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "friendNodeX",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "User",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "friendNodeY",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "User",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
         "kind": "UNION",
         "name": "FriendRequestResult",
         "description": null,
@@ -558,7 +511,7 @@
             ],
             "type": {
               "kind": "SCALAR",
-              "name": "ID",
+              "name": "Boolean",
               "ofType": null
             },
             "isDeprecated": false,
@@ -811,7 +764,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "Friend",
+                "name": "User",
                 "ofType": null
               }
             },
@@ -977,7 +930,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "Friend",
+                "name": "User",
                 "ofType": null
               }
             },

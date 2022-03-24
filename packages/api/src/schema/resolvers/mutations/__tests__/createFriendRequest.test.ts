@@ -115,7 +115,7 @@ describe(`${testSubject} workflow`, () => {
 		expect(body.errors[0].path[0]).toBe(testSubject);
 	});
 
-	it.skip('fails when creating a friend request between two users that are already friends', async () => {
+	it.skip('@todo fails when creating a friend request between two users that are already friends', async () => {
 		const { user, testUser2 } = await seed({ mode: 0 });
 
 		const response = await request(app)

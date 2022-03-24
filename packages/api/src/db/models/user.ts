@@ -56,6 +56,13 @@ const UserSchema = new Schema<UserWithPassword>(
 	{
 		timestamps: true,
 
+		toObject: {
+			transform(_, ret: RawDocument) {
+				delete ret.password;
+				delete ret.__v;
+			}
+		},
+
 		// modify internal `toJSON` method to serialize the user object sans password, __v;
 		// convert mongo-specific `_id` to a db-agnostic format
 		toJSON: {
