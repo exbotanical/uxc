@@ -1,9 +1,10 @@
 import { GET_FRIENDS, SIGNIN_MUTATION } from '@@/fixtures';
 import { ERROR_MESSAGES } from '@uxc/common/node';
 import request from 'supertest';
-import { seed } from '@/schema/resolvers/mutations/computed/seed';
 
 import { app } from '@/app';
+import { seed } from '@/schema/resolvers/mutations/computed/seed';
+
 
 const testSubject = 'getFriends';
 describe(`${testSubject} workflow`, () => {

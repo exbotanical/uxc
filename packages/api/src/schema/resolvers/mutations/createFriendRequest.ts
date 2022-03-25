@@ -60,7 +60,7 @@ export const createFriendRequest = async (
 
 		return populatedFriendRequest._id;
 	} catch (ex) {
-		let message;
+		let internal;
 
 		if (ex instanceof Error) {
 			if (
@@ -77,12 +77,12 @@ export const createFriendRequest = async (
 				throw new UserInputError(ERROR_MESSAGES.E_DUPE_FRIEND_RQ, ex.message);
 			}
 
-			message = ex.message;
+			internal = ex.message;
 		}
 
 		throw new BadRequestError(
 			ERROR_MESSAGES.E_GENERIC_FRIENDLY,
-			(message || ex) as string
+			(internal || ex) as string
 		);
 	}
 };

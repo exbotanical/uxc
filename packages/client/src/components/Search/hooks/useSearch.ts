@@ -1,20 +1,21 @@
+
+import { useQuery } from '@apollo/client';
 import { useCallback, useEffect, useState } from 'react';
 
-import { GET_CURRENT_USER, TEXT_SEARCH } from '@/services/api';
-import { useQuery } from '@apollo/client';
-
 import type { PrivateThread, Message, User } from '@uxc/common';
+
 import { useLocalStorage } from '@/hooks';
+import { GET_CURRENT_USER, TEXT_SEARCH } from '@/services/api';
 
 type PopulatedMessage = Message & { threadId: PrivateThread };
 
 type DeterminedResult =
-	| ({
+	| (PopulatedMessage & {
 			__typename: 'Message';
-	  } & PopulatedMessage)
-	| ({
+	  })
+	| (PrivateThread & {
 			__typename: 'PrivateThread';
-	  } & PrivateThread);
+	  });
 
 export interface SearchResults {
 	threads: (SearchRecord & { category: 'thread' })[];

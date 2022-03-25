@@ -12,5 +12,5 @@ export const getFriends: Resolver<User[]> = async (_, __, { req }) => {
 		throw new AuthenticationError(ERROR_MESSAGES.E_NO_USER_SESSION);
 	}
 
-	return await Friend.findFriends(userId);
+	return Friend.findFriends(userId);
 };

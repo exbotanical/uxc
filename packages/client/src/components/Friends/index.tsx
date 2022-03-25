@@ -1,14 +1,15 @@
 import type { ChangeEvent } from 'react';
 
+import { useQuery } from '@apollo/client';
 import React, { useState } from 'react';
 import { v4 } from 'uuid';
 
 import * as S from './styles';
 
+import type { Friend, User } from '@uxc/common';
+
 import { Input } from '@/components/Fields/Input';
 import { FRIEND_SEARCH, GET_CURRENT_USER } from '@/services/api';
-import { useQuery } from '@apollo/client';
-import type { Friend, User } from '@uxc/common';
 
 export function Friends() {
 	const { data: currentUser } = useQuery<{

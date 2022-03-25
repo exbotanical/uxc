@@ -1,17 +1,17 @@
 import React, { useContext } from 'react';
 
-import { SearchHit } from '@/components/Search/SearchContent/SearchHit';
 import { SearchHistoryHit } from '@/components/Search/SearchContent/SearchHistoryHit';
-import { SearchContext } from '@/components/Search/SearchContext';
+import { SearchHit } from '@/components/Search/SearchContent/SearchHit';
 import * as S from '@/components/Search/SearchContent/styles';
+import { SearchContext } from '@/components/Search/SearchContext';
 
 export function SearchContent() {
 	const ref = React.useRef<HTMLDivElement | null>(null);
 
 	const { favorites, history, results, query } = useContext(SearchContext);
 
-	const History = () =>
-		history?.length ? (
+	function History() {
+  return history.length ? (
 			<section>
 				<S.SearchSource>Recent</S.SearchSource>
 
@@ -23,22 +23,24 @@ export function SearchContent() {
 			</section>
 		) : (
 			<S.NoContent>No recent searches</S.NoContent>
-		);
+		)
+}
 
-	const Favorites = () =>
-		favorites?.length ? (
+	function Favorites() {
+  return favorites.length ? (
 			<section>
 				<S.SearchSource>Favorites</S.SearchSource>
 
 				<S.SearchHistoryHitList>
 					{favorites.map((record) => {
 						return (
-							<SearchHistoryHit key={record.id} record={record} isFavorite />
+							<SearchHistoryHit isFavorite key={record.id} record={record} />
 						);
 					})}
 				</S.SearchHistoryHitList>
 			</section>
-		) : null;
+		) : null
+}
 
 	if (query) {
 		if (!results.threads.length && !results.messages.length) {

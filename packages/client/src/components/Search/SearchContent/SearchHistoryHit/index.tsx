@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useTheme } from 'styled-components';
 
 import type { SearchRecord } from '@/components/Search/hooks';
 
@@ -6,7 +7,6 @@ import SvgIcon from '@/components/Icon';
 import * as S from '@/components/Search/SearchContent/SearchHistoryHit/styles';
 import { SearchContext } from '@/components/Search/SearchContext';
 import { mitigateClickBubble, onEnterKeyPressed } from '@/utils';
-import { useTheme } from 'styled-components';
 
 interface SearchHistoryHitProps {
 	record: SearchRecord;
@@ -44,21 +44,21 @@ export function SearchHistoryHit({
 	const favoriteActionConfig = isFavorite
 		? {
 				title: 'Unfavorite this search result',
-				onClick: mitigateClickBubble(() => removeFromFavorites(record))
+				onClick: mitigateClickBubble(() => { removeFromFavorites(record); })
 		  }
 		: {
 				title: 'Favorite this search result',
-				onClick: mitigateClickBubble(() => appendToFavorites(record))
+				onClick: mitigateClickBubble(() => { appendToFavorites(record); })
 		  };
 
 	const closeActionConfig = isFavorite
 		? {
 				title: 'Remove this search result from favorites',
-				onClick: mitigateClickBubble(() => removeFromFavorites(record))
+				onClick: mitigateClickBubble(() => { removeFromFavorites(record); })
 		  }
 		: {
 				title: 'Remove this search result from history',
-				onClick: mitigateClickBubble(() => removeFromHistory(record))
+				onClick: mitigateClickBubble(() => { removeFromHistory(record); })
 		  };
 
 	function handleClick() {
@@ -70,10 +70,10 @@ export function SearchHistoryHit({
 
 	return (
 		<S.ListItem
+			data-testid={id}
+			id={id}
 			isActiveRecord={isActiveRecord}
 			onClick={handleClick}
-			id={id}
-			data-testid={id}
 		>
 			<S.StyledHashLink smooth to={record.link}>
 				<S.ListItemContent>
@@ -89,7 +89,7 @@ export function SearchHistoryHit({
 
 				<S.RightAction>
 					<S.IconButton {...closeActionConfig}>
-						<SvgIcon name="close" size={32} color={gray} hoverColor={'#fff'} />
+						<SvgIcon color={gray} hoverColor="#fff" name="close" size={32} />
 					</S.IconButton>
 				</S.RightAction>
 			</S.StyledHashLink>

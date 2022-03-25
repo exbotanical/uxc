@@ -120,6 +120,6 @@ describe(`${testSubject} workflow`, () => {
 			})
 			.expect(200);
 
-		expect(body3.data.removeFriend).toStrictEqual(true);
+		expect(body3.data.removeFriend).toBe(true);
 	});
 });

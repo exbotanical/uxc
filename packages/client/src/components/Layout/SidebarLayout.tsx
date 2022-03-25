@@ -7,10 +7,10 @@ import type { User } from '@uxc/common';
 
 import SvgIcon from '@/components/Icon';
 import { Search } from '@/components/PrivateThread/Search';
+import { SearchProvider } from '@/components/Search/SearchContext';
 import { UserStatus } from '@/components/User/UserStatus';
 import { GET_CURRENT_USER } from '@/services/api/queries';
 import { FlexCol } from '@/styles/Layout';
-import { SearchProvider } from '@/components/Search/SearchContext';
 
 const Container = styled.aside`
 	${FlexCol}

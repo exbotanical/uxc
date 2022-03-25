@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { isBrowserRuntime } from '@/utils';
+
 import { logger } from '@/services/logger';
+import { isBrowserRuntime } from '@/utils';
 
 export function useLocalStorage<T>(key: string, initialValue: T) {
 	const [persistedValue, setPersistedValue] = useState<T>(() => {

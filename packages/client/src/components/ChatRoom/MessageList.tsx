@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client';
 import React, { useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { filterMessagesToSender } from './utils';
@@ -12,7 +13,6 @@ import {
 	GET_CURRENT_USER,
 	ON_THREAD_MESSAGE_CREATED
 } from '@/services/api/queries';
-import { useLocation } from 'react-router-dom';
 
 interface MessageListProps {
 	threadId: ObjectID;
@@ -46,7 +46,7 @@ export function MessageList({ threadId }: MessageListProps) {
 	useEffect(() => {
 		// if there's a hash, the user was redirected from a search; we don't want the
 		// scroll effect to be invoked here
-		if (!!location.hash) {
+		if (location.hash) {
 			window.history.replaceState('', location.hash, location.pathname);
 			return;
 		}

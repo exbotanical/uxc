@@ -1,11 +1,12 @@
 import React, { useContext, useRef } from 'react';
 
+import { SearchContext } from './SearchContext';
+
 import SvgIcon from '@/components/Icon';
 import { Modal } from '@/components/Modal/Modal';
 import { SearchContent } from '@/components/Search/SearchContent';
 import { SearchForm } from '@/components/Search/SearchForm';
 import * as S from '@/components/Search/styles';
-import { SearchContext } from './SearchContext';
 
 /**
  * @todo Add up/down arrow keyboard support.

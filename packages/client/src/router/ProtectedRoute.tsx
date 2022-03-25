@@ -24,7 +24,7 @@ export function withProtectedRoute<P extends Record<string, unknown>>(
 			return <>Loading...</>;
 		}
 
-		if (error || !data || !data?.getCurrentUser) {
+		if (error || !data || !data.getCurrentUser) {
 			return <Navigate replace to="/signin" />;
 		}
 

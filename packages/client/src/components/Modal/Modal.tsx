@@ -66,7 +66,7 @@ export function Modal({ onModalClose, modalRef, children }: ModalProps) {
 		};
 	});
 
-	function handleClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+	function handleClick(e: React.MouseEvent<HTMLDivElement>) {
 		if (e.target === overlayRef.current) {
 			onModalClose();
 		}

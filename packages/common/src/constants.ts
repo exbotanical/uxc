@@ -12,6 +12,7 @@ export const ERROR_MESSAGES = {
 	E_CREDENTIALS_TAKEN_FRIENDLY: 'The email or username you chose is taken.',
 	E_DISALLOWED_CHAR_USERNAME:
 		'Your username contains a disallowed special character.',
+	E_DUPE_FRIEND_RQ: 'A friend request between these two users already exists.',
 	E_GENERIC_FRIENDLY:
 		'Something went wrong. Please try again or contact support.',
 	E_INVALID_CREDENTIALS: 'The provided credentials are invalid.',
@@ -30,6 +31,7 @@ export const ERROR_MESSAGES = {
 	E_NO_MESSAGE_ID: 'messageId is required but was not supplied.',
 	E_NO_NEW_PASSWORD: 'A valid password is required.',
 	E_NO_PASSWORD: 'A password must be provided.',
+	E_NO_QUERY: 'A search query is required but was not supplied.',
 	E_NO_RECEIVER_ID: 'receiverId is required but was not supplied.',
 	E_NO_RECIPIENT: 'A recipientId is required.',
 	E_NO_RECIPIENT_ID: 'The required argument `recipientId` was not provided.',
@@ -47,7 +49,5 @@ export const ERROR_MESSAGES = {
 	} characters.`,
 	E_SHORT_USERNAME: `Your username must contain more than ${
 		USERNAME_CHARS_MIN - 1
-	} characters.`,
-	E_NO_QUERY: 'A search query is required but was not supplied.',
-	E_DUPE_FRIEND_RQ: 'A friend request between these two users already exists.'
+	} characters.`
 };

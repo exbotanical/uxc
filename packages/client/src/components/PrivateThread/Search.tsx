@@ -1,10 +1,11 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 
+import { SearchContext } from '../Search/SearchContext';
+
 import { SearchModal } from '@/components/Search';
 import { FlexCol } from '@/styles/Layout';
 import { FontSizeBase } from '@/styles/Typography/FontSize';
-import { SearchContext } from '../Search/SearchContext';
 
 const SearchContainer = styled.div`
 	${FlexCol}

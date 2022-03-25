@@ -1,19 +1,13 @@
 import { Schema, model } from 'mongoose';
 
 import type { AsBuildArgs, AsRawDocument, AsReturnDocument } from '../types';
-import type {
-	User,
-	ObjectID,
-	Friend as FriendType,
-	FriendY,
-	FriendX
-} from '@uxc/common/node';
+import type { User, ObjectID, Friend as FriendType } from '@uxc/common/node';
 import type { Model, Query } from 'mongoose';
 
 type RawDocument = AsRawDocument<FriendType>;
 type ReturnDocument = AsReturnDocument<FriendType>;
 type NewFriendArgs = AsBuildArgs<FriendType>;
-type FriendQuery = Query<FriendType, any>;
+type FriendsQuery = Query<FriendType[], any>;
 
 interface FriendModel extends Model<RawDocument> {
 	build(attrs: NewFriendArgs): ReturnDocument;
@@ -47,16 +41,20 @@ FriendSchema.index({ '$**': 'text' });
 
 FriendSchema.index({ friendNodeX: 1, friendNodeY: 1 }, { unique: true });
 
-FriendSchema.statics.findFriends = async function searchFriends(
+FriendSchema.statics.findFriends = async function findFriends(
 	currentUserId: ObjectID
 ) {
-	const friendsX = this.find({
-		friendNodeY: currentUserId
-	}).populate('friendNodeX') as FriendX[];
+	const friendsX = (
+		this.find({
+			friendNodeY: currentUserId
+		}) as FriendsQuery
+	).populate('friendNodeX');
 
-	const friendsY = this.find({
-		friendNodeX: currentUserId
-	}).populate('friendNodeY') as FriendY[];
+	const friendsY = (
+		this.find({
+			friendNodeX: currentUserId
+		}) as FriendsQuery
+	).populate('friendNodeY');
 
 	const [x, y] = await Promise.all([friendsX, friendsY]);
 

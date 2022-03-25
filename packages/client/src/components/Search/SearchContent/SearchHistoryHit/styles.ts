@@ -1,7 +1,7 @@
+import { HashLink } from 'react-router-hash-link';
 import styled from 'styled-components';
 
 import { FontSizeBase, FontSizeXs } from '@/styles/Typography/FontSize';
-import { HashLink } from 'react-router-hash-link';
 
 export const ListItem = styled.li.attrs<{ isActiveRecord: boolean }>(
 	({ isActiveRecord }) => ({

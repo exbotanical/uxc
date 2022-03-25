@@ -29,15 +29,15 @@ export default function SvgIcon({
 
 	return (
 		<IconWrapper
-			color={color}
-			hoverColor={hoverColor || color}
 			aria-hidden="true"
-			height={size}
-			width={size}
+			color={color}
 			fill={fill}
+			height={size}
+			hoverColor={hoverColor || color}
+			width={size}
 			{...props}
 		>
-			<use href={symbolId} fill={fill} />
+			<use fill={fill} href={symbolId} />
 		</IconWrapper>
 	);
 }

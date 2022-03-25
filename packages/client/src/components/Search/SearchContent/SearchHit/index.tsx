@@ -24,10 +24,10 @@ export function SearchHit({ record }: SearchHitProps) {
 
 	return (
 		<S.SearchHit
+			data-testid={id}
+			id={id}
 			isActiveRecord={isActiveRecord}
 			onClick={handleClick}
-			id={id}
-			data-testid={id}
 		>
 			<S.StyledHashLink smooth to={record.link}>
 				<S.SearchHitContainer>

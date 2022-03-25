@@ -16,7 +16,7 @@ export function SearchForm() {
 		setQuery(value);
 	}
 
-	function handleClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+	function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
 		e.preventDefault();
 		setQuery('');
 	}
@@ -34,8 +34,8 @@ export function SearchForm() {
 			<button
 				data-testid="uxc-search-clear-input-btn"
 				onClick={handleClick}
-				type="button"
 				title="Clear search text"
+				type="button"
 			>
 				<SvgIcon name="close" size={42} />
 			</button>
