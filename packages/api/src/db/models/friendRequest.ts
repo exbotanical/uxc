@@ -17,8 +17,8 @@ type FriendRequestQuery = Query<FriendRequestType, any>;
 
 interface FriendRequestModel extends Model<RawDocument> {
 	build(attrs: NewFriendRequestArgs): ReturnDocument;
-	findFriendRequestsSent(userId: ObjectID): SentFriendRequest[];
-	findFriendRequestsRecv(userId: ObjectID): ReceivedFriendRequest[];
+	findFriendRequestsSent(userId: ObjectID): Promise<SentFriendRequest[]>;
+	findFriendRequestsRecv(userId: ObjectID): Promise<ReceivedFriendRequest[]>;
 }
 
 const FriendRequestSchema = new Schema<FriendRequestType>(

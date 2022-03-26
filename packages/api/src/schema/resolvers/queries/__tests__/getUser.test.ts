@@ -64,7 +64,7 @@ describe('getUser workflow', () => {
 
 	it('returns the requested user', async () => {
 		const { cookie } = await join();
-		const { user } = await seed();
+		const { user } = await seed({ mode: 0 });
 
 		const { body } = await request(app)
 			.post(BASE_PATH)

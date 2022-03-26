@@ -67,7 +67,7 @@ describe('getThread workflow', () => {
 	});
 
 	it('returns null if the thread was not found', async () => {
-		const { user } = await seed();
+		const { user } = await seed({ mode: 0 });
 
 		const response = await request(app)
 			.post(BASE_PATH)
@@ -99,7 +99,7 @@ describe('getThread workflow', () => {
 	});
 
 	it('returns the requested thread', async () => {
-		const { user, threadIds } = await seed();
+		const { user, threadIds } = await seed({ mode: 0 });
 
 		const response = await request(app)
 			.post(BASE_PATH)

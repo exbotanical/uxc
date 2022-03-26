@@ -1,5 +1,9 @@
 import type { ObjectID, PopulatedDoc } from './util';
 
+export type FriendRequestStatus = 'ACCEPTED' | 'PENDING' | 'REJECTED';
+
+export type FriendRequestOptions = 'SENT' | 'RECV' | 'BOTH';
+
 export interface Timestamps {
 	createdAt: Date;
 	updatedAt: Date;
@@ -63,4 +67,8 @@ export interface SentFriendRequest extends BaseModel {
 	status: FriendRequestStatus;
 }
 
-export type FriendRequestStatus = 'ACCEPTED' | 'PENDING' | 'REJECTED';
+export interface SearchFriendsResult {
+	friends: User[];
+	sent: User[];
+	received: User[];
+}

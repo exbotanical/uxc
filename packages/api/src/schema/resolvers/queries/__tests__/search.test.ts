@@ -49,7 +49,7 @@ describe(`${testSubject} workflow`, () => {
 		const expectedMatches = 4;
 		const query = 'test';
 
-		const { user } = await seed({ mode: 0 });
+		const { user } = await seed();
 
 		const response = await request(app)
 			.post(BASE_PATH)
@@ -87,7 +87,7 @@ describe(`${testSubject} workflow`, () => {
 	});
 
 	it('returns private thread results', async () => {
-		const { user, testUser2 } = await seed({ mode: 0 });
+		const { user, testUser2 } = await seed();
 		const query = testUser2.username;
 
 		const response = await request(app)
@@ -128,7 +128,7 @@ describe(`${testSubject} workflow`, () => {
 
 	it('ignores messages not to or from the current user', async () => {
 		const query = 'test';
-		await seed({ mode: 0 });
+		await seed();
 		const { cookie } = await join();
 
 		const { body } = await request(app)
@@ -148,7 +148,7 @@ describe(`${testSubject} workflow`, () => {
 	});
 
 	it('ignores threads in which the current user is not a member', async () => {
-		const { testUser2 } = await seed({ mode: 0 });
+		const { testUser2 } = await seed();
 		const { cookie } = await join();
 		const query = testUser2.username;
 

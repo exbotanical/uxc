@@ -13,7 +13,7 @@ import { seed } from '@/schema/resolvers/mutations/computed/seed';
 const testSubject = 'removeFriend';
 describe(`${testSubject} workflow`, () => {
 	it('fails with an Unauthorized error if the request does not include a valid session cookie', async () => {
-		const { userIds } = await seed();
+		const { userIds } = await seed({ mode: 0 });
 
 		const { body } = await request(app)
 			.post(BASE_PATH)

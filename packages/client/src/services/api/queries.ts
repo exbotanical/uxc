@@ -146,6 +146,7 @@ export const TEXT_SEARCH = gql`
 	query search($query: String) {
 		search(query: $query) {
 			... on PrivateThread {
+				__typename
 				_id
 				users {
 					_id
@@ -155,12 +156,13 @@ export const TEXT_SEARCH = gql`
 				}
 			}
 
-			... on Message {
+			... on MessageResult {
 				__typename
-
 				_id
 				body
-				threadId
+				threadId {
+					_id
+				}
 				sender {
 					_id
 					email
@@ -176,18 +178,9 @@ export const FRIEND_SEARCH = gql`
 	query searchFriends($query: String) {
 		searchFriends(query: $query) {
 			_id
-			friendNodeX {
-				_id
-				email
-				userImage
-				username
-			}
-			friendNodeY {
-				_id
-				email
-				userImage
-				username
-			}
+			email
+			userImage
+			username
 		}
 	}
 `;

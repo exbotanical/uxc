@@ -4,13 +4,19 @@ enum FriendRequestStatus {
   ACCEPTED
 }
 
-enum FriendRequestType {
+enum FriendRequestOptions {
   SENT
   RECV
+  BOTH
 }
 
 union FriendRequestResult = ReceivedFriendRequest | SentFriendRequest
 
+type SearchFriendsResult {
+  friends: [User]
+  sent: [User]
+  received: [User]
+}
 
 type ReceivedFriendRequest {
   _id: ID
@@ -27,9 +33,9 @@ type SentFriendRequest {
 }
 
 type Query {
-  searchFriends(query: String): [User]
+  searchFriends(query: String, type: FriendRequestOptions): SearchFriendsResult
   getFriends: [User]
-  getFriendRequests(type: FriendRequestType): [FriendRequestResult]
+  getFriendRequests(type: FriendRequestOptions): [FriendRequestResult]
 }
 
 type Subscription {

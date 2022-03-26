@@ -98,7 +98,7 @@ describe('updateMessage workflow', () => {
 	});
 
 	it('updates a message', async () => {
-		const { threadIds, user } = await seed();
+		const { threadIds, user } = await seed({ mode: 0 });
 
 		const signinResponse = await request(app)
 			.post(BASE_PATH)

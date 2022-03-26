@@ -23,7 +23,7 @@ describe('getCurrentUser workflow', () => {
 
 	it('returns the current user if the requester has a valid session', async () => {
 		const { cookie } = await join();
-		const { user } = await seed();
+		const { user } = await seed({ mode: 0 });
 
 		const { body: firstUserResponse } = await request(app)
 			.post(BASE_PATH)

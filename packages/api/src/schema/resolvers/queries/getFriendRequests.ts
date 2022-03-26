@@ -4,14 +4,15 @@ import { AuthenticationError } from 'apollo-server-core';
 import type { Resolver } from '../types';
 import type {
 	ReceivedFriendRequest,
-	SentFriendRequest
+	SentFriendRequest,
+	FriendRequestOptions
 } from '@uxc/common/node';
 
 import { FriendRequest } from '@/db';
 
 export const getFriendRequests: Resolver<
 	(ReceivedFriendRequest | SentFriendRequest)[],
-	{ type: 'RECV' | 'SENT' }
+	{ type: FriendRequestOptions }
 > = (_, { type }, { req }) => {
 	const userId = req.session.meta?.id;
 	if (!userId) {

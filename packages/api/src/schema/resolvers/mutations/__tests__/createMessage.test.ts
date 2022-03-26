@@ -100,7 +100,7 @@ describe('createMessage workflow', () => {
 	});
 
 	it('creates a new message', async () => {
-		const { threadIds, user } = await seed();
+		const { threadIds, user } = await seed({ mode: 0 });
 
 		const response = await request(app)
 			.post(BASE_PATH)

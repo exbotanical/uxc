@@ -162,9 +162,10 @@ export async function seed({
 			);
 		}
 	});
+
 	await Promise.all(messageTasks);
 
-	if (mode === SeedModes.TEST) {
+	if (mode !== SeedModes.TEST) {
 		const testMessageTasks = createTestMessages(threadIds[0], userId);
 		// befriend ea new user - test user
 		const [friendTasks] = partition(

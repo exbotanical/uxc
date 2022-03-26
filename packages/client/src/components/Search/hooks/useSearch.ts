@@ -1,4 +1,3 @@
-
 import { useQuery } from '@apollo/client';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -11,7 +10,7 @@ type PopulatedMessage = Message & { threadId: PrivateThread };
 
 type DeterminedResult =
 	| (PopulatedMessage & {
-			__typename: 'Message';
+			__typename: 'MessageResult';
 	  })
 	| (PrivateThread & {
 			__typename: 'PrivateThread';
@@ -81,7 +80,6 @@ export function useSearch() {
 		setFavorites((prev) => [...prev, record]);
 	}
 
-	console.log('render');
 	useEffect(() => {
 		if (!query) {
 			return;
@@ -91,7 +89,7 @@ export function useSearch() {
 
 		const hits = data?.search?.reduce(
 			(acc, record) => {
-				if (record.__typename === 'Message') {
+				if (record.__typename === 'MessageResult') {
 					acc.messages.push({
 						category: 'message' as const,
 						content: `Message by ${(record.sender as User).username}`,

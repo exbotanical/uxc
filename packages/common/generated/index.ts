@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
-import { User as UserModel, Message as MessageModel, FriendRequestStatus as FriendRequestStatusModel, Friend as FriendModel, Context } from '../node/index';
+import { User as UserModel, Message as MessageModel, Friend as FriendModel, FriendRequestStatus as FriendRequestStatusModel, FriendRequestOptions as FriendRequestOptionsModel, Context } from '../node/index';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -17,17 +17,18 @@ export type Scalars = {
   Date: any;
 };
 
+export enum FriendRequestOptions {
+  Both = 'BOTH',
+  Recv = 'RECV',
+  Sent = 'SENT'
+}
+
 export type FriendRequestResult = ReceivedFriendRequest | SentFriendRequest;
 
 export enum FriendRequestStatus {
   Accepted = 'ACCEPTED',
   Pending = 'PENDING',
   Rejected = 'REJECTED'
-}
-
-export enum FriendRequestType {
-  Recv = 'RECV',
-  Sent = 'SENT'
 }
 
 export type JoinInput = {
@@ -139,12 +140,12 @@ export type Query = {
   getThreads?: Maybe<Array<Maybe<PrivateThread>>>;
   getUser?: Maybe<User>;
   search?: Maybe<Array<Maybe<Result>>>;
-  searchFriends?: Maybe<Array<Maybe<User>>>;
+  searchFriends?: Maybe<SearchFriendsResult>;
 };
 
 
 export type QueryGetFriendRequestsArgs = {
-  type?: InputMaybe<FriendRequestType>;
+  type?: InputMaybe<FriendRequestOptions>;
 };
 
 
@@ -175,6 +176,7 @@ export type QuerySearchArgs = {
 
 export type QuerySearchFriendsArgs = {
   query?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<FriendRequestOptions>;
 };
 
 export type ReceivedFriendRequest = {
@@ -186,6 +188,13 @@ export type ReceivedFriendRequest = {
 };
 
 export type Result = MessageResult | PrivateThread;
+
+export type SearchFriendsResult = {
+  __typename?: 'SearchFriendsResult';
+  friends?: Maybe<Array<Maybe<User>>>;
+  received?: Maybe<Array<Maybe<User>>>;
+  sent?: Maybe<Array<Maybe<User>>>;
+};
 
 export type SeedReturnValue = {
   __typename?: 'SeedReturnValue';
@@ -299,9 +308,9 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
+  FriendRequestOptions: ResolverTypeWrapper<FriendRequestOptionsModel>;
   FriendRequestResult: ResolversTypes['ReceivedFriendRequest'] | ResolversTypes['SentFriendRequest'];
   FriendRequestStatus: ResolverTypeWrapper<FriendRequestStatusModel>;
-  FriendRequestType: FriendRequestType;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   JoinInput: JoinInput;
   Message: ResolverTypeWrapper<MessageModel>;
@@ -311,6 +320,7 @@ export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
   ReceivedFriendRequest: ResolverTypeWrapper<Omit<ReceivedFriendRequest, 'requester' | 'status'> & { requester?: Maybe<ResolversTypes['User']>, status?: Maybe<ResolversTypes['FriendRequestStatus']> }>;
   Result: ResolversTypes['MessageResult'] | ResolversTypes['PrivateThread'];
+  SearchFriendsResult: ResolverTypeWrapper<Omit<SearchFriendsResult, 'friends' | 'received' | 'sent'> & { friends?: Maybe<Array<Maybe<ResolversTypes['User']>>>, received?: Maybe<Array<Maybe<ResolversTypes['User']>>>, sent?: Maybe<Array<Maybe<ResolversTypes['User']>>> }>;
   SeedReturnValue: ResolverTypeWrapper<Omit<SeedReturnValue, 'user'> & { user?: Maybe<ResolversTypes['User']> }>;
   SentFriendRequest: ResolverTypeWrapper<Omit<SentFriendRequest, 'recipient' | 'status'> & { recipient?: Maybe<ResolversTypes['User']>, status?: Maybe<ResolversTypes['FriendRequestStatus']> }>;
   SigninInput: SigninInput;
@@ -333,6 +343,7 @@ export type ResolversParentTypes = {
   Query: {};
   ReceivedFriendRequest: Omit<ReceivedFriendRequest, 'requester'> & { requester?: Maybe<ResolversParentTypes['User']> };
   Result: ResolversParentTypes['MessageResult'] | ResolversParentTypes['PrivateThread'];
+  SearchFriendsResult: Omit<SearchFriendsResult, 'friends' | 'received' | 'sent'> & { friends?: Maybe<Array<Maybe<ResolversParentTypes['User']>>>, received?: Maybe<Array<Maybe<ResolversParentTypes['User']>>>, sent?: Maybe<Array<Maybe<ResolversParentTypes['User']>>> };
   SeedReturnValue: Omit<SeedReturnValue, 'user'> & { user?: Maybe<ResolversParentTypes['User']> };
   SentFriendRequest: Omit<SentFriendRequest, 'recipient'> & { recipient?: Maybe<ResolversParentTypes['User']> };
   SigninInput: SigninInput;
@@ -344,6 +355,8 @@ export type ResolversParentTypes = {
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
   name: 'Date';
 }
+
+export type FriendRequestOptionsResolvers = EnumResolverSignature<{ BOTH?: any, RECV?: any, SENT?: any }, ResolversTypes['FriendRequestOptions']>;
 
 export type FriendRequestResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['FriendRequestResult'] = ResolversParentTypes['FriendRequestResult']> = {
   __resolveType: TypeResolveFn<'ReceivedFriendRequest' | 'SentFriendRequest', ParentType, ContextType>;
@@ -403,7 +416,7 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
   getThreads?: Resolver<Maybe<Array<Maybe<ResolversTypes['PrivateThread']>>>, ParentType, ContextType, Partial<QueryGetThreadsArgs>>;
   getUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<QueryGetUserArgs>>;
   search?: Resolver<Maybe<Array<Maybe<ResolversTypes['Result']>>>, ParentType, ContextType, Partial<QuerySearchArgs>>;
-  searchFriends?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType, Partial<QuerySearchFriendsArgs>>;
+  searchFriends?: Resolver<Maybe<ResolversTypes['SearchFriendsResult']>, ParentType, ContextType, Partial<QuerySearchFriendsArgs>>;
 };
 
 export type ReceivedFriendRequestResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ReceivedFriendRequest'] = ResolversParentTypes['ReceivedFriendRequest']> = {
@@ -416,6 +429,13 @@ export type ReceivedFriendRequestResolvers<ContextType = Context, ParentType ext
 
 export type ResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Result'] = ResolversParentTypes['Result']> = {
   __resolveType: TypeResolveFn<'MessageResult' | 'PrivateThread', ParentType, ContextType>;
+};
+
+export type SearchFriendsResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['SearchFriendsResult'] = ResolversParentTypes['SearchFriendsResult']> = {
+  friends?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
+  received?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
+  sent?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type SeedReturnValueResolvers<ContextType = Context, ParentType extends ResolversParentTypes['SeedReturnValue'] = ResolversParentTypes['SeedReturnValue']> = {
@@ -450,6 +470,7 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
 
 export type Resolvers<ContextType = Context> = {
   Date?: GraphQLScalarType;
+  FriendRequestOptions?: FriendRequestOptionsResolvers;
   FriendRequestResult?: FriendRequestResultResolvers<ContextType>;
   FriendRequestStatus?: FriendRequestStatusResolvers;
   Message?: MessageResolvers<ContextType>;
@@ -459,6 +480,7 @@ export type Resolvers<ContextType = Context> = {
   Query?: QueryResolvers<ContextType>;
   ReceivedFriendRequest?: ReceivedFriendRequestResolvers<ContextType>;
   Result?: ResultResolvers<ContextType>;
+  SearchFriendsResult?: SearchFriendsResultResolvers<ContextType>;
   SeedReturnValue?: SeedReturnValueResolvers<ContextType>;
   SentFriendRequest?: SentFriendRequestResolvers<ContextType>;
   Subscription?: SubscriptionResolvers<ContextType>;

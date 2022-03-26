@@ -66,7 +66,7 @@ describe('deleteThread workflow', () => {
 	});
 
 	it('deletes a thread', async () => {
-		const { threadIds } = await seed();
+		const { threadIds } = await seed({ mode: 0 });
 
 		const { cookie } = await join();
 		const threadId = threadIds[0];

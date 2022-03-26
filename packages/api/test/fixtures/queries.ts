@@ -118,7 +118,7 @@ export const UPDATE_FRIEND_REQUEST = `
 `;
 
 export const GET_FRIEND_REQUESTS_SENT = `
-	query getFriendRequests($type: FriendRequestType) {
+	query getFriendRequests($type: FriendRequestOptions) {
 		getFriendRequests(type: $type) {
 
 			...on SentFriendRequest {
@@ -137,7 +137,7 @@ export const GET_FRIEND_REQUESTS_SENT = `
 `;
 
 export const GET_FRIEND_REQUESTS_RECV = `
-	query getFriendRequests($type: FriendRequestType) {
+	query getFriendRequests($type: FriendRequestOptions) {
 		getFriendRequests(type: $type) {
 			__typename
 
@@ -204,12 +204,26 @@ export const TEXT_SEARCH = `
 `;
 
 export const FRIEND_SEARCH = `
-	query searchFriends($query: String) {
-		searchFriends(query: $query) {
-			_id
-			email
-			username
-			userImage
+	query searchFriends($query: String, $type: FriendRequestOptions) {
+		searchFriends(query: $query, type: $type) {
+			friends {
+				_id
+				email
+				username
+				userImage
+			}
+			sent {
+				_id
+				email
+				username
+				userImage
+			}
+			received {
+				_id
+				email
+				username
+				userImage
+			}
 		}
 	}
 `;

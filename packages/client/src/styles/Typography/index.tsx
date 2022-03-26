@@ -46,10 +46,6 @@ const TypographyStyles = createGlobalStyle`
 		${BodyWithStyle}
 	}
 
-	button {
-		${ButtonLabelWithStyle}
-	}
-
 	code {
 		${CodeWithStyle}
 	}

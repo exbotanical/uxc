@@ -24,6 +24,11 @@ const SizeMap = {
   left: 1.5rem;
 	width: 1.25rem;
 	height: 1.25rem;
+`,
+	xl: `
+	left: 2.5rem;
+	width: 1.25rem;
+	height: 1.25rem;
 `
 };
 

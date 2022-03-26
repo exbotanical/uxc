@@ -51,7 +51,6 @@ export const search: Resolver<
 	)
 		.populate({
 			path: 'threadId',
-
 			populate: {
 				path: 'users',
 				match: {

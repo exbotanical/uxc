@@ -52,6 +52,8 @@ export function SearchProvider({ children }: { children: JSX.Element }) {
 				} else {
 					current = cycleRange(-1, current, els.length);
 				}
+			} else {
+				return;
 			}
 
 			setActiveRecordId(els[current].id);

@@ -5,7 +5,6 @@ import request from 'supertest';
 import { app } from '@/app';
 import { seed } from '@/schema/resolvers/mutations/computed/seed';
 
-
 const testSubject = 'getFriends';
 describe(`${testSubject} workflow`, () => {
 	it('fails with an Unauthorized error if the request does not include a valid session cookie', async () => {
@@ -27,7 +26,7 @@ describe(`${testSubject} workflow`, () => {
 	});
 
 	it('retrieves all friends', async () => {
-		const { user } = await seed({ mode: 0 });
+		const { user } = await seed();
 
 		const response = await request(app)
 			.post(BASE_PATH)

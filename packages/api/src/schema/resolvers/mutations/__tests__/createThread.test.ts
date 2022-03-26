@@ -72,7 +72,7 @@ describe('createThread workflow', () => {
 	});
 
 	it('creates a new thread', async () => {
-		const { user } = await seed();
+		const { user } = await seed({ mode: 0 });
 
 		const { cookie } = await join();
 

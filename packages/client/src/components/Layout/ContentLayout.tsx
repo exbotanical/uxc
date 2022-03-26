@@ -12,6 +12,8 @@ import { GET_CURRENT_USER } from '@/services/api/queries';
 import { ThreadsContext } from '@/state/context/ThreadsContext';
 import { FlexCol } from '@/styles/Layout';
 import { FontSizeXl } from '@/styles/Typography/FontSize';
+import { FriendsHeader } from '@/components/Friends/FriendsHeader';
+import { FriendsProvider } from '../Friends/FriendsContext';
 
 const Container = styled.div`
 	${FlexCol}
@@ -21,7 +23,9 @@ const Container = styled.div`
 	color: ${({ theme }) => theme.colors.font.strong};
 `;
 
-const Header = styled.header`
+const Header = styled.header.attrs({
+	role: 'tabpanel'
+})`
 	display: flex;
 	width: 100%;
 	height: 65px;
@@ -65,6 +69,7 @@ export function ContentLayout() {
 	const location = useLocation();
 	const paths = location.pathname.split('/');
 	const threadId = paths[paths.length - 1];
+	const isFriendsView = !threadId;
 
 	const { getThreadById } = useContext(ThreadsContext);
 	const { data: user } = useQuery<{
@@ -80,10 +85,16 @@ export function ContentLayout() {
 	return (
 		<Container>
 			<Header>
-				<Item>
-					<SvgIcon name="people" size={21} />
-					<HeaderLabel>{them?.username || 'Friends'}</HeaderLabel>
-				</Item>
+				{isFriendsView ? (
+					<FriendsProvider>
+						<FriendsHeader />
+					</FriendsProvider>
+				) : (
+					<Item>
+						<SvgIcon name="people" size={21} />
+						<HeaderLabel>{them?.username}</HeaderLabel>
+					</Item>
+				)}
 			</Header>
 
 			<ContentContainer>

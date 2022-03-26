@@ -33,7 +33,7 @@ const StyledButton = styled(RowCenter).attrs({
 	color: ${({ theme }) => theme.colors.font.strong};
 	font-weight: 700;
 	outline-offset: 2px;
-	transition-duration: 700ms;
+	transition-duration: 300ms;
 	transition-property: color, background-color;
 	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 
