@@ -1,4 +1,5 @@
 import { SIGNOUT_MUTATION } from '@@/fixtures';
+import { join } from '@@/utils';
 import request from 'supertest';
 
 import { app } from '@/app';

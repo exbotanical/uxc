@@ -1,4 +1,5 @@
 import { DELETE_THREAD } from '@@/fixtures';
+import { join } from '@@/utils';
 import { ERROR_MESSAGES } from '@uxc/common/node';
 import request from 'supertest';
 

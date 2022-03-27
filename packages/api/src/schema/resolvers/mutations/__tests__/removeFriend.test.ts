@@ -1,9 +1,5 @@
-import {
-	CREATE_FRIEND_REQUEST,
-	GET_FRIENDS,
-	REMOVE_FRIEND,
-	UPDATE_FRIEND_REQUEST
-} from '@@/fixtures';
+import { REMOVE_FRIEND, UPDATE_FRIEND_REQUEST } from '@@/fixtures';
+import { join, diad, createFriendRequest, getFriends } from '@@/utils';
 import { ERROR_MESSAGES } from '@uxc/common/node';
 import request from 'supertest';
 
@@ -74,18 +70,14 @@ describe(`${testSubject} workflow`, () => {
 	});
 
 	it('removes the friend relationship', async () => {
-		const { cookie, cookie2, id2 } = await taleOfTwoUsers();
+		const { cookie, cookie2, id2 } = await diad();
 
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: CREATE_FRIEND_REQUEST,
-				variables: {
-					recipientId: id2
-				}
-			})
-			.expect(200);
+		const { body } = await createFriendRequest({
+			cookie,
+			variables: {
+				recipientId: id2
+			}
+		});
 
 		await request(app)
 			.post(BASE_PATH)
@@ -99,13 +91,7 @@ describe(`${testSubject} workflow`, () => {
 			})
 			.expect(200);
 
-		const { body: body2 } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: GET_FRIENDS
-			})
-			.expect(200);
+		const { body: body2 } = await getFriends({ cookie });
 
 		const friend = body2.data.getFriends[0];
 

@@ -37,38 +37,28 @@ export const searchFriends: Resolver<
 		received: []
 	};
 
-	switch (type) {
-		case 'RECV':
-		case 'BOTH':
-			const received = await FriendRequest.findFriendRequestsRecv(userId);
+	if (type === 'RECV' || type === 'BOTH') {
+		const received = await FriendRequest.findFriendRequestsRecv(userId);
 
-			ret.received.push(
-				...received
-					.filter((request) =>
-						request.requester.username
-							.toLowerCase()
-							.includes(query.toLowerCase())
-					)
-					.map(({ requester }) => requester)
-			);
+		ret.received.push(
+			...received
+				.filter((request) =>
+					request.requester.username.toLowerCase().includes(query.toLowerCase())
+				)
+				.map(({ requester }) => requester)
+		);
+	}
 
-			break;
+	if (type === 'SENT' || type === 'BOTH') {
+		const sent = await FriendRequest.findFriendRequestsSent(userId);
 
-		case 'SENT':
-		case 'BOTH':
-			const sent = await FriendRequest.findFriendRequestsSent(userId);
-
-			ret.sent.push(
-				...sent
-					.filter((request) =>
-						request.recipient.username
-							.toLowerCase()
-							.includes(query.toLowerCase())
-					)
-					.map(({ recipient }) => recipient)
-			);
-
-			break;
+		ret.sent.push(
+			...sent
+				.filter((request) =>
+					request.recipient.username.toLowerCase().includes(query.toLowerCase())
+				)
+				.map(({ recipient }) => recipient)
+		);
 	}
 
 	return ret;

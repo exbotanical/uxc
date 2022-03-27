@@ -1,47 +1,24 @@
-import { SIGNIN_MUTATION } from '@@/fixtures';
+import { join, signin, user } from '@@/utils';
 import { ERROR_MESSAGES } from '@uxc/common/node';
-import request from 'supertest';
-
-import { app } from '@/app';
 
 describe('signin workflow', () => {
 	it('responds with a cookie when signin is successful', async () => {
 		await join();
 
-		const response = await request(app)
-			.post(globalThis.BASE_PATH)
-			.send({
-				query: SIGNIN_MUTATION,
-				variables: {
-					args: {
-						email: user.email,
-						password
-					}
-				}
-			})
-			.expect(200);
+		const response = await signin();
 
 		expect(response.get('Set-Cookie')).toBeDefined();
 	});
 
 	it('responds with the user when signin is successful', async () => {
 		await join();
-
-		const { body } = await request(app)
-			.post(globalThis.BASE_PATH)
-			.send({
-				query: SIGNIN_MUTATION,
-				variables: {
-					args: {
-						email: user.email,
-						password
-					}
-				}
-			})
-			.expect(200);
+		const { body } = await signin();
+		const { email, userImage, username } = user;
 
 		expect(body.data.signin).toMatchObject({
-			...user,
+			email,
+			userImage,
+			username,
 			_id: expect.any(String)
 		});
 	});
@@ -49,18 +26,7 @@ describe('signin workflow', () => {
 	it('returns an error when provided no email address', async () => {
 		await join();
 
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.send({
-				query: SIGNIN_MUTATION,
-				variables: {
-					args: {
-						email: null,
-						password
-					}
-				}
-			})
-			.expect(200);
+		const { body } = await signin({ email: '', password: user.password });
 
 		expect(body.errors[0].message).toStrictEqual(
 			ERROR_MESSAGES.E_INVALID_EMAIL
@@ -71,18 +37,7 @@ describe('signin workflow', () => {
 	it('returns an error when provided no password', async () => {
 		await join();
 
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.send({
-				query: SIGNIN_MUTATION,
-				variables: {
-					args: {
-						email: user.email,
-						password: null
-					}
-				}
-			})
-			.expect(200);
+		const { body } = await signin({ email: user.email, password: void 0 });
 
 		expect(body.errors[0].message).toStrictEqual(ERROR_MESSAGES.E_NO_PASSWORD);
 		expect(body.errors[0].extensions.exception.field).toBe('password');
@@ -91,18 +46,10 @@ describe('signin workflow', () => {
 	it('returns a generic error when the given credentials do not match those of any known user', async () => {
 		await join();
 
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.send({
-				query: SIGNIN_MUTATION,
-				variables: {
-					args: {
-						email: user.email,
-						password: 'random'
-					}
-				}
-			})
-			.expect(200);
+		const { body } = await signin({
+			email: 'bob_odenkirk@bcs.bb',
+			password: 'random'
+		});
 
 		expect(body.errors[0].message).toStrictEqual(
 			ERROR_MESSAGES.E_INVALID_CREDENTIALS
@@ -112,18 +59,10 @@ describe('signin workflow', () => {
 	it('returns a generic error when an incorrect password is supplied', async () => {
 		await join();
 
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.send({
-				query: SIGNIN_MUTATION,
-				variables: {
-					args: {
-						email: 'random@mail.com',
-						password
-					}
-				}
-			})
-			.expect(200);
+		const { body } = await signin({
+			email: user.email,
+			password: 'random'
+		});
 
 		expect(body.errors[0].message).toStrictEqual(
 			ERROR_MESSAGES.E_INVALID_CREDENTIALS

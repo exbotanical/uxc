@@ -2,7 +2,7 @@ import type { ObjectID, PopulatedDoc } from './util';
 
 export type FriendRequestStatus = 'ACCEPTED' | 'PENDING' | 'REJECTED';
 
-export type FriendRequestOptions = 'SENT' | 'RECV' | 'BOTH';
+export type FriendRequestOptions = 'BOTH' | 'RECV' | 'SENT';
 
 export interface Timestamps {
 	createdAt: Date;

@@ -1,8 +1,8 @@
 import {
-	CREATE_FRIEND_REQUEST,
 	GET_FRIEND_REQUESTS_RECV,
 	GET_FRIEND_REQUESTS_SENT
 } from '@@/fixtures';
+import { createFriendRequest, diad } from '@@/utils';
 import { ERROR_MESSAGES } from '@uxc/common/node';
 import request from 'supertest';
 
@@ -29,18 +29,14 @@ describe(`${testSubject} workflow`, () => {
 	});
 
 	it('retrieves all received friend requests', async () => {
-		const { cookie, cookie2, id, id2 } = await taleOfTwoUsers();
+		const { cookie, cookie2, id, id2 } = await diad();
 
-		await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie2)
-			.send({
-				query: CREATE_FRIEND_REQUEST,
-				variables: {
-					recipientId: id
-				}
-			})
-			.expect(200);
+		await createFriendRequest({
+			cookie: cookie2,
+			variables: {
+				recipientId: id
+			}
+		});
 
 		const { body } = await request(app)
 			.post(BASE_PATH)
@@ -62,18 +58,14 @@ describe(`${testSubject} workflow`, () => {
 	});
 
 	it('retrieves all sent friend requests', async () => {
-		const { cookie, id, id2 } = await taleOfTwoUsers();
+		const { cookie, id, id2 } = await diad();
 
-		await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: CREATE_FRIEND_REQUEST,
-				variables: {
-					recipientId: id2
-				}
-			})
-			.expect(200);
+		await createFriendRequest({
+			cookie,
+			variables: {
+				recipientId: id2
+			}
+		});
 
 		const { body } = await request(app)
 			.post(BASE_PATH)

@@ -3,17 +3,18 @@ import React, { useContext } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { FriendsProvider } from '../Friends/FriendsContext';
+
 import type { User } from '@uxc/common';
 
 import { ConnectedChatRoom as ChatRoom } from '@/components/ChatRoom';
 import { Friends } from '@/components/Friends';
+import { FriendsHeader } from '@/components/Friends/FriendsHeader';
 import SvgIcon from '@/components/Icon';
 import { GET_CURRENT_USER } from '@/services/api/queries';
 import { ThreadsContext } from '@/state/context/ThreadsContext';
 import { FlexCol } from '@/styles/Layout';
 import { FontSizeXl } from '@/styles/Typography/FontSize';
-import { FriendsHeader } from '@/components/Friends/FriendsHeader';
-import { FriendsProvider } from '../Friends/FriendsContext';
 
 const Container = styled.div`
 	${FlexCol}

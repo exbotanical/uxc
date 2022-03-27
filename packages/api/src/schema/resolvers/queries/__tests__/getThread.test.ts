@@ -1,4 +1,5 @@
-import { GET_THREAD, SIGNIN_MUTATION } from '@@/fixtures';
+import { GET_THREAD } from '@@/fixtures';
+import { join, signin } from '@@/utils';
 import { ERROR_MESSAGES } from '@uxc/common/node';
 import { ObjectId } from 'mongodb';
 import request from 'supertest';
@@ -69,18 +70,7 @@ describe('getThread workflow', () => {
 	it('returns null if the thread was not found', async () => {
 		const { user } = await seed({ mode: 0 });
 
-		const response = await request(app)
-			.post(BASE_PATH)
-			.send({
-				query: SIGNIN_MUTATION,
-				variables: {
-					args: {
-						email: user.email,
-						password: user.password
-					}
-				}
-			})
-			.expect(200);
+		const response = await signin(user);
 
 		const { body } = await request(app)
 			.post(BASE_PATH)
@@ -101,18 +91,7 @@ describe('getThread workflow', () => {
 	it('returns the requested thread', async () => {
 		const { user, threadIds } = await seed({ mode: 0 });
 
-		const response = await request(app)
-			.post(BASE_PATH)
-			.send({
-				query: SIGNIN_MUTATION,
-				variables: {
-					args: {
-						email: user.email,
-						password: user.password
-					}
-				}
-			})
-			.expect(200);
+		const response = await signin(user);
 
 		const { body } = await request(app)
 			.post(BASE_PATH)

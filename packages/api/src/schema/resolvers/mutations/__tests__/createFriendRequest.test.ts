@@ -1,4 +1,5 @@
-import { CREATE_FRIEND_REQUEST, SIGNIN_MUTATION } from '@@/fixtures';
+import { CREATE_FRIEND_REQUEST } from '@@/fixtures';
+import { createFriendRequest, join, signin } from '@@/utils';
 import { ERROR_MESSAGES } from '@uxc/common/node';
 import request from 'supertest';
 
@@ -30,14 +31,12 @@ describe(`${testSubject} workflow`, () => {
 	it('fails when not provided a recipientId', async () => {
 		const { cookie } = await join();
 
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: CREATE_FRIEND_REQUEST,
-				variables: { recipientId: null }
-			})
-			.expect(200);
+		const { body } = await createFriendRequest({
+			cookie,
+			variables: {
+				recipientId: null
+			}
+		});
 
 		expect(body.errors).toHaveLength(1);
 		expect(body.errors[0].message).toStrictEqual(ERROR_MESSAGES.E_NO_RECIPIENT);
@@ -49,16 +48,12 @@ describe(`${testSubject} workflow`, () => {
 		const { cookie } = await join();
 		const badRecipientId = 'test';
 
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: CREATE_FRIEND_REQUEST,
-				variables: {
-					recipientId: badRecipientId
-				}
-			})
-			.expect(200);
+		const { body } = await createFriendRequest({
+			cookie,
+			variables: {
+				recipientId: badRecipientId
+			}
+		});
 
 		expect(body.errors).toHaveLength(1);
 		expect(body.errors[0].message).toStrictEqual(
@@ -69,18 +64,14 @@ describe(`${testSubject} workflow`, () => {
 	});
 
 	it('fails when provided a recipientId that equals that of the requester', async () => {
-		const { cookie, id } = await join();
+		const { cookie, data } = await join();
 
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: CREATE_FRIEND_REQUEST,
-				variables: {
-					recipientId: id
-				}
-			})
-			.expect(200);
+		const { body } = await createFriendRequest({
+			cookie,
+			variables: {
+				recipientId: data._id
+			}
+		});
 
 		expect(body.errors).toHaveLength(1);
 		expect(body.errors[0].message).toStrictEqual(
@@ -96,16 +87,12 @@ describe(`${testSubject} workflow`, () => {
 		const { cookie } = await join();
 		const threadId = threadIds[0];
 
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: CREATE_FRIEND_REQUEST,
-				variables: {
-					recipientId: threadId
-				}
-			})
-			.expect(200);
+		const { body } = await createFriendRequest({
+			cookie,
+			variables: {
+				recipientId: threadId
+			}
+		});
 
 		expect(body.errors).toHaveLength(1);
 		expect(body.errors[0].message).toStrictEqual(
@@ -118,29 +105,14 @@ describe(`${testSubject} workflow`, () => {
 	it.skip('@todo fails when creating a friend request between two users that are already friends', async () => {
 		const { user, testUser2 } = await seed();
 
-		const response = await request(app)
-			.post(BASE_PATH)
-			.send({
-				query: SIGNIN_MUTATION,
-				variables: {
-					args: {
-						email: testUser2.email,
-						password: testUser2.password
-					}
-				}
-			})
-			.expect(200);
+		const response = await signin(testUser2);
 
-		await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', response.get('Set-Cookie'))
-			.send({
-				query: CREATE_FRIEND_REQUEST,
-				variables: {
-					recipientId: user._id
-				}
-			})
-			.expect(200);
+		await createFriendRequest({
+			cookie: response.get('Set-Cookie'),
+			variables: {
+				recipientId: user._id
+			}
+		});
 
 		expect(1).toBe(1);
 	});
@@ -149,27 +121,19 @@ describe(`${testSubject} workflow`, () => {
 		const { userIds } = await seed({ mode: 0 });
 		const { cookie } = await join();
 
-		await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: CREATE_FRIEND_REQUEST,
-				variables: {
-					recipientId: userIds[0]
-				}
-			})
-			.expect(200);
+		await createFriendRequest({
+			cookie,
+			variables: {
+				recipientId: userIds[0]
+			}
+		});
 
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: CREATE_FRIEND_REQUEST,
-				variables: {
-					recipientId: userIds[0]
-				}
-			})
-			.expect(200);
+		const { body } = await createFriendRequest({
+			cookie,
+			variables: {
+				recipientId: userIds[0]
+			}
+		});
 
 		expect(body.errors).toHaveLength(1);
 		expect(body.errors[0].message).toStrictEqual(
@@ -183,16 +147,12 @@ describe(`${testSubject} workflow`, () => {
 		const { userIds } = await seed({ mode: 0 });
 		const { cookie } = await join();
 
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: CREATE_FRIEND_REQUEST,
-				variables: {
-					recipientId: userIds[0]
-				}
-			})
-			.expect(200);
+		const { body } = await createFriendRequest({
+			cookie,
+			variables: {
+				recipientId: userIds[0]
+			}
+		});
 
 		expect(body.data.createFriendRequest).toStrictEqual(expect.any(String));
 	});

@@ -1,9 +1,5 @@
-import {
-	CREATE_FRIEND_REQUEST,
-	GET_FRIENDS,
-	UPDATE_FRIEND_REQUEST,
-	GET_FRIEND_REQUESTS_SENT
-} from '@@/fixtures';
+import { UPDATE_FRIEND_REQUEST, GET_FRIEND_REQUESTS_SENT } from '@@/fixtures';
+import { join, diad, createFriendRequest, getFriends } from '@@/utils';
 import { ERROR_MESSAGES } from '@uxc/common/node';
 import request from 'supertest';
 
@@ -58,16 +54,12 @@ describe(`${testSubject} workflow`, () => {
 		const { userIds } = await seed({ mode: 0 });
 		const { cookie } = await join();
 
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: CREATE_FRIEND_REQUEST,
-				variables: {
-					recipientId: userIds[0]
-				}
-			})
-			.expect(200);
+		const { body } = await createFriendRequest({
+			cookie,
+			variables: {
+				recipientId: userIds[0]
+			}
+		});
 
 		const { body: body2 } = await request(app)
 			.post(BASE_PATH)
@@ -134,18 +126,14 @@ describe(`${testSubject} workflow`, () => {
 	});
 
 	it('fails when the user attempts to update the status of a friend request they sent', async () => {
-		const { cookie, id2 } = await taleOfTwoUsers();
+		const { cookie, id2 } = await diad();
 
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: CREATE_FRIEND_REQUEST,
-				variables: {
-					recipientId: id2
-				}
-			})
-			.expect(200);
+		const { body } = await createFriendRequest({
+			cookie,
+			variables: {
+				recipientId: id2
+			}
+		});
 
 		const { body: body2 } = await request(app)
 			.post(BASE_PATH)
@@ -168,18 +156,14 @@ describe(`${testSubject} workflow`, () => {
 	});
 
 	it('updates a friend request', async () => {
-		const { cookie, cookie2, id2 } = await taleOfTwoUsers();
+		const { cookie, cookie2, id2 } = await diad();
 
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: CREATE_FRIEND_REQUEST,
-				variables: {
-					recipientId: id2
-				}
-			})
-			.expect(200);
+		const { body } = await createFriendRequest({
+			cookie,
+			variables: {
+				recipientId: id2
+			}
+		});
 
 		const { body: body2 } = await request(app)
 			.post(BASE_PATH)
@@ -197,18 +181,14 @@ describe(`${testSubject} workflow`, () => {
 	});
 
 	it('deletes the friend request once its status is updated to REJECTED', async () => {
-		const { cookie, cookie2, id2 } = await taleOfTwoUsers();
+		const { cookie, cookie2, id2 } = await diad();
 
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: CREATE_FRIEND_REQUEST,
-				variables: {
-					recipientId: id2
-				}
-			})
-			.expect(200);
+		const { body } = await createFriendRequest({
+			cookie,
+			variables: {
+				recipientId: id2
+			}
+		});
 
 		const { body: body2 } = await request(app)
 			.post(BASE_PATH)
@@ -239,26 +219,16 @@ describe(`${testSubject} workflow`, () => {
 	});
 
 	it('deletes the friend request once its status is updated to ACCEPTED and creates a new Friend relationship', async () => {
-		const { cookie, cookie2, id2 } = await taleOfTwoUsers();
+		const { cookie, cookie2, id2 } = await diad();
 
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: CREATE_FRIEND_REQUEST,
-				variables: {
-					recipientId: id2
-				}
-			})
-			.expect(200);
+		const { body } = await createFriendRequest({
+			cookie,
+			variables: {
+				recipientId: id2
+			}
+		});
 
-		const { body: body2 } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: GET_FRIENDS
-			})
-			.expect(200);
+		const { body: body2 } = await getFriends({ cookie });
 
 		expect(body2.data.getFriends).toHaveLength(0);
 
@@ -289,13 +259,7 @@ describe(`${testSubject} workflow`, () => {
 
 		expect(body4.data.getFriendRequests).toHaveLength(0);
 
-		const { body: body5 } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: GET_FRIENDS
-			})
-			.expect(200);
+		const { body: body5 } = await getFriends({ cookie });
 
 		expect(body5.data.getFriends).toHaveLength(1);
 	});

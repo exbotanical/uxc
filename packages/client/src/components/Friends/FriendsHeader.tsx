@@ -1,10 +1,14 @@
-import { FontSizeXl, FontSizeLg } from '@/styles/Typography/FontSize';
 import React, { useContext } from 'react';
 import styled from 'styled-components';
+
 import { Button } from '../Buttons/Button';
 import SvgIcon from '../Icon';
+
 import { FriendsContext } from './FriendsContext';
+
 import type { FriendsViewMode } from './FriendsContext';
+
+import { FontSizeXl, FontSizeLg } from '@/styles/Typography/FontSize';
 
 const LabelContainer = styled.div.attrs({
 	role: 'tablist'
@@ -95,9 +99,9 @@ export function FriendsHeader() {
 
 			{friendsOpts.map(({ label, key, onClick }, idx) => (
 				<Tab
-					key={idx}
 					aria-labelledby={`${key}-tab`}
 					isSelected={isCurrentView(key)}
+					key={idx}
 					onClick={onClick.bind({ key })}
 				>
 					<p id={`${key}-tab`}>{label}</p>

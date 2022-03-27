@@ -1,6 +1,6 @@
 import React, { createContext, useCallback, useState } from 'react';
 
-export type FriendsViewMode = 'online' | 'all' | 'pending' | 'blocked';
+export type FriendsViewMode = 'all' | 'blocked' | 'online' | 'pending';
 
 interface FriendsContextType {
 	viewMode: FriendsViewMode;

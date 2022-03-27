@@ -1,10 +1,11 @@
 import { useQuery } from '@apollo/client';
 import { useContext, useEffect, useState } from 'react';
 
+import { FriendsContext } from '../FriendsContext';
+
 import type { User } from '@uxc/common';
 
 import { FRIEND_SEARCH } from '@/services/api';
-import { FriendsContext } from '../FriendsContext';
 
 /**
  * @todo Throttle type-along search.

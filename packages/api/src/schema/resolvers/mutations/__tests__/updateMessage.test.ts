@@ -1,4 +1,5 @@
-import { UPDATE_MESSAGE, SIGNIN_MUTATION, CREATE_MESSAGE } from '@@/fixtures';
+import { UPDATE_MESSAGE, CREATE_MESSAGE } from '@@/fixtures';
+import { join, signin } from '@@/utils';
 import { ERROR_MESSAGES } from '@uxc/common/node';
 import { ObjectId } from 'mongodb';
 import request from 'supertest';
@@ -100,18 +101,7 @@ describe('updateMessage workflow', () => {
 	it('updates a message', async () => {
 		const { threadIds, user } = await seed({ mode: 0 });
 
-		const signinResponse = await request(app)
-			.post(BASE_PATH)
-			.send({
-				query: SIGNIN_MUTATION,
-				variables: {
-					args: {
-						email: user.email,
-						password: user.password
-					}
-				}
-			})
-			.expect(200);
+		const signinResponse = await signin(user);
 
 		const cookie = signinResponse.get('Set-Cookie');
 		const threadId = threadIds[0];

@@ -2,11 +2,12 @@ import type { ChangeEvent } from 'react';
 
 import React from 'react';
 
+import { UserAvatar } from '../User/UserAvatar';
+
+import { useFriendSearch } from './hooks/useFriendSearch';
 import * as S from './styles';
 
 import { Input } from '@/components/Fields/Input';
-import { useFriendSearch } from './hooks/useFriendSearch';
-import { UserAvatar } from '../User/UserAvatar';
 
 export function FriendsView() {
 	const { query, setQuery, results } = useFriendSearch();
@@ -42,7 +43,7 @@ export function FriendsView() {
 				{results.map(({ username, _id, ...rest }) => {
 					return (
 						<S.ListItem key={_id}>
-							<UserAvatar u={{ username, _id, ...rest }} size="xl" />
+							<UserAvatar size="xl" u={{ username, _id, ...rest }} />
 
 							<S.Username>{username}</S.Username>
 							<S.UserStatus>user status</S.UserStatus>

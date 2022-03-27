@@ -1,4 +1,5 @@
-import { GET_FRIENDS, SIGNIN_MUTATION } from '@@/fixtures';
+import { GET_FRIENDS } from '@@/fixtures';
+import { getFriends, signin } from '@@/utils';
 import { ERROR_MESSAGES } from '@uxc/common/node';
 import request from 'supertest';
 
@@ -28,26 +29,11 @@ describe(`${testSubject} workflow`, () => {
 	it('retrieves all friends', async () => {
 		const { user } = await seed();
 
-		const response = await request(app)
-			.post(BASE_PATH)
-			.send({
-				query: SIGNIN_MUTATION,
-				variables: {
-					args: {
-						email: user.email,
-						password: user.password
-					}
-				}
-			})
-			.expect(200);
+		const response = await signin(user);
 
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', response.get('Set-Cookie'))
-			.send({
-				query: GET_FRIENDS
-			})
-			.expect(200);
+		const { body } = await getFriends({
+			cookie: response.get('Set-Cookie')
+		});
 
 		const friends = body.data.getFriends;
 

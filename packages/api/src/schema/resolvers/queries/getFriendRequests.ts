@@ -13,7 +13,7 @@ import { FriendRequest } from '@/db';
 export const getFriendRequests: Resolver<
 	(ReceivedFriendRequest | SentFriendRequest)[],
 	{ type: FriendRequestOptions }
-> = (_, { type }, { req }) => {
+> = async (_, { type }, { req }) => {
 	const userId = req.session.meta?.id;
 	if (!userId) {
 		throw new AuthenticationError(ERROR_MESSAGES.E_NO_USER_SESSION);

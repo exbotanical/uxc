@@ -1,9 +1,9 @@
-import { GET_CURRENT_USER, SIGNIN_MUTATION } from '@@/fixtures';
+import { GET_CURRENT_USER } from '@@/fixtures';
+import { getCurrentUser, join, signin, user } from '@@/utils';
 import { ERROR_MESSAGES } from '@uxc/common/node';
 import request from 'supertest';
 
 import { app } from '@/app';
-import { seed } from '@/schema/resolvers/mutations/computed/seed';
 
 describe('getCurrentUser workflow', () => {
 	it('fails with an Unauthorized error if the request does not include a valid session cookie', async () => {
@@ -23,43 +23,21 @@ describe('getCurrentUser workflow', () => {
 
 	it('returns the current user if the requester has a valid session', async () => {
 		const { cookie } = await join();
-		const { user } = await seed({ mode: 0 });
 
-		const { body: firstUserResponse } = await request(app)
-			.post(BASE_PATH)
-			.send({
-				query: GET_CURRENT_USER
-			})
-			.set('Cookie', cookie)
-			.expect(200);
+		const { body: firstUserResponse } = await getCurrentUser({ cookie });
 
 		expect(firstUserResponse.data.getCurrentUser.username).toStrictEqual(
-			globalThis.user.username
+			user.username
 		);
 
 		// switch users
-		const response = await request(app)
-			.post(BASE_PATH)
-			.send({
-				query: SIGNIN_MUTATION,
-				variables: {
-					args: {
-						email: user.email,
-						password: user.password
-					}
-				}
-			})
-			.expect(200);
+		const response = await signin(user);
 
 		const cookie2 = response.get('Set-Cookie');
 
-		const { body: secondUserResponse } = await request(app)
-			.post(BASE_PATH)
-			.send({
-				query: GET_CURRENT_USER
-			})
-			.set('Cookie', cookie2)
-			.expect(200);
+		const { body: secondUserResponse } = await getCurrentUser({
+			cookie: cookie2
+		});
 
 		expect(secondUserResponse.data.getCurrentUser.username).toStrictEqual(
 			user.username

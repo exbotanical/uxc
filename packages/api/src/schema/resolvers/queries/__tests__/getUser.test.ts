@@ -1,11 +1,13 @@
 import { GET_USER } from '@@/fixtures';
+import { join } from '@@/utils';
 import { ERROR_MESSAGES } from '@uxc/common/node';
 import request from 'supertest';
 
 import { app } from '@/app';
 import { seed } from '@/schema/resolvers/mutations/computed/seed';
 
-describe('getUser workflow', () => {
+const testSubject = 'getUser';
+describe(`${testSubject} workflow`, () => {
 	it('fails with an Unauthorized error if the request does not include a valid session cookie', async () => {
 		const { body } = await request(app)
 			.post(BASE_PATH)
@@ -18,7 +20,7 @@ describe('getUser workflow', () => {
 		expect(body.errors[0].message).toStrictEqual(
 			ERROR_MESSAGES.E_AUTHORIZATION_REQUIRED
 		);
-		expect(body.errors[0].path[0]).toBe('getUser');
+		expect(body.errors[0].path[0]).toBe(testSubject);
 	});
 
 	it('fails when not provided a userId', async () => {
@@ -36,7 +38,7 @@ describe('getUser workflow', () => {
 		expect(body.errors).toHaveLength(1);
 		expect(body.errors[0].message).toStrictEqual(ERROR_MESSAGES.E_NO_USER_ID);
 
-		expect(body.errors[0].path[0]).toBe('getUser');
+		expect(body.errors[0].path[0]).toBe(testSubject);
 	});
 
 	it('fails when provided a userId that is not a valid ObjectID', async () => {
@@ -59,7 +61,7 @@ describe('getUser workflow', () => {
 			`The provided userId ${userId} is not a valid ObjectID.`
 		);
 
-		expect(body.errors[0].path[0]).toBe('getUser');
+		expect(body.errors[0].path[0]).toBe(testSubject);
 	});
 
 	it('returns the requested user', async () => {

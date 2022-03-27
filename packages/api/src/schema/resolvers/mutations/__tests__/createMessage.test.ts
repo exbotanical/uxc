@@ -1,7 +1,9 @@
-import { CREATE_MESSAGE, SIGNIN_MUTATION } from '@@/fixtures';
+import { CREATE_MESSAGE } from '@@/fixtures';
+import { join, signin } from '@@/utils';
 import { ERROR_MESSAGES } from '@uxc/common/node';
 import { ObjectId } from 'mongodb';
 import request from 'supertest';
+
 
 import { app } from '@/app';
 import { seed } from '@/schema/resolvers/mutations/computed/seed';
@@ -102,18 +104,7 @@ describe('createMessage workflow', () => {
 	it('creates a new message', async () => {
 		const { threadIds, user } = await seed({ mode: 0 });
 
-		const response = await request(app)
-			.post(BASE_PATH)
-			.send({
-				query: SIGNIN_MUTATION,
-				variables: {
-					args: {
-						email: user.email,
-						password: user.password
-					}
-				}
-			})
-			.expect(200);
+		const response = await signin(user);
 
 		const cookie = response.get('Set-Cookie');
 		const messageBody = '_test_message_';

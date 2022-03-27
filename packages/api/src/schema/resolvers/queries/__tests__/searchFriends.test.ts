@@ -1,24 +1,13 @@
-import {
-	SIGNIN_MUTATION,
-	FRIEND_SEARCH,
-	CREATE_FRIEND_REQUEST
-} from '@@/fixtures';
+import { createFriendRequest, join, searchFriends, signin } from '@@/utils';
 import { ERROR_MESSAGES } from '@uxc/common/node';
-import request from 'supertest';
 
-import { app } from '@/app';
 import { seed } from '@/schema/resolvers/mutations/computed/seed';
 
 const testSubject = 'searchFriends';
 
 describe(`${testSubject} workflow`, () => {
 	it('fails with an Unauthorized error if the request does not include a valid session cookie', async () => {
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.send({
-				query: FRIEND_SEARCH
-			})
-			.expect(200);
+		const { body } = await searchFriends({ cookie: [''], variables: {} });
 
 		expect(body.errors).toHaveLength(1);
 		expect(body.errors[0].message).toStrictEqual(
@@ -30,14 +19,7 @@ describe(`${testSubject} workflow`, () => {
 	it('fails when not provided a query', async () => {
 		const { cookie } = await join();
 
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: FRIEND_SEARCH,
-				variables: {}
-			})
-			.expect(200);
+		const { body } = await searchFriends({ cookie, variables: {} });
 
 		expect(body.errors).toHaveLength(1);
 		expect(body.errors[0].message).toStrictEqual(ERROR_MESSAGES.E_NO_QUERY);
@@ -48,29 +30,14 @@ describe(`${testSubject} workflow`, () => {
 	it('returns friend search results', async () => {
 		const { user, testUser2 } = await seed();
 
-		const response = await request(app)
-			.post(BASE_PATH)
-			.send({
-				query: SIGNIN_MUTATION,
-				variables: {
-					args: {
-						email: user.email,
-						password: user.password
-					}
-				}
-			})
-			.expect(200);
+		const response = await signin(user);
 
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', response.get('Set-Cookie'))
-			.send({
-				query: FRIEND_SEARCH,
-				variables: {
-					query: testUser2.username
-				}
-			})
-			.expect(200);
+		const { body } = await searchFriends({
+			cookie: response.get('Set-Cookie'),
+			variables: {
+				query: testUser2.username
+			}
+		});
 
 		const { friends, sent, received } = body.data.searchFriends;
 
@@ -85,17 +52,14 @@ describe(`${testSubject} workflow`, () => {
 		const { cookie } = await join();
 		const { testUser2 } = await seed();
 
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: FRIEND_SEARCH,
-				variables: {
-					query: testUser2.username
-				}
-			})
-			.expect(200);
+		const { body } = await searchFriends({
+			cookie,
+			variables: {
+				query: testUser2.username
+			}
+		});
 
+		console.log({ body });
 		const { friends } = body.data.searchFriends;
 
 		expect(friends).toHaveLength(0);
@@ -105,28 +69,20 @@ describe(`${testSubject} workflow`, () => {
 		const { user } = await seed();
 		const { cookie } = await join();
 
-		const response = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: CREATE_FRIEND_REQUEST,
-				variables: {
-					recipientId: user._id
-				}
-			})
-			.expect(200);
+		await createFriendRequest({
+			cookie,
+			variables: {
+				recipientId: user._id
+			}
+		});
 
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', response.get('Set-Cookie'))
-			.send({
-				query: FRIEND_SEARCH,
-				variables: {
-					query: user.username,
-					type: 'SENT'
-				}
-			})
-			.expect(200);
+		const { body } = await searchFriends({
+			cookie,
+			variables: {
+				query: user.username,
+				type: 'SENT'
+			}
+		});
 
 		const { friends, sent, received } = body.data.searchFriends;
 
@@ -139,43 +95,24 @@ describe(`${testSubject} workflow`, () => {
 
 	it('searches received friend requests', async () => {
 		const { user } = await seed();
-		const { cookie, id } = await join();
+		const { cookie, data } = await join();
 
-		const response = await request(app)
-			.post(BASE_PATH)
-			.send({
-				query: SIGNIN_MUTATION,
-				variables: {
-					args: {
-						email: user.email,
-						password: user.password
-					}
-				}
-			})
-			.expect(200);
+		const response = await signin(user);
 
-		await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', response.get('Set-Cookie'))
-			.send({
-				query: CREATE_FRIEND_REQUEST,
-				variables: {
-					recipientId: id
-				}
-			})
-			.expect(200);
+		await createFriendRequest({
+			cookie: response.get('Set-Cookie'),
+			variables: {
+				recipientId: data._id
+			}
+		});
 
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: FRIEND_SEARCH,
-				variables: {
-					query: user.username,
-					type: 'RECV'
-				}
-			})
-			.expect(200);
+		const { body } = await searchFriends({
+			cookie,
+			variables: {
+				query: user.username,
+				type: 'RECV'
+			}
+		});
 
 		const { friends, sent, received } = body.data.searchFriends;
 

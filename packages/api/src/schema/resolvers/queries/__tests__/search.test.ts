@@ -1,4 +1,5 @@
-import { SIGNIN_MUTATION, TEXT_SEARCH } from '@@/fixtures';
+import { TEXT_SEARCH } from '@@/fixtures';
+import { join, search, signin } from '@@/utils';
 import { ERROR_MESSAGES } from '@uxc/common/node';
 import request from 'supertest';
 
@@ -29,15 +30,7 @@ describe(`${testSubject} workflow`, () => {
 
 	it('fails when not provided a query', async () => {
 		const { cookie } = await join();
-
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: TEXT_SEARCH,
-				variables: {}
-			})
-			.expect(200);
+		const { body } = await search({ cookie, variables: {} });
 
 		expect(body.errors).toHaveLength(1);
 		expect(body.errors[0].message).toStrictEqual(ERROR_MESSAGES.E_NO_QUERY);
@@ -50,30 +43,11 @@ describe(`${testSubject} workflow`, () => {
 		const query = 'test';
 
 		const { user } = await seed();
-
-		const response = await request(app)
-			.post(BASE_PATH)
-			.send({
-				query: SIGNIN_MUTATION,
-				variables: {
-					args: {
-						email: user.email,
-						password: user.password
-					}
-				}
-			})
-			.expect(200);
-
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.send({
-				query: TEXT_SEARCH,
-				variables: {
-					query
-				}
-			})
-			.set('Cookie', response.get('Set-Cookie'))
-			.expect(200);
+		const response = await signin(user);
+		const { body } = await search({
+			cookie: response.get('Set-Cookie'),
+			variables: { query }
+		});
 
 		const data: Message[] = body.data.search;
 
@@ -90,29 +64,12 @@ describe(`${testSubject} workflow`, () => {
 		const { user, testUser2 } = await seed();
 		const query = testUser2.username;
 
-		const response = await request(app)
-			.post(BASE_PATH)
-			.send({
-				query: SIGNIN_MUTATION,
-				variables: {
-					args: {
-						email: user.email,
-						password: user.password
-					}
-				}
-			})
-			.expect(200);
+		const response = await signin(user);
 
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.send({
-				query: TEXT_SEARCH,
-				variables: {
-					query
-				}
-			})
-			.set('Cookie', response.get('Set-Cookie'))
-			.expect(200);
+		const { body } = await search({
+			cookie: response.get('Set-Cookie'),
+			variables: { query }
+		});
 
 		const data: PrivateThread[] = body.data.search;
 
@@ -131,16 +88,10 @@ describe(`${testSubject} workflow`, () => {
 		await seed();
 		const { cookie } = await join();
 
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: TEXT_SEARCH,
-				variables: {
-					query
-				}
-			})
-			.expect(200);
+		const { body } = await search({
+			cookie,
+			variables: { query }
+		});
 
 		const data = body.data.search;
 
@@ -149,20 +100,14 @@ describe(`${testSubject} workflow`, () => {
 
 	it('ignores threads in which the current user is not a member', async () => {
 		const { testUser2 } = await seed();
-		const { cookie } = await join();
 		const query = testUser2.username;
 
-		const { body } = await request(app)
-			.post(BASE_PATH)
-			.set('Cookie', cookie)
-			.send({
-				query: TEXT_SEARCH,
-				variables: {
-					query
-				}
-			})
-			.expect(200);
+		const { cookie } = await join();
 
+		const { body } = await search({
+			cookie,
+			variables: { query }
+		});
 		const data = body.data.search;
 
 		expect(data).toHaveLength(0);
