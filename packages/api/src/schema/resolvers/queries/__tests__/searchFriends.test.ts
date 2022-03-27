@@ -16,18 +16,7 @@ describe(`${testSubject} workflow`, () => {
 		expect(body.errors[0].path[0]).toBe(testSubject);
 	});
 
-	it('fails when not provided a query', async () => {
-		const { cookie } = await join();
-
-		const { body } = await searchFriends({ cookie, variables: {} });
-
-		expect(body.errors).toHaveLength(1);
-		expect(body.errors[0].message).toStrictEqual(ERROR_MESSAGES.E_NO_QUERY);
-
-		expect(body.errors[0].path[0]).toBe(testSubject);
-	});
-
-	it('returns friend search results', async () => {
+	it('returns friend search results per the given query', async () => {
 		const { user, testUser2 } = await seed();
 
 		const response = await signin(user);
@@ -121,5 +110,22 @@ describe(`${testSubject} workflow`, () => {
 		expect(received).toHaveLength(1);
 
 		expect(received[0]._id.toString()).toStrictEqual(user._id.toString());
+	});
+
+	it('retrieves all friends when provided no query', async () => {
+		const { user } = await seed();
+
+		const response = await signin(user);
+
+		const { body } = await searchFriends({
+			cookie: response.get('Set-Cookie'),
+			variables: {}
+		});
+
+		const { friends, sent, received } = body.data.searchFriends;
+
+		expect(friends).toHaveLength(11);
+		expect(sent).toHaveLength(0);
+		expect(received).toHaveLength(0);
 	});
 });

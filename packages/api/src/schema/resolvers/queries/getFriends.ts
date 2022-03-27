@@ -6,6 +6,9 @@ import type { User } from '@uxc/common/node';
 
 import { Friend } from '@/db';
 
+/**
+ * @internal
+ */
 export const getFriends: Resolver<User[]> = async (_, __, { req }) => {
 	const userId = req.session.meta?.id;
 	if (!userId) {

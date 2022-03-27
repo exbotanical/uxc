@@ -1,5 +1,5 @@
 import { ERROR_MESSAGES } from '@uxc/common/node';
-import { AuthenticationError, UserInputError } from 'apollo-server-core';
+import { AuthenticationError } from 'apollo-server-core';
 
 import type { Resolver } from '../types';
 import type {
@@ -23,16 +23,14 @@ export const searchFriends: Resolver<
 		throw new AuthenticationError(ERROR_MESSAGES.E_NO_USER_SESSION);
 	}
 
-	if (!query) {
-		throw new UserInputError(ERROR_MESSAGES.E_NO_QUERY);
-	}
-
 	const friends = await Friend.findFriends(userId);
 
 	const ret: SearchFriendsResult = {
-		friends: friends.filter((friend) =>
-			friend.username.toLowerCase().includes(query.toLowerCase())
-		),
+		friends: query
+			? friends.filter((friend) =>
+					friend.username.toLowerCase().includes(query.toLowerCase())
+			  )
+			: friends,
 		sent: [],
 		received: []
 	};
@@ -41,11 +39,14 @@ export const searchFriends: Resolver<
 		const received = await FriendRequest.findFriendRequestsRecv(userId);
 
 		ret.received.push(
-			...received
-				.filter((request) =>
-					request.requester.username.toLowerCase().includes(query.toLowerCase())
-				)
-				.map(({ requester }) => requester)
+			...(query
+				? received.filter((request) =>
+						request.requester.username
+							.toLowerCase()
+							.includes(query.toLowerCase())
+				  )
+				: received
+			).map(({ requester }) => requester)
 		);
 	}
 
@@ -53,11 +54,14 @@ export const searchFriends: Resolver<
 		const sent = await FriendRequest.findFriendRequestsSent(userId);
 
 		ret.sent.push(
-			...sent
-				.filter((request) =>
-					request.recipient.username.toLowerCase().includes(query.toLowerCase())
-				)
-				.map(({ recipient }) => recipient)
+			...(query
+				? sent.filter((request) =>
+						request.recipient.username
+							.toLowerCase()
+							.includes(query.toLowerCase())
+				  )
+				: sent
+			).map(({ recipient }) => recipient)
 		);
 	}
 
