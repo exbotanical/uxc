@@ -175,12 +175,26 @@ export const TEXT_SEARCH = gql`
 `;
 
 export const FRIEND_SEARCH = gql`
-	query searchFriends($query: String) {
-		searchFriends(query: $query) {
-			_id
-			email
-			userImage
-			username
+	query searchFriends($query: String, $type: FriendRequestOptions) {
+		searchFriends(query: $query, type: $type) {
+			friends {
+				_id
+				email
+				username
+				userImage
+			}
+			sent {
+				_id
+				email
+				username
+				userImage
+			}
+			received {
+				_id
+				email
+				username
+				userImage
+			}
 		}
 	}
 `;

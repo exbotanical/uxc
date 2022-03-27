@@ -66,11 +66,45 @@ const Item = styled.div`
 	}
 `;
 
+// @todo relocate
+const FriendsC = () => {
+	return (
+		<FriendsProvider>
+			<Container>
+				<Header>
+					<FriendsHeader />
+				</Header>
+
+				<ContentContainer>
+					<Friends />
+				</ContentContainer>
+			</Container>
+		</FriendsProvider>
+	);
+};
+
+// @todo relocate
+const ThreadC = ({ username }: { username: string }) => {
+	return (
+		<Container>
+			<Header>
+				<Item>
+					<SvgIcon name="people" size={21} />
+					<HeaderLabel>{username}</HeaderLabel>
+				</Item>
+			</Header>
+
+			<ContentContainer>
+				<ChatRoom />
+			</ContentContainer>
+		</Container>
+	);
+};
+
 export function ContentLayout() {
 	const location = useLocation();
 	const paths = location.pathname.split('/');
 	const threadId = paths[paths.length - 1];
-	const isFriendsView = !threadId;
 
 	const { getThreadById } = useContext(ThreadsContext);
 	const { data: user } = useQuery<{
@@ -84,26 +118,12 @@ export function ContentLayout() {
 	);
 
 	return (
-		<Container>
-			<Header>
-				{isFriendsView ? (
-					<FriendsProvider>
-						<FriendsHeader />
-					</FriendsProvider>
-				) : (
-					<Item>
-						<SvgIcon name="people" size={21} />
-						<HeaderLabel>{them?.username}</HeaderLabel>
-					</Item>
-				)}
-			</Header>
-
-			<ContentContainer>
-				<Routes>
-					<Route element={<Friends />} path="/" />
-					<Route element={<ChatRoom />} path="/:threadId" />
-				</Routes>
-			</ContentContainer>
-		</Container>
+		<Routes>
+			<Route element={<FriendsC />} path="/" />
+			<Route
+				element={<ThreadC username={them?.username || ''} />}
+				path="/:threadId"
+			/>
+		</Routes>
 	);
 }
