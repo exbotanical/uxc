@@ -5,10 +5,10 @@ import React from 'react';
 import * as S from './styles';
 
 import { Input } from '@/components/Fields/Input';
-import { FriendsContext } from './FriendsContext';
-import { Friend } from './Friend/Friend';
-import { RecvPendingFriend } from './Friend/RecvPendingFriend';
-import { SentPendingFriend } from './Friend/SentPendingFriend';
+import { FriendsContext } from '@/components/Friends/FriendsContext';
+import { Friend } from '@/components/Friends/Friend/Friend';
+import { RecvPendingFriend } from '@/components/Friends/Friend/RecvPendingFriend';
+import { SentPendingFriend } from '@/components/Friends/Friend/SentPendingFriend';
 
 export function Friends() {
 	const { query, setQuery, results } = useContext(FriendsContext);

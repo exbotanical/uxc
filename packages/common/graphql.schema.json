@@ -1130,15 +1130,15 @@
             "deprecationReason": null
           },
           {
-            "name": "userIds",
+            "name": "users",
             "description": null,
             "args": [],
             "type": {
               "kind": "LIST",
               "name": null,
               "ofType": {
-                "kind": "SCALAR",
-                "name": "ID",
+                "kind": "OBJECT",
+                "name": "User",
                 "ofType": null
               }
             },

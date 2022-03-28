@@ -1,7 +1,7 @@
 type SeedReturnValue {
 	user: User
+	users: [User]
 	threadIds: [ID]
-	userIds: [ID]
 }
 
 type Mutation {

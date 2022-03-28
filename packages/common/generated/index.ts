@@ -200,7 +200,7 @@ export type SeedReturnValue = {
   __typename?: 'SeedReturnValue';
   threadIds?: Maybe<Array<Maybe<Scalars['ID']>>>;
   user?: Maybe<User>;
-  userIds?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  users?: Maybe<Array<Maybe<User>>>;
 };
 
 export type SentFriendRequest = {
@@ -321,7 +321,7 @@ export type ResolversTypes = {
   ReceivedFriendRequest: ResolverTypeWrapper<Omit<ReceivedFriendRequest, 'requester' | 'status'> & { requester?: Maybe<ResolversTypes['User']>, status?: Maybe<ResolversTypes['FriendRequestStatus']> }>;
   Result: ResolversTypes['MessageResult'] | ResolversTypes['PrivateThread'];
   SearchFriendsResult: ResolverTypeWrapper<Omit<SearchFriendsResult, 'friends' | 'received' | 'sent'> & { friends?: Maybe<Array<Maybe<ResolversTypes['User']>>>, received?: Maybe<Array<Maybe<ResolversTypes['User']>>>, sent?: Maybe<Array<Maybe<ResolversTypes['User']>>> }>;
-  SeedReturnValue: ResolverTypeWrapper<Omit<SeedReturnValue, 'user'> & { user?: Maybe<ResolversTypes['User']> }>;
+  SeedReturnValue: ResolverTypeWrapper<Omit<SeedReturnValue, 'user' | 'users'> & { user?: Maybe<ResolversTypes['User']>, users?: Maybe<Array<Maybe<ResolversTypes['User']>>> }>;
   SentFriendRequest: ResolverTypeWrapper<Omit<SentFriendRequest, 'recipient' | 'status'> & { recipient?: Maybe<ResolversTypes['User']>, status?: Maybe<ResolversTypes['FriendRequestStatus']> }>;
   SigninInput: SigninInput;
   String: ResolverTypeWrapper<Scalars['String']>;
@@ -344,7 +344,7 @@ export type ResolversParentTypes = {
   ReceivedFriendRequest: Omit<ReceivedFriendRequest, 'requester'> & { requester?: Maybe<ResolversParentTypes['User']> };
   Result: ResolversParentTypes['MessageResult'] | ResolversParentTypes['PrivateThread'];
   SearchFriendsResult: Omit<SearchFriendsResult, 'friends' | 'received' | 'sent'> & { friends?: Maybe<Array<Maybe<ResolversParentTypes['User']>>>, received?: Maybe<Array<Maybe<ResolversParentTypes['User']>>>, sent?: Maybe<Array<Maybe<ResolversParentTypes['User']>>> };
-  SeedReturnValue: Omit<SeedReturnValue, 'user'> & { user?: Maybe<ResolversParentTypes['User']> };
+  SeedReturnValue: Omit<SeedReturnValue, 'user' | 'users'> & { user?: Maybe<ResolversParentTypes['User']>, users?: Maybe<Array<Maybe<ResolversParentTypes['User']>>> };
   SentFriendRequest: Omit<SentFriendRequest, 'recipient'> & { recipient?: Maybe<ResolversParentTypes['User']> };
   SigninInput: SigninInput;
   String: Scalars['String'];
@@ -441,7 +441,7 @@ export type SearchFriendsResultResolvers<ContextType = Context, ParentType exten
 export type SeedReturnValueResolvers<ContextType = Context, ParentType extends ResolversParentTypes['SeedReturnValue'] = ResolversParentTypes['SeedReturnValue']> = {
   threadIds?: Resolver<Maybe<Array<Maybe<ResolversTypes['ID']>>>, ParentType, ContextType>;
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
-  userIds?: Resolver<Maybe<Array<Maybe<ResolversTypes['ID']>>>, ParentType, ContextType>;
+  users?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

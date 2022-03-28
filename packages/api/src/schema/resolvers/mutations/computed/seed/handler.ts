@@ -1,10 +1,7 @@
-import { Request } from 'express';
 import { Document } from 'mongoose';
 
-import type { User as UserType } from '@uxc/common/node';
-
-import { PrivateThread, Friend, User, ReturnDocument } from '@/db';
-import { SeedModes, Taskable } from './types';
+import { PrivateThread, Friend, FriendRequest } from '@/db';
+import { SeedModes } from './types';
 import {
 	createMessage,
 	createTestMessages,
@@ -13,12 +10,9 @@ import {
 	partition
 } from './op';
 
-import type { PartitionedTasks } from './types';
-
 export async function seed({
 	mode
 }: {
-	req?: Request;
 	mode?: SeedModes;
 } = {}) {
 	const { user, users, userIds } = await createUsers();
@@ -30,7 +24,7 @@ export async function seed({
 				users: [user._id, user2._id]
 			})
 		)
-	) as unknown as PartitionedTasks;
+	);
 	await Promise.all(threadTasks);
 
 	// correlate sender to its thread
@@ -52,18 +46,46 @@ export async function seed({
 
 	if (mode !== SeedModes.TEST) {
 		const testMessageTasks = createTestMessages(threadIds[0], userIds[0]);
+
 		// befriend ea new user - test user
 		const [friendTasks] = partition(
-			userIds.map((friendNodeY) => {
-				console.log(user, friendNodeY);
-				return Friend.build({
+			userIds.map((friendNodeY) =>
+				Friend.build({
 					friendNodeX: user._id,
 					friendNodeY
-				});
-			})
-		) as unknown as PartitionedTasks;
+				})
+			)
+		);
 
-		await Promise.all([...testMessageTasks, ...friendTasks]);
+		const [moreUserTasks, moreUserIds] = partition(
+			Array.from({ length: 10 }, createUser).map((u) => u[1])
+		);
+
+		await Promise.all([...testMessageTasks, ...friendTasks, ...moreUserTasks]);
+
+		// send friend requests to the test user
+		const [recvFriendRequestTasks] = partition(
+			moreUserIds.slice(0, 5).map((id) =>
+				FriendRequest.build({
+					recipient: user._id,
+					requester: id,
+					status: 'PENDING'
+				})
+			)
+		);
+
+		// send friend requests from the test user
+		const [sentFriendRequestTasks] = partition(
+			moreUserIds.slice(5, moreUserIds.length).map((id) =>
+				FriendRequest.build({
+					recipient: user._id,
+					requester: id,
+					status: 'PENDING'
+				})
+			)
+		);
+
+		await Promise.all([...recvFriendRequestTasks, ...sentFriendRequestTasks]);
 	}
 
 	return {

@@ -43,8 +43,7 @@ export function createUser(): [string, ReturnDocument] {
 }
 
 export function partition(grp: Taskable[]) {
-	return grp.reduce(
-		// @ts-expect-error
+	return grp.reduce<PartitionedTasks>(
 		([tasks, ids], task) => {
 			return [
 				[...tasks, task.save()],

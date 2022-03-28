@@ -3,10 +3,11 @@ import type { Context } from '@uxc/common/node';
 import { seed } from './handler';
 
 export async function seedResolver(_: any, __: any, { req }: Context) {
-	const { users, ...rest } = await seed({ req });
+	const { user, users, threadIds } = await seed();
 
 	return {
-		...rest,
-		user: users[0]
+		user,
+		users,
+		threadIds
 	};
 }
