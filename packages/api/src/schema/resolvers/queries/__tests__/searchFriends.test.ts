@@ -17,14 +17,14 @@ describe(`${testSubject} workflow`, () => {
 	});
 
 	it('returns friend search results per the given query', async () => {
-		const { user, testUser2 } = await seed();
+		const { user, users } = await seed();
 
 		const response = await signin(user);
 
 		const { body } = await searchFriends({
 			cookie: response.get('Set-Cookie'),
 			variables: {
-				query: testUser2.username
+				query: users[0].username
 			}
 		});
 
@@ -34,21 +34,20 @@ describe(`${testSubject} workflow`, () => {
 		expect(sent).toHaveLength(0);
 		expect(received).toHaveLength(0);
 
-		expect(testUser2.username).toStrictEqual(friends[0].username);
+		expect(users[0].username).toStrictEqual(friends[0].username);
 	});
 
 	it('searches only friends of the current user', async () => {
 		const { cookie } = await join();
-		const { testUser2 } = await seed();
+		const { users } = await seed();
 
 		const { body } = await searchFriends({
 			cookie,
 			variables: {
-				query: testUser2.username
+				query: users[0].username
 			}
 		});
 
-		console.log({ body });
 		const { friends } = body.data.searchFriends;
 
 		expect(friends).toHaveLength(0);
@@ -112,7 +111,7 @@ describe(`${testSubject} workflow`, () => {
 		expect(received[0]._id.toString()).toStrictEqual(user._id.toString());
 	});
 
-	it('retrieves all friends when provided no query', async () => {
+	it.only('retrieves all friends when provided no query', async () => {
 		const { user } = await seed();
 
 		const response = await signin(user);

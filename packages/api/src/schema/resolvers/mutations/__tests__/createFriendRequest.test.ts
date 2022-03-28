@@ -9,14 +9,14 @@ import { seed } from '@/schema/resolvers/mutations/computed/seed';
 const testSubject = 'createFriendRequest';
 describe(`${testSubject} workflow`, () => {
 	it('fails with an Unauthorized error if the request does not include a valid session cookie', async () => {
-		const { userIds } = await seed({ mode: 0 });
+		const { users } = await seed({ mode: 0 });
 
 		const { body } = await request(app)
 			.post(BASE_PATH)
 			.send({
 				query: CREATE_FRIEND_REQUEST,
 				variables: {
-					recipientId: userIds[0]
+					recipientId: users[0]._id
 				}
 			})
 			.expect(200);
@@ -103,9 +103,9 @@ describe(`${testSubject} workflow`, () => {
 	});
 
 	it.skip('@todo fails when creating a friend request between two users that are already friends', async () => {
-		const { user, testUser2 } = await seed();
+		const { user, users } = await seed();
 
-		const response = await signin(testUser2);
+		const response = await signin(users[0]);
 
 		await createFriendRequest({
 			cookie: response.get('Set-Cookie'),
@@ -118,20 +118,20 @@ describe(`${testSubject} workflow`, () => {
 	});
 
 	it('fails when creating a duplicate friend request', async () => {
-		const { userIds } = await seed({ mode: 0 });
+		const { users } = await seed({ mode: 0 });
 		const { cookie } = await join();
 
 		await createFriendRequest({
 			cookie,
 			variables: {
-				recipientId: userIds[0]
+				recipientId: users[0]._id
 			}
 		});
 
 		const { body } = await createFriendRequest({
 			cookie,
 			variables: {
-				recipientId: userIds[0]
+				recipientId: users[0]._id
 			}
 		});
 
@@ -144,13 +144,13 @@ describe(`${testSubject} workflow`, () => {
 	});
 
 	it('creates a friend request', async () => {
-		const { userIds } = await seed({ mode: 0 });
+		const { users } = await seed({ mode: 0 });
 		const { cookie } = await join();
 
 		const { body } = await createFriendRequest({
 			cookie,
 			variables: {
-				recipientId: userIds[0]
+				recipientId: users[0]._id
 			}
 		});
 

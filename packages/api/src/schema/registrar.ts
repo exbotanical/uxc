@@ -12,7 +12,10 @@ import {
 	signoutResolver as signout
 } from '@/schema/resolvers/mutations';
 import * as mutations from '@/schema/resolvers/mutations';
-import { seedWrapper, purge } from '@/schema/resolvers/mutations/computed';
+import {
+	seedResolver as seed,
+	purge
+} from '@/schema/resolvers/mutations/computed';
 import * as queries from '@/schema/resolvers/queries';
 import {
 	onThreadMessageCreated,
@@ -104,7 +107,7 @@ export const resolvers: Resolvers = {
 	},
 
 	Mutation: {
-		seed: authGuard(seedWrapper),
+		seed: authGuard(seed),
 		purge: authGuard(purge),
 		signout,
 		signin,

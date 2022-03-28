@@ -61,8 +61,8 @@ describe(`${testSubject} workflow`, () => {
 	});
 
 	it('returns private thread results', async () => {
-		const { user, testUser2 } = await seed();
-		const query = testUser2.username;
+		const { user, users } = await seed();
+		const query = users[0].username;
 
 		const response = await signin(user);
 
@@ -99,8 +99,8 @@ describe(`${testSubject} workflow`, () => {
 	});
 
 	it('ignores threads in which the current user is not a member', async () => {
-		const { testUser2 } = await seed();
-		const query = testUser2.username;
+		const { users } = await seed();
+		const query = users[0].username;
 
 		const { cookie } = await join();
 
