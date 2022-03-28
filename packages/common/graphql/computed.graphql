@@ -1,6 +1,6 @@
 type SeedReturnValue {
-	user: User
-	users: [User]
+	user: TestUser
+	users: [TestUser]
 	threadIds: [ID]
 }
 
