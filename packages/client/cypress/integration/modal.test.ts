@@ -1,21 +1,21 @@
-import currentUserOk from '../fixtures/getCurrentUser/ok.json';
-import getThreadsOk from '../fixtures/getThreads/ok.json';
+import currentUserOk from '@/fixtures/getCurrentUser/ok.json';
+import getThreadsOk from '@/fixtures/getThreads/ok.json';
 
 const overlayTestId = 'modal-overlay';
 
 describe('modal accessibility and functionality', () => {
 	beforeEach(() => {
-		Cypress.config('interceptions', {});
+		Cypress.config('interceptions' as keyof Cypress.TestConfigOverrides, {});
 
 		cy.interceptGQL(
 			'http://localhost/api/graphql',
 			'getCurrentUser',
 			currentUserOk
-		);
+		)
 
-		cy.interceptGQL('http://localhost/api/graphql', 'getThreads', getThreadsOk);
+			.interceptGQL('http://localhost/api/graphql', 'getThreads', getThreadsOk)
 
-		cy.visit('/');
+			.visit('/');
 	});
 
 	it('traps focus inside the modal, cycling all tab-able elements', () => {
@@ -31,8 +31,11 @@ describe('modal accessibility and functionality', () => {
 
 		// focus forwards
 		do {
-			cy.focused().should('have.attr', 'data-testid', orderedFocusIds[counter]);
-			cy.get('body').realPress('Tab');
+			cy.focused()
+				.should('have.attr', 'data-testid', orderedFocusIds[counter])
+
+				.get('body')
+				.realPress('Tab');
 		} while (++counter < orderedFocusIds.length);
 
 		// we always end up at the first el
@@ -40,12 +43,11 @@ describe('modal accessibility and functionality', () => {
 
 		// now reverse
 		do {
-			cy.get('body').realPress(['Shift', 'Tab']);
-			cy.focused().should(
-				'have.attr',
-				'data-testid',
-				orderedFocusIds[counter - 1]
-			);
+			cy.get('body')
+				.realPress(['Shift', 'Tab'])
+
+				.focused()
+				.should('have.attr', 'data-testid', orderedFocusIds[counter - 1]);
 		} while (--counter > 0);
 
 		// again, we should end up at the first el
@@ -53,32 +55,47 @@ describe('modal accessibility and functionality', () => {
 	});
 
 	it('closes the modal when the user presses the escape key', () => {
-		cy.getByTestId(overlayTestId).should('not.exist');
-		cy.getByTestId('uxc-search-btn').click();
+		cy.getByTestId(overlayTestId)
+			.should('not.exist')
+			.getByTestId('uxc-search-btn')
+			.click()
 
-		cy.getByTestId(overlayTestId).should('exist');
+			.getByTestId(overlayTestId)
+			.should('exist')
 
-		cy.get('body').type('{esc}');
-		cy.getByTestId(overlayTestId).should('not.exist');
+			.get('body')
+			.type('{esc}')
+			.getByTestId(overlayTestId)
+			.should('not.exist');
 	});
 
 	it('closes the modal when the user clicks the close button', () => {
-		cy.getByTestId(overlayTestId).should('not.exist');
-		cy.getByTestId('uxc-search-btn').click();
+		cy.getByTestId(overlayTestId)
+			.should('not.exist')
+			.getByTestId('uxc-search-btn')
+			.click()
 
-		cy.getByTestId(overlayTestId).should('exist');
+			.getByTestId(overlayTestId)
+			.should('exist')
 
-		cy.getByTestId('uxc-search-esc-btn').click();
-		cy.getByTestId(overlayTestId).should('not.exist');
+			.getByTestId('uxc-search-esc-btn')
+			.click()
+			.getByTestId(overlayTestId)
+			.should('not.exist');
 	});
 
 	it('closes the modal when the user clicks outside the modal', () => {
-		cy.getByTestId(overlayTestId).should('not.exist');
-		cy.getByTestId('uxc-search-btn').click();
+		cy.getByTestId(overlayTestId)
+			.should('not.exist')
+			.getByTestId('uxc-search-btn')
+			.click()
 
-		cy.getByTestId(overlayTestId).should('exist');
+			.getByTestId(overlayTestId)
+			.should('exist')
 
-		cy.getByTestId('modal-overlay').click();
-		cy.getByTestId(overlayTestId).should('not.exist');
+			.getByTestId('modal-overlay')
+			.click()
+			.getByTestId(overlayTestId)
+			.should('not.exist');
 	});
 });

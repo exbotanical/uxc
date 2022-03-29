@@ -1,4 +1,6 @@
 declare namespace Cypress {
+	type CypressInstance = Chainable<JQuery>;
+
 	interface ResolvedConfigOptions {
 		interceptions: {
 			[url: string]: {
@@ -10,8 +12,6 @@ declare namespace Cypress {
 		};
 	}
 
-	type CypressInstance = Chainable<JQuery>;
-
 	interface Chainable {
 		getByTestId(selector: string): CypressInstance;
 		getByTestIdLike(selector: string): CypressInstance;
@@ -22,6 +22,6 @@ declare namespace Cypress {
 			operation: string,
 			data: GQLResponse<T>,
 			alias?: string
-		): void;
+		): Cypress.cy;
 	}
 }

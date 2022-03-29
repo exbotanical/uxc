@@ -66,6 +66,10 @@ const Item = styled.div`
 	}
 `;
 
+const FriendsContentContainer = styled(ContentContainer)`
+	overflow-y: auto;
+`;
+
 // @todo relocate
 const FriendsC = () => {
 	return (
@@ -75,9 +79,9 @@ const FriendsC = () => {
 					<FriendsHeader />
 				</Header>
 
-				<ContentContainer>
+				<FriendsContentContainer>
 					<Friends />
-				</ContentContainer>
+				</FriendsContentContainer>
 			</Container>
 		</FriendsProvider>
 	);

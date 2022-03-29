@@ -1,12 +1,16 @@
 {
   "compilerOptions": {
+		"baseUrl": ".",
     "target": "es5",
     "strict": true,
     "lib": ["DOM", "ESNEXT"],
     "types": ["node", "cypress", "cypress-axe", "@testing-library/cypress", "cypress-real-events"],
     "esModuleInterop": true,
 		"resolveJsonModule": true,
-		"downlevelIteration": true
+		"downlevelIteration": true,
+		"paths": {
+			"@/*": ["./*"]
+		}
   },
   "include": ["./**/*.ts"]
 }

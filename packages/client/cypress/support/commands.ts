@@ -1,3 +1,13 @@
+interface GQLResponse<T> {
+	data: T;
+	errors?: {
+		message: string;
+		extensions: {
+			code: string;
+		};
+	}[];
+}
+
 /**
  * Select a `data-testid` element by its exact key
  */
@@ -40,19 +50,14 @@ Cypress.Commands.add(
 	}
 );
 
-interface GQLResponse<T> {
-	data: T;
-	errors?: {
-		message: string;
-		extensions: {
-			code: string;
-		};
-	}[];
-}
-
 Cypress.Commands.add(
 	'interceptGQL',
-	<T>(url: string, operation: string, data: GQLResponse<T>, alias?: string) => {
+	<T>(
+		url: string,
+		operation: string,
+		data: GQLResponse<T>,
+		alias?: string
+	): Cypress.cy => {
 		const previous = Cypress.config('interceptions');
 		const alreadyRegistered = url in previous;
 
@@ -61,13 +66,13 @@ Cypress.Commands.add(
 			[operation]: { alias, data }
 		};
 
-		Cypress.config('interceptions', {
+		Cypress.config('interceptions' as keyof Cypress.TestConfigOverrides, {
 			...previous,
 			[url]: next
 		});
 
 		if (alreadyRegistered) {
-			return;
+			return cy;
 		}
 
 		cy.intercept('POST', url, (req) => {
@@ -84,5 +89,7 @@ Cypress.Commands.add(
 				req.reply({ body: match.data });
 			}
 		});
+
+		return cy;
 	}
 );

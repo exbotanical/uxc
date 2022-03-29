@@ -1,24 +1,33 @@
 import { ERROR_MESSAGES } from '@uxc/common';
 
-import currentUserOk from '../fixtures/getCurrentUser/ok.json';
-import signinNotOk from '../fixtures/signin/notok.json';
-import signinOk from '../fixtures/signin/ok.json';
+import currentUserOk from '@/fixtures/getCurrentUser/ok.json';
+import signinNotOk from '@/fixtures/signin/notok.json';
+import signinOk from '@/fixtures/signin/ok.json';
 
 const goodEmail = 'user@cypress.com';
 const goodPassword = 'cypress_password';
 const badEmail = 'user';
 
 function signinUser() {
-	cy.get('@email').type(goodEmail);
-	cy.get('@password').type(goodPassword);
-	cy.get('@btn').click();
+	cy.get('@email')
+		.type(goodEmail)
+
+		.get('@password')
+		.type(goodPassword)
+
+		.get('@btn')
+		.click();
 }
 
 function setAliases() {
-	cy.getByTestId('signin-button').as('btn');
-	cy.getByTestId('email-input').as('email');
-	cy.getByTestId('password-input').as('password');
-	cy.getByTestId('swapmode-button').as('swap');
+	cy.getByTestId('signin-button')
+		.as('btn')
+		.getByTestId('email-input')
+		.as('email')
+		.getByTestId('password-input')
+		.as('password')
+		.getByTestId('swapmode-button')
+		.as('swap');
 }
 
 function init() {
@@ -28,7 +37,7 @@ function init() {
 
 describe('signin workflow', () => {
 	beforeEach(() => {
-		Cypress.config('interceptions', {});
+		Cypress.config('interceptions' as keyof Cypress.TestConfigOverrides, {});
 	});
 
 	it('focuses the first input on load', () => {
@@ -49,76 +58,92 @@ describe('signin workflow', () => {
 		];
 
 		for (const el of orderedInteractiveEls.slice(1)) {
-			cy.get('body').realPress('Tab');
-			cy.focused().should('have.attr', 'data-testid', el);
+			cy.get('body')
+				.realPress('Tab')
+				.focused()
+				.should('have.attr', 'data-testid', el);
 		}
 
 		for (const el of orderedInteractiveEls.reverse().slice(1)) {
-			cy.realPress(['Shift', 'Tab']);
-			cy.focused().should('have.attr', 'data-testid', el);
+			cy.realPress(['Shift', 'Tab'])
+				.focused()
+				.should('have.attr', 'data-testid', el);
 		}
 	});
 
 	it('disables the join button if missing required fields', () => {
 		init();
 
-		cy.get('@btn').should('have.attr', 'aria-disabled', 'true');
+		cy.get('@btn')
+			.should('have.attr', 'aria-disabled', 'true')
 
-		cy.get('@email').type(goodEmail);
-		cy.get('@btn').should('have.attr', 'aria-disabled', 'true');
+			.get('@email')
+			.type(goodEmail)
+			.get('@btn')
+			.should('have.attr', 'aria-disabled', 'true')
 
-		cy.get('@password').type(goodPassword);
-		cy.get('@btn').should('have.attr', 'aria-disabled', 'false');
+			.get('@password')
+			.type(goodPassword)
+			.get('@btn')
+			.should('have.attr', 'aria-disabled', 'false')
 
-		cy.get('@email').clear();
-		cy.get('@btn').should('have.attr', 'aria-disabled', 'true');
+			.get('@email')
+			.clear()
+			.get('@btn')
+			.should('have.attr', 'aria-disabled', 'true')
 
-		cy.get('@email').type(goodEmail);
-		cy.get('@btn').should('have.attr', 'aria-disabled', 'false');
+			.get('@email')
+			.type(goodEmail)
+			.get('@btn')
+			.should('have.attr', 'aria-disabled', 'false');
 	});
 
 	it('clicking on the swap mode button takes the user to the join page', () => {
 		init();
 
-		cy.get('@swap').click();
-		cy.url().should('eq', 'http://localhost:3000/join');
+		cy.get('@swap').click().url().should('eq', 'http://localhost:3000/join');
 	});
 
 	it('validates each input lazily, on unfocus', () => {
 		init();
 
-		cy.get('@email').type(badEmail);
-		cy.get('@email').blur();
-		cy.getByTestId('email-address-error').should(
-			'contain',
-			ERROR_MESSAGES.E_INVALID_EMAIL
-		);
+		cy.get('@email')
+			.type(badEmail)
+			.get('@email')
+			.blur()
+			.getByTestId('email-address-error')
+			.should('contain', ERROR_MESSAGES.E_INVALID_EMAIL)
 
-		cy.get('@password').focus();
-		cy.get('@password').blur();
-		cy.getByTestId('password-error').should(
-			'contain',
-			ERROR_MESSAGES.E_NO_PASSWORD
-		);
+			.get('@password')
+			.focus()
+			.get('@password')
+			.blur()
+			.getByTestId('password-error')
+			.should('contain', ERROR_MESSAGES.E_NO_PASSWORD);
 	});
 
 	it('displays an error if the provided credentials are invalid', () => {
 		cy.interceptGQL('http://localhost/api/graphql', 'signin', signinNotOk);
 		init();
 
-		cy.get('@email').type('email@email.com');
-		cy.get('@password').focus();
+		cy.get('@email')
+			.type('email@email.com')
+			.get('@password')
+			.focus()
 
-		cy.get('@password').type('wrong_pw');
-		cy.get('@email').focus();
+			.get('@password')
+			.type('wrong_pw')
+			.get('@email')
+			.focus()
 
-		cy.get('@btn').click();
+			.get('@btn')
+			.click()
 
-		cy.getByTestId('error-message').contains(
-			ERROR_MESSAGES.E_INVALID_CREDENTIALS
-		);
+			.getByTestId('error-message')
+			.contains(ERROR_MESSAGES.E_INVALID_CREDENTIALS)
 
-		cy.url().should('eq', 'http://localhost:3000/signin');
+			.url()
+			.should('eq', 'http://localhost:3000/signin');
 	});
 
 	it('redirects the user to the landing page once authenticated', () => {

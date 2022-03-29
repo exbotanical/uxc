@@ -1,6 +1,6 @@
-import currentUserOk from '../../fixtures/getCurrentUser/ok.json';
-import getMessagesOk from '../../fixtures/getMessages/ok1.json';
-import getThreadsOk from '../../fixtures/getThreads/ok.json';
+import currentUserOk from '@/fixtures/getCurrentUser/ok.json';
+import getMessagesOk from '@/fixtures/getMessages/ok1.json';
+import getThreadsOk from '@/fixtures/getThreads/ok.json';
 
 import type { Rule } from 'axe-core';
 
@@ -39,14 +39,16 @@ const assertAll = () => {
 };
 
 const runTest = (url: string) => {
-	cy.visit(url);
-	cy.injectAxe();
+	cy.visit(url).injectAxe();
+
+	cy.wait(1000);
+
 	assertAll();
 };
 
 describe('accessibility', () => {
 	beforeEach(() => {
-		Cypress.config('interceptions', {});
+		Cypress.config('interceptions' as keyof Cypress.TestConfigOverrides, {});
 	});
 
 	unauthenticatedTestUrls.forEach((url) => {
@@ -57,26 +59,21 @@ describe('accessibility', () => {
 
 	authenticatedTestUrls.forEach((url, idx) => {
 		it(`Page ${url} has no detectable accessibility violations on load`, () => {
-			if (idx === 0) {
-				cy.interceptGQL(
-					'http://localhost/api/graphql',
-					'getCurrentUser',
-					currentUserOk
-				);
-
-				cy.interceptGQL(
+			cy.interceptGQL(
+				'http://localhost/api/graphql',
+				'getCurrentUser',
+				currentUserOk
+			)
+				.interceptGQL(
 					'http://localhost/api/graphql',
 					'getThreads',
 					getThreadsOk
-				);
-
-				cy.interceptGQL(
+				)
+				.interceptGQL(
 					'http://localhost/api/graphql',
 					'getMessages',
 					getMessagesOk
 				);
-			}
-
 			runTest(url);
 		});
 	});

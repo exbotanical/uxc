@@ -1,21 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import currentUserOk from '../fixtures/getCurrentUser/ok.json';
-import getThreadsOk from '../fixtures/getThreads/ok.json';
+import currentUserOk from '@/fixtures/getCurrentUser/ok.json';
+import getThreadsOk from '@/fixtures/getThreads/ok.json';
 
 describe('landing / dashboard experience', () => {
 	beforeEach(() => {
-		Cypress.config('interceptions', {});
+		Cypress.config('interceptions' as keyof Cypress.TestConfigOverrides, {});
 
 		cy.interceptGQL(
 			'http://localhost/api/graphql',
 			'getCurrentUser',
 			currentUserOk
-		);
+		)
 
-		cy.interceptGQL('http://localhost/api/graphql', 'getThreads', getThreadsOk);
+			.interceptGQL('http://localhost/api/graphql', 'getThreads', getThreadsOk)
 
-		cy.visit('/');
+			.visit('/');
 	});
+
+	// fasting
 
 	it('loads the users threads in the sidebar', () => {
 		cy.url().should('eq', 'http://localhost:3000/');
@@ -37,14 +39,18 @@ describe('landing / dashboard experience', () => {
 		cy.getByTestId('dm-btn').focus();
 
 		for (const { _id } of threads) {
-			cy.get('body').type('{downarrow}');
+			cy.get('body')
+				.type('{downarrow}')
 
-			cy.focused().should('have.attr', 'data-testid', `thread-${_id}`);
+				.focused()
+				.should('have.attr', 'data-testid', `thread-${_id}`);
 		}
 
 		for (const { _id } of threads.slice().reverse()) {
-			cy.focused().should('have.attr', 'data-testid', `thread-${_id}`);
-			cy.get('body').type('{uparrow}');
+			cy.focused()
+				.should('have.attr', 'data-testid', `thread-${_id}`)
+				.get('body')
+				.type('{uparrow}');
 		}
 	});
 
@@ -60,11 +66,15 @@ describe('landing / dashboard experience', () => {
 			cy.get('body').type('{downarrow}');
 		}
 
-		cy.get('body').type('{downarrow}');
-		cy.get('body').type('{downarrow}');
-		cy.get('body').type('{downarrow}');
+		cy.get('body')
+			.type('{downarrow}')
+			.get('body')
+			.type('{downarrow}')
+			.get('body')
+			.type('{downarrow}')
 
-		cy.focused().should('have.attr', 'data-testid', `thread-${last._id}`);
+			.focused()
+			.should('have.attr', 'data-testid', `thread-${last._id}`);
 	});
 
 	it('stops at the first thread regardless of up arrow keypresses after the focus thereof', () => {
@@ -83,10 +93,14 @@ describe('landing / dashboard experience', () => {
 			cy.get('body').type('{uparrow}');
 		}
 
-		cy.get('body').type('{uparrow}');
-		cy.get('body').type('{uparrow}');
-		cy.get('body').type('{uparrow}');
-		cy.focused().should('have.attr', 'data-testid', `thread-${first._id}`);
+		cy.get('body')
+			.type('{uparrow}')
+			.get('body')
+			.type('{uparrow}')
+			.get('body')
+			.type('{uparrow}')
+			.focused()
+			.should('have.attr', 'data-testid', `thread-${first._id}`);
 	});
 
 	it('defaults to the friends page', () => {
@@ -100,8 +114,10 @@ describe('landing / dashboard experience', () => {
 		cy.getByTestId('dm-btn').focus();
 
 		for (const { _id } of threads) {
-			cy.getByTestId(`thread-${_id}`).click();
-			cy.url().should('eq', `http://localhost:3000/${_id}`);
+			cy.getByTestId(`thread-${_id}`)
+				.click()
+				.url()
+				.should('eq', `http://localhost:3000/${_id}`);
 		}
 	});
 });
