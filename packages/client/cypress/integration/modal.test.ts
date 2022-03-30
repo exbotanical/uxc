@@ -1,8 +1,8 @@
 import currentUserOk from '@/fixtures/getCurrentUser/ok.json';
 import getThreadsOk from '@/fixtures/getThreads/ok.json';
+import { overlayTestId } from '@/utils';
 
-const overlayTestId = 'modal-overlay';
-
+// @todo pull this into its own isolated unit test
 describe('modal accessibility and functionality', () => {
 	beforeEach(() => {
 		Cypress.config('interceptions' as keyof Cypress.TestConfigOverrides, {});
@@ -19,12 +19,12 @@ describe('modal accessibility and functionality', () => {
 	});
 
 	it('traps focus inside the modal, cycling all tab-able elements', () => {
-		cy.getByTestId('uxc-search-btn').click();
+		cy.getByTestId('search-btn').click();
 
 		const orderedFocusIds = [
-			'uxc-search-input',
-			'uxc-search-clear-input-btn',
-			'uxc-search-esc-btn'
+			'search-input',
+			'search-clear-input-btn',
+			'search-esc-btn'
 		];
 
 		let counter = 0;
@@ -57,7 +57,7 @@ describe('modal accessibility and functionality', () => {
 	it('closes the modal when the user presses the escape key', () => {
 		cy.getByTestId(overlayTestId)
 			.should('not.exist')
-			.getByTestId('uxc-search-btn')
+			.getByTestId('search-btn')
 			.click()
 
 			.getByTestId(overlayTestId)
@@ -72,13 +72,13 @@ describe('modal accessibility and functionality', () => {
 	it('closes the modal when the user clicks the close button', () => {
 		cy.getByTestId(overlayTestId)
 			.should('not.exist')
-			.getByTestId('uxc-search-btn')
+			.getByTestId('search-btn')
 			.click()
 
 			.getByTestId(overlayTestId)
 			.should('exist')
 
-			.getByTestId('uxc-search-esc-btn')
+			.getByTestId('search-esc-btn')
 			.click()
 			.getByTestId(overlayTestId)
 			.should('not.exist');
@@ -87,7 +87,7 @@ describe('modal accessibility and functionality', () => {
 	it('closes the modal when the user clicks outside the modal', () => {
 		cy.getByTestId(overlayTestId)
 			.should('not.exist')
-			.getByTestId('uxc-search-btn')
+			.getByTestId('search-btn')
 			.click()
 
 			.getByTestId(overlayTestId)

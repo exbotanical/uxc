@@ -21,18 +21,22 @@ export function SearchForm() {
 		setQuery('');
 	}
 
+	function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+		e.preventDefault();
+	}
+
 	return (
-		<S.Form>
+		<S.Form onSubmit={handleSubmit}>
 			<S.SearchLabel>
 				<SvgIcon name="search" size={18} />
 			</S.SearchLabel>
 			<S.SearchInput
-				data-testid="uxc-search-input"
+				data-testid="search-input"
 				onChange={handleChange}
 				value={query}
 			/>
 			<button
-				data-testid="uxc-search-clear-input-btn"
+				data-testid="search-clear-input-btn"
 				onClick={handleClick}
 				title="Clear search text"
 				type="button"

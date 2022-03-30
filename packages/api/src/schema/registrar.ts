@@ -107,8 +107,8 @@ export const resolvers: Resolvers = {
 	},
 
 	Mutation: {
-		seed: authGuard(seed),
-		purge: authGuard(purge),
+		seed,
+		purge,
 		signout,
 		signin,
 		join,

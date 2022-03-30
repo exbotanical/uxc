@@ -3,24 +3,13 @@ import styled from 'styled-components';
 
 import { FontSizeBase, FontSizeXs } from '@/styles/Typography/FontSize';
 
-export const ListItem = styled.li.attrs<{ isActiveRecord: boolean }>(
-	({ isActiveRecord }) => ({
+export const ListItem = styled.li.attrs<{ isFocused: boolean }>(
+	({ isFocused }) => ({
 		'role': 'option',
-		'aria-selected': isActiveRecord
+		'aria-selected': isFocused
 	})
-)<{ isActiveRecord: boolean }>`
-	position: 'relative';
-	background-color: ${({ theme, isActiveRecord }) =>
-		isActiveRecord && theme.colors.background.hover};
-	color: ${({ theme, isActiveRecord }) =>
-		isActiveRecord ? theme.colors.accent.norm : theme.colors.font.strong};
-	cursor: pointer;
-
-	transition: color 0.3s, background-color 0.4s;
-
-	&:hover {
-		background-color: ${({ theme }) => theme.colors.background.hover};
-	}
+)<{ isFocused: boolean }>`
+	outline: none;
 `;
 
 export const StyledHashLink = styled(HashLink)`
@@ -29,9 +18,17 @@ export const StyledHashLink = styled(HashLink)`
 	padding: 1.25rem;
 	border-color: ${({ theme }) => theme.colors.border.weak};
 	text-decoration: none !important;
+	transition: color 0.3s, background-color 0.4s;
+	position: relative;
+	cursor: pointer;
 
 	&:focus-visible {
 		outline: 1px solid white;
+	}
+
+	${ListItem}:hover &,
+	${ListItem}:focus & {
+		background-color: ${({ theme }) => theme.colors.background.hover};
 	}
 `;
 

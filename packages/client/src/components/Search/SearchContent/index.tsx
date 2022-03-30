@@ -11,9 +11,9 @@ export function SearchContent() {
 	const { favorites, history, results, query } = useContext(SearchContext);
 
 	function History() {
-  return history.length ? (
+		return history.length ? (
 			<section>
-				<S.SearchSource>Recent</S.SearchSource>
+				<S.SearchSource data-testid="search-content-src">Recent</S.SearchSource>
 
 				<S.SearchHistoryHitList>
 					{history.map((record) => {
@@ -22,14 +22,18 @@ export function SearchContent() {
 				</S.SearchHistoryHitList>
 			</section>
 		) : (
-			<S.NoContent>No recent searches</S.NoContent>
-		)
-}
+			<S.NoContent data-testid="search-content-src">
+				No recent searches
+			</S.NoContent>
+		);
+	}
 
 	function Favorites() {
-  return favorites.length ? (
+		return favorites.length ? (
 			<section>
-				<S.SearchSource>Favorites</S.SearchSource>
+				<S.SearchSource data-testid="search-content-src">
+					Favorites
+				</S.SearchSource>
 
 				<S.SearchHistoryHitList>
 					{favorites.map((record) => {
@@ -39,19 +43,25 @@ export function SearchContent() {
 					})}
 				</S.SearchHistoryHitList>
 			</section>
-		) : null
-}
+		) : null;
+	}
 
 	if (query) {
 		if (!results.threads.length && !results.messages.length) {
-			return <S.NoContent>No results for &quot;{query}&quot;</S.NoContent>;
+			return (
+				<S.NoContent data-testid="search-content-src">
+					No results for &quot;{query}&quot;
+				</S.NoContent>
+			);
 		}
 
 		return (
 			<div ref={ref}>
 				{results.threads.length ? (
 					<S.SearchHitSection>
-						<S.SearchSource>Chat Threads</S.SearchSource>
+						<S.SearchSource data-testid="search-content-src">
+							Chat Threads
+						</S.SearchSource>
 
 						<S.SearchHitList>
 							{results.threads.map((record) => {
@@ -60,9 +70,12 @@ export function SearchContent() {
 						</S.SearchHitList>
 					</S.SearchHitSection>
 				) : null}
+
 				{results.messages.length ? (
 					<S.SearchHitSection>
-						<S.SearchSource>Messages</S.SearchSource>
+						<S.SearchSource data-testid="search-content-src">
+							Messages
+						</S.SearchSource>
 
 						<S.SearchHitList>
 							{results.messages.map((record) => {

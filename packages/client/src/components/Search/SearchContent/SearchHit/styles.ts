@@ -3,12 +3,14 @@ import styled from 'styled-components';
 
 import { FontSizeBase } from '@/styles/Typography/FontSize';
 
-export const SearchHit = styled.li.attrs<{ isActiveRecord: boolean }>(
-	({ isActiveRecord }) => ({
+export const SearchHit = styled.li.attrs<{ isFocused: boolean }>(
+	({ isFocused }) => ({
 		'role': 'option',
-		'aria-selected': isActiveRecord ? 'true' : 'false'
+		'aria-selected': isFocused
 	})
-)<{ isActiveRecord: boolean }>``;
+)<{ isFocused: boolean }>`
+	outline: none;
+`;
 
 export const StyledHashLink = styled(HashLink)`
 	position: relative;
@@ -29,7 +31,7 @@ export const StyledHashLink = styled(HashLink)`
 	}
 
 	${SearchHit}:hover &,
-	${SearchHit}[aria-selected='true'] & {
+	${SearchHit}:focus & {
 		background-color: ${({ theme }) => theme.colors.link.norm};
 	}
 `;
@@ -44,14 +46,10 @@ export const SearchHitIcon = styled.div`
 	background-color: ${({ theme }) => theme.colors.background.hover};
 	border-radius: 0.375rem;
 
-	${SearchHit}:hover & {
+	${SearchHit}:hover &,
+	${SearchHit}:focus & {
+		background-color: inherit;
 		border: 0.125px solid rgba(255, 255, 255, 0.25);
-		background-color: ${({ theme }) => theme.colors.link.norm};
-	}
-
-	${SearchHit}[aria-selected=true] & {
-		border: 0.125px solid rgba(255, 255, 255, 0.25);
-		background-color: ${({ theme }) => theme.colors.link.norm};
 	}
 `;
 

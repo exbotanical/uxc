@@ -31,6 +31,7 @@ export const ModalContent = styled.div`
 	overflow: auto;
 	flex: 1 1 auto;
 	padding-bottom: 1.5rem;
+	scroll-behavior: smooth;
 `;
 
 export const Footer = styled.footer`

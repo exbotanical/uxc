@@ -91,7 +91,7 @@ export function useSearch() {
 			(acc, record) => {
 				if (record.__typename === 'MessageResult') {
 					acc.messages.push({
-						category: 'message' as const,
+						category: 'message',
 						content: `Message by ${(record.sender as User).username}`,
 						label: record.body.replace(
 							messageMatcher,
@@ -102,7 +102,7 @@ export function useSearch() {
 					});
 				} else {
 					acc.threads.push({
-						category: 'thread' as const,
+						category: 'thread',
 						content: 'Chat Thread',
 						label: record.users.find(
 							({ _id }) => _id !== currentUser?.getCurrentUser._id

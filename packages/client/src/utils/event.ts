@@ -16,17 +16,16 @@ export function handleChange(fn: (v: string) => void) {
 	};
 }
 
-export function onEnterKeyPressed(fn: () => void) {
+export function onEnterKeyPressed(fn: <T>(e: KeyboardEvent<T>) => void) {
 	return function <T>(e: KeyboardEvent<T>) {
 		if (e.key == 'Enter') {
-			e.preventDefault();
-			fn();
+			fn(e);
 		}
 	};
 }
 
-export function mitigateClickBubble(fn: () => void) {
-	return (e: React.MouseEvent<HTMLButtonElement>) => {
+export function mitigateClickBubble<T>(fn: () => void) {
+	return (e: React.MouseEvent<HTMLButtonElement> | KeyboardEvent<T>) => {
 		e.stopPropagation();
 		e.preventDefault();
 

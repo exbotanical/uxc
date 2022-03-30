@@ -44,7 +44,7 @@ describe('thread chatroom functionality', () => {
 		cy.get('body')
 			.realPress('Tab')
 			.focused()
-			.should('have.attr', 'data-testid', 'uxc-search-btn')
+			.should('have.attr', 'data-testid', 'search-btn')
 
 			.get('body')
 			.realPress('Tab')

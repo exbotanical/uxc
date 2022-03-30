@@ -27,19 +27,24 @@ export function SearchProvider({ children }: { children: JSX.Element }) {
 		[search, activeRecordId, setActiveRecordId, isOpen, setIsOpen]
 	);
 
-	let current = -1;
 	useEffect(() => {
 		if (!isOpen) {
 			return;
 		}
 
-		const els = document.querySelectorAll(`[id^='search-hit']`);
+		const els = document.querySelectorAll<HTMLElement>(`[id^='search-h']`);
 
 		if (!els.length) {
 			return;
 		}
 
 		function handleKeyDown(e: KeyboardEvent) {
+			// find the currently focused element and start from there
+			// note: we compare ids because the element's referential eq may have changed
+			let current = Array.from(els).findIndex(
+				(el) => el.id === document.activeElement?.id
+			);
+
 			if (e.key == 'ArrowDown') {
 				if (current === -1) {
 					current = 0;
@@ -56,7 +61,9 @@ export function SearchProvider({ children }: { children: JSX.Element }) {
 				return;
 			}
 
-			setActiveRecordId(els[current].id);
+			// @todo find a means whereby we don't need to do this
+			document.getElementById(els[current].id)?.focus();
+			e.preventDefault();
 		}
 
 		window.addEventListener('keydown', handleKeyDown);

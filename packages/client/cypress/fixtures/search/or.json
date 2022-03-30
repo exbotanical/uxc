@@ -1,0 +1,24 @@
+{
+	"data": {
+			"search": [
+					{
+							"__typename": "PrivateThread",
+							"_id": "622a1412cbc9a5e523cd0a7b",
+							"users": [
+									{
+											"_id": "62286019001e6e232d9e0d69",
+											"username": "cy_user",
+											"email": "user@cypress.com",
+											"userImage": "none"
+									},
+									{
+											"_id": "624276b54ac0cc47043d2552",
+											"username": "Elnora_Nienow",
+											"userImage": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/266.jpg",
+											"email": "Eulah_Orn55@yahoo.com"
+									}
+							]
+					}
+			]
+	}
+}

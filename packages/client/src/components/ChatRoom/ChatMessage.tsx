@@ -200,8 +200,10 @@ export function ChatMessage({
 		}
 	}, [editMode, body, focusEndOfTextarea]);
 
+	const id = `message-${_id}`;
+
 	return (
-		<Container id={`message-${_id}`}>
+		<Container id={id} data-testid={id}>
 			{sansMeta ? (
 				<BodyContainerSansMeta {...isSenderActions}>
 					{editMode ? (

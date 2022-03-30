@@ -27,7 +27,7 @@ export function SearchModal() {
 					<SearchForm />
 
 					<S.CloseButton
-						data-testid="uxc-search-esc-btn"
+						data-testid="search-esc-btn"
 						onClick={closeSearch}
 						title="Close search"
 					>

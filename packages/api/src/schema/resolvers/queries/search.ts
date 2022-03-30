@@ -73,14 +73,24 @@ export const search: Resolver<
 		users: { $in: [{ _id: userId }] }
 	})
 		.populate('users')
-		.limit(10)
 		.then((records) =>
-			records.filter(
-				(record) =>
-					record.users.filter((user) =>
-						user.username.toLowerCase().includes(query.toLowerCase())
-					).length
-			)
+			records
+				.filter(({ users }) => {
+					let count = 0;
+
+					users.forEach(({ _id, username }) => {
+						// always increment for the current user; else, only increment if our query matches
+						if (
+							_id === userId ||
+							username.toLowerCase().includes(query.toLowerCase())
+						) {
+							++count;
+						}
+					});
+					// both conds must have matched
+					return count === 2;
+				})
+				.slice(0, 11)
 		);
 
 	const tasks = [messageTask, threadTask];

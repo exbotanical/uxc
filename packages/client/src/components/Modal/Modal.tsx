@@ -76,14 +76,13 @@ export function Modal({ onModalClose, modalRef, children }: ModalProps) {
 		// @todo hoist this up
 		const focusableModalElements = Array.from(
 			modalRef.current?.querySelectorAll<HTMLElement>(
-				'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], input[type="search"], select'
+				'li, button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], input[type="search"], select'
 			) || []
 		);
 
 		if (!focusableModalElements.length) {
 			return;
 		}
-
 		const currentActive = document.activeElement;
 		const currentIdx = focusableModalElements.findIndex(
 			(el) => el === currentActive
@@ -116,6 +115,7 @@ export function Modal({ onModalClose, modalRef, children }: ModalProps) {
 		if (!focusableModalElements) {
 			return;
 		}
+
 		const firstElement = focusableModalElements[0];
 
 		firstElement.focus();

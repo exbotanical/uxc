@@ -1,0 +1,20 @@
+{
+	"data": {
+			"search": [
+					{
+							"__typename": "MessageResult",
+							"_id": "624276b64ac0cc47043d36b3",
+							"body": "Crafting Te St.Pant Library is a thing to be.",
+							"threadId": {
+									"_id": "624276b54ac0cc47043d2569"
+							},
+							"sender": {
+									"_id": "624276b54ac0cc47043d2552",
+									"email": "Eulah_Orn55@yahoo.com",
+									"userImage": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/266.jpg",
+									"username": "Elnora_Nienow"
+							}
+					}
+			]
+	}
+}
