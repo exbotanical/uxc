@@ -43,7 +43,7 @@ type Subscription {
 }
 
 type Mutation {
-  removeFriend(friendId: ID): Boolean
+  removeFriend(friendId: ID): ID
   createFriendRequest(recipientId: ID): ID
   updateFriendRequest(requestId: ID, status: FriendRequestStatus): ID
 }

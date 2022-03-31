@@ -66,7 +66,7 @@ export type Mutation = {
   deleteThread?: Maybe<Scalars['ID']>;
   join?: Maybe<User>;
   purge?: Maybe<Scalars['Boolean']>;
-  removeFriend?: Maybe<Scalars['Boolean']>;
+  removeFriend?: Maybe<Scalars['ID']>;
   seed?: Maybe<SeedReturnValue>;
   signin?: Maybe<User>;
   signout?: Maybe<Scalars['ID']>;
@@ -401,7 +401,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   deleteThread?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType, Partial<MutationDeleteThreadArgs>>;
   join?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<MutationJoinArgs>>;
   purge?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  removeFriend?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, Partial<MutationRemoveFriendArgs>>;
+  removeFriend?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType, Partial<MutationRemoveFriendArgs>>;
   seed?: Resolver<Maybe<ResolversTypes['SeedReturnValue']>, ParentType, ContextType>;
   signin?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<MutationSigninArgs>>;
   signout?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
