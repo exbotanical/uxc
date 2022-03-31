@@ -1,11 +1,12 @@
 import currentUserOk from '@/fixtures/getCurrentUser/ok.json';
 import getMessagesOk from '@/fixtures/getMessages/ok1.json';
 import getThreadsOk from '@/fixtures/getThreads/ok.json';
+import searchFriends from '@/fixtures/searchFriends/all-both.json';
 
 import type { Rule } from 'axe-core';
 
 const unauthenticatedTestUrls = ['/signin', '/join'];
-const authenticatedTestUrls = ['/', '/friends', '/622a1412cbc9a5e523cd0a7b'];
+const authenticatedTestUrls = ['/', '/622a1412cbc9a5e523cd0a7b'];
 
 const disabledRules: Rule[] = [
 	/*
@@ -73,7 +74,13 @@ describe('accessibility', () => {
 					'http://localhost/api/graphql',
 					'getMessages',
 					getMessagesOk
+				)
+				.interceptGQL(
+					'http://localhost/api/graphql',
+					'searchFriends',
+					searchFriends
 				);
+
 			runTest(url);
 		});
 	});

@@ -22,7 +22,7 @@ export function Friend({ user }: FriendProps) {
 	}
 
 	return (
-		<S.ListItem key={user._id}>
+		<S.ListItem key={user._id} data-testid={`friend-hit-${user._id}`}>
 			<UserAvatar size="xl" u={user} />
 
 			<S.Username>{user.username}</S.Username>

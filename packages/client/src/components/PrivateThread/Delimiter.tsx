@@ -30,7 +30,12 @@ export const Delimiter = forwardRef<HTMLButtonElement, DelimiterProps>(
 		return (
 			<Container>
 				<Label>{title}</Label>
-				<button data-testid="dm-btn" ref={ref} type="button">
+				<button
+					data-testid="dm-btn"
+					ref={ref}
+					type="button"
+					title="Create direct message"
+				>
 					<SvgIcon name="plus" size={24} />
 				</button>
 			</Container>

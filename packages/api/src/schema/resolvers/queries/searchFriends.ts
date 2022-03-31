@@ -52,7 +52,8 @@ export const searchFriends: Resolver<
 
 	if (type === 'SENT' || type === 'BOTH') {
 		const sent = await FriendRequest.findFriendRequestsSent(userId);
-
+		const r = await FriendRequest.find({});
+		console.log({ r });
 		ret.sent.push(
 			...(query
 				? sent.filter((request) =>

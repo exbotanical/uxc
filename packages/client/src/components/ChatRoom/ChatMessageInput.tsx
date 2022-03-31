@@ -21,12 +21,15 @@ const Form = styled.form`
 export function ChatMessageInput({ sendMessage, name }: ChatMessageInputProps) {
 	const [message, setMessage] = useState('');
 
-	const chatOptions = [
-		{
-			handleClick: console.log,
-			iconName: 'smiley'
-		}
-	];
+	const chatOptions = {
+		options: [
+			{
+				handleClick: console.log,
+				iconName: 'smiley',
+				title: 'Search emoji'
+			}
+		]
+	};
 
 	function handleSubmit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
@@ -49,9 +52,9 @@ export function ChatMessageInput({ sendMessage, name }: ChatMessageInputProps) {
 				label="Send message"
 				maxLength={512}
 				onChange={handleChange}
-				options={chatOptions}
 				placeholder={`Send a message to ${name}`}
 				value={message}
+				{...chatOptions}
 			/>
 		</Form>
 	);

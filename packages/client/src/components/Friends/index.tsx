@@ -11,7 +11,7 @@ import { RecvPendingFriend } from '@/components/Friends/Friend/RecvPendingFriend
 import { SentPendingFriend } from '@/components/Friends/Friend/SentPendingFriend';
 
 export function Friends() {
-	const { query, setQuery, results } = useContext(FriendsContext);
+	const { query, setQuery, results, viewMode } = useContext(FriendsContext);
 
 	const searchOptions = [
 		{
@@ -26,11 +26,15 @@ export function Friends() {
 	};
 
 	return (
-		<S.Container>
+		<S.Container
+			id={`${viewMode}-panel`}
+			aria-labelledby={`${viewMode}-tab`}
+			role="tabpanel"
+		>
 			<S.Form>
 				<Input
 					autoComplete="off"
-					data-testid="search-friends"
+					data-testid="filter-friends"
 					label="Search friends"
 					maxLength={512}
 					onChange={handleChange}

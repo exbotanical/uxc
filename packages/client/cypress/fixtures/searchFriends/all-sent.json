@@ -1,0 +1,76 @@
+{
+	"data": {
+			"searchFriends": {
+					"friends": [
+							{
+									"_id": "624276b54ac0cc47043d2552",
+									"email": "Eulah_Orn55@yahoo.com",
+									"username": "Elnora_Nienow",
+									"userImage": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/266.jpg"
+							},
+							{
+									"_id": "624276b54ac0cc47043d2553",
+									"email": "Erica.Dooley@yahoo.com",
+									"username": "Maximillian38",
+									"userImage": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1013.jpg"
+							},
+							{
+									"_id": "624276b54ac0cc47043d2554",
+									"email": "Garnett_Becker50@yahoo.com",
+									"username": "Wendy_Emmerich",
+									"userImage": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1153.jpg"
+							},
+							{
+									"_id": "624276b54ac0cc47043d2555",
+									"email": "Jerad.Cruickshank80@yahoo.com",
+									"username": "Palma_Bernier19",
+									"userImage": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/741.jpg"
+							},
+							{
+									"_id": "624276b54ac0cc47043d2556",
+									"email": "Bailey53@yahoo.com",
+									"username": "Ahmad_Jenkins60",
+									"userImage": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1183.jpg"
+							},
+							{
+									"_id": "624276b54ac0cc47043d2557",
+									"email": "Javon_Douglas@hotmail.com",
+									"username": "Rick_Greenfelder87",
+									"userImage": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/830.jpg"
+							},
+							{
+									"_id": "624276b54ac0cc47043d2558",
+									"email": "Jeramie_Murphy62@hotmail.com",
+									"username": "Erin.Beahan40",
+									"userImage": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/813.jpg"
+							},
+							{
+									"_id": "624276b54ac0cc47043d2559",
+									"email": "Letha74@gmail.com",
+									"username": "Weston_Spinka",
+									"userImage": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1219.jpg"
+							},
+							{
+									"_id": "624276b54ac0cc47043d255a",
+									"email": "Jazmin_Nolan@yahoo.com",
+									"username": "Leonie_Hagenes79",
+									"userImage": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/310.jpg"
+							},
+							{
+									"_id": "624276b54ac0cc47043d255b",
+									"email": "Mitchel_Gorczany88@yahoo.com",
+									"username": "Winifred.Koss36",
+									"userImage": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/710.jpg"
+							},
+							{
+									"_id": "624276b54ac0cc47043d255c",
+									"email": "Adolf.Bergstrom@gmail.com",
+									"username": "Alden_Keebler29",
+									"userImage": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/168.jpg"
+							}
+					],
+					"sent": [],
+					"received": []
+			}
+	}
+}

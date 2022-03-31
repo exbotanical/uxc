@@ -65,10 +65,10 @@ export async function seed({
 
 		// send friend requests to the test user
 		const [recvFriendRequestTasks] = partition(
-			moreUserIds.slice(0, 5).map((id) =>
+			moreUserIds.slice(0, 5).map((requester) =>
 				FriendRequest.build({
 					recipient: user._id,
-					requester: id,
+					requester,
 					status: 'PENDING'
 				})
 			)
@@ -76,10 +76,10 @@ export async function seed({
 
 		// send friend requests from the test user
 		const [sentFriendRequestTasks] = partition(
-			moreUserIds.slice(5, moreUserIds.length).map((id) =>
+			moreUserIds.slice(5, moreUserIds.length).map((recipient) =>
 				FriendRequest.build({
-					recipient: user._id,
-					requester: id,
+					recipient,
+					requester: user._id,
 					status: 'PENDING'
 				})
 			)

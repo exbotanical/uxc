@@ -76,19 +76,19 @@ export const search: Resolver<
 		.then((records) =>
 			records
 				.filter(({ users }) => {
-					let count = 0;
+					let keep = 0;
 
 					users.forEach(({ _id, username }) => {
-						// always increment for the current user; else, only increment if our query matches
+						// always increment for the current user; if other user, only increment if our query matches
 						if (
 							_id === userId ||
 							username.toLowerCase().includes(query.toLowerCase())
 						) {
-							++count;
+							keep |= 1;
 						}
 					});
-					// both conds must have matched
-					return count === 2;
+
+					return keep === 1;
 				})
 				.slice(0, 11)
 		);

@@ -60,7 +60,12 @@ export function SidebarLayout({ body }: { body: React.ReactNode }) {
 			<Footer>
 				<FooterContainer>
 					<UserStatus user={data.getCurrentUser} />
-					<button data-testid="settings-btn" id="settings-btn" type="button">
+					<button
+						data-testid="settings-btn"
+						id="settings-btn"
+						type="button"
+						title="User Settings"
+					>
 						<SvgIcon color="#979bb0" name="gear" size={22} />
 					</button>
 				</FooterContainer>

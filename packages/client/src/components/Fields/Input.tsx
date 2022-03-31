@@ -10,6 +10,7 @@ import { FontSizeXl } from '@/styles/Typography/FontSize';
 
 interface OptionConfig {
 	iconName: string;
+	title: string;
 	handleClick?: () => void;
 }
 
@@ -66,9 +67,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 				<Label>{label}</Label>
 
 				<ButtonContainer>
-					{options?.map(({ iconName, handleClick }, idx) => {
+					{options?.map(({ iconName, handleClick, title }, idx) => {
 						return handleClick ? (
-							<Button key={idx} onClick={handleClick}>
+							<Button key={idx} onClick={handleClick} title={title}>
 								<SvgIcon name={iconName} size={22} />
 							</Button>
 						) : (

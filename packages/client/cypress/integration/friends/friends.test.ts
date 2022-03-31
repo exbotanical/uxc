@@ -1,23 +1,148 @@
+import currentUserOk from '@/fixtures/getCurrentUser/ok.json';
+import getMessagesOk from '@/fixtures/getMessages/ok1.json';
+import getThreadsOk from '@/fixtures/getThreads/ok.json';
+import searchFriends from '@/fixtures/searchFriends/all-both.json';
+
+const searchFriendsPayload = searchFriends.data.searchFriends;
+const allFriends = [
+	...searchFriendsPayload.friends,
+	...searchFriendsPayload.received,
+	...searchFriendsPayload.sent
+];
+
 describe('friends workflows and filtering functionality', () => {
-	it("displays all friends with an online status in the 'All' tab", () => {});
-	it("filters all friends with an online status in the 'All' tab", () => {});
+	beforeEach(() => {
+		Cypress.config('interceptions' as keyof Cypress.TestConfigOverrides, {});
 
-	it.only("displays all friends in the 'All' tab", () => {});
-	it("filters all friends in the 'All' tab", () => {});
+		cy.interceptGQL(
+			'http://localhost/api/graphql',
+			'getCurrentUser',
+			currentUserOk
+		)
 
-	it("displays all sent and received pending friend requests in the 'Pending' tab", () => {});
-	it("filters all sent and received pending friend requests in the 'Pending' tab", () => {});
+			.interceptGQL('http://localhost/api/graphql', 'getThreads', getThreadsOk)
 
-	it("displays blocked friends and users in the 'Blocked' tab", () => {});
-	it("filters blocked friends and users in the 'Blocked' tab", () => {});
+			.interceptGQL(
+				'http://localhost/api/graphql',
+				'getMessages',
+				getMessagesOk
+			)
 
-	it('prompts the user with a confirmation dialog before removing a friend', () => {});
-	it('removes a friend when clicking the remove friend button', () => {});
+			.visit('/');
+	});
 
-	it('rejects a pending friend request when clicking the reject friend request button', () => {});
-	it('accepts a pending friend request when clicking the accept friend request button', () => {});
-	it('cancels a pending sent friend request when clicking the cancel friend request button', () => {});
+	it.skip("displays all friends with an online status in the 'All' tab", () => {});
 
-	it('directs to the corresponding chat thread - if extant - when clicking on the message friend button', () => {});
-	it('directs to a new chat thread - if one was not extant - when clicking on the message friend button', () => {});
+	it.skip("filters all friends with an online status in the 'All' tab", () => {});
+
+	it("displays all friends and friend requests in the 'All' tab", () => {
+		cy.interceptGQL(
+			'http://localhost/api/graphql',
+			'searchFriends',
+			searchFriends
+		)
+			.getByTestIdLike(`friend-hit`)
+			.as('friends')
+
+			.get(`@friends`)
+			.its('length')
+			.then(($count) => {
+				expect($count).equal(allFriends.length);
+			})
+
+			.getByTestIdLike(`friend-hit-sent`)
+			.its('length')
+			.then(($count) => {
+				expect($count).equal(5);
+			})
+
+			.getByTestIdLike(`friend-hit-recv`)
+			.its('length')
+			.then(($count) => {
+				expect($count).equal(5);
+			})
+
+			.get(`@friends`)
+			.each(($friend, idx) => {
+				cy.wrap($friend).get('h4').should('contain', allFriends[idx].username);
+			});
+	});
+
+	it("filters all friends in the 'All' tab", () => {
+		cy.interceptGQL(
+			'http://localhost/api/graphql',
+			'searchFriends',
+			searchFriends
+		)
+
+			.getByTestIdLike(`friend-hit`)
+			.as('friends')
+
+			.getByTestId('filter-friends')
+			.type('b')
+			.get(`@friends`)
+			.its('length')
+			.then(($count) => {
+				expect($count).equal(5);
+			})
+
+			.getByTestId('filter-friends')
+			.clear()
+			.type('a')
+			.getByTestIdLike(`friend-hit`)
+			.its('length')
+			.then(($count) => {
+				expect($count).equal(16);
+			})
+
+			.getByTestId('filter-friends')
+			.clear()
+			.type('ra')
+			.getByTestIdLike(`friend-hit`)
+			.its('length')
+			.then(($count) => {
+				expect($count).equal(1);
+			});
+	});
+
+	it("displays all sent and received pending friend requests in the 'Pending' tab", () => {
+		cy.interceptGQL(
+			'http://localhost/api/graphql',
+			'searchFriends',
+			searchFriends
+		)
+
+			.getByTestId('pending-tab')
+			.click()
+
+			.getByTestIdLike(`friend-hit`)
+			.its('length')
+			.then(($count) => {
+				expect($count).equal(allFriends);
+			})
+
+			.getByTestIdLike(`friend-hit-sent`)
+			.its('length')
+			.then(($count) => {
+				expect($count).equal(5);
+			})
+
+			.getByTestIdLike(`friend-hit-recv`)
+			.its('length')
+			.then(($count) => {
+				expect($count).equal(5);
+			});
+	});
+
+	it.skip("displays blocked friends and users in the 'Blocked' tab", () => {});
+
+	it.skip('prompts the user with a confirmation dialog before removing a friend', () => {});
+	it.skip('removes a friend when clicking the remove friend button', () => {});
+
+	it.skip('rejects a pending friend request when clicking the reject friend request button', () => {});
+	it.skip('accepts a pending friend request when clicking the accept friend request button', () => {});
+	it.skip('cancels a pending sent friend request when clicking the cancel friend request button', () => {});
+
+	it.skip('directs to the corresponding chat thread - if extant - when clicking on the message friend button', () => {});
+	it.skip('directs to a new chat thread - if one was not extant - when clicking on the message friend button', () => {});
 });

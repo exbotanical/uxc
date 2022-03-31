@@ -10,9 +10,7 @@ import type { FriendsViewMode } from './FriendsContext';
 
 import { FontSizeXl, FontSizeLg } from '@/styles/Typography/FontSize';
 
-const LabelContainer = styled.div.attrs({
-	role: 'tablist'
-})`
+const LabelContainer = styled.div.attrs({})`
 	display: flex;
 	height: 100%;
 	align-items: center;
@@ -36,7 +34,6 @@ const Separator = styled.div`
 `;
 
 const Tab = styled.button.attrs<{ isSelected: boolean }>(({ isSelected }) => ({
-	'role': 'tab',
 	'aria-selected': isSelected
 }))<{ isSelected: boolean }>`
 	${FontSizeLg}
@@ -97,16 +94,21 @@ export function FriendsHeader() {
 				<Separator />
 			</LabelContainer>
 
-			{friendsOpts.map(({ label, key, onClick }, idx) => (
-				<Tab
-					aria-labelledby={`${key}-tab`}
-					isSelected={isCurrentView(key)}
-					key={idx}
-					onClick={onClick.bind({ key })}
-				>
-					<p id={`${key}-tab`}>{label}</p>
-				</Tab>
-			))}
+			<div role="tablist" style={{ display: 'flex' }}>
+				{friendsOpts.map(({ label, key, onClick }, idx) => (
+					<Tab
+						isSelected={isCurrentView(key)}
+						key={idx}
+						onClick={onClick.bind({ key })}
+						data-testid={`${key}-tab`}
+						aria-controls={`${key}-panel`}
+						id={`${key}-tab`}
+						role="tab"
+					>
+						<p>{label}</p>
+					</Tab>
+				))}
+			</div>
 
 			<AddFriendButton>
 				<p>Add Friend</p>

@@ -24,9 +24,7 @@ const Container = styled.div`
 	color: ${({ theme }) => theme.colors.font.strong};
 `;
 
-const Header = styled.header.attrs({
-	role: 'tabpanel'
-})`
+const Header = styled.header`
 	display: flex;
 	width: 100%;
 	height: 65px;
@@ -89,8 +87,16 @@ const FriendsC = () => {
 
 // @todo relocate
 const ThreadC = ({ username }: { username: string }) => {
+	const location = useLocation();
+	const paths = location.pathname.split('/');
+	const threadId = paths[paths.length - 1];
+
 	return (
-		<Container>
+		<Container
+			id={`chat-${threadId}`}
+			aria-labelledby={`thread-${threadId}`}
+			role="tabpanel"
+		>
 			<Header>
 				<Item>
 					<SvgIcon name="people" size={21} />

@@ -59,6 +59,7 @@ export const PrivateThread = forwardRef<HTMLLIElement, PrivateThreadProps>(
 
 		return (
 			<PaddedListItem
+				id={`thread-${id}`}
 				data-testid={`thread-${id}`}
 				isActiveItem={isActiveItem}
 				onClick={handleClick}
@@ -66,7 +67,7 @@ export const PrivateThread = forwardRef<HTMLLIElement, PrivateThreadProps>(
 					onEnterKeyPressed(handleClick)<HTMLLIElement>(e);
 				}}
 				ref={ref}
-				role="button"
+				role="tab"
 				tabIndex={-1}
 			>
 				{isActiveItem ? <S.ActiveItemIndicator /> : null}

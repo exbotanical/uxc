@@ -46,8 +46,8 @@ export function PrivateThreadsList() {
 	const isActiveItem = paths[paths.length - 1] == '';
 	const nThreads = threads.length;
 
-	function handleClick(path = '') {
-		navigate(`/${path}`);
+	function handleClick() {
+		navigate(`/`);
 	}
 
 	useEffect(() => {
@@ -102,9 +102,7 @@ export function PrivateThreadsList() {
 				<PaddedListItem
 					data-testid="friends-btn"
 					isActiveItem={isActiveItem}
-					onClick={() => {
-						handleClick();
-					}}
+					onClick={handleClick}
 					onKeyPress={onEnterKeyPressed(handleClick)}
 					tabIndex={0}
 				>
@@ -115,7 +113,7 @@ export function PrivateThreadsList() {
 
 			<Delimiter ref={dmRef} title="Direct Messages" />
 
-			<ThreadsListContainer>
+			<ThreadsListContainer role="tablist" tabIndex={0}>
 				{threads.map(({ _id: id }, idx) => (
 					<PrivateThread
 						id={id}
