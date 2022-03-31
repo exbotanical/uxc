@@ -106,6 +106,6 @@ describe(`${testSubject} workflow`, () => {
 			})
 			.expect(200);
 
-		expect(body3.data.removeFriend).toBe(true);
+		expect(body3.data.removeFriend).toBe(friend._id);
 	});
 });

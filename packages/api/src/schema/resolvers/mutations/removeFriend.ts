@@ -8,7 +8,7 @@ import type { ObjectID } from '@uxc/common/node';
 import { Friend } from '@/db';
 import { UserInputError } from '@/services/error';
 
-export const removeFriend: Resolver<boolean, { friendId: ObjectID }> = async (
+export const removeFriend: Resolver<ObjectID, { friendId: ObjectID }> = async (
 	_,
 	{ friendId },
 	{ req }
@@ -53,5 +53,5 @@ export const removeFriend: Resolver<boolean, { friendId: ObjectID }> = async (
 		]
 	});
 
-	return !!deletedFriend?._id;
+	return deletedFriend?._id ?? null;
 };

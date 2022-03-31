@@ -1,12 +1,12 @@
+import testMessages from '@@/fixtures/messages.json';
 import { faker } from '@faker-js/faker';
 
-import testMessages from '@@/fixtures/messages.json';
+import { PartitionedTasks, Taskable } from './types';
 
+import type { ReturnDocument } from '@/db';
 import type { ObjectID, User as UserType } from '@uxc/common/node';
 
 import { User, Message } from '@/db';
-import type { ReturnDocument } from '@/db';
-import { PartitionedTasks, Taskable } from './types';
 
 export function createTestMessages(threadId: ObjectID, userId: ObjectID) {
 	return testMessages.map(async (body) =>
@@ -70,8 +70,8 @@ export async function createUsers() {
 		users
 	) as unknown as PartitionedTasks;
 
-	const finalUsers = await Promise.all(userTasks);
-	const [_, ...userIds] = allUserIds;
+	const finalUsers = await Promise.all<{ _doc: UserType }>(userTasks);
+	const userIds = allUserIds.slice(1);
 	const [testUser, ...otherUsers] = finalUsers.map((u, idx) => ({
 		...u._doc,
 		password: userPasswords[idx]

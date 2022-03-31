@@ -10,16 +10,15 @@ import { PrivateThread } from '@/db';
 
 /**
  * @todo Paginate.
+ * @todo Test; assert only friend threads by default.
  */
-export const getThreads: Resolver<PrivateThreadType[], { userId: ObjectID }> = (
-	_,
-	{ userId }
-) => {
-	if (!userId) {
-		throw new UserInputError('todo');
-	}
+export const getThreads: Resolver<PrivateThreadType[], { userId: ObjectID }> =
+	async (_, { userId }) => {
+		if (!userId) {
+			throw new UserInputError('todo');
+		}
 
-	const privateThreads = PrivateThread.findUserThreads(userId);
+		const privateThreads = await PrivateThread.findUserThreads(userId);
 
-	return privateThreads;
-};
+		return privateThreads;
+	};

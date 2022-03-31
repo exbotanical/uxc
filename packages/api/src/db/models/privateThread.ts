@@ -1,17 +1,18 @@
 import { ObjectID, PrivateThread as PrivateThreadType } from '@uxc/common/node';
 import { Schema, model } from 'mongoose';
 
-import type { AsRawDocument, AsBuildArgs, AsReturnDocument } from '../types';
+import { Friend } from './friend';
+
+import type { AsRawDocument, AsReturnDocument } from '../types';
 import type { Model, Query } from 'mongoose';
 
 type RawDocument = AsRawDocument<PrivateThreadType>;
 type ReturnDocument = AsReturnDocument<PrivateThreadType>;
-type NewPrivateThreadArgs = AsBuildArgs<PrivateThreadType>;
 type PrivateThreadQuery = Query<PrivateThreadType, any>;
 
 interface PrivateThreadModel extends Model<PrivateThreadType> {
-	build(attrs: NewPrivateThreadArgs): ReturnDocument;
-	findUserThreads(userId: ObjectID): PrivateThreadType[];
+	build(attrs: { users: [ObjectID, ObjectID] }): ReturnDocument;
+	findUserThreads(userId: ObjectID): Promise<PrivateThreadType[]>;
 }
 
 const PrivateThreadSchema = new Schema<PrivateThreadType>(
@@ -36,12 +37,21 @@ const PrivateThreadSchema = new Schema<PrivateThreadType>(
 
 PrivateThreadSchema.index({ '$**': 'text' });
 
-PrivateThreadSchema.statics.findUserThreads = function findUserThreads(
+PrivateThreadSchema.statics.findUserThreads = async function findUserThreads(
 	userId: ObjectID
 ) {
+	const friends = await Friend.findFriends(userId);
+
 	return (
 		this.find({
-			users: { $in: [{ _id: userId }] }
+			$and: [
+				{
+					users: { $in: [{ _id: userId }] }
+				},
+				{
+					users: { $in: friends }
+				}
+			]
 		}) as PrivateThreadQuery
 	).populate('users');
 };

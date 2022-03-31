@@ -1,8 +1,6 @@
-import type { Context } from '@uxc/common/node';
-
 import { seed } from './handler';
 
-export async function seedResolver(_: any, __: any, { req }: Context) {
+export async function seedResolver() {
 	const { user, users, threadIds } = await seed();
 
 	return {

@@ -111,7 +111,7 @@ describe(`${testSubject} workflow`, () => {
 		expect(received[0]._id.toString()).toStrictEqual(user._id.toString());
 	});
 
-	it.only('retrieves all friends when provided no query', async () => {
+	it('retrieves all friends when provided no query', async () => {
 		const { user } = await seed();
 
 		const response = await signin(user);

@@ -2,8 +2,9 @@ import { SIGNOUT_MUTATION } from '@@/fixtures';
 import { join } from '@@/utils';
 import request from 'supertest';
 
-import { app } from '@/app';
 import { seed } from '../computed';
+
+import { app } from '@/app';
 
 describe('signout workflow', () => {
 	it('clears the cookie after logging out', async () => {

@@ -1,7 +1,5 @@
 import { Document } from 'mongoose';
 
-import { PrivateThread, Friend, FriendRequest } from '@/db';
-import { SeedModes } from './types';
 import {
 	createMessage,
 	createTestMessages,
@@ -9,6 +7,9 @@ import {
 	createUsers,
 	partition
 } from './op';
+import { SeedModes } from './types';
+
+import { PrivateThread, Friend, FriendRequest } from '@/db';
 
 export async function seed({
 	mode
