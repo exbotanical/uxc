@@ -41,13 +41,13 @@ export function SearchHit({ record }: SearchHitProps) {
 			data-testid={id}
 			id={id}
 			isFocused={isFocused}
+			onBlur={handleBlur}
 			onClick={handleClick}
+			onFocus={handleFocus}
 			onKeyPress={onEnterKeyPressed(handleKeypress)}
 			tabIndex={-1}
-			onFocus={handleFocus}
-			onBlur={handleBlur}
 		>
-			<S.StyledHashLink smooth to={record.link} ref={ref}>
+			<S.StyledHashLink ref={ref} smooth to={record.link}>
 				<S.SearchHitContainer>
 					<S.SearchHitIcon>
 						<SvgIcon name="hash" size={12} />

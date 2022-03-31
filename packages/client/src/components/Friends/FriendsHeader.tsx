@@ -97,12 +97,12 @@ export function FriendsHeader() {
 			<div role="tablist" style={{ display: 'flex' }}>
 				{friendsOpts.map(({ label, key, onClick }, idx) => (
 					<Tab
+						aria-controls={`${key}-panel`}
+						data-testid={`${key}-tab`}
+						id={`${key}-tab`}
 						isSelected={isCurrentView(key)}
 						key={idx}
 						onClick={onClick.bind({ key })}
-						data-testid={`${key}-tab`}
-						aria-controls={`${key}-panel`}
-						id={`${key}-tab`}
 						role="tab"
 					>
 						<p>{label}</p>

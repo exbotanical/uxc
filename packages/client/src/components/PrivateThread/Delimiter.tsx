@@ -33,8 +33,8 @@ export const Delimiter = forwardRef<HTMLButtonElement, DelimiterProps>(
 				<button
 					data-testid="dm-btn"
 					ref={ref}
-					type="button"
 					title="Create direct message"
+					type="button"
 				>
 					<SvgIcon name="plus" size={24} />
 				</button>

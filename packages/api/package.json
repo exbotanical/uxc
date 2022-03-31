@@ -6,10 +6,12 @@
   "author": "Matthew Zito <matthewtzito@gmail.com> (goldmund)",
   "main": "src/index.ts",
   "scripts": {
-    "check": "pnpm lint",
+    "check": "pnpm lint && pnpm format",
+    "check:ci": "pnpm lint:ci",
     "dev": "NODE_PORT=5000 ts-node-dev --log-error ./src/index.ts",
     "format": "prettier --write \"src/**/*.{ts,tsx,md}\"",
     "lint": "eslint --ext .ts,.js,.tsx,.jsx,.json . --fix",
+    "lint:ci": "eslint --ext .ts,.js,.tsx,.jsx,.json . --no-fix",
     "test": "jest",
     "test:dev": "jest --watchAll"
   },

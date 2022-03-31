@@ -198,3 +198,9 @@ export const FRIEND_SEARCH = gql`
 		}
 	}
 `;
+
+export const REMOVE_FRIEND = gql`
+	mutation ($friendId: ID) {
+		removeFriend(friendId: $friendId)
+	}
+`;

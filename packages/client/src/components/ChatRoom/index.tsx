@@ -53,7 +53,10 @@ export function ChatRoom() {
 				variables: { threadId }
 			});
 
-			/** @todo deduplicate in subscription */
+			/**
+			 * @todo deduplicate in subscription
+			 * @todo use `modify` instead
+			 */
 			cache.writeQuery({
 				data: {
 					getMessages: [

@@ -69,7 +69,7 @@ const FriendsContentContainer = styled(ContentContainer)`
 `;
 
 // @todo relocate
-const FriendsC = () => {
+function FriendsC() {
 	return (
 		<FriendsProvider>
 			<Container>
@@ -83,18 +83,18 @@ const FriendsC = () => {
 			</Container>
 		</FriendsProvider>
 	);
-};
+}
 
 // @todo relocate
-const ThreadC = ({ username }: { username: string }) => {
+function ThreadC({ username }: { username: string }) {
 	const location = useLocation();
 	const paths = location.pathname.split('/');
 	const threadId = paths[paths.length - 1];
 
 	return (
 		<Container
-			id={`chat-${threadId}`}
 			aria-labelledby={`thread-${threadId}`}
+			id={`chat-${threadId}`}
 			role="tabpanel"
 		>
 			<Header>
@@ -109,7 +109,7 @@ const ThreadC = ({ username }: { username: string }) => {
 			</ContentContainer>
 		</Container>
 	);
-};
+}
 
 export function ContentLayout() {
 	const location = useLocation();

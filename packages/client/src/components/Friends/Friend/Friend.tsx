@@ -1,10 +1,12 @@
 import React from 'react';
 
-import { UserAvatar } from '@/components/User/UserAvatar';
-import type { SearchResult } from '@/components/Friends/FriendsContext';
-import SvgIcon from '@/components/Icon';
-
 import * as S from './styles';
+
+import type { SearchResult } from '@/components/Friends/FriendsContext';
+
+import SvgIcon from '@/components/Icon';
+import { UserAvatar } from '@/components/User/UserAvatar';
+
 
 interface FriendProps {
 	user: SearchResult;
@@ -22,14 +24,14 @@ export function Friend({ user }: FriendProps) {
 	}
 
 	return (
-		<S.ListItem key={user._id} data-testid={`friend-hit-${user._id}`}>
+		<S.ListItem data-testid={`friend-hit-${user._id}`} key={user._id}>
 			<UserAvatar size="xl" u={user} />
 
 			<S.Username>{user.username}</S.Username>
 			<S.UserStatus>user status</S.UserStatus>
 			<S.ActionsContainer>
 				<S.ActionBubble onClick={removeFriend} title="Remove friend">
-					<SvgIcon name={'remove-friend'} size={22} />
+					<SvgIcon name="remove-friend" size={22} />
 				</S.ActionBubble>
 
 				<S.ActionBubble onClick={navigateToChat} title="Send a message">

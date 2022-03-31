@@ -59,8 +59,8 @@ export const PrivateThread = forwardRef<HTMLLIElement, PrivateThreadProps>(
 
 		return (
 			<PaddedListItem
-				id={`thread-${id}`}
 				data-testid={`thread-${id}`}
+				id={`thread-${id}`}
 				isActiveItem={isActiveItem}
 				onClick={handleClick}
 				onKeyPress={(e) => {

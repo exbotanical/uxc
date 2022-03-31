@@ -63,8 +63,8 @@ export function SidebarLayout({ body }: { body: React.ReactNode }) {
 					<button
 						data-testid="settings-btn"
 						id="settings-btn"
-						type="button"
 						title="User Settings"
+						type="button"
 					>
 						<SvgIcon color="#979bb0" name="gear" size={22} />
 					</button>

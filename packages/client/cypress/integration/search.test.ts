@@ -1,8 +1,8 @@
 import currentUserOk from '@/fixtures/getCurrentUser/ok.json';
+import getMessagesOk from '@/fixtures/getMessages/ok1.json';
 import getThreadsOk from '@/fixtures/getThreads/ok.json';
 import searchOr from '@/fixtures/search/or.json';
 import searchQuo from '@/fixtures/search/quo.json';
-import getMessagesOk from '@/fixtures/getMessages/ok1.json';
 
 const orResult = searchOr.data.search[0];
 const quoResults = searchQuo.data.search;

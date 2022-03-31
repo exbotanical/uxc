@@ -25,7 +25,7 @@ export function onEnterKeyPressed(fn: <T>(e: KeyboardEvent<T>) => void) {
 }
 
 export function mitigateClickBubble<T>(fn: () => void) {
-	return (e: React.MouseEvent<HTMLButtonElement> | KeyboardEvent<T>) => {
+	return (e: KeyboardEvent<T> | React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
 		e.preventDefault();
 

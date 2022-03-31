@@ -10,7 +10,7 @@ jobs:
   check:
     uses: MatthewZito/.github/.github/workflows/pnpm_script_run.yml@master
     with:
-      script_name: check
+      script_name: check:ci
 
   test:
     uses: MatthewZito/.github/.github/workflows/pnpm_script_run.yml@master

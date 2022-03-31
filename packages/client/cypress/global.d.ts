@@ -22,6 +22,6 @@ declare namespace Cypress {
 			operation: string,
 			data: GQLResponse<T>,
 			alias?: string
-		): Cypress.cy;
+		): cy;
 	}
 }

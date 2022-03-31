@@ -1,10 +1,12 @@
 import React from 'react';
 
-import { UserAvatar } from '@/components/User/UserAvatar';
-import type { SearchResult } from '@/components/Friends/FriendsContext';
-import SvgIcon from '@/components/Icon';
-
 import * as S from './styles';
+
+import type { SearchResult } from '@/components/Friends/FriendsContext';
+
+import SvgIcon from '@/components/Icon';
+import { UserAvatar } from '@/components/User/UserAvatar';
+
 
 interface PendingFriendProps {
 	user: SearchResult;
@@ -22,19 +24,19 @@ export function RecvPendingFriend({ user }: PendingFriendProps) {
 	}
 
 	return (
-		<S.ListItem key={user._id} data-testid={`friend-hit-recv-${user._id}`}>
+		<S.ListItem data-testid={`friend-hit-recv-${user._id}`} key={user._id}>
 			<UserAvatar size="xl" u={user} />
 
 			<S.Username>{user.username}</S.Username>
 			<S.UserStatus>user status</S.UserStatus>
 			<S.ActionsContainer>
-				<S.ActionBubble title="Deny friend request" onClick={denyFriendRequest}>
-					<SvgIcon name={'cancel'} size={22} />
+				<S.ActionBubble onClick={denyFriendRequest} title="Deny friend request">
+					<SvgIcon name="cancel" size={22} />
 				</S.ActionBubble>
 
 				<S.ActionBubble
-					title="Approve friend request"
 					onClick={approveFriendRequest}
+					title="Approve friend request"
 				>
 					<SvgIcon name="check" size={22} />
 				</S.ActionBubble>

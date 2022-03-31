@@ -203,7 +203,7 @@ export function ChatMessage({
 	const id = `message-${_id}`;
 
 	return (
-		<Container id={id} data-testid={id}>
+		<Container data-testid={id} id={id}>
 			{sansMeta ? (
 				<BodyContainerSansMeta {...isSenderActions}>
 					{editMode ? (

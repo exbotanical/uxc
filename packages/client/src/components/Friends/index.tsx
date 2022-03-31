@@ -1,14 +1,13 @@
-import { ChangeEvent, useContext } from 'react';
+import React, { ChangeEvent, useContext } from 'react';
 
-import React from 'react';
 
 import * as S from './styles';
 
 import { Input } from '@/components/Fields/Input';
-import { FriendsContext } from '@/components/Friends/FriendsContext';
 import { Friend } from '@/components/Friends/Friend/Friend';
 import { RecvPendingFriend } from '@/components/Friends/Friend/RecvPendingFriend';
 import { SentPendingFriend } from '@/components/Friends/Friend/SentPendingFriend';
+import { FriendsContext } from '@/components/Friends/FriendsContext';
 
 export function Friends() {
 	const { query, setQuery, results, viewMode } = useContext(FriendsContext);
@@ -27,8 +26,8 @@ export function Friends() {
 
 	return (
 		<S.Container
-			id={`${viewMode}-panel`}
 			aria-labelledby={`${viewMode}-tab`}
+			id={`${viewMode}-panel`}
 			role="tabpanel"
 		>
 			<S.Form>
@@ -47,14 +46,14 @@ export function Friends() {
 			<S.ListContainer>
 				{results.map((friend) => {
 					if (friend.status === 'friend') {
-						return <Friend user={friend} key={friend._id} />;
+						return <Friend key={friend._id} user={friend} />;
 					}
 
 					if (friend.status === 'recv') {
-						return <RecvPendingFriend user={friend} key={friend._id} />;
+						return <RecvPendingFriend key={friend._id} user={friend} />;
 					}
 
-					return <SentPendingFriend user={friend} key={friend._id} />;
+					return <SentPendingFriend key={friend._id} user={friend} />;
 				})}
 			</S.ListContainer>
 		</S.Container>
