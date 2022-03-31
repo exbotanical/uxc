@@ -10,7 +10,7 @@ import { FontSizeXl } from '@/styles/Typography/FontSize';
 
 interface OptionConfig {
 	iconName: string;
-	title: string;
+	title?: string;
 	handleClick?: () => void;
 }
 

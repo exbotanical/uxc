@@ -104,7 +104,7 @@ describe('landing / dashboard experience', () => {
 	});
 
 	it('defaults to the friends page', () => {
-		cy.getByTestId('search-friends').should('exist');
+		cy.getByTestId('filter-friends').should('exist');
 	});
 
 	it('opens a chat room when clicking on a thread item', () => {

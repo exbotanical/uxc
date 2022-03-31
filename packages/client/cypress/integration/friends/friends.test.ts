@@ -115,10 +115,11 @@ describe('friends workflows and filtering functionality', () => {
 			.getByTestId('pending-tab')
 			.click()
 
+			// only 10 in total
 			.getByTestIdLike(`friend-hit`)
 			.its('length')
 			.then(($count) => {
-				expect($count).equal(allFriends);
+				expect($count).equal(10);
 			})
 
 			.getByTestIdLike(`friend-hit-sent`)
