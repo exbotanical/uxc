@@ -10,9 +10,9 @@
     "dev": "./scripts/dev.bash",
     "format": "pnpm -r --parallel --filter .... format",
     "lint": "pnpm -r --parallel --filter .... lint",
-    "postinstall": "husky install",
     "schema": "pnpm -r --filter {packages/common} schema",
-    "test": "pnpm --filter {packages/api} test && pnpm --filter {packages/client} test:unit"
+    "test": "pnpm --filter {packages/api} test && pnpm --filter {packages/client} test:unit",
+    "prepare": "husky install"
   },
   "engines": {
     "node": ">= 16.1.0",
@@ -26,8 +26,19 @@
     "concurrently": "^7.0.0",
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.5.0",
-    "husky": "7.0.2",
+    "husky": "^7.0.0",
+    "lint-staged": "^12.3.7",
     "prettier": "2.4.1",
     "typescript": "4.4.2"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "packages/**/*.{ts,tsx,js,jsx,css,scss,json}": [
+      "pnpm format"
+    ]
   }
 }
