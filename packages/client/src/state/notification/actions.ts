@@ -1,12 +1,8 @@
 import { store } from '..';
 
-import {
-	NOTIFICATION_ACTION
-} from './types';
+import { NOTIFICATION_ACTION } from './types';
 
-import type {
-	ShowNotification,
-	HideNotification} from './types';
+import type { ShowNotification, HideNotification } from './types';
 
 const SHOW_NOTIFICATION: ShowNotification = ({
 	message,

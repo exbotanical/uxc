@@ -1,3 +1,5 @@
+export * from './cancelFriendRequest';
+
 export * from './createFriendRequest';
 
 export * from './createMessage';

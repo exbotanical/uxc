@@ -1,8 +1,8 @@
-@use "sass:math";
+@use 'sass:math';
 
 .bubble {
 	> *,
-	> * > .message  {
+	> * > .message {
 		@for $i from 1 through 10 {
 			&:nth-child(#{$i}) {
 				animation: fade-in 1s ease-in-out;

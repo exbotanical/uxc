@@ -7,7 +7,6 @@ import type { SearchResult } from '@/components/Friends/FriendsContext';
 import SvgIcon from '@/components/Icon';
 import { UserAvatar } from '@/components/User/UserAvatar';
 
-
 interface PendingFriendProps {
 	user: SearchResult;
 }

@@ -1,4 +1,3 @@
-
 import { RedisPubSub } from 'graphql-redis-subscriptions';
 import Redis from 'ioredis';
 import redisMock from 'redis-mock';

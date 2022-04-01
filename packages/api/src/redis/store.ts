@@ -1,4 +1,3 @@
-
 import connectRedis from 'connect-redis';
 import Redis from 'ioredis';
 import redisMock from 'redis-mock';

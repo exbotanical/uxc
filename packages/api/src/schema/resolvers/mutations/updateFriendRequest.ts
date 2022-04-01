@@ -83,5 +83,5 @@ export const updateFriendRequest = async (
 		friendRequest: [Object.assign(populatedFriendRequest, status)]
 	});
 
-	return populatedFriendRequest._id;
+	return requester._id;
 };

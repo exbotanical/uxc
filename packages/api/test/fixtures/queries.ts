@@ -117,6 +117,12 @@ export const UPDATE_FRIEND_REQUEST = `
 	}
 `;
 
+export const CANCEL_FRIEND_REQUEST = `
+	mutation ($requestId: ID) {
+		cancelFriendRequest(requestId: $requestId)
+	}
+`;
+
 export const GET_FRIEND_REQUESTS_SENT = `
 	query getFriendRequests($type: FriendRequestOptions) {
 		getFriendRequests(type: $type) {

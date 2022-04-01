@@ -116,6 +116,7 @@ export const resolvers: Resolvers = {
 		updateMessage: authGuard(mutations.updateMessage),
 		createThread: authGuard(mutations.createThread),
 		deleteThread: authGuard(mutations.deleteThread),
+		cancelFriendRequest: authGuard(mutations.cancelFriendRequest),
 		createFriendRequest: authGuard(mutations.createFriendRequest),
 		updateFriendRequest: authGuard(mutations.updateFriendRequest),
 		removeFriend: authGuard(mutations.removeFriend)

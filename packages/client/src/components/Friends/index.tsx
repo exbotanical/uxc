@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useContext } from 'react';
 
-
 import * as S from './styles';
 
 import { Input } from '@/components/Fields/Input';

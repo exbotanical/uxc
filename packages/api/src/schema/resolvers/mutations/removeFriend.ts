@@ -53,5 +53,5 @@ export const removeFriend: Resolver<ObjectID, { friendId: ObjectID }> = async (
 		]
 	});
 
-	return deletedFriend?._id ?? null;
+	return deletedFriend?._id ? friendId : null;
 };

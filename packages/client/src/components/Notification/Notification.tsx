@@ -24,16 +24,16 @@ const Container = styled.div<{ type: NotifType['type'] }>`
 
 	background-color: ${({ theme, type }) => {
 		switch (type) {
-		case 'error':
-		return theme.colors.error.norm;
+			case 'error':
+				return theme.colors.error.norm;
 
-		case 'success':
-		return theme.colors.accent.norm;
+			case 'success':
+				return theme.colors.accent.norm;
 
-		default:
-		return theme.colors.accent.norm;
+			default:
+				return theme.colors.accent.norm;
 		}
-		}};
+	}};
 	border-radius: 0.375rem;
 	transition-duration: 150ms;
 	transition-duration: 300ms;

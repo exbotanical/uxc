@@ -8,6 +8,7 @@ import type {
 } from '@uxc/common/node';
 
 import { Friend, FriendRequest } from '@/db';
+import { Document } from 'mongodb';
 
 /**
  * @todo Test.
@@ -36,7 +37,9 @@ export const searchFriends: Resolver<
 	};
 
 	if (type === 'RECV' || type === 'BOTH') {
-		const received = await FriendRequest.findFriendRequestsRecv(userId);
+		const received: Document[] = await FriendRequest.findFriendRequestsRecv(
+			userId
+		);
 
 		ret.received.push(
 			...(query
@@ -46,14 +49,13 @@ export const searchFriends: Resolver<
 							.includes(query.toLowerCase())
 				  )
 				: received
-			).map(({ requester }) => requester)
+			).map(({ requester, _id }) => ({ ...requester._doc, requestId: _id }))
 		);
 	}
 
 	if (type === 'SENT' || type === 'BOTH') {
-		const sent = await FriendRequest.findFriendRequestsSent(userId);
-		const r = await FriendRequest.find({});
-		console.log({ r });
+		const sent: Document[] = await FriendRequest.findFriendRequestsSent(userId);
+
 		ret.sent.push(
 			...(query
 				? sent.filter((request) =>
@@ -62,7 +64,7 @@ export const searchFriends: Resolver<
 							.includes(query.toLowerCase())
 				  )
 				: sent
-			).map(({ recipient }) => recipient)
+			).map(({ recipient, _id }) => ({ ...recipient._doc, requestId: _id }))
 		);
 	}
 
