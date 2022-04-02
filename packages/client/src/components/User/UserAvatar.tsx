@@ -16,10 +16,11 @@ interface UserCardProps {
 }
 
 const SizeMap = {
-	sm: '30px',
-	md: '40px',
-	lg: '50px',
-	xl: '75px'
+	'sm': '30px',
+	'md': '40px',
+	'lg': '50px',
+	'xl': '75px',
+	'2xl': '125px'
 };
 
 const defaultAvatar = new URL('../../assets/gravatar.png', import.meta.url)

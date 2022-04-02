@@ -15,6 +15,8 @@ import { GET_CURRENT_USER } from '@/services/api/queries';
 import { ThreadsContext } from '@/state/context/ThreadsContext';
 import { FlexCol } from '@/styles/Layout';
 import { FontSizeXl } from '@/styles/Typography/FontSize';
+import { ConfirmModalProvider } from '../Modal/Confirm/ConfirmModalContext';
+import { ConfirmModal } from '../Modal/Confirm/ConfirmModal';
 
 const Container = styled.div`
 	${FlexCol}
@@ -128,12 +130,18 @@ export function ContentLayout() {
 	);
 
 	return (
-		<Routes>
-			<Route element={<FriendsC />} path="/" />
-			<Route
-				element={<ThreadC username={them?.username || ''} />}
-				path="/:threadId"
-			/>
-		</Routes>
+		<ConfirmModalProvider>
+			<>
+				<Routes>
+					<Route element={<FriendsC />} path="/" />
+					<Route
+						element={<ThreadC username={them?.username || ''} />}
+						path="/:threadId"
+					/>
+				</Routes>
+
+				<ConfirmModal />
+			</>
+		</ConfirmModalProvider>
 	);
 }

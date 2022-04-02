@@ -183,17 +183,21 @@ export const FRIEND_SEARCH = gql`
 				username
 				userImage
 			}
+
 			sent {
 				_id
 				email
 				username
 				userImage
+				requestId
 			}
+
 			received {
 				_id
 				email
 				username
 				userImage
+				requestId
 			}
 		}
 	}
@@ -202,5 +206,17 @@ export const FRIEND_SEARCH = gql`
 export const REMOVE_FRIEND = gql`
 	mutation ($friendId: ID) {
 		removeFriend(friendId: $friendId)
+	}
+`;
+
+export const UPDATE_FRIEND_REQUEST = gql`
+	mutation ($requestId: ID, $status: FriendRequestStatus) {
+		updateFriendRequest(requestId: $requestId, status: $status)
+	}
+`;
+
+export const CANCEL_FRIEND_REQUEST = gql`
+	mutation ($requestId: ID) {
+		cancelFriendRequest(requestId: $requestId)
 	}
 `;

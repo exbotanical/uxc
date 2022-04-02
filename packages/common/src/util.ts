@@ -4,6 +4,7 @@ import type { RefType } from 'mongoose';
 
 export type AllNullable<T> = { [K in keyof T]: T[K] | null };
 export type AllNullableOrUndef<T> = { [K in keyof T]?: T[K] | null };
+export type AllUndef<T> = { [K in keyof T]?: T[K] };
 
 export type ObjectID = string;
 

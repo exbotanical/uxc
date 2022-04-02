@@ -16,7 +16,6 @@ const filter = {
 };
 
 /**
- * @todo Test.
  * @todo Filter: ensure messages from friends of current user.
  * @todo Filter: ensure threads from friends of current user.
  * @todo Replace thread filter; use filtered query via mongo server.

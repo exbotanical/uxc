@@ -10,6 +10,7 @@ import type { ConnectedProps } from 'react-redux';
 
 export type RootState = ReturnType<typeof store.getState>;
 
+// @todo fix circular deps
 const store = createStore(
 	combineReducers({
 		channel,

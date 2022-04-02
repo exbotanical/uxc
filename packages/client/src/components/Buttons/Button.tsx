@@ -9,28 +9,33 @@ import styled from 'styled-components';
 import type { DefaultTheme, StyledComponent } from 'styled-components';
 
 import { RowCenter } from '@/styles/Layout';
-import { FontSizeLg } from '@/styles/Typography/FontSize';
+import { FontSizeLg, FontSizeSm } from '@/styles/Typography/FontSize';
+import type { AllUndef } from '@uxc/common';
 
 type ButtonAttrs = DetailedHTMLProps<
 	ButtonHTMLAttributes<HTMLButtonElement>,
 	HTMLButtonElement
 >;
 
-export type ButtonProps = Omit<ButtonAttrs, 'ref'> & {
-	loading?: boolean;
-	icon?: ReactNode;
-	transition?: boolean;
-};
+type StyledButtonProps = { size: ButtonSize; flat: boolean };
 
-const StyledButton = styled(RowCenter).attrs({
+type ButtonSize = 'sm' | 'lg';
+
+export type ButtonProps = Omit<ButtonAttrs, 'ref'> &
+	AllUndef<StyledButtonProps> & {
+		loading?: boolean;
+		icon?: ReactNode;
+		transition?: boolean;
+	};
+
+const BaseButton = styled(RowCenter).attrs({
 	as: 'button'
-})`
-	${FontSizeLg}
+})<StyledButtonProps>`
+	${({ size }) => (size === 'lg' ? FontSizeLg : FontSizeSm)};
 	width: 100%;
+	max-width: ${({ size }) => (size === 'lg' ? '' : 'max-content')};
 	padding: 0.75rem 1.5rem;
-	background-color: ${({ theme }) => theme.colors.interactive.norm} !important;
 	border-radius: 4px;
-	color: ${({ theme }) => theme.colors.font.strong};
 	font-weight: 700;
 	outline-offset: 2px;
 	transition-duration: 300ms;
@@ -38,22 +43,54 @@ const StyledButton = styled(RowCenter).attrs({
 	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 
 	&:active {
-		background-color: ${({ theme }) =>
-			theme.colors.interactive.active} !important;
 		transform: translateY(0.1px);
 	}
 
 	&[aria-disabled='true'] {
-		background-color: ${({ theme }) =>
-			theme.colors.interactive.hover} !important;
+		cursor: not-allowed;
+	}
+`;
+
+const StyledButton = styled(BaseButton).attrs({
+	as: 'button'
+})<StyledButtonProps>`
+	background-color: ${({ theme }) => theme.colors.interactive.norm};
+	color: ${({ theme }) => theme.colors.font.strong};
+
+	&:active {
+		background-color: ${({ theme }) => theme.colors.interactive.active};
+	}
+
+	&[aria-disabled='true'] {
+		background-color: ${({ theme }) => theme.colors.interactive.hover};
+	}
+
+	&:hover {
+		background-color: ${({ theme }) => theme.colors.interactive.hover};
+	}
+` as StyledComponent<'button', DefaultTheme, StyledButtonProps>;
+
+const FlatStyledButton = styled(BaseButton).attrs({
+	as: 'button'
+})<StyledButtonProps>`
+	background-color: inherit;
+	/* border: ${({ theme }) => theme.colors.accent.weak} 1px solid; */
+	color: ${({ theme }) => theme.colors.accent.weak};
+
+	&:active {
+		background-color: ${({ theme }) => theme.colors.accent.hover};
+		transform: translateY(0.1px);
+	}
+
+	&[aria-disabled='true'] {
+		background-color: ${({ theme }) => theme.colors.accent.hover};
 		cursor: not-allowed;
 	}
 
 	&:hover {
-		background-color: ${({ theme }) =>
-			theme.colors.interactive.hover} !important;
+		background-color: ${({ theme }) => theme.colors.accent.hover};
 	}
-` as StyledComponent<'button', DefaultTheme>;
+` as StyledComponent<'button', DefaultTheme, StyledButtonProps>;
 
 const Loading = `opacity: 0;`;
 
@@ -73,13 +110,15 @@ const Spinner = styled.span`
 `;
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-	({ children, loading = false, ...props }, ref) => {
+	({ children, size = 'lg', flat = false, loading = false, ...props }, ref) => {
+		const ButtonComp = flat ? FlatStyledButton : StyledButton;
+
 		return (
-			<StyledButton ref={ref} {...props}>
+			<ButtonComp ref={ref} {...{ flat, size, ...props }}>
 				<ContentContainer loadingState={loading}>{children}</ContentContainer>
 
 				{loading ? <Spinner>@todo</Spinner> : null}
-			</StyledButton>
+			</ButtonComp>
 		);
 	}
 );

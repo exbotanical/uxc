@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
-type Size = 'lg' | 'md' | 'sm';
+type Size = '2xl' | 'xl' | 'lg' | 'md' | 'sm';
 
 interface StatusIndicatorProps {
 	size?: Size;
@@ -10,25 +10,30 @@ interface StatusIndicatorProps {
 }
 
 const SizeMap = {
-	sm: `
+	'sm': `
   left: 1rem;
 	width: 1rem;
 	height: 1rem;
 `,
-	md: `
+	'md': `
   left: 1rem;
 	width: 1rem;
 	height: 1rem;
 `,
-	lg: `
+	'lg': `
   left: 1.5rem;
 	width: 1.25rem;
 	height: 1.25rem;
 `,
-	xl: `
+	'xl': `
 	left: 2.5rem;
 	width: 1.25rem;
 	height: 1.25rem;
+`,
+	'2xl': `
+	left: 4.75rem;
+	width: 1.75rem;
+	height: 1.75rem;
 `
 };
 

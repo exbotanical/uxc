@@ -1,25 +1,50 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import * as S from './styles';
 
-import type { SearchResult } from '@/components/Friends/FriendsContext';
+import {
+	FriendsContext,
+	SearchResult
+} from '@/components/Friends/FriendsContext';
 
 import SvgIcon from '@/components/Icon';
 import { UserAvatar } from '@/components/User/UserAvatar';
+import { ConfirmModalContext } from '@/components/Modal/Confirm/ConfirmModalContext';
+import { RemoveFriend } from './RemoveFriend';
+import { ThreadsContext } from '@/state/context/ThreadsContext';
+import { useNavigate } from 'react-router-dom';
 
 interface FriendProps {
 	user: SearchResult;
 }
 
 export function Friend({ user }: FriendProps) {
+	const { open } = useContext(ConfirmModalContext);
+	const { removeFriend } = useContext(FriendsContext);
+	const { threads } = useContext(ThreadsContext);
+
+	const navigate = useNavigate();
+
 	function navigateToChat() {
-		// if thread exists, take us there; else create new thread w/ user
-		console.log(user._id);
+		const threadId = threads.find(({ users }) => {
+			return users[0]._id === user._id || users[1]._id === user._id;
+		})?._id;
+
+		if (threadId) {
+			navigate(threadId);
+		}
+
+		// @todo create new thread
 	}
 
-	function removeFriend() {
-		// display confirmation dialog, then remove friend
-		console.log(user._id);
+	function removeFriendProxy() {
+		open({
+			content: <RemoveFriend user={user} mode="remove" />,
+			confirmLabel: 'Yes, remove',
+			onConfirm: () => {
+				removeFriend(user._id);
+			}
+		});
 	}
 
 	return (
@@ -29,7 +54,7 @@ export function Friend({ user }: FriendProps) {
 			<S.Username>{user.username}</S.Username>
 			<S.UserStatus>user status</S.UserStatus>
 			<S.ActionsContainer>
-				<S.ActionBubble onClick={removeFriend} title="Remove friend">
+				<S.ActionBubble onClick={removeFriendProxy} title="Remove friend">
 					<SvgIcon name="remove-friend" size={22} />
 				</S.ActionBubble>
 

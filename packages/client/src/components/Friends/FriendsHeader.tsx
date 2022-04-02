@@ -46,23 +46,17 @@ const Tab = styled.button.attrs<{ isSelected: boolean }>(({ isSelected }) => ({
 	cursor: pointer;
 `;
 
-const AddFriendButton = styled(Button)`
-	width: max-content;
-	padding: 0.125rem 1rem;
-`;
-
 export function FriendsHeader() {
 	const { setViewMode, isCurrentView } = useContext(FriendsContext);
 
-	function onClick(this: { key: FriendsViewMode }) {
-		setViewMode(this.key);
-		console.log(this);
+	function onClick(key: FriendsViewMode) {
+		setViewMode(key);
 	}
 
 	const friendsOpts: {
 		label: string;
 		key: FriendsViewMode;
-		onClick: () => void;
+		onClick: (key: FriendsViewMode) => void;
 	}[] = [
 		{
 			label: 'Online',
@@ -102,7 +96,9 @@ export function FriendsHeader() {
 						id={`${key}-tab`}
 						isSelected={isCurrentView(key)}
 						key={idx}
-						onClick={onClick.bind({ key })}
+						onClick={() => {
+							onClick(key);
+						}}
 						role="tab"
 					>
 						<p>{label}</p>
@@ -110,9 +106,9 @@ export function FriendsHeader() {
 				))}
 			</div>
 
-			<AddFriendButton>
+			<Button size="sm">
 				<p>Add Friend</p>
-			</AddFriendButton>
+			</Button>
 		</>
 	);
 }

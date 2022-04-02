@@ -19,7 +19,8 @@ export const colors = {
 	accent: {
 		norm: '#2fd6b5',
 		weak: '#32e5c2',
-		strong: '#36f5cf'
+		strong: '#36f5cf',
+		hover: '#32e5c215'
 	},
 	field: {
 		norm: '#454a61',

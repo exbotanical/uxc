@@ -5,7 +5,6 @@ import getMessagesOk from '@/fixtures/getMessages/ok1.json';
 import getThreadsOk from '@/fixtures/getThreads/ok.json';
 import searchFriends from '@/fixtures/searchFriends/all-both.json';
 
-
 const unauthenticatedTestUrls = ['/signin', '/join'];
 const authenticatedTestUrls = ['/', '/622a1412cbc9a5e523cd0a7b'];
 
@@ -59,7 +58,7 @@ describe('accessibility', () => {
 		});
 	});
 
-	authenticatedTestUrls.forEach((url, idx) => {
+	authenticatedTestUrls.forEach((url) => {
 		it(`Page ${url} has no detectable accessibility violations on load`, () => {
 			cy.interceptGQL(
 				'http://localhost/api/graphql',

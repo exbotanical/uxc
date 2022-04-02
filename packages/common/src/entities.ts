@@ -69,6 +69,6 @@ export interface SentFriendRequest extends BaseModel {
 
 export interface SearchFriendsResult {
 	friends: User[];
-	sent: User[];
-	received: User[];
+	sent: (User & { requestId: ObjectID })[];
+	received: (User & { requestId: ObjectID })[];
 }

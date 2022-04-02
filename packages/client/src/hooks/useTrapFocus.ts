@@ -22,7 +22,6 @@ export function useTrapFocus({ container }: UseTrapFocusProps) {
 			}
 
 			if (e.shiftKey) {
-				console.log('HERE');
 				if (document.activeElement === firstElement) {
 					e.preventDefault();
 					lastElement.focus();

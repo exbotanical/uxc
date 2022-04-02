@@ -39,7 +39,10 @@ export const ERROR_MESSAGES = {
 	E_NO_REQUEST_STATUS:
 		'A status is required in order to update a friend request.',
 	E_NO_SELF_REQUEST: 'You cannot send a friend request to yourself.',
-	E_NO_SELF_REQUEST_EDIT: "You cannot edit another user's friend request.",
+	E_NO_SELF_REQUEST_EDIT:
+		'You cannot edit the status of a friend request you sent.',
+	E_NO_OTHER_REQUEST_CANCEL:
+		'You cannot cancel a friend request sent by another user.',
 	E_NO_THREAD_ID: 'threadId is required but was not supplied.',
 	E_NO_USERNAME: 'A valid username is required.',
 	E_NO_USER_ID: 'userId is required but was not supplied.',

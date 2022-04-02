@@ -112,7 +112,7 @@ export function Modal({ onModalClose, modalRef, children }: ModalProps) {
 				'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], input[type="search"], select'
 			);
 
-		if (!focusableModalElements) {
+		if (!focusableModalElements?.length) {
 			return;
 		}
 

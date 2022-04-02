@@ -12,10 +12,18 @@ enum FriendRequestOptions {
 
 union FriendRequestResult = ReceivedFriendRequest | SentFriendRequest
 
+type FriendRequestUser {
+  requestId: String
+  _id: ID
+  username: String
+  email: String
+  userImage: String
+}
+
 type SearchFriendsResult {
   friends: [User]
-  sent: [User]
-  received: [User]
+  sent: [FriendRequestUser]
+  received: [FriendRequestUser]
 }
 
 type ReceivedFriendRequest {
@@ -46,4 +54,5 @@ type Mutation {
   removeFriend(friendId: ID): ID
   createFriendRequest(recipientId: ID): ID
   updateFriendRequest(requestId: ID, status: FriendRequestStatus): ID
+  cancelFriendRequest(requestId: ID): ID
 }

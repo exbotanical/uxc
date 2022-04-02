@@ -7,7 +7,7 @@ import React, {
 	useState
 } from 'react';
 
-import { showNotification } from '../notification/actions';
+// import { showNotification } from '../notification/actions';
 
 import type { PrivateThread, ObjectID, User, Message } from '@uxc/common';
 
@@ -113,11 +113,12 @@ export function ThreadsProvider({ children }: { children: JSX.Element }) {
 
 			setThreads(copiedThreads);
 
-			showNotification({
-				message: newMessage[0].body,
-				type: 'success',
-				duration: 'sticky'
-			});
+			// @todo fix
+			// showNotification({
+			// 	message: newMessage[0].body,
+			// 	type: 'success',
+			// 	duration: 'sticky'
+			// });
 		}
 	}, [threads, newMessage]);
 

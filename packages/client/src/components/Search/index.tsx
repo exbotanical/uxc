@@ -8,10 +8,6 @@ import { SearchContent } from '@/components/Search/SearchContent';
 import { SearchForm } from '@/components/Search/SearchForm';
 import * as S from '@/components/Search/styles';
 
-/**
- * @todo Add up/down arrow keyboard support.
- * @todo User search result to direct to thread.
- */
 export function SearchModal() {
 	const modalRef = useRef<HTMLDivElement>(null);
 	const { isOpen, setIsOpen } = useContext(SearchContext);

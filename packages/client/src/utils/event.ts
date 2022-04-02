@@ -1,7 +1,7 @@
 import type { KeyboardEvent, ChangeEvent, FormEvent } from 'react';
 
 export function handleSubmit(fn?: () => void) {
-	return function (e: FormEvent) {
+	return function handleSubmit(e: FormEvent) {
 		e.preventDefault();
 
 		if (typeof fn == 'function') {
@@ -11,13 +11,13 @@ export function handleSubmit(fn?: () => void) {
 }
 
 export function handleChange(fn: (v: string) => void) {
-	return function (e: ChangeEvent<HTMLInputElement>) {
+	return function handleChange(e: ChangeEvent<HTMLInputElement>) {
 		fn(e.target.value);
 	};
 }
 
 export function onEnterKeyPressed(fn: <T>(e: KeyboardEvent<T>) => void) {
-	return function <T>(e: KeyboardEvent<T>) {
+	return function onEnterKeyPressed<T>(e: KeyboardEvent<T>) {
 		if (e.key == 'Enter') {
 			fn(e);
 		}

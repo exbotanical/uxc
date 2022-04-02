@@ -1,15 +1,20 @@
 import { useMutation, useQuery } from '@apollo/client';
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 
-import type { MutationFunction } from '@/types';
 import type {
+	FriendRequestStatus,
 	ObjectID,
 	PrivateThread,
 	SearchFriendsResult,
 	User
 } from '@uxc/common';
 
-import { FRIEND_SEARCH, REMOVE_FRIEND } from '@/services/api';
+import {
+	CANCEL_FRIEND_REQUEST,
+	FRIEND_SEARCH,
+	REMOVE_FRIEND,
+	UPDATE_FRIEND_REQUEST
+} from '@/services/api';
 
 export type FriendsViewMode = 'all' | 'blocked' | 'online' | 'pending';
 
@@ -17,6 +22,7 @@ export type FriendshipStatus = 'friend' | 'recv' | 'sent';
 
 export type SearchResult = User & {
 	status: FriendshipStatus;
+	requestId?: ObjectID;
 };
 
 interface FriendsContextType {
@@ -26,10 +32,10 @@ interface FriendsContextType {
 	results: SearchResult[];
 	query: string;
 	setQuery: React.Dispatch<React.SetStateAction<string>>;
-	removeFriend: MutationFunction<
-		{ removeFriend: ObjectID },
-		{ friendId: ObjectID }
-	>;
+	removeFriend: (friendId: ObjectID) => void;
+	acceptFriend: (requestId: ObjectID) => void;
+	rejectFriend: (requestId: ObjectID) => void;
+	cancelFriend: (requestId: ObjectID) => void;
 }
 
 export const FriendsContext = createContext({} as FriendsContextType);
@@ -40,8 +46,7 @@ export function FriendsProvider({ children }: { children: JSX.Element }) {
 	const [filteredResults, setFilteredResults] = useState<SearchResult[]>([]);
 	const [query, setQuery] = useState('');
 
-	// @todo
-	const [removeFriend] = useMutation<
+	const [removeFriendFn] = useMutation<
 		{
 			removeFriend: ObjectID;
 		},
@@ -51,20 +56,25 @@ export function FriendsProvider({ children }: { children: JSX.Element }) {
 			cache.modify({
 				fields: {
 					// remove friend from cache
-					searchFriends: (previous: User[]) => {
+					searchFriends: (previous: SearchFriendsResult) => {
 						if (!data?.removeFriend) {
 							return previous;
 						}
 
-						const idx = previous.findIndex(
+						const idx = previous.friends.findIndex(
 							({ _id }) => _id === data.removeFriend
 						);
-
 						if (idx === -1) {
 							return previous;
 						}
 
-						return previous.splice(idx, 1);
+						const friends = previous.friends.slice(0);
+						friends.splice(idx, 1);
+
+						return {
+							...previous,
+							friends
+						};
 					},
 
 					// remove thread with friend from cache
@@ -78,6 +88,112 @@ export function FriendsProvider({ children }: { children: JSX.Element }) {
 
 							return !ids.includes(data.removeFriend);
 						});
+					}
+				}
+			});
+		}
+	});
+
+	const [acceptFriendRequest] = useMutation<
+		{ updateFriendRequest: ObjectID },
+		{ requestId: ObjectID; status: FriendRequestStatus }
+	>(UPDATE_FRIEND_REQUEST, {
+		update(cache, { data }) {
+			cache.modify({
+				fields: {
+					// remove friend from cache
+					searchFriends: (previous: SearchFriendsResult) => {
+						if (!data?.updateFriendRequest) {
+							return previous;
+						}
+
+						const idx = previous.received.findIndex(
+							({ _id }) => _id === data.updateFriendRequest
+						);
+						if (idx === -1) {
+							return previous;
+						}
+
+						const accepted = { ...previous.received[idx] };
+						const friends = previous.friends.slice(0);
+						const received = previous.friends.slice(0);
+
+						received.splice(idx, 1);
+						friends.push(accepted);
+
+						return {
+							...previous,
+							friends,
+							received
+						};
+					}
+				}
+			});
+		}
+	});
+
+	const [rejectFriendRequest] = useMutation<
+		{ updateFriendRequest: ObjectID },
+		{ requestId: ObjectID; status: FriendRequestStatus }
+	>(UPDATE_FRIEND_REQUEST, {
+		update(cache, { data }) {
+			cache.modify({
+				fields: {
+					// remove friend from cache
+					searchFriends: (previous: SearchFriendsResult) => {
+						if (!data?.updateFriendRequest) {
+							return previous;
+						}
+
+						const idx = previous.received.findIndex(
+							({ _id }) => _id === data.updateFriendRequest
+						);
+						if (idx === -1) {
+							return previous;
+						}
+
+						const received = previous.friends.slice(0);
+
+						received.splice(idx, 1);
+
+						return {
+							...previous,
+							received
+						};
+					}
+				}
+			});
+		}
+	});
+
+	const [cancelFriendRequest] = useMutation<
+		{ cancelFriendRequest: ObjectID },
+		{ requestId: ObjectID }
+	>(CANCEL_FRIEND_REQUEST, {
+		update(cache, { data }) {
+			cache.modify({
+				fields: {
+					// remove friend from cache
+					searchFriends: (previous: SearchFriendsResult) => {
+						if (!data?.cancelFriendRequest) {
+							return previous;
+						}
+
+						const idx = previous.sent.findIndex(
+							({ _id }) => _id === data.cancelFriendRequest
+						);
+						if (idx === -1) {
+							return previous;
+						}
+
+						const sent = previous.friends.slice(0);
+
+						sent.splice(idx, 1);
+
+						return {
+							...previous,
+							sent
+						};
 					}
 				}
 			});
@@ -161,7 +277,31 @@ export function FriendsProvider({ children }: { children: JSX.Element }) {
 		results: filteredResults,
 		query,
 		setQuery,
-		removeFriend
+		removeFriend: (friendId: ObjectID) =>
+			removeFriendFn({ variables: { friendId } }),
+		acceptFriend: (requestId: ObjectID) =>
+			acceptFriendRequest({
+				variables: {
+					requestId,
+					status: 'ACCEPTED'
+				}
+			}),
+
+		rejectFriend: (requestId: ObjectID) =>
+			rejectFriendRequest({
+				variables: {
+					requestId,
+					status: 'REJECTED'
+				}
+			}),
+
+		cancelFriend: (requestId: ObjectID) => {
+			cancelFriendRequest({
+				variables: {
+					requestId
+				}
+			});
+		}
 	};
 
 	return (

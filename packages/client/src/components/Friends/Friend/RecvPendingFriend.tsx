@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import * as S from './styles';
 
-import type { SearchResult } from '@/components/Friends/FriendsContext';
+import {
+	FriendsContext,
+	SearchResult
+} from '@/components/Friends/FriendsContext';
 
 import SvgIcon from '@/components/Icon';
 import { UserAvatar } from '@/components/User/UserAvatar';
@@ -12,14 +15,24 @@ interface PendingFriendProps {
 }
 
 export function RecvPendingFriend({ user }: PendingFriendProps) {
+	const { acceptFriend, rejectFriend } = useContext(FriendsContext);
+
 	function approveFriendRequest() {
-		// update friend request, update friend hits (via subscription)
-		console.log(user._id);
+		// @todo err
+		if (!user.requestId) {
+			return;
+		}
+
+		acceptFriend(user.requestId);
 	}
 
 	function denyFriendRequest() {
-		// update friend request, update friend hits (via subscription)
-		console.log(user._id);
+		// @todo err
+		if (!user.requestId) {
+			return;
+		}
+
+		rejectFriend(user.requestId);
 	}
 
 	return (
