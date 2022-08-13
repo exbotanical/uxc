@@ -1,12 +1,10 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
 export async function purge() {
-	const collections = await mongoose.connection.db.collections();
-	const tasks = collections.map(async (collection) =>
-		collection.deleteMany({})
-	);
+  const collections = await mongoose.connection.db.collections()
+  const tasks = collections.map(async collection => collection.deleteMany({}))
 
-	await Promise.all(tasks);
+  await Promise.all(tasks)
 
-	return true;
+  return true
 }

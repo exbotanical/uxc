@@ -1,19 +1,19 @@
-import { ERROR_MESSAGES } from '@uxc/common/node';
-import { AuthenticationError, UserInputError } from 'apollo-server-core';
+import { ERROR_MESSAGES } from '@uxc/common/node'
+import { AuthenticationError, UserInputError } from 'apollo-server-core'
 
-import type { Resolver } from '../types';
+import { Message, PrivateThread } from '@/db'
+
+import type { Resolver } from '../types'
 import type {
-	PrivateThread as PrivateThreadType,
-	Message as MessageType
-} from '@uxc/common/node';
+  PrivateThread as PrivateThreadType,
+  Message as MessageType,
+} from '@uxc/common/node'
 
-import { Message, PrivateThread } from '@/db';
-
-type PopulatedMessage = MessageType & { threadId: PrivateThreadType };
+type PopulatedMessage = MessageType & { threadId: PrivateThreadType }
 
 const filter = {
-	score: { $meta: 'textScore' }
-};
+  score: { $meta: 'textScore' },
+}
 
 /**
  * @todo Filter: ensure messages from friends of current user.
@@ -22,85 +22,84 @@ const filter = {
  * @todo Escape query input.
  */
 export const search: Resolver<
-	(PopulatedMessage | PrivateThreadType)[],
-	{ query: string }
+  (PopulatedMessage | PrivateThreadType)[],
+  { query: string }
 > = async (_, { query }, { req }) => {
-	const userId = req.session.meta?.id;
-	if (!userId) {
-		throw new AuthenticationError(ERROR_MESSAGES.E_NO_USER_SESSION);
-	}
+  const userId = req.session.meta?.id
+  if (!userId) {
+    throw new AuthenticationError(ERROR_MESSAGES.E_NO_USER_SESSION)
+  }
 
-	if (!query) {
-		throw new UserInputError(ERROR_MESSAGES.E_NO_QUERY);
-	}
+  if (!query) {
+    throw new UserInputError(ERROR_MESSAGES.E_NO_QUERY)
+  }
 
-	const textQuery = {
-		$text: {
-			$search: query,
-			$caseSensitive: false,
-			$diacriticSensitive: false
-		}
-	};
+  const textQuery = {
+    $text: {
+      $search: query,
+      $caseSensitive: false,
+      $diacriticSensitive: false,
+    },
+  }
 
-	const messageTask = Message.find(
-		{
-			...textQuery
-		},
-		filter
-	)
-		.populate({
-			path: 'threadId',
-			populate: {
-				path: 'users',
-				match: {
-					_id: userId
-				}
-			}
-		})
-		.populate('sender')
-		.limit(10)
-		.then((records) => {
-			return records.filter(
-				(record) =>
-					!!(record.threadId as PrivateThreadType).users.filter(
-						(user) => !!user // eslint-disable-line @typescript-eslint/no-unnecessary-condition
-					).length
-			) as PopulatedMessage[];
-		});
+  const messageTask = Message.find(
+    {
+      ...textQuery,
+    },
+    filter,
+  )
+    .populate({
+      path: 'threadId',
+      populate: {
+        path: 'users',
+        match: {
+          _id: userId,
+        },
+      },
+    })
+    .populate('sender')
+    .limit(10)
+    .then(
+      records =>
+        records.filter(
+          record =>
+            !!(record.threadId as PrivateThreadType).users.filter(
+              user => !!user,
+            ).length,
+        ) as PopulatedMessage[],
+    )
 
-	const threadTask = PrivateThread.find({
-		users: { $in: [{ _id: userId }] }
-	})
-		.populate('users')
-		.then((records) =>
-			records
-				.filter(({ users }) => {
-					let keep = 0;
+  const threadTask = PrivateThread.find({
+    users: { $in: [{ _id: userId }] },
+  })
+    .populate('users')
+    .then(records =>
+      records
+        .filter(({ users }) => {
+          let keep = 0
 
-					users.forEach(({ _id, username }) => {
-						// always increment for the current user; if other user, only increment if our query matches
-						if (
-							_id === userId ||
-							username.toLowerCase().includes(query.toLowerCase())
-						) {
-							keep |= 1;
-						}
-					});
+          users.forEach(({ _id, username }) => {
+            // always increment for the current user; if other user, only increment if our query matches
+            if (
+              _id === userId ||
+              username.toLowerCase().includes(query.toLowerCase())
+            ) {
+              keep |= 1
+            }
+          })
 
-					return keep === 1;
-				})
-				.slice(0, 11)
-		);
+          return keep === 1
+        })
+        .slice(0, 11),
+    )
 
-	const tasks = [messageTask, threadTask];
+  const tasks = [messageTask, threadTask]
 
-	const resolved = await Promise.all<(PopulatedMessage | PrivateThreadType)[]>(
-		tasks
-	);
+  const resolved = await Promise.all<(PopulatedMessage | PrivateThreadType)[]>(
+    tasks,
+  )
 
-	const results = resolved
-		.filter((result) => !!Object.keys(result).length)
-		.flat();
+  const results = resolved.filter(result => !!Object.keys(result).length).flat()
 
-	return results;
-};
+  return results
+}

@@ -19,7 +19,7 @@
     "test:cy:dev": "cross-env VITE_CY_TEST=true CYPRESS_BASE_URL=http://localhost:3000 CYPRESS_STAGE=dev start-server-and-test dev http-get://localhost:3000/ \"cypress open\"",
     "test:unit": "jest",
     "test:unit:dev": "jest --watchAll",
-    "test": "npm run test:unit && npm run test:cy:ci",
+    "test": "pnpm test:unit && pnpm test:cy:ci",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

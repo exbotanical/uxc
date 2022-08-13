@@ -1,13 +1,13 @@
-import type { MutationResolvers } from '@uxc/common/generated';
+import { invalidateSession } from '@/utils'
 
-import { invalidateSession } from '@/utils';
+import type { MutationResolvers } from '@uxc/common/generated'
 
 export const signoutResolver: MutationResolvers['signout'] = (
-	_,
-	__,
-	{ req }
+  _,
+  __,
+  { req },
 ) => {
-	invalidateSession(req);
+  invalidateSession(req)
 
-	return '';
-};
+  return ''
+}

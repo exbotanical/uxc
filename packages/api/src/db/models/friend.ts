@@ -1,71 +1,65 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model } from 'mongoose'
 
-import type { AsBuildArgs, AsRawDocument, AsReturnDocument } from '../types';
-import type { User, ObjectID, Friend as FriendType } from '@uxc/common/node';
-import type { Model, Query } from 'mongoose';
+import type { AsBuildArgs, AsRawDocument, AsReturnDocument } from '../types'
+import type { User, ObjectID, Friend as FriendType } from '@uxc/common/node'
+import type { Model, Query } from 'mongoose'
 
-type RawDocument = AsRawDocument<FriendType>;
-type ReturnDocument = AsReturnDocument<FriendType>;
-type NewFriendArgs = AsBuildArgs<FriendType>;
-type FriendsQuery = Query<FriendType[], any>;
+type RawDocument = AsRawDocument<FriendType>
+type ReturnDocument = AsReturnDocument<FriendType>
+type NewFriendArgs = AsBuildArgs<FriendType>
+type FriendsQuery = Query<FriendType[], any>
 
 interface FriendModel extends Model<RawDocument> {
-	build(attrs: NewFriendArgs): ReturnDocument;
-	findFriends(currentUserId: ObjectID): Promise<User[]>;
+  build(attrs: NewFriendArgs): ReturnDocument
+  findFriends(currentUserId: ObjectID): Promise<User[]>
 }
 
 const FriendSchema = new Schema<FriendType>(
-	{
-		friendNodeX: {
-			ref: 'User',
-			required: true,
-			type: Schema.Types.ObjectId
-		},
-		friendNodeY: {
-			ref: 'User',
-			required: true,
-			type: Schema.Types.ObjectId
-		}
-	},
-	{
-		timestamps: true,
-		toJSON: {
-			transform(_, ret: RawDocument) {
-				delete ret.__v;
-			}
-		}
-	}
-);
+  {
+    friendNodeX: {
+      ref: 'User',
+      required: true,
+      type: Schema.Types.ObjectId,
+    },
+    friendNodeY: {
+      ref: 'User',
+      required: true,
+      type: Schema.Types.ObjectId,
+    },
+  },
+  {
+    timestamps: true,
+    toJSON: {
+      transform(_, ret: RawDocument) {
+        delete ret.__v
+      },
+    },
+  },
+)
 
-FriendSchema.index({ '$**': 'text' });
+FriendSchema.index({ '$**': 'text' })
 
-FriendSchema.index({ friendNodeX: 1, friendNodeY: 1 }, { unique: true });
+FriendSchema.index({ friendNodeX: 1, friendNodeY: 1 }, { unique: true })
 
 FriendSchema.statics.findFriends = async function findFriends(
-	currentUserId: ObjectID
+  currentUserId: ObjectID,
 ) {
-	const friendsX = (
-		this.find({
-			friendNodeY: currentUserId
-		}) as FriendsQuery
-	).populate('friendNodeX');
+  const friendsX = this.find({
+    friendNodeY: currentUserId,
+  }).populate('friendNodeX')
 
-	const friendsY = (
-		this.find({
-			friendNodeX: currentUserId
-		}) as FriendsQuery
-	).populate('friendNodeY');
+  const friendsY = this.find({
+    friendNodeX: currentUserId,
+  }).populate('friendNodeY')
 
-	const [x, y] = await Promise.all([friendsX, friendsY]);
+  const [x, y] = await Promise.all([friendsX, friendsY])
 
-	return [
-		...x.map((friend) => friend.friendNodeX),
-		...y.map((friend) => friend.friendNodeY)
-	];
-};
+  return [
+    ...x.map(friend => friend.friendNodeX),
+    ...y.map(friend => friend.friendNodeY),
+  ]
+}
 
-FriendSchema.statics.build = (attrs) => {
-	return new Friend(attrs);
-};
+FriendSchema.statics.build = attrs => new Friend(attrs)
 
-export const Friend = model<RawDocument, FriendModel>('Friend', FriendSchema);
+export const Friend = model<RawDocument, FriendModel>('Friend', FriendSchema)

@@ -1,30 +1,30 @@
-import { BaseError } from '..';
+import { logger } from '@/services/logger'
 
-import type { Request, Response, NextFunction } from 'express';
+import { BaseError } from '..'
 
-import { logger } from '@/services/logger';
+import type { Request, Response, NextFunction } from 'express'
 
 /**
  * Handle errors that pass through the Apollo server and onto the Express server instance.
  */
 export const expressErrorHandler = (
-	err: Error,
-	_: Request,
-	res: Response,
-	next: NextFunction
+  err: Error,
+  _: Request,
+  res: Response,
+  next: NextFunction,
 ) => {
-	logger.error('express error handler', err);
+  logger.error('express error handler', err)
 
-	// status codes will take effect in express but will be overridden in apollo
-	// which is what we want; the errors will propagate and be formatted per gql spec
-	if (err instanceof BaseError) {
-		return res.status(err.statusCode).send(err.serialize());
-	}
+  // status codes will take effect in express but will be overridden in apollo
+  // which is what we want; the errors will propagate and be formatted per gql spec
+  if (err instanceof BaseError) {
+    return res.status(err.statusCode).send(err.serialize())
+  }
 
-	res.status(400).send({
-		errors: [{ message: 'unknown error' }],
-		friendly: 'An unknown error occurred'
-	});
+  res.status(400).send({
+    errors: [{ message: 'unknown error' }],
+    friendly: 'An unknown error occurred',
+  })
 
-	next();
-};
+  next()
+}

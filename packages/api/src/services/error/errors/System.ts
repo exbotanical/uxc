@@ -1,21 +1,21 @@
-import { BaseError } from '.';
+import { BaseError } from '.'
 
 export class SystemError extends BaseError {
-	statusCode = 500;
+  statusCode = 500
 
-	constructor(
-		public message: string = 'A system error occurred.',
-		public internal?: string
-	) {
-		super(message, internal);
+  constructor(
+    public message: string = 'A system error occurred.',
+    public internal?: string,
+  ) {
+    super(message, internal)
 
-		Object.setPrototypeOf(this, SystemError.prototype);
-	}
+    Object.setPrototypeOf(this, SystemError.prototype)
+  }
 
-	serialize() {
-		return {
-			friendly: this.message,
-			internal: this.internal || this.message
-		};
-	}
+  serialize() {
+    return {
+      friendly: this.message,
+      internal: this.internal || this.message,
+    }
+  }
 }

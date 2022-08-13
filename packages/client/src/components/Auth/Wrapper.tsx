@@ -1,16 +1,16 @@
-import React from 'react';
+import React from 'react'
 
-import * as S from './styles';
+import bg from '@/assets/splash.png'
 
-import bg from '@/assets/splash.png';
+import * as S from './styles'
 
 export function Wrapper({ content }: { content: React.ReactNode }) {
-	return (
-		<S.Container
-			style={{ backgroundImage: `url(${bg})`, position: 'relative' }}
-		>
-			<h1>uxc</h1>
-			{content}
-		</S.Container>
-	);
+  return (
+    <S.Container
+      style={{ backgroundImage: `url(${bg})`, position: 'relative' }}
+    >
+      <h1>uxc</h1>
+      {content}
+    </S.Container>
+  )
 }

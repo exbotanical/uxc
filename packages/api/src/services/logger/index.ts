@@ -1,3 +1,3 @@
-import { StreamLogger } from './client';
+import { StreamLogger } from './client'
 
-export const logger = StreamLogger.init();
+export const logger = StreamLogger.init()

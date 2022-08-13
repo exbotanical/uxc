@@ -1,14 +1,14 @@
 export abstract class BaseError extends Error {
-	abstract statusCode: number;
+  abstract statusCode: number
 
-	constructor(public message: string, public internal?: string) {
-		super(message);
+  constructor(public message: string, public internal?: string) {
+    super(message)
 
-		Object.setPrototypeOf(this, BaseError.prototype);
-	}
+    Object.setPrototypeOf(this, BaseError.prototype)
+  }
 
-	abstract serialize(): {
-		friendly: string;
-		internal: string;
-	};
+  abstract serialize(): {
+    friendly: string
+    internal: string
+  }
 }

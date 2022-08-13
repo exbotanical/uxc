@@ -1,3 +1,3 @@
-import { Logger } from './client';
+import { Logger } from './client'
 
-export const logger = new Logger();
+export const logger = new Logger()

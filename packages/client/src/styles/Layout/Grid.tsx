@@ -1,15 +1,15 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const FlexCol = `
 	display: flex;
 	flex-direction: column;
-`;
+`
 
 export const RowCenter = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: center;
-`;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
 
 export const ScreenReaderOnly = `
 	position: absolute;
@@ -21,4 +21,4 @@ export const ScreenReaderOnly = `
 	clip: rect(0, 0, 0, 0);
 	white-space: nowrap;
 	border-width: 0;
-`;
+`

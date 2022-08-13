@@ -1,9 +1,9 @@
-export * from './friend';
+export * from './friend'
 
-export * from './friendRequest';
+export * from './friendRequest'
 
-export * from './message';
+export * from './message'
 
-export * from './privateThread';
+export * from './privateThread'
 
-export * from './user';
+export * from './user'

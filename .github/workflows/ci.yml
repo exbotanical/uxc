@@ -8,16 +8,16 @@ on:
 jobs:
 
   check:
-    uses: MatthewZito/.github/.github/workflows/pnpm_script_run.yml@master
+    uses: /.github/.github/workflows/pnpm_script_run.yml@master
     with:
       script_name: check:ci
 
   test:
-    uses: MatthewZito/.github/.github/workflows/pnpm_script_run.yml@master
+    uses: exbotanical/.github/.github/workflows/pnpm_script_run.yml@master
     with:
       script_name: test
 
   # cy-test:
-  #   uses: MatthewZito/.github/.github/workflows/pnpm_script_run.yml@master
+  #   uses: exbotanical/.github/.github/workflows/pnpm_script_run.yml@master
   #   with:
   #     script_name: test:cy

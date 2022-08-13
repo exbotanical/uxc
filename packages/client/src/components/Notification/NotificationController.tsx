@@ -1,47 +1,46 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from 'react'
+import styled from 'styled-components'
 
-import type { PropsFromRedux } from '@/state';
+import { Notification } from '@/components/Notification/Notification'
+import type { PropsFromRedux } from '@/state'
+import { connector } from '@/state'
+import { FlexCol } from '@/styles/Layout'
 
-import { Notification } from '@/components/Notification/Notification';
-import { connector } from '@/state';
-import { FlexCol } from '@/styles/Layout';
-
-type NotificationControllerProps = PropsFromRedux;
+type NotificationControllerProps = PropsFromRedux
 
 const Container = styled.div`
-	${FlexCol}
-	position: absolute;
-	z-index: 1001;
-	right: 0px;
-	bottom: 0px;
-	left: 0px;
-	width: 100%;
-	justify-content: center;
-	margin-right: auto;
-	margin-bottom: 0.75rem;
-	margin-left: auto;
-`;
+  ${FlexCol}
+  position: absolute;
+  z-index: 1001;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  justify-content: center;
+  margin-right: auto;
+  margin-bottom: 0.75rem;
+  margin-left: auto;
+`
 
 function NotificationControllerBase({
-	notifications,
-	hideNotification
+  notifications,
+  hideNotification,
 }: NotificationControllerProps & PropsFromRedux) {
-	return (
-		<Container>
-			{notifications.map(({ id, message, duration, ...otherProps }) => (
-				<Notification
-					duration={duration}
-					message={message}
-					onClose={() => hideNotification({ id })}
-					{...otherProps}
-					key={id}
-				/>
-			))}
-		</Container>
-	);
+  return (
+    <Container>
+      {notifications.map(({ id, message, duration, ...otherProps }) => (
+        <Notification
+          duration={duration}
+          message={message}
+          onClose={() => hideNotification({ id })}
+          {...otherProps}
+          key={id}
+        />
+      ))}
+    </Container>
+  )
 }
 
-NotificationControllerBase.displayName = 'NotificationControllerBase';
+NotificationControllerBase.displayName = 'NotificationControllerBase'
 
-export const NotificationController = connector(NotificationControllerBase);
+export const NotificationController = connector(NotificationControllerBase)

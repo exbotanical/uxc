@@ -1,11 +1,11 @@
-export * from './Base';
+export * from './Base'
 
-export * from './BadRequest';
+export * from './BadRequest'
 
-export * from './DatabaseConnection';
+export * from './DatabaseConnection'
 
-export * from './NotFound';
+export * from './NotFound'
 
-export * from './System';
+export * from './System'
 
-export * from './UserInput';
+export * from './UserInput'

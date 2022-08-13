@@ -9,9 +9,10 @@ import {
 } from '@@/fixtures';
 import request from 'supertest';
 
+import { app } from '@/app';
+
 import type { ObjectID, User } from '@uxc/common/node';
 
-import { app } from '@/app';
 
 type Maybe<T extends Record<any, any>> = {
 	[K in keyof T]?: T[K];

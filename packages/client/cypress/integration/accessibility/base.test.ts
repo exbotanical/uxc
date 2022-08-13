@@ -1,9 +1,10 @@
-import type { Rule } from 'axe-core';
 
 import currentUserOk from '@/fixtures/getCurrentUser/ok.json';
 import getMessagesOk from '@/fixtures/getMessages/ok1.json';
 import getThreadsOk from '@/fixtures/getThreads/ok.json';
 import searchFriends from '@/fixtures/searchFriends/all-both.json';
+
+import type { Rule } from 'axe-core';
 
 const unauthenticatedTestUrls = ['/signin', '/join'];
 const authenticatedTestUrls = ['/', '/622a1412cbc9a5e523cd0a7b'];

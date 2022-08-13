@@ -1,9 +1,9 @@
-export * from './useLocalStorage';
+export * from './useLocalStorage'
 
-export * from './useOnline';
+export * from './useOnline'
 
-export * from './useTrapFocus';
+export * from './useTrapFocus'
 
-export * from './useValidation';
+export * from './useValidation'
 
-export * from './useViewportSize';
+export * from './useViewportSize'

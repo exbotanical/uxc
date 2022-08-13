@@ -1,3 +1,3 @@
-export * from './purge';
+export * from './purge'
 
-export * from './seed';
+export * from './seed'

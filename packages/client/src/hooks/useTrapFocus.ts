@@ -1,41 +1,41 @@
-import React from 'react';
+import React from 'react'
 
 interface UseTrapFocusProps {
-	container: HTMLElement | null;
+  container: HTMLElement | null
 }
 
 export function useTrapFocus({ container }: UseTrapFocusProps) {
-	React.useEffect(() => {
-		if (!container) {
-			return undefined;
-		}
+  React.useEffect(() => {
+    if (!container) {
+      return undefined
+    }
 
-		const focusableElements = container.querySelectorAll<HTMLElement>(
-			'a[href]:not([disabled]), button:not([disabled]), input:not([disabled])'
-		);
-		const firstElement = focusableElements[0];
-		const lastElement = focusableElements[focusableElements.length - 1];
+    const focusableElements = container.querySelectorAll<HTMLElement>(
+      'a[href]:not([disabled]), button:not([disabled]), input:not([disabled])',
+    )
+    const firstElement = focusableElements[0]
+    const lastElement = focusableElements[focusableElements.length - 1]
 
-		function trapFocus(e: KeyboardEvent) {
-			if (e.key !== 'Tab') {
-				return;
-			}
+    function trapFocus(e: KeyboardEvent) {
+      if (e.key !== 'Tab') {
+        return
+      }
 
-			if (e.shiftKey) {
-				if (document.activeElement === firstElement) {
-					e.preventDefault();
-					lastElement.focus();
-				}
-			} else if (document.activeElement === lastElement) {
-				e.preventDefault();
-				firstElement.focus();
-			}
-		}
+      if (e.shiftKey) {
+        if (document.activeElement === firstElement) {
+          e.preventDefault()
+          lastElement.focus()
+        }
+      } else if (document.activeElement === lastElement) {
+        e.preventDefault()
+        firstElement.focus()
+      }
+    }
 
-		container.addEventListener('keydown', trapFocus);
+    container.addEventListener('keydown', trapFocus)
 
-		return () => {
-			container.removeEventListener('keydown', trapFocus);
-		};
-	}, [container]);
+    return () => {
+      container.removeEventListener('keydown', trapFocus)
+    }
+  }, [container])
 }

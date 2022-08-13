@@ -5,5 +5,5 @@
  * @param total Total number of indices
  */
 export function cycleRange(direction: -1 | 1, current: number, total: number) {
-	return (current + direction + total) % total;
+  return (current + direction + total) % total
 }

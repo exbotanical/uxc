@@ -1,5 +1,5 @@
-export * from './onAnyMessageCreated';
+export * from './onAnyMessageCreated'
 
-export * from './onFriendRequestSaved';
+export * from './onFriendRequestSaved'
 
-export * from './onThreadMessageCreated';
+export * from './onThreadMessageCreated'

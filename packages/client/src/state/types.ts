@@ -1,2 +1,2 @@
-export * from './thread/types';
-export * from './notification/types';
+export * from './thread/types'
+export * from './notification/types'

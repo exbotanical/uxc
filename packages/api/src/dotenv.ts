@@ -1,7 +1,7 @@
-import { config } from 'dotenv';
+import { config } from 'dotenv'
 
-import { isTestRuntime } from './utils';
+import { isTestRuntime } from './utils'
 
-const path = `../../${isTestRuntime ? 'example.env' : '.env'}`;
+const path = `../../${isTestRuntime ? 'example.env' : '.env'}`
 
-config({ path });
+config({ path })

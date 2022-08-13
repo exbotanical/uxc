@@ -1,17 +1,17 @@
-export * from './getCurrentUser';
+export * from './getCurrentUser'
 
-export * from './getFriendRequests';
+export * from './getFriendRequests'
 
-export * from './getFriends';
+export * from './getFriends'
 
-export * from './getMessages';
+export * from './getMessages'
 
-export * from './getThread';
+export * from './getThread'
 
-export * from './getThreads';
+export * from './getThreads'
 
-export * from './getUser';
+export * from './getUser'
 
-export * from './search';
+export * from './search'
 
-export * from './searchFriends';
+export * from './searchFriends'

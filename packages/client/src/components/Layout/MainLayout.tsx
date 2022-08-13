@@ -1,43 +1,43 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import styled from 'styled-components';
+import React from 'react'
+import { Outlet } from 'react-router-dom'
+import styled from 'styled-components'
 
-import { ContentLayout } from './ContentLayout';
-import { SidebarLayout } from './SidebarLayout';
+import { ChannelsList } from '@/components/Channel/ChannelsList'
+import { NotificationController } from '@/components/Notification/NotificationController'
+import { useViewportSize } from '@/hooks/useViewportSize'
+import { ThreadsProvider } from '@/state/context/ThreadsContext'
 
-import { ChannelsList } from '@/components/Channel/ChannelsList';
-import { NotificationController } from '@/components/Notification/NotificationController';
-import { useViewportSize } from '@/hooks/useViewportSize';
-import { ThreadsProvider } from '@/state/context/ThreadsContext';
+import { ContentLayout } from './ContentLayout'
+import { SidebarLayout } from './SidebarLayout'
 
 const Container = styled.div`
-	display: flex;
-	height: 100vh;
-	flex: 1 1 0%;
-	border: 1px solid ${({ theme }) => theme.colors.border.norm};
-`;
+  display: flex;
+  height: 100vh;
+  flex: 1 1 0%;
+  border: 1px solid ${({ theme }) => theme.colors.border.norm};
+`
 
 export function MainLayout() {
-	const viewport = useViewportSize();
-	const gtsm = viewport > 0;
+  const viewport = useViewportSize()
+  const gtsm = viewport > 0
 
-	const isSmallViewport = useViewportSize() <= 2;
+  const isSmallViewport = useViewportSize() <= 2
 
-	return (
-		<ThreadsProvider>
-			<Container>
-				{isSmallViewport ? null : <ChannelsList />}
+  return (
+    <ThreadsProvider>
+      <Container>
+        {isSmallViewport ? null : <ChannelsList />}
 
-				{gtsm ? <SidebarLayout body={<Outlet />} /> : null}
+        {gtsm ? <SidebarLayout body={<Outlet />} /> : null}
 
-				<ContentLayout />
+        <ContentLayout />
 
-				<NotificationController />
-			</Container>
-		</ThreadsProvider>
-	);
+        <NotificationController />
+      </Container>
+    </ThreadsProvider>
+  )
 }
 
-MainLayout.displayName = 'MainLayout';
+MainLayout.displayName = 'MainLayout'
 
-export const ConnectedMainLayout = MainLayout;
+export const ConnectedMainLayout = MainLayout

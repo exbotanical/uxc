@@ -1,11 +1,11 @@
-import { seed } from './handler';
+import { seed } from './handler'
 
 export async function seedResolver() {
-	const { user, users, threadIds } = await seed();
+  const { user, users, threadIds } = await seed()
 
-	return {
-		user,
-		users,
-		threadIds
-	};
+  return {
+    user,
+    users,
+    threadIds,
+  }
 }

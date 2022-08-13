@@ -1,2 +1,2 @@
-export const labelLabel = 'search-label';
-export const inputLabel = 'search-input';
+export const labelLabel = 'search-label'
+export const inputLabel = 'search-input'

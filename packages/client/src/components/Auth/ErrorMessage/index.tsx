@@ -1,25 +1,25 @@
-import React from 'react';
+import React from 'react'
 
-import * as S from './styles';
+import { isTestRuntime } from '@/utils'
 
-import { isTestRuntime } from '@/utils';
+import * as S from './styles'
 
-import './bubble.scss';
+import './bubble.scss'
 
 interface ErrorMessageProps {
-	message: string;
+  message: string
 }
 
-export const MESSAGE_TIMEOUT = isTestRuntime ? 20000 : 5000;
+export const MESSAGE_TIMEOUT = isTestRuntime ? 20000 : 5000
 
 export function ErrorMessage({ message }: ErrorMessageProps) {
-	return (
-		<S.ErrorBubble className="bubble" data-testid="error-message">
-			<S.ErrorMessageContainer className="message">
-				<S.ErrorMessage>
-					<p>{message}</p>
-				</S.ErrorMessage>
-			</S.ErrorMessageContainer>
-		</S.ErrorBubble>
-	);
+  return (
+    <S.ErrorBubble className="bubble" data-testid="error-message">
+      <S.ErrorMessageContainer className="message">
+        <S.ErrorMessage>
+          <p>{message}</p>
+        </S.ErrorMessage>
+      </S.ErrorMessageContainer>
+    </S.ErrorBubble>
+  )
 }

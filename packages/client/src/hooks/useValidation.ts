@@ -1,47 +1,47 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react'
 
-import { nullNoop, once } from '@/utils/atomic';
+import { nullNoop, once } from '@/utils/atomic'
 
 export interface Validator {
-	(input: string): string | null;
+  (input: string): string | null
 }
 
 interface UseValidationOptions {
-	lazy?: boolean;
+  lazy?: boolean
 }
 
 export function useValidation(
-	validateImpl: Validator,
-	options?: UseValidationOptions
+  validateImpl: Validator,
+  options?: UseValidationOptions,
 ) {
-	const lazy = options?.lazy ?? true;
+  const lazy = options?.lazy ?? true
 
-	const [input, setInput] = useState('');
-	const [isDirty, setIsDirty] = useState(false);
-	const [error, setError] = useState<string | null>(null);
-	const validate = useRef(lazy ? nullNoop : validateImpl);
+  const [input, setInput] = useState('')
+  const [isDirty, setIsDirty] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const validate = useRef(lazy ? nullNoop : validateImpl)
 
-	const setDirty = once(() => {
-		setIsDirty(true);
-	});
+  const setDirty = once(() => {
+    setIsDirty(true)
+  })
 
-	const setInputProxy = (newInput: string) => {
-		setInput(newInput);
+  const setInputProxy = (newInput: string) => {
+    setInput(newInput)
 
-		setError(validate.current(newInput));
-	};
+    setError(validate.current(newInput))
+  }
 
-	useEffect(() => {
-		if (isDirty && lazy) {
-			validate.current = validateImpl;
-			setError(validate.current(input));
-		}
-	}, [isDirty, setIsDirty, input, lazy, validate, validateImpl]);
+  useEffect(() => {
+    if (isDirty && lazy) {
+      validate.current = validateImpl
+      setError(validate.current(input))
+    }
+  }, [isDirty, setIsDirty, input, lazy, validate, validateImpl])
 
-	return {
-		input,
-		error,
-		setInput: setInputProxy,
-		setDirty
-	};
+  return {
+    input,
+    error,
+    setInput: setInputProxy,
+    setDirty,
+  }
 }

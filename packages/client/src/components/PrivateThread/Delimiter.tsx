@@ -1,46 +1,44 @@
-import React, { forwardRef } from 'react';
-import styled from 'styled-components';
+import React, { forwardRef } from 'react'
+import styled from 'styled-components'
 
-import SvgIcon from '../Icon';
+import { FontSizeSm } from '@/styles/Typography/FontSize'
 
-import { FontSizeSm } from '@/styles/Typography/FontSize';
+import SvgIcon from '../Icon'
 
 interface DelimiterProps {
-	title: string;
+  title: string
 }
 
 const Container = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 1rem;
-	color: ${({ theme }) => theme.colors.font.strong};
-`;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  color: ${({ theme }) => theme.colors.font.strong};
+`
 
 const Label = styled.p`
-	${FontSizeSm}
-	font-weight: 700;
-	opacity: 0.75;
-	text-transform: uppercase;
-	white-space: nowrap;
-`;
+  ${FontSizeSm}
+  font-weight: 700;
+  opacity: 0.75;
+  text-transform: uppercase;
+  white-space: nowrap;
+`
 
 export const Delimiter = forwardRef<HTMLButtonElement, DelimiterProps>(
-	({ title }, ref) => {
-		return (
-			<Container>
-				<Label>{title}</Label>
-				<button
-					data-testid="dm-btn"
-					ref={ref}
-					title="Create direct message"
-					type="button"
-				>
-					<SvgIcon name="plus" size={24} />
-				</button>
-			</Container>
-		);
-	}
-);
+  ({ title }, ref) => (
+    <Container>
+      <Label>{title}</Label>
+      <button
+        data-testid="dm-btn"
+        ref={ref}
+        title="Create direct message"
+        type="button"
+      >
+        <SvgIcon name="plus" size={24} />
+      </button>
+    </Container>
+  ),
+)
 
-Delimiter.displayName = 'Delimiter';
+Delimiter.displayName = 'Delimiter'

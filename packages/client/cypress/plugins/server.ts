@@ -6,14 +6,12 @@ export function configureDevServer(
 	on: Cypress.PluginEvents,
 	config: Cypress.PluginConfigOptions
 ) {
-	on('dev-server:start', async (options) => {
-		return startDevServer({
+	on('dev-server:start', async (options) => startDevServer({
 			options,
 			viteConfig: {
 				configFile: join(__dirname, '../../vite.config.ts')
 			}
-		});
-	});
+		}));
 
 	return config;
 }

@@ -1,3 +1,3 @@
-export * from './breakpoints';
+export * from './breakpoints'
 
-export * from './Grid';
+export * from './Grid'

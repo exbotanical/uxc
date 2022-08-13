@@ -1,9 +1,9 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components'
 
-import { FontFamilyBase, FontFamilyCode } from './Typography/FontFamily';
+import { FontFamilyBase, FontFamilyCode } from './Typography/FontFamily'
 
 export const Reset = createGlobalStyle<{
-	theme: { colorbg: string; colortext: string };
+  theme: { colorbg: string; colortext: string }
 }>`
 body,
 html {
@@ -93,4 +93,4 @@ mark {
 	color: ${({ theme }) => theme.colors.interactive.norm};
 	font-weight: 700;
 }
-`;
+`

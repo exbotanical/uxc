@@ -1,27 +1,27 @@
-import { ERROR_MESSAGES } from '@uxc/common/node';
-import { AuthenticationError } from 'apollo-server-core';
+import { ERROR_MESSAGES } from '@uxc/common/node'
+import { AuthenticationError } from 'apollo-server-core'
 
-import type { Resolver } from '../types';
+import { FriendRequest } from '@/db'
+
+import type { Resolver } from '../types'
 import type {
-	ReceivedFriendRequest,
-	SentFriendRequest,
-	FriendRequestOptions
-} from '@uxc/common/node';
-
-import { FriendRequest } from '@/db';
+  ReceivedFriendRequest,
+  SentFriendRequest,
+  FriendRequestOptions,
+} from '@uxc/common/node'
 
 export const getFriendRequests: Resolver<
-	(ReceivedFriendRequest | SentFriendRequest)[],
-	{ type: FriendRequestOptions }
+  (ReceivedFriendRequest | SentFriendRequest)[],
+  { type: FriendRequestOptions }
 > = async (_, { type }, { req }) => {
-	const userId = req.session.meta?.id;
-	if (!userId) {
-		throw new AuthenticationError(ERROR_MESSAGES.E_NO_USER_SESSION);
-	}
+  const userId = req.session.meta?.id
+  if (!userId) {
+    throw new AuthenticationError(ERROR_MESSAGES.E_NO_USER_SESSION)
+  }
 
-	if (type === 'SENT') {
-		return FriendRequest.findFriendRequestsSent(userId);
-	}
+  if (type === 'SENT') {
+    return FriendRequest.findFriendRequestsSent(userId)
+  }
 
-	return FriendRequest.findFriendRequestsRecv(userId);
-};
+  return FriendRequest.findFriendRequestsRecv(userId)
+}

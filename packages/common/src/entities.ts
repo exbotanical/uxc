@@ -1,74 +1,74 @@
-import type { ObjectID, PopulatedDoc } from './util';
+import type { ObjectID, PopulatedDoc } from './util'
 
-export type FriendRequestStatus = 'ACCEPTED' | 'PENDING' | 'REJECTED';
+export type FriendRequestStatus = 'ACCEPTED' | 'PENDING' | 'REJECTED'
 
-export type FriendRequestOptions = 'BOTH' | 'RECV' | 'SENT';
+export type FriendRequestOptions = 'BOTH' | 'RECV' | 'SENT'
 
 export interface Timestamps {
-	createdAt: Date;
-	updatedAt: Date;
+  createdAt: Date
+  updatedAt: Date
 }
 
 export interface BaseModel extends Timestamps {
-	_id: ObjectID;
+  _id: ObjectID
 }
 
 export interface Message extends BaseModel {
-	threadId: PopulatedDoc<PrivateThread>;
-	sender: PopulatedDoc<User>;
-	body: string;
+  threadId: PopulatedDoc<PrivateThread>
+  sender: PopulatedDoc<User>
+  body: string
 }
 
 export type MessageWithSender = Message & {
-	sender: User;
-};
+  sender: User
+}
 
 // @todo PopulatedDoc
 export interface PrivateThread extends BaseModel {
-	users: [User, User];
+  users: [User, User]
 }
 
 export interface User extends BaseModel {
-	username: string;
-	email: string;
-	userImage: string | null;
+  username: string
+  email: string
+  userImage: string | null
 }
 
 export interface Friend extends BaseModel {
-	friendNodeX: PopulatedDoc<User>;
-	friendNodeY: PopulatedDoc<User>;
+  friendNodeX: PopulatedDoc<User>
+  friendNodeY: PopulatedDoc<User>
 }
 
 export interface FriendX {
-	friendNodeX: User;
-	friendNodeY: ObjectID;
+  friendNodeX: User
+  friendNodeY: ObjectID
 }
 
 export interface FriendY {
-	friendNodeX: ObjectID;
-	friendNodeY: User;
+  friendNodeX: ObjectID
+  friendNodeY: User
 }
 
 export interface FriendRequest extends BaseModel {
-	requester: PopulatedDoc<User>;
-	recipient: PopulatedDoc<User>;
-	status: FriendRequestStatus;
+  requester: PopulatedDoc<User>
+  recipient: PopulatedDoc<User>
+  status: FriendRequestStatus
 }
 
 export interface ReceivedFriendRequest extends BaseModel {
-	requester: User;
-	recipient: ObjectID;
-	status: FriendRequestStatus;
+  requester: User
+  recipient: ObjectID
+  status: FriendRequestStatus
 }
 
 export interface SentFriendRequest extends BaseModel {
-	requester: ObjectID;
-	recipient: User;
-	status: FriendRequestStatus;
+  requester: ObjectID
+  recipient: User
+  status: FriendRequestStatus
 }
 
 export interface SearchFriendsResult {
-	friends: User[];
-	sent: (User & { requestId: ObjectID })[];
-	received: (User & { requestId: ObjectID })[];
+  friends: User[]
+  sent: (User & { requestId: ObjectID })[]
+  received: (User & { requestId: ObjectID })[]
 }

@@ -1,9 +1,9 @@
-import { UserInputError as ApolloUserInputError } from 'apollo-server-core';
+import { UserInputError as ApolloUserInputError } from 'apollo-server-core'
 
 export class UserInputError extends ApolloUserInputError {
-	constructor(message: string, field?: string) {
-		super(message);
+  constructor(message: string, field?: string) {
+    super(message)
 
-		this.field = field || null;
-	}
+    this.field = field || null
+  }
 }

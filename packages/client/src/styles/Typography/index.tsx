@@ -1,21 +1,21 @@
-import React from 'react';
-import { createGlobalStyle } from 'styled-components';
+import React from 'react'
+import { createGlobalStyle } from 'styled-components'
 
 import {
-	BodyWithStyle,
-	ButtonLabelWithStyle,
-	CaptionWithStyle,
-	CodeWithStyle,
-	H1WithStyle,
-	H2WithStyle,
-	H3WithStyle,
-	H4WithStyle,
-	H5WithStyle,
-	H6WithStyle,
-	OverlineWithStyle,
-	LinkWithStyle
-} from './Element';
-import { FontFamily } from './FontFamily';
+  BodyWithStyle,
+  ButtonLabelWithStyle,
+  CaptionWithStyle,
+  CodeWithStyle,
+  H1WithStyle,
+  H2WithStyle,
+  H3WithStyle,
+  H4WithStyle,
+  H5WithStyle,
+  H6WithStyle,
+  OverlineWithStyle,
+  LinkWithStyle,
+} from './Element'
+import { FontFamily } from './FontFamily'
 
 const TypographyStyles = createGlobalStyle`
 	h1 {
@@ -53,28 +53,28 @@ const TypographyStyles = createGlobalStyle`
 	a {
 		${LinkWithStyle}
 	}
-`;
+`
 
 export const typographyStyles = {
-	Body: BodyWithStyle,
-	ButtonLabel: ButtonLabelWithStyle,
-	Caption: CaptionWithStyle,
-	Code: CodeWithStyle,
-	H1: H1WithStyle,
-	H2: H2WithStyle,
-	H3: H3WithStyle,
-	H4: H4WithStyle,
-	H5: H5WithStyle,
-	H6: H6WithStyle,
-	Overline: OverlineWithStyle,
-	Link: LinkWithStyle
-};
+  Body: BodyWithStyle,
+  ButtonLabel: ButtonLabelWithStyle,
+  Caption: CaptionWithStyle,
+  Code: CodeWithStyle,
+  H1: H1WithStyle,
+  H2: H2WithStyle,
+  H3: H3WithStyle,
+  H4: H4WithStyle,
+  H5: H5WithStyle,
+  H6: H6WithStyle,
+  Overline: OverlineWithStyle,
+  Link: LinkWithStyle,
+}
 
 export function Typography(): JSX.Element {
-	return (
-		<>
-			<FontFamily />
-			<TypographyStyles />
-		</>
-	);
+  return (
+    <>
+      <FontFamily />
+      <TypographyStyles />
+    </>
+  )
 }
